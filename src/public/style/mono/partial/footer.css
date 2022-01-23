@@ -1,0 +1,24 @@
+.footer {
+  padding: 80px 0;
+}
+
+.footer .inner {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.footer .sns {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.footer .sns a {
+  display: block;
+  margin-left: 1em;
+}
+/*# sourceMappingURL=footer.css.map */

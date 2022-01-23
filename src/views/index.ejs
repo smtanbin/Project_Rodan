@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="style/styles.css">
+    <link rel="stylesheet" href="style/mono/index.css">
+    <title>Document</title>
+
+</head>
+<body>
+    <%- include('navbar'); %>
+    <%- include('sidenav'); %>
+    <%- include('body'); %>
+    <%- include('footer'); %>
+    <script>
+        /* Set the width of the side navigation to 250px and the left margin of the page content to 250px */
+function openNav() {
+  document.getElementById("sidenavtigger").style.width = "250px";
+  document.getElementById("main").style.marginLeft = "250px";
+}
+
+/* Set the width of the side navigation to 0 and the left margin of the page content to 0 */
+function closeNav() {
+  document.getElementById("sidenavtigger").style.width = "0";
+  document.getElementById("main").style.marginLeft = "0";
+}
+    </script>
+</body>
+</html>
