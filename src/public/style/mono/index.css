@@ -2006,25 +2006,4 @@ main {
     font-size: 18px;
   }
 }
-
-table {
-  caption-side: bottom;
-  border-collapse: collapse;
-}
-
-table th {
-  text-align: inherit;
-  text-align: -webkit-match-parent;
-}
-
-table tbody,
-table td,
-table tfoot,
-table th,
-table thead,
-table tr {
-  border-color: inherit;
-  border-style: solid;
-  border-width: 0;
-}
 /*# sourceMappingURL=index.css.map */
