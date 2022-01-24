@@ -18,6 +18,7 @@ app.get('/', function(req, res) {
 	}
 	res.render('index')
 })
+
 app.get('/login', function(req, res) {
 	res.locals = {
 		title: 'Login'
@@ -26,8 +27,11 @@ app.get('/login', function(req, res) {
 })
 
 // registration
-app.get('/reg', function(req, res) {
-	res.render('pages/registration')
+app.get('/report/customerInfo', function(req, res) {
+	res.locals = {
+		title: 'Customer Info'
+	}
+	res.render('pages/customerInfo')
 })
 
 const port = 80

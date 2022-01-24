@@ -4,14 +4,25 @@ hero {
   p {
     margin: 32px 0 0;
   }
+
+  .hero-logo {
+    display: inline-block;
+    margin: 0;
+    padding: 0 8px;
+    font-size: 2rem;
+    line-height: 1;
+    background: $color-black;
+    color: $color-white;
+  }
 }
 
-.hero-logo {
-  display: inline-block;
-  margin: 0;
-  padding: 0 8px;
-  font-size: 2rem;
-  line-height: 1;
-  background: $color-black;
-  color: $color-white;
+hero-img {
+  img {
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    height: 500px;
+    overflow: hidden;
+    object-fit: none;
+  }
 }

@@ -1,0 +1,23 @@
+table {
+    caption-side: bottom;
+    border-collapse: collapse;
+
+
+
+
+    th {
+        text-align: inherit;
+        text-align: -webkit-match-parent;
+    }
+
+    tbody,
+    td,
+    tfoot,
+    th,
+    thead,
+    tr {
+        border-color: inherit;
+        border-style: solid;
+        border-width: 0;
+    }
+}

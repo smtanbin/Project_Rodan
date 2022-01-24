@@ -1,45 +1,38 @@
-window.addEventListener('resize', function() {
-	'use strict'
-	window.location.reload()
-})
+// Side nav
+function openNav() {
+	document.getElementById('sidenavtigger').style.width = '250px'
+	document.getElementById('main').style.marginLeft = '250px'
+}
 
-document.addEventListener('DOMContentLoaded', function() {
-	/////// Prevent closing from click inside dropdown
-	document.querySelectorAll('.dropdown-menu').forEach(function(element) {
-		element.addEventListener('click', function(e) {
-			e.stopPropagation()
-		})
-	})
+/* Set the width of the side navigation to 0 and the left margin of the page content to 0 */
+function closeNav() {
+	document.getElementById('sidenavtigger').style.width = '0'
+	document.getElementById('main').style.marginLeft = '0'
+}
 
-	// make it as accordion for smaller screens
-	if (window.innerWidth < 992) {
-		// close all inner dropdowns when parent is closed
-		document.querySelectorAll('.navbar .dropdown').forEach(function(everydropdown) {
-			everydropdown.addEventListener('hidden.bs.dropdown', function() {
-				// after dropdown is hidden, then find all submenus
-				this.querySelectorAll('.megasubmenu').forEach(function(everysubmenu) {
-					// hide every submenu as well
-					everysubmenu.style.display = 'none'
-				})
-			})
-		})
+// botten
+function createRipple(event) {
+	const button = event.currentTarget
 
-		document.querySelectorAll('.has-megasubmenu a').forEach(function(element) {
-			element.addEventListener('click', function(e) {
-				let nextEl = this.nextElementSibling
-				if (nextEl && nextEl.classList.contains('megasubmenu')) {
-					// prevent opening link if link needs to open dropdown
-					e.preventDefault()
+	const circle = document.createElement('span')
+	const diameter = Math.max(button.clientWidth, button.clientHeight)
+	const radius = diameter / 2
 
-					if (nextEl.style.display == 'block') {
-						nextEl.style.display = 'none'
-					} else {
-						nextEl.style.display = 'block'
-					}
-				}
-			})
-		})
+	circle.style.width = circle.style.height = `${diameter}px`
+	circle.style.left = `${event.clientX - button.offsetLeft - radius}px`
+	circle.style.top = `${event.clientY - button.offsetTop - radius}px`
+	circle.classList.add('ripple')
+
+	const ripple = button.getElementsByClassName('ripple')[0]
+
+	if (ripple) {
+		ripple.remove()
 	}
-	// end if innerWidth
-})
-// DOMContentLoaded  end
+
+	button.appendChild(circle)
+}
+
+const buttons = document.getElementsByTagName('button')
+for (const button of buttons) {
+	button.addEventListener('click', createRipple)
+}

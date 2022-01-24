@@ -1,6 +1,36 @@
-<nav>
-    <div style="margin-right: auto;"><button class="sidemenu" onclick="openNav()"><i
-                class="large material-icons">arrow_forward</i></button></div>
-   
-                <div style="margin-left: auto;"><a href="#">Usage</a><a href="#">Document</a><a href="#">GitHub</a></div>
-</nav>
+<div class="navbar-container navbar__container">
+    <nav class="navbar__flex">
+        <div class="navbar__left"><i class="navbar__hamburger" onclick="openNav()"><i
+                    class="large material-icons">menu</i></i>
+            <form class="navbar__search">
+                <div class="navbar__inputwithicon"><input type="text" name="" class="navbar__input"
+                        placeholder="Search my site..."><input type="submit" name="" class="navbar__button" value="">
+                </div>
+            </form>
+        </div>
+        <div class="navbar__right"><label for="navbarToggler" class="navbar__toggler__label"><span
+                    class="navbar__hamberger"></span><span>Menu</span></label><input type="checkbox" name=""
+                class="navbar__toggler__input" id="navbarToggler">
+            <ul class="navbar__links">
+                <li><a href="/">Home</a></li>
+                <li><a href="#">Connections</a>
+                    <ul class="navbar__sublinks">
+                        <li><a href="#">linkedin</a></li>
+                        <li><a href="#">dribbble</a></li>
+                        <li><a href="#">behance</a></li>
+                        <li><a href="#">codepen</a></li>
+                        <li><a href="#">vimeo</a></li>
+                    </ul>
+                </li>
+                <li><a href="#">Jobs</a>
+                    <ul class="navbar__sublinks">
+                        <li><a href="#">front-end developer</a></li>
+                        <li><a href="#">back-end developer</a></li>
+                        <li><a href="#">web designer</a></li>
+                    </ul>
+                </li>
+                <li><a href="#">About Us</a></li>
+            </ul>
+        </div>
+    </nav>
+</div>
