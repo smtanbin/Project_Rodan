@@ -33,18 +33,15 @@ app.get('/report/customerInfo', function(req, res) {
 	}
 	res.render('pages/customerInfo')
 })
-
-
+app.get('/report/utilityreport', function(req, res) {
+	res.locals = {
+		title: 'Utility Report'
+	}
+	res.render('pages/utilityreport')
+})
 
 // API
 app.use('/api', apipath)
-
-
-
-
-
-
-
 
 const port = 80
 app.listen(port)

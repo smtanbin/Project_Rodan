@@ -54,7 +54,7 @@ at async custsearch (customerinfo.js:22:2)
 
 			document.getElementById('output').innerHTML += `
 
-<!-- grid nesting example -->
+
 <div class="card bg-gray col-12 p-2">
 	<div class="p-2">
 		<div class="container">
