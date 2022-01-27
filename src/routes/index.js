@@ -1,7 +1,7 @@
 const { Router } = require('express')
 const { reginfo, nooftrans, customerinfo } = require('../apps/api.js')
 const app = Router()
-
+;(bodyParser = require('body-parser')), app.use(bodyParser.json())
 app.get('/reginfo', async (req, res) => {
 	const data = await reginfo()
 	res.send(data)
@@ -23,14 +23,13 @@ app.get('/numberoftrans', async (req, res) => {
 })
 
 app.get('/customerinfo', async (req, res) => {
-	const data = await customerinfo(10833000003)
+	const data = await customerinfo(10834000654)
 	res.send(data)
 })
 
 app.post('/customerinfo', async (req, res) => {
-	// const data = await customerinfo(res.body.id)
-	const data = await customerinfo(res.body)
-	console.log(res.body)
+	const data = await customerinfo(req.body.id)
+	console.log(req.body.id)
 	res.send(data)
 })
 
