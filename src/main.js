@@ -1,7 +1,7 @@
 const express = require('express')
 const app = express()
 const path = require('path')
-
+const apipath = require('./routes/index')
 app.use(express.static(__dirname + '/public'))
 app.set('views', path.join(__dirname, '/views'))
 // set the view engine to ejs
@@ -33,6 +33,18 @@ app.get('/report/customerInfo', function(req, res) {
 	}
 	res.render('pages/customerInfo')
 })
+
+
+
+// API
+app.use('/api', apipath)
+
+
+
+
+
+
+
 
 const port = 80
 app.listen(port)

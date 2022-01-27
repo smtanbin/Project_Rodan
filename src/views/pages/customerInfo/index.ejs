@@ -1,3 +1,4 @@
+
 <main class="content">
   <div class="margin" style="margin-top: 60px;"></div>
   <div class="hero-sm bg-gray">
@@ -9,25 +10,18 @@
     <!-- normal input group with button -->
     <div class="input-group">
 
-      <input type="text" class="form-input" placeholder="Type Account Number">
-      <button class="btn btn-primary input-group-btn">Search</button>
+      <input type="text" id="acno" class="form-input" placeholder="Type Account Number">
+      <button class="btn btn-primary input-group-btn" onclick="custsearch()">Search</button>
     </div>
     <div class="container">
       <br>
-      <div class="columns">
-        <div class="column col-xs-6">
-          <h4>Name:</h4>
-          <h6>Status:</h6>
-        </div>
-        <div class="column col-xs-3">col-xs-6</div>
-        <div class="column col-12">
-          <div class="column col-3">col-xs-6</div>
-          <div class="column col-3">col-xs-6</div>
-          <div class="column col-3">col-xs-6</div>
+      <div class="columns" id="output">
+        
         </div>
       </div>
     </div>
   </div>
   </div>
   </div>
+  <script src="/js/customerinfo.js"></script>
 </main>
