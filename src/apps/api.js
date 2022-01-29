@@ -197,5 +197,9 @@ const customerinfo = async (id) => {
 	 WHERE MPHONE = ${id}`
 	return await qurrythis(sql)
 }
+const utilityinfosummary = async (from, to, acno) => {
+	const sql = `SELECT * from AGENT_BANKING.UTILITYREPORT`
+	return await qurrythis(sql)
+}
 
 module.exports = { reginfo, nooftrans, customerinfo }

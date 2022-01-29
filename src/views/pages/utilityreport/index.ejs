@@ -18,19 +18,23 @@
         <!-- normal input group with button -->
         <div class="input-group">
 
+            <input type="date" id="fromdate" class="form-input" placeholder="Type Account Number">
+            <input type="date" id="todate" class="form-input" placeholder="Type Account Number">
             <input type="text" id="acno" class="form-input" placeholder="Type Account Number">
-            <button class="btn btn-primary input-group-btn" onclick="custsearch()">Transaction Report Summary</button>
-            <button class="btn btn-primary input-group-btn" onclick="custsearch()">Bill Report Summary</button>
-            <button class="btn btn-primary input-group-btn" onclick="custsearch()">Search</button>
-            <button class="btn btn-primary input-group-btn" onclick="custsearch()">Search</button>
+            <button class="btn btn-primary input-group-btn" onclick="utilityinfosummary()">Transaction Report
+                Summary</button>
+            <!-- <button class="btn btn-primary input-group-btn" onclick="custsearch()">Bill Report Summary</button> -->
+            <!-- <button class="btn btn-primary input-group-btn" onclick="custsearch()">Search</button> -->
+            <!-- <button class="btn btn-primary input-group-btn" onclick="custsearch()">Search</button> -->
         </div>
+
         <div class="container">
             <br>
             <div class="columns" id="output">
                 <!-- ///////////////*************************** -->
 
-
-                <!-- grid nesting example -->
+                <!-- 
+                grid nesting example
                 <div class="card col-12 p-2">
                     <div class="p-2">
                         <div class="container">
@@ -87,7 +91,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> -->
 
 
 
@@ -99,5 +103,5 @@
     </div>
     </div>
     </div>
-    <script src="/js/customerinfo.js"></script>
+    <script src="/js/utilityreport.js"></script>
 </main>

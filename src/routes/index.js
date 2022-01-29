@@ -2,8 +2,12 @@ const { Router } = require('express')
 const { reginfo, nooftrans, customerinfo } = require('../apps/api.js')
 const app = Router()
 ;(bodyParser = require('body-parser')), app.use(bodyParser.json())
-app.get('/reginfo', async (req, res) => {
-	const data = await reginfo()
+
+// Utility info summery
+app.post('/utilityinfosummary', async (req, res) => {
+	const from = req.body.from
+	const to = req.body.to
+	const acno = req.body.acno
 	res.send(data)
 })
 
