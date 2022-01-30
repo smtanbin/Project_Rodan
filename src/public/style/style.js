@@ -1,38 +1,37 @@
-// Side nav
-function openNav() {
-	document.getElementById('sidenavtigger').style.width = '250px'
-	document.getElementById('main').style.marginLeft = '250px'
-}
+document.addEventListener('DOMContentLoaded', function(event) {
+	const showNavbar = (toggleId, navId, bodyId, headerId) => {
+		const toggle = document.getElementById(toggleId),
+			nav = document.getElementById(navId),
+			bodypd = document.getElementById(bodyId),
+			headerpd = document.getElementById(headerId)
 
-/* Set the width of the side navigation to 0 and the left margin of the page content to 0 */
-function closeNav() {
-	document.getElementById('sidenavtigger').style.width = '0'
-	document.getElementById('main').style.marginLeft = '0'
-}
-
-// botten
-function createRipple(event) {
-	const button = event.currentTarget
-
-	const circle = document.createElement('span')
-	const diameter = Math.max(button.clientWidth, button.clientHeight)
-	const radius = diameter / 2
-
-	circle.style.width = circle.style.height = `${diameter}px`
-	circle.style.left = `${event.clientX - button.offsetLeft - radius}px`
-	circle.style.top = `${event.clientY - button.offsetTop - radius}px`
-	circle.classList.add('ripple')
-
-	const ripple = button.getElementsByClassName('ripple')[0]
-
-	if (ripple) {
-		ripple.remove()
+		// Validate that all variables exist
+		if (toggle && nav && bodypd && headerpd) {
+			toggle.addEventListener('click', () => {
+				// show navbar
+				nav.classList.toggle('show')
+				// change icon
+				toggle.classList.toggle('bx-x')
+				// add padding to body
+				bodypd.classList.toggle('body-pd')
+				// add padding to header
+				headerpd.classList.toggle('body-pd')
+			})
+		}
 	}
 
-	button.appendChild(circle)
-}
+	showNavbar('header-toggle', 'nav-bar', 'body-pd', 'header')
 
-const buttons = document.getElementsByTagName('button')
-for (const button of buttons) {
-	button.addEventListener('click', createRipple)
-}
+	/*===== LINK ACTIVE =====*/
+	const linkColor = document.querySelectorAll('.nav_link')
+
+	function colorLink() {
+		if (linkColor) {
+			linkColor.forEach((l) => l.classList.remove('active'))
+			this.classList.add('active')
+		}
+	}
+	linkColor.forEach((l) => l.addEventListener('click', colorLink))
+
+	// Your code to run since DOM is loaded and ready
+})
