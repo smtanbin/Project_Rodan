@@ -97,7 +97,7 @@ const utilityinfosummary = async () => {
 	})
 }
 
-getuvanls = async () => {
+const getuvanls = async () => {
 	const requestOptionsuvanls = {
 		method: 'GET',
 		headers: myHeaders,
@@ -114,3 +114,4 @@ getuvanls = async () => {
 		})
 	})
 }
+getuvanls()
