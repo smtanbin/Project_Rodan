@@ -1,36 +1,100 @@
 <main class="content">
 
+    <ul class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a href="/">Home</a>
+        </li>
+        <li class="breadcrumb-item">
+            <a href="/report/utilityreport">Utility Report</a>
+        </li>
 
-    <nav aria-label="breadcrumb">
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="/">Home</a></li>
-            <li class="breadcrumb-item active" aria-current="page">Utility Report
-                Summary</li>
-        </ol>
-    </nav>
-
-    <div class="container">
-        <div class="px-4 py-5 m-0 text-center">
-
-            <h1 class="display-5 text-primary fw-thin">Utility Transaction Report
-                Summary</h1>
-            <div class="col-lg-6 mx-auto" style="width: 100%;">
-                <div class="input-group mb-3 py-2">
-                    <input type="date" id="fromdate" class="form-control" />
-                    <input type="date" id="todate" class="form-control" />
-                    <input type="text" id="acno" class="form-control" placeholder="Type Account Number" />
-                    <button onclick="utilityinfosummary()()" class="btn btn-outline-primary" type="button">
-                        Transaction Report
-                        Summary
-                    </button>
-                </div>
-            </div>
+    </ul>
+    <div class="hero bg-gray">
+        <div class="hero-body">
+            <h1 class="text-primary">Utility Report</h1>
         </div>
+    </div>
+    <div class="container">
+        <!-- normal input group with button -->
+        <div class="input-group">
+
+            <input type="date" id="fromdate" class="form-input" placeholder="Type Account Number">
+            <input type="date" id="todate" class="form-input" placeholder="Type Account Number">
+            <input type="text" id="acno" class="form-input" placeholder="Type Account Number">
+            <button class="btn btn-primary input-group-btn" onclick="utilityinfosummary()">Transaction Report
+                Summary</button>
+            <!-- <button class="btn btn-primary input-group-btn" onclick="custsearch()">Bill Report Summary</button> -->
+            <!-- <button class="btn btn-primary input-group-btn" onclick="custsearch()">Search</button> -->
+            <!-- <button class="btn btn-primary input-group-btn" onclick="custsearch()">Search</button> -->
+        </div>
+
         <div class="container">
             <br>
             <div class="columns" id="output">
+                <!-- ///////////////*************************** -->
+
+                <!-- 
+                grid nesting example
+                <div class="card col-12 p-2">
+                    <div class="p-2">
+                        <div class="container">
+                            <div class="columns col-sm-12">
+                                <div class="columns col-12">
+                                    <h2 class="p-centered">Standard Bank Limited</h2>
+                                </div>
+                                <div class="columns col-12">
+                                    <h4 class="p-centered">Agent Banking Division</h4>
+                                </div>
+                                <div class="columns col-sm-12">
+                                    <p>Summery of Electricity Bill Colllection Report : ${}</p>
+                                </div>
+                                <div class="columns col-12">
+                                    <div class="columns col-6 float-left">
+                                        Date: From ${fromdate} To ${todate}
+                                    </div>
+                                    <div class="columns col-6 float-righ">
+                                        Print Date: ${printd}
+                                    </div>
+                                </div>
+                                <div class="columns col-12">
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th>Bill Date</th>
+                                                <th>No Of Bill</th>
+                                                <th>Net Bill</th>
+                                                <th>Vat/th>
+                                                <th>Rev.Stamp</th>
+                                                <th>Total
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr class="active">
+                                                <td>The Shawshank Redemption</td>
+                                                <td>Crime, Drama</td>
+                                                <td>14 October 1994</td>
+                                                <td>The Shawshank Redemption</td>
+                                                <td>Crime, Drama</td>
+                                                <td>14 October 1994</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div> -->
+
+
+
+
+                <!-- ******************************************** -->
             </div>
         </div>
+    </div>
+    </div>
+    </div>
     </div>
     <script src="/js/utilityreport.js"></script>
 </main>

@@ -1,31 +1,35 @@
 <main class="content">
 
-  <nav aria-label="breadcrumb">
-    <ol class="breadcrumb">
-      <li class="breadcrumb-item"><a href="/">Home</a></li>
-      <li class="breadcrumb-item active" aria-current="page">Customer Master</li>
-    </ol>
-  </nav>
+  <ul class="breadcrumb">
+    <li class="breadcrumb-item">
+      <a href="/">Home</a>
+    </li>
+    <li class="breadcrumb-item">
+      <a href="/report/customerInfo">Customer Master</a>
+    </li>
 
+  </ul>
+  <div class="hero bg-gray">
+    <div class="hero-body">
+      <h1 class="text-primary">Customer Master</h1>
+    </div>
+  </div>
   <div class="container">
-    <div class="px-4 py-5 m-0 text-center">
+    <!-- normal input group with button -->
+    <div class="input-group">
 
-      <h1 class="display-5 text-primary fw-thin">Customer Info</h1>
-      <div class="col-lg-6 mx-auto">
-        <div class="input-group mb-3">
-          <input type="text" id="acno" class="form-control" placeholder="Type Account Number" />
-          <button onclick="custsearch()" class="btn btn-outline-primary" type="button">
-            Search
-          </button>
-        </div>
-      </div>
+      <input type="text" id="acno" class="form-input" placeholder="Type Account Number">
+      <button class="btn btn-primary input-group-btn" onclick="custsearch()">Search</button>
     </div>
     <div class="container">
       <br>
       <div class="columns" id="output">
+
       </div>
     </div>
   </div>
-
+  </div>
+  </div>
+  </div>
   <script src="/js/customerinfo.js"></script>
 </main>

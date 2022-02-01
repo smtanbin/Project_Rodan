@@ -7,6 +7,18 @@ app.set('views', path.join(__dirname, '/views'))
 // set the view engine to ejs
 app.set('view engine', 'ejs')
 // use res.render to load up an ejs view file
+let autho = false
+// Middelwears
+app.get('/', function(req, res, next) {
+	if (autho === true) {
+		res.locals = {
+			title: 'Login'
+		}
+		res.render('login')
+	} else {
+		next()
+	}
+})
 
 /** 
  **Routes**

@@ -1,56 +1,25 @@
-<nav class="navbar navbar-expand-lg navbar-light" id="header">
-    <div class="container-fluid px-0">
-        <div class="d-flex align-items-center">
-            <div class="header_toggle me-2 mt-1"> <i class='bx bx-menu' id="header-toggle"></i> </div>
-            <a class="navbar-brand" href="#">SBL</a>
-        </div>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll"
-            aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarScroll">
-            <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
-                <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="/">Home</a>
-                </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" id="navbarScrollingDropdown" role="button"
-                        data-bs-toggle="dropdown" aria-expanded="false">
-                        Link
-                    </a>
-                    <ul class="dropdown-menu" aria-labelledby="navbarScrollingDropdown">
-                        <li><a class="dropdown-item" href="/report/customerInfo">Customer Info</a></li>
-
-
-                        <li>
-                            <hr class="dropdown-divider">
-                        </li>
-                        <li><a class="dropdown-item" href="#">Something else here</a></li>
-                    </ul>
-                </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarScrollingDropdown" role="button"
-                        data-bs-toggle="dropdown" aria-expanded="false">
-                        Utility Report
-                    </a>
-                    <ul class="dropdown-menu" aria-labelledby="navbarScrollingDropdown">
-
-                        <li><a class="dropdown-item" href="/report/utilityreport">Utility Report</a></li>
-
-                        <li>
-                            <hr class="dropdown-divider">
-                        </li>
-                        <li><a class="dropdown-item" href="#">Something else here</a></li>
-                    </ul>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Link</a>
-                </li>
+<header class="navbar m-0 bg-frost p-fixed w100" id="navbar">
+    <section class="navbar-section">
+        <!-- <div onclick="sideNavTigger()" class="navbar-brand">SIdeBAR</div> -->
+        <!-- <a href="..." class="btn btn-link">Docs</a> -->
+        <a href="https://github.com/smtanbin/omicron" class="btn btn-link">GitHub</a>
+        <div class="dropdown">
+            <a href="#" class=" btn btn-link dropdown-toggle" tabindex="0">
+                Reports <i class="icon icon-caret"></i>
+            </a>
+            <!-- menu component -->
+            <ul class="menu">
+                <li class="menu-item"><a href="/report/customerInfo">Customer Info</a></li>
+                <li class="menu-item"><a href="/report/utilityreport">Utility Report</a></li>
             </ul>
-            <form class="d-flex">
-                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                <button class="btn btn-outline-success" type="submit">Search</button>
-            </form>
         </div>
-    </div>
-</nav>
+
+    </section>
+    <section class="navbar-section">
+        <a href="/" class="navbar-brand">Standard Bank Ltd.</a>
+        <!-- <div class="input-group input-inline">
+            <input class="form-input" type="text" placeholder="search">
+            <button class="btn btn-primary input-group-btn">Search</button>
+        </div> -->
+    </section>
+</header>
