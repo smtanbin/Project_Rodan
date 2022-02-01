@@ -1,16 +1,6 @@
 const oracledb = require('oracledb')
 oracledb.outFormat = oracledb.OUT_FORMAT_OBJECT
 let connection
-
-// PostDB part
-
-// const connectionString = `postgresql://root:root@127.0.0.1:5432/AGENT_BANKING`
-
-// const pool = new Pool({
-// 	connectionString: isProduction ? process.env.DATABASE_URL : connectionString,
-// 	ssl: isProduction
-// })
-
 // oracle working db
 async function qurrythis(sqlqurry) {
 	try {
@@ -204,10 +194,6 @@ const customerinfo = async (id) => {
 	  FROM AGENT_BANKING.REGINFO  R
 		   FULL OUTER JOIN AGENT_BANKING.CUSTIDINFO C ON R.CUST_ID = C.CUST_ID
 	 WHERE MPHONE = ${id}`
-	return await qurrythis(sql)
-}
-const utilityinfosummary = async (from, to, acno) => {
-	const sql = `SELECT * from AGENT_BANKING.UTILITYREPORT`
 	return await qurrythis(sql)
 }
 

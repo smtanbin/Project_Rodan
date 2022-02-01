@@ -1,13 +1,32 @@
 const { Router } = require('express')
 const { reginfo, nooftrans, customerinfo } = require('../apps/api.js')
+const { uvanls, uinfodtl } = require('../apps/api_utilitybill.js')
 const app = Router()
 ;(bodyParser = require('body-parser')), app.use(bodyParser.json())
 
-// Utility info summery
+/* 
+Utility info 
+All utility realated apis data 
+functions are currently imported from api_utilitybill.js
+*/
+/* This will bring the list for dropdown It is a GET */
+app.get('/uvanls', async (req, res) => {
+	const data = await uvanls()
+	res.send(data)
+})
+/* Give the summary data */
 app.post('/utilityinfosummary', async (req, res) => {
 	const from = req.body.from
 	const to = req.body.to
 	const acno = req.body.acno
+	res.send(data)
+})
+/* Give the deteals data */
+app.post('/uinfodtl', async (req, res) => {
+	const from = req.body.from
+	const to = req.body.to
+	const key = 'PDB-6091001'
+	const data = await uinfodtl('01-dec-2021', '01-dec-2021', key)
 	res.send(data)
 })
 

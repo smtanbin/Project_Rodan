@@ -1,13 +1,15 @@
+const { get } = require("express/lib/response")
+
 const utilityinfosummary = async () => {
 	const apiserver = 'http://127.0.0.1/api'
 	const url = `${apiserver}/utilityinfosummary`
+	const uvanlsurl = `${apiserver}/uvanls`
 	let fromdate = document.getElementById('fromdate').value
 	let todate = document.getElementById('todate').value
 	let acno = document.getElementById('acno').value
 	console.log(fromdate)
 	console.log(todate)
 	console.log(acno)
-
 	let printday = Date()
 	document.getElementById('printday').innerHTML = printday
 	// request
@@ -15,7 +17,7 @@ const utilityinfosummary = async () => {
 	myHeaders.append('Content-Type', 'application/json')
 
 	const raw = JSON.stringify({
-		acno: `${acno}`,
+		key: `${acno}`,
 		from: `${fromdate}`,
 		to: `${todate}`
 	})
@@ -26,33 +28,6 @@ const utilityinfosummary = async () => {
 		body: raw,
 		redirect: 'follow'
 	}
-
-	await fetch(url, requestOptions).then((response) => response.json()).then((payload) => {
-		payload.map((data) => {
-			const {
-				REG_DATE,
-				REG_STATUS,
-				AUTHO_BY,
-				UPDATE_BY,
-				UPDATE_DATE,
-				STATUS,
-				CATEGORY,
-				AC_TYPE_CODE,
-				MPHONE,
-				AGENT,
-				AGENTAC,
-				BALANCE,
-				LIEN_M,
-				NAME,
-				IMGAE,
-				FATHER_NAME,
-				MOTHER_NAME,
-				SPOUSE_NAME,
-				DATE_OF_BIRTH,
-				SIM_NO,
-				TIN_NO,
-				RELIGION
-			} = data
 
 			document.getElementById('output').innerHTML += `
 
@@ -85,35 +60,59 @@ const utilityinfosummary = async () => {
 								<table class="table">
 									<thead>
 										<tr>
-											<th>Bill Date</th>
-											<th>No Of Bill</th>
+											<th>Date</th>
+											<th>Trans NO</th>
+											<th>Total</th>
 											<th>Net Bill</th>
 											<th>Vat/th>
 											<th>Rev.Stamp</th>
-											<th>Total
-											</th>
+											<th>ACNO</th>
+											<th>Book No</th>
+											<th>Month</th>
 										</tr>
-									</thead>
-									<tbody>
-										<tr class="active">
-											<td>The Shawshank Redemption</td>
-											<td>Crime, Drama</td>
-											<td>14 October 1994</td>
-											<td>The Shawshank Redemption</td>
-											<td>Crime, Drama</td>
-											<td>14 October 1994</td>
-										</tr>
-									</tbody>
-								</table>
+									</thead><tbody id="output2"></tbody>
+									</table>
+								</div>
 							</div>
 						</div>
 					</div>
-				</div>
-			</div>
-
-
-
-`
+				</div>`
+				await fetch(url, requestOptions).then((response) => response.json()).then((payload) => {
+					payload.map((data) => {
+						const {ENTRY_DATE,TRANS_NO,TRANS_AMT,VAT_AMT,STAMP_AMT,ACNO,BOOKNO,MONTH} = data
+									document.getElementById('output2').innerHTML += `
+									
+										<tr class="active">
+											<td>${ENTRY_DATE}</td>
+											<td>${TRANS_NO}</td>
+											<td>${TRANS_AMT}</td>
+											<td>${VAT_AMT}</td>
+											<td>${STAMP_AMT}</td>
+											<td>${ACNO}</td>
+											<td>${BOOKNO}</td>
+											<td>${MONTH}</td>
+										</tr>
+									`
 		})
 	})
 }
+
+const getuvanls = () => {
+
+	const requestOptionsuvanls = {
+		method: 'GET',
+		headers: myHeaders,
+		
+		redirect: 'follow'
+	}
+
+			// uvanls
+			await fetch(uvanlsurl, requestOptionsuvanls).then((response) => response.json()).then((payload) => {
+				payload.map((data) => {
+					const {TRANS_SNAME} = data
+
+					document.getElementById('uvanls').innerHTML += `<option>${TRANS_SNAME}</option>`
+				})
+			})
+		}
+
