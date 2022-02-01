@@ -1,4 +1,4 @@
-const { get } = require("express/lib/response")
+const { get } = require('express/lib/response')
 
 const utilityinfosummary = async () => {
 	const apiserver = 'http://127.0.0.1/api'
@@ -29,7 +29,7 @@ const utilityinfosummary = async () => {
 		redirect: 'follow'
 	}
 
-			document.getElementById('output').innerHTML += `
+	document.getElementById('output').innerHTML += `
 
 
 			<!-- grid nesting example -->
@@ -77,10 +77,10 @@ const utilityinfosummary = async () => {
 						</div>
 					</div>
 				</div>`
-				await fetch(url, requestOptions).then((response) => response.json()).then((payload) => {
-					payload.map((data) => {
-						const {ENTRY_DATE,TRANS_NO,TRANS_AMT,VAT_AMT,STAMP_AMT,ACNO,BOOKNO,MONTH} = data
-									document.getElementById('output2').innerHTML += `
+	await fetch(url, requestOptions).then((response) => response.json()).then((payload) => {
+		payload.map((data) => {
+			const { ENTRY_DATE, TRANS_NO, TRANS_AMT, VAT_AMT, STAMP_AMT, ACNO, BOOKNO, MONTH } = data
+			document.getElementById('output2').innerHTML += `
 									
 										<tr class="active">
 											<td>${ENTRY_DATE}</td>
@@ -97,22 +97,20 @@ const utilityinfosummary = async () => {
 	})
 }
 
-const getuvanls = () => {
-
+getuvanls = async () => {
 	const requestOptionsuvanls = {
 		method: 'GET',
 		headers: myHeaders,
-		
+
 		redirect: 'follow'
 	}
 
-			// uvanls
-			await fetch(uvanlsurl, requestOptionsuvanls).then((response) => response.json()).then((payload) => {
-				payload.map((data) => {
-					const {TRANS_SNAME} = data
+	// uvanls
+	await fetch(uvanlsurl, requestOptionsuvanls).then((response) => response.json()).then((payload) => {
+		payload.map((data) => {
+			const { TRANS_SNAME } = data
 
-					document.getElementById('uvanls').innerHTML += `<option>${TRANS_SNAME}</option>`
-				})
-			})
-		}
-
+			document.getElementById('uvanls').innerHTML += `<option>${TRANS_SNAME}</option>`
+		})
+	})
+}
