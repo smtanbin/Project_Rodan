@@ -1,8 +1,17 @@
 const oracledb = require('oracledb')
 oracledb.outFormat = oracledb.OUT_FORMAT_OBJECT
-
 let connection
 
+// PostDB part
+
+// const connectionString = `postgresql://root:root@127.0.0.1:5432/AGENT_BANKING`
+
+// const pool = new Pool({
+// 	connectionString: isProduction ? process.env.DATABASE_URL : connectionString,
+// 	ssl: isProduction
+// })
+
+// oracle working db
 async function qurrythis(sqlqurry) {
 	try {
 		connection = await oracledb.getConnection({
