@@ -183,9 +183,19 @@ const custPrint = async () => {
 				RELIGION
 			} = data
 
-			var myWindow = window.open('', 'MsgWindow', 'width=200,height=100')
+			var myWindow = window.open('', 'MsgWindow')
 			myWindow.document.write(`
-
+			<head>
+			<meta charset="UTF-8">
+			<meta http-equiv="X-UA-Compatible" content="IE=edge">
+			<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		  
+			<link href="/style/aos/aos.css" rel="stylesheet">
+			<link rel="stylesheet" href="/style/styles.css">
+			<link rel="stylesheet" href="/style/spectre/spectre.min.css">
+			<link rel="stylesheet" href="/style/spectre/spectre-icons.min.css">
+			<link rel="stylesheet" href="/style/spectre/spectre-exp.min.css">
+		  </head>
 <!-- grid nesting example -->
 <div class="card bg-gray col-12 p-2">
 	<div class="p-2">
