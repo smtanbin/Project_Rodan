@@ -1,5 +1,4 @@
 const { Router } = require('express')
-const { oracleDate } = require('../apps/FunCore.js')
 const { reginfo, nooftrans, customerinfo } = require('../apps/api.js')
 const { uvanls, utilityinfodtl } = require('../apps/api_utilitybill.js')
 const app = Router()
@@ -17,15 +16,15 @@ app.get('/uvanls', async (req, res) => {
 })
 /* Give the summary data */
 app.post('/utilityinfo', async (req, res) => {
-	const from = oracleDate(req.body.from)
-	const to = oracleDate(req.body.to)
+	const from = req.body.from
+	const to = req.body.to
 	const acno = req.body.acno
 	res.send(data)
 })
 /* Give the deteals data */
 app.post('/utilityinfodtl', async (req, res) => {
-	const from = oracleDate(req.body.from)
-	const to = oracleDate(req.body.to)
+	const from = req.body.from
+	const to = req.body.to
 	const key = req.body.key
 	const data = await utilityinfodtl(from, to, key)
 	res.send(data)

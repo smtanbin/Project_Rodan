@@ -1,5 +1,5 @@
-const moment = require('moment')
 const oracledb = require('oracledb')
+const { oracledate } = require('./FunCore')
 oracledb.outFormat = oracledb.OUT_FORMAT_OBJECT
 let connection
 // oracle working db
@@ -27,8 +27,7 @@ async function qurrythis(sqlqurry) {
 }
 
 const uvanls = async () => {
-	const sql = `/* Formatted on 2/1/2022 3:19:21 PM (QP5 v5.374) */
-	SELECT TRANS_SNAME
+	const sql = `SELECT TRANS_SNAME
 	  FROM AGENT_BANKING.UTILITY_PAYMENT_INFO u
 	  where status = 'S'
 	  GROUP BY TRANS_SNAME
@@ -39,7 +38,9 @@ const urptsum = async (from, to, key) => {
 	const sql = `SELECT * from AGENT_BANKING.UTILITYREPORT`
 	return await qurrythis(sql)
 }
-const utilityinfodtl = async (fromdate, todate, key) => {
+const utilityinfodtl = async (fromdate, to, key) => {
+	fromdate = oracledate(fromdate)
+	let todate = oracledate(to)
 	const sql = `/* Formatted on 2/1/2022 3:19:21 PM (QP5 v5.374) */
 	SELECT u.ENTRY_DATE,
 		   u.TRANS_NO,
@@ -52,6 +53,7 @@ const utilityinfodtl = async (fromdate, todate, key) => {
 	  FROM AGENT_BANKING.UTILITY_PAYMENT_INFO u
 	  where status = 'S' and trunc(entry_date) between '${fromdate}' and '${todate}'
 	  and TRANS_SNAME = '${key}'`
+	console.log(sql)
 	return await qurrythis(sql)
 }
 const utilityinfosummary = async (from, to, key) => {
