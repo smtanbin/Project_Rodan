@@ -24,12 +24,12 @@ const getuvanls = async () => {
 getuvanls()
 const utilityinfo = async () => {
 	const apiserver = 'http://127.0.0.1/api'
-	const url = `${apiserver}/utilityinfo`
+	const url = `${apiserver}/utilityinfodtl`
 	const uvanls = document.getElementById('uvanls')
 	let key = uvanls.value
 	let fromdate = document.getElementById('fromdate').value
 	let todate = document.getElementById('todate').value
-
+	let printday = Date()
 	// request
 	const myHeaders = new Headers()
 	myHeaders.append('Content-Type', 'application/json')
