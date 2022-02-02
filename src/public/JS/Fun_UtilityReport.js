@@ -118,20 +118,8 @@ const utilityinfo = async () => {
 			VAT_AMT_TOTAL = VAT_AMT_TOTAL + VAT_AMT
 			STAMP_AMT_TOTAL = STAMP_AMT_TOTAL + STAMP_AMT
 		})
+		document.getElementById(
+			'output2'
+		).lastChild.innerHTML = `<tr class="active"><td>${sl}</td><td></td><td>Total</td><td>${TRANS_AMT}</td><td>${VAT_AMT}</td><td>${STAMP_AMT}</td><td></td><td></td><td></td></tr>`
 	})
-
-	document.getElementById('output2').lastChild.innerHTML = `
-							
-								<tr class="active">
-									<td>${sl}</td>
-									<td></td>
-									<td>Total</td>
-									<td>${TRANS_AMT}</td>
-									<td>${VAT_AMT}</td>
-									<td>${STAMP_AMT}</td>
-									<td></td>
-									<td></td>
-									<td></td>
-								</tr>
-							`
 }
