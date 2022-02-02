@@ -7,7 +7,7 @@ const getuvanls = async () => {
 	const raw = JSON.stringify({
 		ID: 'autho'
 	})
-	console.log(raw)
+	// console.log(raw)
 	const requestOptions = {
 		method: 'GET',
 		headers: myHeaders,
@@ -24,7 +24,7 @@ const getuvanls = async () => {
 getuvanls()
 const utilityinfo = async () => {
 	const apiserver = 'http://127.0.0.1/api'
-	const url = `${apiserver}/utilityinfodtl`
+	const url2 = `${apiserver}/utilityinfodtl`
 	const uvanls = document.getElementById('uvanls')
 	let key = uvanls.value
 	let fromdate = document.getElementById('fromdate').value
@@ -35,19 +35,19 @@ const utilityinfo = async () => {
 	myHeaders.append('Content-Type', 'application/json')
 
 	const raw = JSON.stringify({
-		key: `${key}`
+		key: `${key}`,
+		from: `${fromdate}`,
+		to: `${todate}`
 	})
-
+	console.log(raw)
 	const requestOptions = {
 		method: 'POST',
 		headers: myHeaders,
 		body: raw,
 		redirect: 'follow'
 	}
-	document.getElementById('output').innerHTML += `
 
-
-	<!-- grid nesting example -->
+	document.getElementById('output').innerHTML = `<!-- grid nesting example -->
 	<div class="card col-12 p-2">
 		<div class="p-2">
 			<div class="container">
@@ -92,7 +92,8 @@ const utilityinfo = async () => {
 				</div>
 			</div>
 		</div>`
-	await fetch(url, requestOptions).then((response) => response.json()).then((payload) => {
+
+	await fetch(url2, requestOptions).then((response) => response.json()).then((payload) => {
 		payload.map((data) => {
 			const { ENTRY_DATE, TRANS_NO, TRANS_AMT, VAT_AMT, STAMP_AMT, ACNO, BOOKNO, MONTH } = data
 			document.getElementById('output2').innerHTML += `
