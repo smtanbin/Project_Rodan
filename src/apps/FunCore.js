@@ -6,7 +6,8 @@ const oracleDate = (date) => {
 	const month = [ 'JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC' ][
 		payload.getMonth()
 	]
-	const output = day + '-' + month + '-' + mydate.getFullYear()
+	const output = day + '-' + month + '-' + payload.getFullYear()
+	console.log(output)
 	return output
 }
 
