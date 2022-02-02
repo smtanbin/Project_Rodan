@@ -26,7 +26,7 @@ async function qurrythis(sqlqurry) {
 	}
 }
 
-const uvanls = async () => {
+const utilityreportpbslist = async () => {
 	const sql = `SELECT TRANS_SNAME
 	  FROM AGENT_BANKING.UTILITY_PAYMENT_INFO u
 	  where status = 'S'
@@ -38,9 +38,10 @@ const urptsum = async (from, to, key) => {
 	const sql = `SELECT * from AGENT_BANKING.UTILITYREPORT`
 	return await qurrythis(sql)
 }
-const utilityinfodtl = async (fromdate, to, key) => {
-	fromdate = oracledate(fromdate)
-	let todate = oracledate(to)
+const utilityinfodtl = async (fromdate, todate, key) => {
+	// fromdate = oracledate(fromdate)
+	// todate = oracledate(todate)
+
 	const sql = `/* Formatted on 2/1/2022 3:19:21 PM (QP5 v5.374) */
 	SELECT u.ENTRY_DATE,
 		   u.TRANS_NO,
@@ -71,4 +72,4 @@ const utilityinfosummary = async (from, to, key) => {
 	  --and TRANS_SNAME = ${key}`
 	return await qurrythis(sql)
 }
-module.exports = { uvanls, utilityinfodtl, urptsum }
+module.exports = { utilityreportpbslist, utilityinfodtl, urptsum }

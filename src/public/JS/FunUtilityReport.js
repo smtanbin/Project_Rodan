@@ -5,7 +5,7 @@ It connect via url which request recived by routes/index as rest Get request
 Then it call api_utilitybill from apps folder.
 */
 const getuvanls = async () => {
-	const url = `${apiserver}/uvanls`
+	const url = `${apiserver}/utilityreportpbslist`
 	const myHeaders = new Headers()
 	myHeaders.append('Content-Type', 'application/json')
 

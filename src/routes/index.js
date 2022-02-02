@@ -1,17 +1,15 @@
 const { Router } = require('express')
 const { reginfo, nooftrans, customerinfo } = require('../apps/api.js')
-const { uvanls, utilityinfodtl } = require('../apps/api_utilitybill.js')
+const { utilityreportpbslist, utilityinfodtl } = require('../apps/api_utilitybill.js')
 const app = Router()
 ;(bodyParser = require('body-parser')), app.use(bodyParser.json())
 
-/* 
-Utility info 
-All utility realated apis data 
-functions are currently imported from api_utilitybill.js
-*/
-/* This will bring the list for dropdown It is a GET */
-app.get('/uvanls', async (req, res) => {
-	const data = await uvanls()
+/* Utility info All utility realated apis data 
+functions are currently imported from api_utilitybill.js */
+
+/* This will bring the list for dropdown*/
+app.get('/utilityreportpbslist', async (req, res) => {
+	const data = await utilityreportpbslist()
 	res.send(data)
 })
 /* Give the summary data */
