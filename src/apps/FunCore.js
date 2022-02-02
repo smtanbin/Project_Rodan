@@ -7,7 +7,7 @@ const oracleDate = (date) => {
 		payload.getMonth()
 	]
 	const output = day + '-' + month + '-' + payload.getFullYear()
-	console.log(output)
+
 	return output
 }
 

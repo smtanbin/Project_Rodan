@@ -21,11 +21,14 @@ app.post('/utilityinfo', async (req, res) => {
 })
 /* Give the deteals data */
 app.post('/utilityinfodtl', async (req, res) => {
-	const from = '01-feb-2022' //req.body.fromdate
-	const to = '01-feb-2022' //req.body.todate
-	const key = req.body.key
-	const data = await utilityinfodtl(from, to, key)
-	res.send(data)
+	res.status(200)
+	try {
+		const data = await utilityinfodtl(req.body.fromdate, req.body.todate, req.body.key)
+		res.send(data)
+	} catch (e) {
+		res.status(400)
+		res.send('Stop by error! Check if its help:' + e)
+	}
 })
 
 app.post('/numberoftrans', async (req, res) => {

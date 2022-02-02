@@ -1,5 +1,5 @@
 const qurrythis = require('./db')
-const { oracledate } = require('./FunCore')
+const { oracleDate } = require('./FunCore')
 
 const utilityreportpbslist = async () => {
 	const sql = `SELECT TRANS_SNAME
@@ -9,13 +9,10 @@ const utilityreportpbslist = async () => {
 	  ORDER BY TRANS_SNAME ASC`
 	return await qurrythis(sql)
 }
-const urptsum = async (from, to, key) => {
-	const sql = `SELECT * from AGENT_BANKING.UTILITYREPORT`
-	return await qurrythis(sql)
-}
+
 const utilityinfodtl = async (fromdate, todate, key) => {
-	// fromdate = oracledate(fromdate)
-	// todate = oracledate(todate)
+	fromdate = oracleDate(fromdate)
+	todate = oracleDate(todate)
 
 	const sql = `/* Formatted on 2/1/2022 3:19:21 PM (QP5 v5.374) */
 	SELECT u.ENTRY_DATE,
@@ -29,7 +26,7 @@ const utilityinfodtl = async (fromdate, todate, key) => {
 	  FROM AGENT_BANKING.UTILITY_PAYMENT_INFO u
 	  where status = 'S' and trunc(entry_date) between '${fromdate}' and '${todate}'
 	  and TRANS_SNAME = '${key}'`
-	console.log(sql)
+
 	return await qurrythis(sql)
 }
 const utilityinfosummary = async (from, to, key) => {
@@ -47,4 +44,4 @@ const utilityinfosummary = async (from, to, key) => {
 	  --and TRANS_SNAME = ${key}`
 	return await qurrythis(sql)
 }
-module.exports = { utilityreportpbslist, utilityinfodtl, urptsum }
+module.exports = { utilityreportpbslist, utilityinfodtl }
