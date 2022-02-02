@@ -24,7 +24,7 @@ const getuvanls = async () => {
 getuvanls()
 const utilityinfo = async () => {
 	const apiserver = 'http://127.0.0.1/api'
-	const url = `${apiserver}/utilityinfo`
+	const url = `${apiserver}/utilityinfodtl`
 	const uvanls = document.getElementById('uvanls')
 	let key = uvanls.value
 	let fromdate = document.getElementById('fromdate').value
@@ -79,7 +79,7 @@ const utilityinfo = async () => {
 									<th>Trans NO</th>
 									<th>Total</th>
 									<th>Net Bill</th>
-									<th>Vat/th>
+									<th>Vat</th>
 									<th>Rev.Stamp</th>
 									<th>ACNO</th>
 									<th>Book No</th>

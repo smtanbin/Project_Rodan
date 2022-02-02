@@ -25,8 +25,8 @@ app.post('/utilityinfo', async (req, res) => {
 app.post('/utilityinfodtl', async (req, res) => {
 	const from = req.body.from
 	const to = req.body.to
-	const key = 'PDB-6091001'
-	const data = await utilityinfodtl('01-dec-2021', '01-dec-2021', key)
+	const key = req.body.key
+	const data = await utilityinfodtl(from, to, key)
 	res.send(data)
 })
 
