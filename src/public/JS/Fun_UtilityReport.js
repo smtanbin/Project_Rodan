@@ -95,7 +95,7 @@ const utilityinfo = async () => {
 							</div>
 						</div>
 					</div>
-					<div class="col-12 w100">
+					<div class="col-12 w100 p-centered bg-gray">
 					<p>Standard Bank Agent Banking Division Head Office<br/>
 					Metropolitan Chamber Building (3rd Floor)
 					122-124 Motijheel C/A, Dhaka-1000, Bangladesh<br/>
@@ -124,22 +124,25 @@ const utilityinfo = async () => {
 								</tr>
 							`
 
-			TRANS_AMT_TOTAL = TRANS_AMT_TOTAL + TRANS_AMT
-			VAT_AMT_TOTAL = VAT_AMT_TOTAL + VAT_AMT
-			STAMP_AMT_TOTAL = STAMP_AMT_TOTAL + STAMP_AMT
+			TRANS_AMT_TOTAL += TRANS_AMT
+			VAT_AMT_TOTAL += VAT_AMT
+			if (STAMP_AMT !== null && STAMP_AMT != 0) {
+				STAMP_AMT_TOTAL += 1
+			}
 		})
+		// Bill Summary
+		// const t = TRANS_AMT_TOTAL - VAT_AMT_TOTAL
+		document.getElementById('billsummary').innerHTML = `
+		<h4>Bill Summary</h4>
+		<p class="row">
+		Total Bill Collected: ${sl} <br/>	
+		Total Net Bill Amount: ${TRANS_AMT_TOTAL}<br/>
+		Total Vat Amount:${VAT_AMT_TOTAL}<br/>
+		Total Stamp Used: ${STAMP_AMT_TOTAL}<br/>
+		Total Payable: ${TRANS_AMT_TOTAL - VAT_AMT_TOTAL}<br/>
+		</p>`
 	})
 	// document.getElementById(
 	// 	'output2'
 	// ).lastElementChild.innerHTML = `<tr class="active"><td>${sl}</td><td>Total</td><td>${TRANS_AMT_TOTAL}</td><td>${VAT_AMT_TOTAL}</td><td>${STAMP_AMT_TOTAL}</td><td></td><td></td><td></td></tr>`
-
-	// Bill Summary
-	document.getElementById('billsummary').lastElementChild.innerHTML = `
-	<h4>Bill Summary</h4>
-	<p class="row">
-	Total Bill Collected: ${sl} <br/>	
-	Total Net Bill Amount: ${TRANS_AMT_TOTAL}<br/>
-	Total Vat Amount:${VAT_AMT_TOTAL}<br/>
-	Total Stamp Used:${STAMP_AMT_TOTAL}<br/>
-	</p>`
 }
