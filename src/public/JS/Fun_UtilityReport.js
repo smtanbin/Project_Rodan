@@ -119,15 +119,13 @@ const utilityinfo = async () => {
 			STAMP_AMT_TOTAL = STAMP_AMT_TOTAL + STAMP_AMT
 		})
 	})
-	await fetch(url, requestOptions).then((response) => response.json()).then((payload) => {
-		payload.map((data) => {
-			const { TRANS_AMT, VAT_AMT, STAMP_AMT } = data
-			document.getElementById('output2').lastChild.innerHTML = `
+
+	document.getElementById('output2').lastChild.innerHTML = `
 							
 								<tr class="active">
 									<td>${sl}</td>
 									<td></td>
-									<td></td>
+									<td>Total</td>
 									<td>${TRANS_AMT}</td>
 									<td>${VAT_AMT}</td>
 									<td>${STAMP_AMT}</td>
@@ -136,6 +134,4 @@ const utilityinfo = async () => {
 									<td></td>
 								</tr>
 							`
-		})
-	})
 }
