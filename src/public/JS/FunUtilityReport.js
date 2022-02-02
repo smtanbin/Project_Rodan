@@ -81,19 +81,20 @@ const utilityinfo = async () => {
 			 <div class="columns col-12">
 				<h2 class="p-centered">Standard Bank Limited</h2>
 			 </div>
-			 <div class="card p-2 w100 col-12 bg-gray">
+			 <div class="card container p-2 w100 col-12 bg-gray">
 				<div class="columns col-12">
 				   <h6 class="p-centered">Agent Banking Division</h6>
 				</div>
-				<div class="columns col-sm-12">
-				   <p>Summery of Electricity Bill Colllection Report : ${key}</p>
-				</div>
 				<div class="columns col-12">
 				   <div class="columns col-6 float-left">
-					  Date: From ${fromdate} To ${todate}
+				   <p>Summery of Electricity Bill Colllection Report : ${key}<br/>
+					  Date: From ${fromdate} To ${todate} <br/>
+					  Print Date: ${printday}
+					  </p>
 				   </div>
 				   <div class="columns col-6 float-righ">
-					  Print Date: ${printday}
+				   <div class="card bg-gray w100 p-2 m-2 col-4" id="billsummary">
+				   </div> 
 				   </div>
 				</div>
 			 </div>
@@ -114,8 +115,7 @@ const utilityinfo = async () => {
 				   </thead>
 				   <tbody id="output2"></tbody>
 				</table>
-				<div class="card bg-gray p-2 m-2 col-4" id="billsummary">
-				</div>
+				
 			 </div>
 		  </div>
 		  <div class="col-12 w100 p-centered bg-gray p-2 mt-2">
@@ -166,7 +166,15 @@ const utilityinfo = async () => {
 		</p>`
 	})
 	/* for table footer*/
-	// document.getElementById(
-	// 	'output2'
-	// ).lastElementChild.innerHTML = `<tr class="active"><td>${sl}</td><td>Total</td><td>${TRANS_AMT_TOTAL}</td><td>${VAT_AMT_TOTAL}</td><td>${STAMP_AMT_TOTAL}</td><td></td><td></td><td></td></tr>`
+	document.getElementById('output2').lastElementChild.innerHTML = `
+	<tr class="active">
+	<td>&nbsp;</td>
+	<td>Total</td>
+	<td>${TRANS_AMT_TOTAL}</td>
+	<td>${VAT_AMT_TOTAL}</td>
+	<td>${STAMP_AMT_TOTAL}</td>
+	<td>&nbsp;</td>
+	<td>&nbsp;</td>
+	<td>&nbsp;</td>
+	</tr>`
 }
