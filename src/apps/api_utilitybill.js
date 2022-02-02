@@ -39,12 +39,7 @@ const urptsum = async (from, to, key) => {
 	const sql = `SELECT * from AGENT_BANKING.UTILITYREPORT`
 	return await qurrythis(sql)
 }
-const utilityinfodtl = async (from, to, key) => {
-	let fromdate = '02-feb-2022' //moment().format('DD-MMM-YYYY')
-
-	let todate = '02-feb-2022' //.moment().format('DD-MMM-YYYY')
-	console.log(key)
-
+const utilityinfodtl = async (fromdate, todate, key) => {
 	const sql = `/* Formatted on 2/1/2022 3:19:21 PM (QP5 v5.374) */
 	SELECT u.ENTRY_DATE,
 		   u.TRANS_NO,
