@@ -1,4 +1,4 @@
-import moment from 'moment'
+const moment = require('moment')
 const oracledb = require('oracledb')
 oracledb.outFormat = oracledb.OUT_FORMAT_OBJECT
 let connection
@@ -40,10 +40,10 @@ const urptsum = async (from, to, key) => {
 	return await qurrythis(sql)
 }
 const utilityinfodtl = async (from, to, key) => {
-	let fromdate = moment(from).format('DD-MMM-YYYY')
-	console.log(fromdate)
-	let todate = to.moment().format('DD-MMM-YYYY')
-	console.log(todate)
+	let fromdate = '02-feb-2022' //moment().format('DD-MMM-YYYY')
+
+	let todate = '02-feb-2022' //.moment().format('DD-MMM-YYYY')
+	console.log(key)
 
 	const sql = `/* Formatted on 2/1/2022 3:19:21 PM (QP5 v5.374) */
 	SELECT u.ENTRY_DATE,
@@ -55,8 +55,8 @@ const utilityinfodtl = async (from, to, key) => {
 		   u.BILL_INFO_2 BOOKNO,
 		   UPPER(u.BILL_INFO_3) MONTH
 	  FROM AGENT_BANKING.UTILITY_PAYMENT_INFO u
-	  where status = 'S' and trunc(entry_date) between ${fromdate} and ${todate}
-	  --and TRANS_SNAME = ${key}`
+	  where status = 'S' and trunc(entry_date) between '${fromdate}' and '${todate}'
+	  and TRANS_SNAME = '${key}'`
 	return await qurrythis(sql)
 }
 const utilityinfosummary = async (from, to, key) => {
