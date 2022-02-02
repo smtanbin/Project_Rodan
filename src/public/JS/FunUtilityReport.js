@@ -81,20 +81,24 @@ const utilityinfo = async () => {
 			 <div class="columns col-12">
 				<h2 class="p-centered">Standard Bank Limited</h2>
 			 </div>
-			 <div class="card container p-2 w100 col-12 bg-gray">
+			 <div class="card p-2 w100 col-12 bg-gray p-2">
 				<div class="columns col-12">
 				   <h6 class="p-centered">Agent Banking Division</h6>
 				</div>
 				<div class="columns col-12">
 				   <div class="columns col-6 float-left">
+				   
+				   <div class="p-1 w100">
+				     
 				   <p>Summery of Electricity Bill Colllection Report : ${key}<br/>
-					  Date: From ${fromdate} To ${todate} <br/>
-					  Print Date: ${printday}
-					  </p>
+				   Date: From ${fromdate} To ${todate} <br/>
+				   Print Date: ${printday}
+				   </p>
+				   </div>   
 				   </div>
 				   <div class="columns col-6 float-righ">
-				   <div class="card bg-gray w100 p-2 m-2">
-				   <h4>Bill Summary</h4><span id="billsummary"></span>  
+				   <div class="p-1 w100" id="billsummary">
+				     
 				   </div> 
 				   </div>
 				</div>
@@ -119,7 +123,7 @@ const utilityinfo = async () => {
 				
 			 </div>
 		  </div>
-		  <div class="col-12 w100 p-centered bg-gray p-2 mt-2">
+		  <div class="col-12 w100 p-centered p-2 mt-2">
 			 <p>Standard Bank Agent Banking Division Head Office<br/>
 				Metropolitan Chamber Building (3rd Floor)
 				122-124 Motijheel C/A, Dhaka-1000, Bangladesh<br/>
