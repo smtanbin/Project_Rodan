@@ -99,6 +99,7 @@ const utilityinfo = async () => {
 	await fetch(url, requestOptions).then((response) => response.json()).then((payload) => {
 		payload.map((data) => {
 			const { ENTRY_DATE, TRANS_NO, TRANS_AMT, VAT_AMT, STAMP_AMT, ACNO, BOOKNO, MONTH } = data
+			sl += 1
 			document.getElementById('output2').innerHTML += `
 							
 								<tr>
@@ -113,13 +114,13 @@ const utilityinfo = async () => {
 									<td>${MONTH}</td>
 								</tr>
 							`
-			sl += 1
+
 			TRANS_AMT_TOTAL = TRANS_AMT_TOTAL + TRANS_AMT
 			VAT_AMT_TOTAL = VAT_AMT_TOTAL + VAT_AMT
 			STAMP_AMT_TOTAL = STAMP_AMT_TOTAL + STAMP_AMT
 		})
-		document.getElementById(
-			'output2'
-		).lastChild.innerHTML = `<tr class="active"><td>${sl}</td><td></td><td>Total</td><td>${TRANS_AMT}</td><td>${VAT_AMT}</td><td>${STAMP_AMT}</td><td></td><td></td><td></td></tr>`
 	})
+	// document.getElementById(
+	// 	'output2'
+	// ).lastElementChild.innerHTML = `<tr class="active"><td>${sl}</td><td>Total</td><td>${TRANS_AMT_TOTAL}</td><td>${VAT_AMT_TOTAL}</td><td>${STAMP_AMT_TOTAL}</td><td></td><td></td><td></td></tr>`
 }
