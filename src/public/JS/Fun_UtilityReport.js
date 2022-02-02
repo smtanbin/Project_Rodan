@@ -48,10 +48,20 @@ const utilityinfo = async () => {
 	let TRANS_AMT_TOTAL = 0
 	let VAT_AMT_TOTAL = 0
 	let STAMP_AMT_TOTAL = 0
-	document.getElementById('output').innerHTML += `
 
-
-	
+	const myWindow = window.open('', 'MsgWindow')
+	myWindow.document.write(`
+			<head>
+			<meta charset="UTF-8">
+			<meta http-equiv="X-UA-Compatible" content="IE=edge">
+			<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		  
+			<link href="/style/aos/aos.css" rel="stylesheet">
+			<link rel="stylesheet" href="/style/styles.css">
+			<link rel="stylesheet" href="/style/spectre/spectre.min.css">
+			<link rel="stylesheet" href="/style/spectre/spectre-icons.min.css">
+			<link rel="stylesheet" href="/style/spectre/spectre-exp.min.css">
+		  </head>
 	<div class="card col-12 p-2">
 		<div class="p-2">
 			<div class="container">
@@ -59,6 +69,7 @@ const utilityinfo = async () => {
 					<div class="columns col-12">
 						<h2 class="p-centered">Standard Bank Limited</h2>
 					</div>
+					<div class="card p-2 w100 col-12 bg-gray">
 					<div class="columns col-12">
 						<h6 class="p-centered">Agent Banking Division</h6>
 					</div>
@@ -73,6 +84,7 @@ const utilityinfo = async () => {
 						<div class="columns col-6 float-righ">
 							Print Date: ${printday}
 						</div>
+					</div>
 					</div>
 
 					<div class="columns col-12">
@@ -90,12 +102,12 @@ const utilityinfo = async () => {
 								</tr>
 							</thead><tbody id="output2"></tbody>
 							</table>
-							<div class="card p-2 m-2 col-4" id="billsummary">
+							<div class="card bg-gray p-2 m-2 col-4" id="billsummary">
 							
 							</div>
 						</div>
 					</div>
-					<div class="col-12 w100 p-centered bg-gray">
+					<div class="col-12 w100 p-centered bg-gray p-2 mt-2">
 					<p>Standard Bank Agent Banking Division Head Office<br/>
 					Metropolitan Chamber Building (3rd Floor)
 					122-124 Motijheel C/A, Dhaka-1000, Bangladesh<br/>
@@ -103,7 +115,7 @@ const utilityinfo = async () => {
 					</div>
 				</div>
 			</div>
-		</div>`
+		</div>`)
 
 	await fetch(url, requestOptions).then((response) => response.json()).then((payload) => {
 		payload.map((data) => {
@@ -136,10 +148,10 @@ const utilityinfo = async () => {
 		<h4>Bill Summary</h4>
 		<p class="row">
 		Total Bill Collected: ${sl} <br/>	
-		Total Net Bill Amount: ${TRANS_AMT_TOTAL}<br/>
-		Total Vat Amount:${VAT_AMT_TOTAL}<br/>
+		Total Net Bill Amount: ${TRANS_AMT_TOTAL} .BDT<br/>
+		Total Vat Amount:${VAT_AMT_TOTAL} .BDT<br/>
 		Total Stamp Used: ${STAMP_AMT_TOTAL}<br/>
-		Total Payable: ${TRANS_AMT_TOTAL - VAT_AMT_TOTAL}<br/>
+		Total Payable: ${TRANS_AMT_TOTAL - VAT_AMT_TOTAL} .BDT<br/>
 		</p>`
 	})
 	// document.getElementById(
