@@ -21,8 +21,8 @@ app.post('/utilityinfo', async (req, res) => {
 })
 /* Give the deteals data */
 app.post('/utilityinfodtl', async (req, res) => {
-	const from = req.body.from
-	const to = req.body.to
+	const from = '01-feb-2022' //req.body.fromdate
+	const to = '01-feb-2022' //req.body.todate
 	const key = req.body.key
 	const data = await utilityinfodtl(from, to, key)
 	res.send(data)

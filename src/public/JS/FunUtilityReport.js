@@ -48,7 +48,9 @@ const utilityinfo = async () => {
 
 	/* Post request body content*/
 	const raw = JSON.stringify({
-		key: `${key}`
+		key: `${key}`,
+		fromdate: `${fromdate}`,
+		todate: `${todate}`
 	})
 
 	const requestOptions = {
