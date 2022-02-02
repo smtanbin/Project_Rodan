@@ -29,7 +29,7 @@ const utilityinfo = async () => {
 	let key = uvanls.value
 	let fromdate = document.getElementById('fromdate').value
 	let todate = document.getElementById('todate').value
-
+	let printday = Date()
 	// request
 	const myHeaders = new Headers()
 	myHeaders.append('Content-Type', 'application/json')
