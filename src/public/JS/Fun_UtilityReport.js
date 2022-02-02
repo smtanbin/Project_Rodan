@@ -44,6 +44,10 @@ const utilityinfo = async () => {
 		body: raw,
 		redirect: 'follow'
 	}
+	let sl = 0
+	let TRANS_AMT_TOTAL = 0
+	let VAT_AMT_TOTAL = 0
+	let STAMP_AMT_TOTAL = 0
 	document.getElementById('output').innerHTML += `
 
 
@@ -74,10 +78,9 @@ const utilityinfo = async () => {
 					<div class="columns col-12">
 						<table class="table">
 							<thead>
-								<tr>
+								<tr><th>SL.</th>
 									<th>Date</th>
 									<th>Trans NO</th>
-									<th>Total</th>
 									<th>Net Bill</th>
 									<th>Vat</th>
 									<th>Rev.Stamp</th>
@@ -92,12 +95,14 @@ const utilityinfo = async () => {
 				</div>
 			</div>
 		</div>`
+
 	await fetch(url, requestOptions).then((response) => response.json()).then((payload) => {
 		payload.map((data) => {
 			const { ENTRY_DATE, TRANS_NO, TRANS_AMT, VAT_AMT, STAMP_AMT, ACNO, BOOKNO, MONTH } = data
 			document.getElementById('output2').innerHTML += `
 							
-								<tr class="active">
+								<tr>
+								<td>${sl}<td/>
 									<td>${ENTRY_DATE}</td>
 									<td>${TRANS_NO}</td>
 									<td>${TRANS_AMT}</td>
@@ -106,6 +111,29 @@ const utilityinfo = async () => {
 									<td>${ACNO}</td>
 									<td>${BOOKNO}</td>
 									<td>${MONTH}</td>
+								</tr>
+							`
+			sl += 1
+			TRANS_AMT_TOTAL = TRANS_AMT_TOTAL + TRANS_AMT
+			VAT_AMT_TOTAL = VAT_AMT_TOTAL + VAT_AMT
+			STAMP_AMT_TOTAL = STAMP_AMT_TOTAL + STAMP_AMT
+		})
+	})
+	await fetch(url, requestOptions).then((response) => response.json()).then((payload) => {
+		payload.map((data) => {
+			const { TRANS_AMT, VAT_AMT, STAMP_AMT } = data
+			document.getElementById('output2').lastChild.innerHTML = `
+							
+								<tr class="active">
+									<td>${sl}</td>
+									<td></td>
+									<td></td>
+									<td>${TRANS_AMT}</td>
+									<td>${VAT_AMT}</td>
+									<td>${STAMP_AMT}</td>
+									<td></td>
+									<td></td>
+									<td></td>
 								</tr>
 							`
 		})
