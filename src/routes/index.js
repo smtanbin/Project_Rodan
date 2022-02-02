@@ -1,6 +1,6 @@
 const { Router } = require('express')
 const { reginfo, nooftrans, customerinfo } = require('../apps/api.js')
-const { uvanls, uinfodtl } = require('../apps/api_utilitybill.js')
+const { uvanls, utilityinfodtl } = require('../apps/api_utilitybill.js')
 const app = Router()
 ;(bodyParser = require('body-parser')), app.use(bodyParser.json())
 
@@ -15,18 +15,18 @@ app.get('/uvanls', async (req, res) => {
 	res.send(data)
 })
 /* Give the summary data */
-app.post('/utilityinfosummary', async (req, res) => {
+app.post('/utilityinfo', async (req, res) => {
 	const from = req.body.from
 	const to = req.body.to
 	const acno = req.body.acno
 	res.send(data)
 })
 /* Give the deteals data */
-app.post('/uinfodtl', async (req, res) => {
+app.post('/utilityinfodtl', async (req, res) => {
 	const from = req.body.from
 	const to = req.body.to
 	const key = 'PDB-6091001'
-	const data = await uinfodtl('01-dec-2021', '01-dec-2021', key)
+	const data = await utilityinfodtl('01-dec-2021', '01-dec-2021', key)
 	res.send(data)
 })
 

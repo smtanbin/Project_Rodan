@@ -22,18 +22,20 @@ const getuvanls = async () => {
 	})
 }
 getuvanls()
-const utilityinfosummary = async () => {
+const utilityinfo = async () => {
 	const apiserver = 'http://127.0.0.1/api'
-	const url = `${apiserver}/utilityinfosummary`
+	const url = `${apiserver}/utilityinfo`
 	const uvanls = document.getElementById('uvanls')
-	let id = uvanls.value
+	let key = uvanls.value
+	let fromdate = document.getElementById('fromdate').value
+	let todate = document.getElementById('todate').value
 
 	// request
 	const myHeaders = new Headers()
 	myHeaders.append('Content-Type', 'application/json')
 
 	const raw = JSON.stringify({
-		key: `${id}`
+		key: `${key}`
 	})
 
 	const requestOptions = {
@@ -57,7 +59,7 @@ const utilityinfosummary = async () => {
 						<h4 class="p-centered">Agent Banking Division</h4>
 					</div>
 					<div class="columns col-sm-12">
-						<p>Summery of Electricity Bill Colllection Report : ${acno}</p>
+						<p>Summery of Electricity Bill Colllection Report : ${key}</p>
 					</div>
 
 					<div class="columns col-12">

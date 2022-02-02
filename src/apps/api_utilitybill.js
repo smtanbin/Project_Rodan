@@ -1,3 +1,4 @@
+import moment from 'moment'
 const oracledb = require('oracledb')
 oracledb.outFormat = oracledb.OUT_FORMAT_OBJECT
 let connection
@@ -38,7 +39,12 @@ const urptsum = async (from, to, key) => {
 	const sql = `SELECT * from AGENT_BANKING.UTILITYREPORT`
 	return await qurrythis(sql)
 }
-const uinfodtl = async (from, to, key) => {
+const utilityinfodtl = async (from, to, key) => {
+	let fromdate = moment(from).format('DD-MMM-YYYY')
+	console.log(fromdate)
+	let todate = to.moment().format('DD-MMM-YYYY')
+	console.log(todate)
+
 	const sql = `/* Formatted on 2/1/2022 3:19:21 PM (QP5 v5.374) */
 	SELECT u.ENTRY_DATE,
 		   u.TRANS_NO,
@@ -49,7 +55,7 @@ const uinfodtl = async (from, to, key) => {
 		   u.BILL_INFO_2 BOOKNO,
 		   UPPER(u.BILL_INFO_3) MONTH
 	  FROM AGENT_BANKING.UTILITY_PAYMENT_INFO u
-	  where status = 'S' and trunc(entry_date) between ${from} and ${to}
+	  where status = 'S' and trunc(entry_date) between ${fromdate} and ${todate}
 	  --and TRANS_SNAME = ${key}`
 	return await qurrythis(sql)
 }
@@ -68,4 +74,4 @@ const utilityinfosummary = async (from, to, key) => {
 	  --and TRANS_SNAME = ${key}`
 	return await qurrythis(sql)
 }
-module.exports = { uvanls, uinfodtl, urptsum }
+module.exports = { uvanls, utilityinfodtl, urptsum }
