@@ -93,7 +93,8 @@ const utilityinfo = async () => {
 					  </p>
 				   </div>
 				   <div class="columns col-6 float-righ">
-				   <div class="card bg-gray w100 p-2 m-2 col-4" id="billsummary">
+				   <div class="card bg-gray w100 p-2 m-2">
+				   <h4>Bill Summary</h4><span id="billsummary"></span>  
 				   </div> 
 				   </div>
 				</div>
@@ -156,8 +157,8 @@ const utilityinfo = async () => {
 		/* Bill Summary */
 
 		document.getElementById('billsummary').innerHTML = `
-		<h4>Bill Summary</h4>
-		<p class="row">
+		
+		<p>
    		Total Bill Collected: ${sl} <br/>	
    		Total Net Bill Amount: ${TRANS_AMT_TOTAL} .BDT<br/>
    		Total Vat Amount:${VAT_AMT_TOTAL} .BDT<br/>
@@ -168,13 +169,13 @@ const utilityinfo = async () => {
 	/* for table footer*/
 	document.getElementById('output2').lastElementChild.innerHTML = `
 	<tr class="active">
-	<td>&nbsp;</td>
-	<td>Total</td>
-	<td>${TRANS_AMT_TOTAL}</td>
-	<td>${VAT_AMT_TOTAL}</td>
-	<td>${STAMP_AMT_TOTAL}</td>
-	<td>&nbsp;</td>
-	<td>&nbsp;</td>
-	<td>&nbsp;</td>
+	<td style="width:inherit">&nbsp;</td>
+	<td style="width:inherit">Total</td>
+	<td style="width:inherit">${TRANS_AMT_TOTAL}</td>
+	<td style="width:inherit">${VAT_AMT_TOTAL}</td>
+	<td style="width:inherit">${STAMP_AMT_TOTAL}</td>
+	<td style="width:inherit">&nbsp;</td>
+	<td style="width:inherit">&nbsp;</td>
+	<td style="width:inherit">&nbsp;</td>
 	</tr>`
 }

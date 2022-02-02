@@ -1,31 +1,5 @@
-// const oracledb = require('oracledb')
 const qurrythis = require('./db')
 const { oracledate } = require('./FunCore')
-// oracledb.outFormat = oracledb.OUT_FORMAT_OBJECT
-// let connection
-// // oracle working db
-// async function qurrythis(sqlqurry) {
-// 	try {
-// 		connection = await oracledb.getConnection({
-// 			user: 'tanbin',
-// 			password: '@urA774234',
-// 			connectString: '10.130.102.103:1525/SBLABS'
-// 		})
-// 		const result = await connection.execute(sqlqurry)
-// 		// console.log(result.rows)
-// 		return result.rows
-// 	} catch (err) {
-// 		console.error(err)
-// 	} finally {
-// 		if (connection) {
-// 			try {
-// 				await connection.close()
-// 			} catch (err) {
-// 				console.error(err)
-// 			}
-// 		}
-// 	}
-// }
 
 const utilityreportpbslist = async () => {
 	const sql = `SELECT TRANS_SNAME
