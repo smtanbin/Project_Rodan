@@ -79,7 +79,7 @@ const utilityinfo = async () => {
 									<th>Trans NO</th>
 									<th>Total</th>
 									<th>Net Bill</th>
-									<th>Vat/th>
+									<th>Vat</th>
 									<th>Rev.Stamp</th>
 									<th>ACNO</th>
 									<th>Book No</th>
