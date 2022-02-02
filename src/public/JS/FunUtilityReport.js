@@ -80,22 +80,19 @@ const utilityinfo = async () => {
 		  <div class="columns col-sm-12">
 			 <div class="columns col-12">
 				<h2 class="p-centered">Standard Bank Limited</h2>
-			 </div>
-			 <div class="card p-2 w100 col-12 bg-gray p-2">
-				<div class="columns col-12">
-				   <h6 class="p-centered">Agent Banking Division</h6>
+				<h6 class="p-centered">Agent Banking Division</h6>
 				</div>
+				<div class="card p-2 w100 col-12 p-2">
 				<div class="columns col-12">
+				<h6 class="p-centered">Utility Colllection Report</h6>
 				   <div class="columns col-6 float-left">
-				   
-				   <div class="p-1 w100">
-				     
-				   <p>Summery of Electricity Bill Colllection Report : ${key}<br/>
-				   Date: From ${fromdate} To ${todate} <br/>
+				   			     
+				   <p>Vendor : ${key}<br/>
+				   Date : From ${fromdate} To ${todate} <br/>
 				   Print Date: ${printday}
 				   </p>
 				   </div>   
-				   </div>
+				   
 				   <div class="columns col-6 float-righ">
 				   <div class="p-1 w100" id="billsummary">
 				     
@@ -107,15 +104,15 @@ const utilityinfo = async () => {
 				<table class="table">
 				   <thead>
 					  <tr>
-						 <th>SL.</th>
-						 <th>Date</th>
-						 <th>Trans NO</th>
-						 <th>Net Bill</th>
-						 <th>Vat</th>
-						 <th>Rev.Stamp</th>
-						 <th>ACNO</th>
-						 <th>Book No</th>
-						 <th>Month</th>
+						 <th class="columns col-1">SL.</th>
+						 <th class="columns col-3">Date</th>
+						 <th class="columns col-2">Trans NO</th>
+						 <th class="columns col-1">Net Bill</th>
+						 <th class="columns col-1">Vat</th>
+						 <th class="columns col-1">Rev.Stamp</th>
+						 <th class="columns col-1">ACNO</th>
+						 <th class="columns col-1">Book No</th>
+						 <th class="columns col-1">Month</th>
 					  </tr>
 				   </thead>
 				   <tbody id="output2"></tbody>
@@ -139,15 +136,15 @@ const utilityinfo = async () => {
 
 			sl += 1 //Serialing Start with map loop
 			document.getElementById('output2').innerHTML += `<tr>
-				<td>${sl}<td/>
-				<td>${ENTRY_DATE}</td>
-				<td>${TRANS_NO}</td>
-				<td>${TRANS_AMT}</td>
-				<td>${VAT_AMT}</td>
-				<td>${STAMP_AMT}</td>
-				<td>${ACNO}</td>
-				<td>${BOOKNO}</td>
-				<td>${MONTH}</td>
+				<td class="columns col-1">${sl}<td/>
+				<td class="columns col-3">${ENTRY_DATE}</td>
+				<td class="columns col-2">${TRANS_NO}</td>
+				<td class="columns col-1">${TRANS_AMT}</td>
+				<td class="columns col-1">${VAT_AMT}</td>
+				<td class="columns col-1">${STAMP_AMT}</td>
+				<td class="columns col-1">${ACNO}</td>
+				<td class="columns col-1">${BOOKNO}</td>
+				<td class="columns col-1">${MONTH}</td>
 		 	</tr>`
 
 			/* Calculatation*/
