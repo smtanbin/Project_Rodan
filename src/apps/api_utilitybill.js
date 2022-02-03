@@ -10,6 +10,33 @@ const utilityreportpbslist = async () => {
 	return await qurrythis(sql)
 }
 
+const utilityinfohead = async (date,key) => {
+	
+	try{
+		// console.log(date+"now")
+		date = oracleDate(date)
+		// console.log(date+"after")
+
+		const sql = `/* Formatted on 2/3/2022 1:50:51 PM (QP5 v5.374) */
+		SELECT (SELECT NAME
+			FROM AGENT_BANKING.REGINFO
+			WHERE MPHONE = C.MPHONE)                                 "TITEL",
+			MPHONE                                                     "REVAC",
+			VAT_MPHONE                                                 "VATAC",
+			ROUND(TANBIN.GET_ACC_BALANC (MPHONE,'${date}'),2)        "REVBAL",
+			ROUND(TANBIN.GET_ACC_BALANC (VAT_MPHONE,'${date}'),2)    "VATBAL",
+			BILL_TITLE_1,
+			BILL_TITLE_2,
+			BILL_TITLE_3,
+			SNAME
+			FROM AGENT_BANKING.MERCHANT_CONFIG C
+			WHERE SNAME = '${key}'`
+			console.log(sql)
+	return await qurrythis(sql)
+} catch (e){
+	return 'Stop code: Qurry miss'
+}
+}
 const utilityinfodtl = async (fromdate, todate, key) => {
 	fromdate = oracleDate(fromdate)
 	todate = oracleDate(todate)
@@ -44,4 +71,4 @@ const utilityinfosummary = async (from, to, key) => {
 	  --and TRANS_SNAME = ${key}`
 	return await qurrythis(sql)
 }
-module.exports = { utilityreportpbslist, utilityinfodtl }
+module.exports = { utilityreportpbslist, utilityinfohead, utilityinfodtl }

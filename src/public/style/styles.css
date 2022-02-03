@@ -48,3 +48,11 @@
 .h100 {
 	height: 100%;
 }
+
+.text-micro {
+	font-size: .4em !important;
+}
+
+.table-cluster td {
+	padding: .1rem !important;
+}

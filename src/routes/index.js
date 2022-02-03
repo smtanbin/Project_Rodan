@@ -1,6 +1,6 @@
 const { Router } = require('express')
 const { reginfo, nooftrans, customerinfo } = require('../apps/api.js')
-const { utilityreportpbslist, utilityinfodtl } = require('../apps/api_utilitybill.js')
+const { utilityreportpbslist, utilityinfohead, utilityinfodtl } = require('../apps/api_utilitybill.js')
 const app = Router()
 ;(bodyParser = require('body-parser')), app.use(bodyParser.json())
 
@@ -20,6 +20,17 @@ app.post('/utilityinfo', async (req, res) => {
 	res.send(data)
 })
 /* Give the deteals data */
+app.post('/utilityinfohead', async (req, res) => {
+	console.log(req.body)
+
+	try {
+		const data = await utilityinfohead(req.body.date, req.body.key)
+		res.send(data)
+	} catch (e) {
+		res.status(400)
+		res.send('Stop by error! Check if its help:' + e + data)
+	}
+})
 app.post('/utilityinfodtl', async (req, res) => {
 	res.status(200)
 	try {

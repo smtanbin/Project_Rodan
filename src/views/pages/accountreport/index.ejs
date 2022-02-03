@@ -1,0 +1,48 @@
+<main class="content">
+
+    <ul class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a href="/">Home</a>
+        </li>
+        <li class="breadcrumb-item">
+            <a href="/report/utilityreport">Utility Report</a>
+        </li>
+
+    </ul>
+    <div class="hero bg-gray">
+        <div class="hero-body">
+            <h1 class="text-primary">Utility Report</h1>
+        </div>
+    </div>
+    <div class="container">
+        <!-- normal input group with button -->
+        <div class="input-group">
+
+            <input type="date" id="fromdate" class="form-input" placeholder="Type Account Number">
+            <input type="date" id="todate" class="form-input" placeholder="Type Account Number">
+            <div class="form-group">
+                <select class="form-select" id="uvanls">
+
+                </select>
+            </div>
+
+            <button class="btn btn-primary-link input-group-btn" onclick="utilityinfo()">Transaction Report
+            </button>
+
+        </div>
+
+    </div>
+
+    <div class="container">
+
+        <div class="columns" id="output">
+
+        </div>
+    </div>
+    </div>
+    </div>
+    </div>
+    </div>
+    <script src="/js/FunUtilityReport.js"></script>
+
+</main>

@@ -207,8 +207,8 @@ const utilityinfo = async () => {
 			payload.map(({ ENTRY_DATE, TRANS_NO, TRANS_AMT, VAT_AMT, STAMP_AMT, ACNO, BOOKNO, MONTH }, index) => {
 				document.getElementById('output2').innerHTML += `<tr>
 				<td>${index + 1}</td>
-				<td class="text-tiny text-break">${new Date(ENTRY_DATE).toDateString()}</td>
-				<td class="text-tiny text-break">${TRANS_NO}</td>
+				<td class="text-micro text-break">${new Date(ENTRY_DATE).toDateString()}</td>
+				<td class="text-micro text-break">${TRANS_NO}</td>
 				<td class="text-tiny">${(TRANS_AMT - VAT_AMT).toFixed(2)}</td>
 				<td class="text-tiny">${VAT_AMT.toFixed(2)}</td>
 				<td class="text-tiny">${STAMP_AMT}</td>
