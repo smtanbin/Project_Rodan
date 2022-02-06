@@ -1,7 +1,7 @@
 const { Router } = require('express')
-const { reginfo, nooftrans, customerinfo,isaccountexist } = require('../apps/api.js')
+const { reginfo, nooftrans, customerinfo,doexist } = require('../apps/api.js')
 const { utilityreportpbslist, utilityinfohead, utilityinfodtl } = require('../apps/api_utilitybill.js')
-const { accountStatmentHead, accountStatmentBody } = require('../apps/apiAccountReport')
+const { statementHead, statementBody } = require('../apps/apiStatement.js')
 const app = Router()
 ;(bodyParser = require('body-parser')), app.use(bodyParser.json())
 
@@ -46,9 +46,9 @@ app.post('/utilityinfodtl', async (req, res) => {
 
 
 /* This will check if account existed */
-app.post('/isaccountexist', async (req, res) => {
+app.post('/doexist', async (req, res) => {
 	const key = req.body.key
-	const data = await isaccountexist(key)
+	const data = await doexist(key)
 	res.send(data)
 })
 
@@ -59,18 +59,18 @@ currently there are 2 api
 */
 
 /* Give the summary data */
-app.post('/accountStatmentHead', async (req, res) => {
+app.post('/statementhead', async (req, res) => {
 	const date = req.body.date
 	const key = req.body.key
-	const data = await accountStatmentHead(date,key)
+	const data = await statementHead(date,key)
 	res.send(data)
 })
 /* Give the deteals data */
 
-app.post('/accountStatmentBody', async (req, res) => {
+app.post('/statementbody', async (req, res) => {
 	res.status(200)
 	try {
-		const data = await accountStatmentBody(req.body.fromdate, req.body.todate, req.body.key)
+		const data = await statementBody(req.body.fromdate, req.body.todate, req.body.key)
 		res.send(data)
 	} catch (e) {
 		res.status(400)

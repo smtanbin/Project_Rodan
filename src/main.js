@@ -72,7 +72,7 @@ app.get('/report/accountStatment', function(req, res) {
 	res.locals = {
 		title: 'Account Report'
 	}
-	res.render('pages/accountStatment')
+	res.render('pages/statement')
 })
 
 // API

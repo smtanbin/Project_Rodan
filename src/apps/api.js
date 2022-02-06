@@ -196,7 +196,7 @@ const customerinfo = async (id) => {
 	 WHERE MPHONE = ${id}`
 	return await qurrythis(sql)
 }
-const isaccountexist = async (key) => {
+const doexist = async (key) => {
 	try {
 		let sql = `/* Formatted on 2/6/2022 8:04:29 AM (QP5 v5.374) */
 	SELECT COUNT (*)
@@ -213,4 +213,4 @@ const isaccountexist = async (key) => {
 	}
 }
 
-module.exports = { reginfo, nooftrans, customerinfo,isaccountexist }
+module.exports = { reginfo, nooftrans, customerinfo,doexist }
