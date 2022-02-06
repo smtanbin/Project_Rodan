@@ -204,6 +204,12 @@ const utilityinfo = async () => {
 
 	
 		await fetch(urlbody, bodyrequestOptions).then((response) => response.json()).then((payload) => {
+			if (payload === null){
+				document.getElementById('output2').innerHTML += 
+				`<tr>
+				<td class="text-tiny text-break" colspan="9">No Bill Found</td>
+				</tr>`
+			} else{
 			payload.map(({ ENTRY_DATE, TRANS_NO, TRANS_AMT, VAT_AMT, STAMP_AMT, ACNO, BOOKNO, MONTH }, index) => {
 				document.getElementById('output2').innerHTML += `<tr>
 				<td>${index + 1}</td>
@@ -225,29 +231,30 @@ const utilityinfo = async () => {
 					STAMP_AMT_TOTAL += 1
 				}
 			})
-
+			
 			/* Bill Summary */
-
+			
 			document.getElementById('billsummary').innerHTML = `
-		
-		<p>
-		<b>Total Bill Collected: </b>${payload.length} <br/>	
-		<b>Total Net Bill Amount: </b>${TRANS_AMT_TOTAL.toFixed(2)} .BDT<br/>
-		<b>Total Vat Amount:</b>${VAT_AMT_TOTAL.toFixed(2)} .BDT<br/>
-		<b>Total Stamp Used: </b>${STAMP_AMT_TOTAL}<br/>
-		<b>Total Payable: </b>${(TRANS_AMT_TOTAL - VAT_AMT_TOTAL).toFixed(2)} .BDT<br/>
-		<b>Revenue Balance: </b>${(REVBAL_TOTAL).toFixed(2)} .BDT<br/>
-		<b>VAT Balance: </b>${(VATBAL_TOTAL).toFixed(2)} .BDT
-		</p>`
+			
+			<p>
+			<b>Total Bill Collected: </b>${payload.length} <br/>	
+			<b>Total Net Bill Amount: </b>${TRANS_AMT_TOTAL.toFixed(2)} .BDT<br/>
+			<b>Total Vat Amount:</b>${VAT_AMT_TOTAL.toFixed(2)} .BDT<br/>
+			<b>Total Stamp Used: </b>${STAMP_AMT_TOTAL}<br/>
+			<b>Total Payable: </b>${(TRANS_AMT_TOTAL - VAT_AMT_TOTAL).toFixed(2)} .BDT<br/>
+			<b>Revenue Balance: </b>${(REVBAL_TOTAL).toFixed(2)} .BDT<br/>
+			<b>VAT Balance: </b>${(VATBAL_TOTAL).toFixed(2)} .BDT
+			</p>`
+		}
 		})
 		/* for table footer*/
 		document.getElementById('output2').lastElementChild.innerHTML = `
-	<tr class="active text-bold">
-	<td class="text-bold" colspan="3">Total</td>
-	
-	<td class="text-bold">${(TRANS_AMT_TOTAL - VAT_AMT_TOTAL).toFixed(2)}</td>
-	<td class="text-bold">${VAT_AMT_TOTAL.toFixed(2)}</td>
-	<td colspan="1"></td>
+		<tr class="active text-bold">
+		<td class="text-bold" colspan="3">Total</td>
+		
+		<td class="text-bold">${(TRANS_AMT_TOTAL - VAT_AMT_TOTAL).toFixed(2)}</td>
+		<td class="text-bold">${VAT_AMT_TOTAL.toFixed(2)}</td>
+		<td colspan="1"></td>
 	<td class="text-bold">${TRANS_AMT_TOTAL.toFixed(2)}</td>
 	
 	<td colspan="3"></td>
