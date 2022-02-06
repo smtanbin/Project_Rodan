@@ -46,7 +46,7 @@ app.post('/utilityinfodtl', async (req, res) => {
 
 
 /* This will check if account existed */
-app.get('/isaccountexist', async (req, res) => {
+app.post('/isaccountexist', async (req, res) => {
 	const key = req.body.key
 	const data = await isaccountexist(key)
 	res.send(data)

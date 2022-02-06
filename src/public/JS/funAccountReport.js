@@ -1,5 +1,8 @@
 /*api server url is in environment file*/
 const apiserver = 'http://127.0.0.1/api'
+/* Requesting part start here. */
+const myHeaders = new Headers()
+myHeaders.append('Content-Type', 'application/json')
 
 /* This function get the PBS list from database 
 It connect via url which request recived by routes/index as rest Get request
@@ -47,7 +50,7 @@ const accountStmt = async () => {
 	})
 
 	const initrequestOptions = {
-		method: 'GET',
+		method: 'POST',
 		headers: myHeaders,
 		body: inithead,
 		redirect: 'follow'
@@ -70,9 +73,6 @@ const accountStmt = async () => {
 		todate = printday
 	}
 
-	/* Requesting part start here. */
-	const myHeaders = new Headers()
-	myHeaders.append('Content-Type', 'application/json')
 
 	/* Post request body content*/
 	const urlhead = `${apiserver}/accountStatmentHead
