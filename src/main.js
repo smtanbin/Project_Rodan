@@ -68,11 +68,11 @@ app.get('/report/utilityreport', function(req, res) {
 	}
 	res.render('pages/utilityreport')
 })
-app.get('/report/accountreport', function(req, res) {
+app.get('/report/accountStatment', function(req, res) {
 	res.locals = {
 		title: 'Account Report'
 	}
-	res.render('pages/accountreport')
+	res.render('pages/accountStatment')
 })
 
 // API

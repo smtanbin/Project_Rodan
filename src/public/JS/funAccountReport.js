@@ -5,28 +5,6 @@ const apiserver = 'http://127.0.0.1/api'
 It connect via url which request recived by routes/index as rest Get request
 Then it call api_utilitybill from apps folder.
 */
-const getuvanls = async () => {
-	const url = `${apiserver}/utilityreportpbslist`
-	const myHeaders = new Headers()
-	myHeaders.append('Content-Type', 'application/json')
-
-	/* It also work without it its here just for corns problem
-     */
-	const requestOptions = {
-		method: 'GET',
-		headers: myHeaders,
-		redirect: 'follow'
-	}
-
-	await fetch(url, requestOptions).then((response) => response.json()).then((payload) => {
-		payload.map((data) => {
-			const { TRANS_SNAME } = data
-			document.getElementById('uvanls').innerHTML += `<option value="${TRANS_SNAME}">${TRANS_SNAME}</option>`
-		})
-	})
-}
-//auto function calling
-getuvanls()
 
 /* Printing Dialog and window genarated by this function. 
 Remember: #output must be loaded
@@ -55,16 +33,35 @@ const printArea = () => {
 It connect via url which request recived by routes/index as rest Post request
 Then it call api_utilitybill from apps folder.
 */
-const utilityinfo = async () => {
+const accountStmt = async () => {
 	// removeing old data if there just in case
 	document.getElementById('output').remove
-	/*Constracting Url*/
-	
-	const key = document.getElementById('uvanls').value
+	/*Checking account*/
+
+	const key = document.getElementById('acno').value
+	/* Post request body content*/
+	const initurl = `${apiserver}/isaccountexist
+`
+	const inithead = JSON.stringify({
+		key: `${key}`
+	})
+
+	const initrequestOptions = {
+		method: 'GET',
+		headers: myHeaders,
+		body: inithead,
+		redirect: 'follow'
+	}
+
+	await fetch(initurl, initrequestOptions).then((response) => response.json()).then((payload) => console.log(payload))
+	// {
+	// 	payload.map(({ REG_STATUS }, index) => {
+	// 		if REG_STATUS === true{
+
 	let fromdate = document.getElementById('fromdate').value
 	let todate = document.getElementById('todate').value
 	const printday = Date()
-	
+
 	/*Current date & time*/
 	if (fromdate === null || fromdate === '') {
 		fromdate = printday
@@ -72,19 +69,18 @@ const utilityinfo = async () => {
 	if (todate === null || todate === '') {
 		todate = printday
 	}
-	
+
 	/* Requesting part start here. */
 	const myHeaders = new Headers()
 	myHeaders.append('Content-Type', 'application/json')
-	
+
 	/* Post request body content*/
-	const urlhead = `${apiserver}/utilityinfohead`
+	const urlhead = `${apiserver}/accountStatmentHead
+`
 	const rawhead = JSON.stringify({
-		key: `${key}`,
-		date: `${fromdate}`,
-		
+		key: `${key}`
 	})
-	
+
 	const headrequestOptions = {
 		method: 'POST',
 		headers: myHeaders,
@@ -92,13 +88,13 @@ const utilityinfo = async () => {
 		redirect: 'follow'
 	}
 	/* Post request body content*/
-	const urlbody = `${apiserver}/utilityinfodtl`
+	const urlbody = `${apiserver}/accountStatmentBody`
 	const rawbody = JSON.stringify({
 		key: `${key}`,
 		fromdate: `${fromdate}`,
 		todate: `${todate}`
 	})
-	
+
 	const bodyrequestOptions = {
 		method: 'POST',
 		headers: myHeaders,
@@ -110,66 +106,92 @@ const utilityinfo = async () => {
     yes its made by by application. not DB yes!!!! >_<
     */
 	/* Totals*/
-	let TRANS_AMT_TOTAL = 0
-	let VAT_AMT_TOTAL = 0
-	let REVBAL_TOTAL = 0
-	let VATBAL_TOTAL = 0
-
-	let STAMP_AMT_TOTAL = 0 //Stumps counter
+	let oprningbalance = 0
+	let total_dr = 0
+	let total_cr = 0
 
 	/* Prints Head portation 
     'output2' is responsiable for table printing.
     'billsummary' is for summery.utilityinfohead
     */
 
-
 	try {
-
 		await fetch(urlhead, headrequestOptions).then((response) => response.json()).then((payload) => {
-			payload.map(({ TITEL,REVAC,VATAC,REVBAL,VATBAL,BILL_TITLE_1,BILL_TITLE_2,BILL_TITLE_3 }, index) => {
-				REVBAL_TOTAL = REVBAL
-				VATBAL_TOTAL = VATBAL
-				document.getElementById('output').innerHTML += `<div class="col-12 p-2">
+			payload.map(
+				(
+					{
+						MPHONE,
+						PMPHONE,
+						ACCOUNT_NAME,
+						TYPE,
+						STATUS,
+						REG_DATE,
+						BALANCE,
+						CON_MOB,
+						ADDR,
+						MATURITY_DATE,
+						CUST_ID
+					},
+					index
+				) => {
+					oprningbalance = BALANCE
+
+					document.getElementById('output').innerHTML += `<div class="col-12 p-2">
     <div class="p-2 container p-centered">
         <div class="card w100 columns col-12 p-1 bg-gray">
             <img src="/img/sblnewfull.png" style="hight:" 30px";" class="img-responsive column p-centered col-4">
             <h5 class="p-centered text-small">Agent Banking Division</h5>
-            <h6 class="p-centered text-tiny my-2">Utility Colllection Report</h6>
+            <h6 class="p-centered text-tiny my-2">Account Statment</h6>
+			
             <div class="columns px-2">
+			<p>Statement of Account for the Period: ${new Date(fromdate).toDateString()} <b>To </b> ${new Date(
+						todate
+					).toDateString()}</p>
                 <div class="column float-left text-tiny ">
-                    <p><b>Marchent :</b> ${TITEL}<br />
-					<b>Revenue Account:</b> ${REVAC}<br />
-					<b>VAT Account :</b> ${VATAC}<br />
-					
-					<b>From :</b> ${new Date(
-		fromdate
-	).toDateString()} <br /><b>To :</b> ${new Date(todate).toDateString()}</p>
+                    <p><b>Titel :</b> ${ACCOUNT_NAME}<br />
+					<b>Address :</b> ${ADDR}<br />
+					<b>Contact :</b> +88${CON_MOB}<br />
+					<b>Status :</b>${STATUS}</p>
                 </div>
                 <div class="divider-vert">
                 </div>
-                <div class="column float-right text-tiny" id="billsummary"">
-						<!-- Summery content content --> 
+                <div class="column float-right text-tiny">
+				<p>
+				<b>Account No: </b>${MPHONE} <br/>	
+				<b>Account Type:</b>${TYPE}<br/>
+				<b>Customer ID: </b>${CUST_ID}<br/>
+				<b>Opening Date: </b>${REG_DATE}<br/>
+				<b>Maturity Date: </b>${MATURITY_DATE}<br/>
+				<b>Agent: </b>${PMPHONE}
+				
+				</p>
 						</div>
 					</div>
 			</div>
 			 <div class=" columns col-12 card p-1">
                     <table class="table table-striped table-cluster">
                         <thead>
+						<tr>
+						<th class="text-tiny">SL.</th>
+							<th class="text-tiny">Date</th>
+							<th class="text-tiny">Trans. Code / Chq No</th>
+							<th class="text-tiny">Debit Amount</th>
+							<th class="text-tiny">Credit Amount</th>
+							<th class="text-tiny">Balance</th>
+							<th class="text-tiny">Remarks</th>
+							
+							
+                            </tr>
                             <tr>
-							<th class="text-tiny">SL.</th>
-                                <th class="text-tiny">Date</th>
-                                <th class="text-tiny">Trans NO</th>
-                                <th class="text-tiny">Revenue</th>
-                                <th class="text-tiny">Vat</th>
-                                <th class="text-tiny">Stamp</th>
-                                <th class="text-tiny">Total</th>
-                                <th class="text-tiny">${BILL_TITLE_1}</th>
-                                <th class="text-tiny">${BILL_TITLE_2}</th>
-                                <th class="text-tiny">${BILL_TITLE_3}</th>
+							<td colspan="5"></td>
+							<td class="text-tiny">${oprningbalance}</td>
+							<td colspan="1"></td>
                   
                             </tr>
                         </thead>
-                        <tbody class="" id="output2"></tbody>
+                        <tbody class="" id="output2">
+						
+						</tbody>
                     </table>
 
                 </div>
@@ -186,9 +208,10 @@ const utilityinfo = async () => {
             Copyright © Standard Bank Ltd.
         </div>
 
-    </div>`})
-
-})
+    </div>`
+				}
+			)
+		})
 	} catch (e) {
 		document.getElementById('output').remove
 		document.getElementById('output').innerHTML = `<div class="empty col-12 w100">
@@ -200,65 +223,39 @@ const utilityinfo = async () => {
 	  </div>`
 	}
 	try {
-
-
-	
 		await fetch(urlbody, bodyrequestOptions).then((response) => response.json()).then((payload) => {
-			payload.map(({ ENTRY_DATE, TRANS_NO, TRANS_AMT, VAT_AMT, STAMP_AMT, ACNO, BOOKNO, MONTH }, index) => {
+			payload.map(({ TRANS_NO, TRANS_DATE, DR_AMT, CR_AMT, PARTICULAR }, index) => {
+				/* Calculatation*/
+				oprningbalance += CR_AMT
+				oprningbalance -= DR_AMT
+
 				document.getElementById('output2').innerHTML += `<tr>
 				<td>${index + 1}</td>
-				<td class="text-micro text-break">${new Date(ENTRY_DATE).toDateString()}</td>
+				<td class="text-micro text-break">${new Date(TRANS_DATE).toDateString()}</td>
 				<td class="text-micro text-break">${TRANS_NO}</td>
-				<td class="text-tiny">${(TRANS_AMT - VAT_AMT).toFixed(2)}</td>
-				<td class="text-tiny">${VAT_AMT.toFixed(2)}</td>
-				<td class="text-tiny">${STAMP_AMT}</td>
-				<td class="text-tiny">${TRANS_AMT.toFixed(2)}</td>
-				<td class="text-tiny">${BOOKNO}</td>
-				<td class="text-tiny">${ACNO}</td>
-				<td class="text-tiny">${MONTH}</td>
+				<td class="text-tiny">${DR_AMT.toFixed(2)}</td>
+				<td class="text-tiny">${CR_AMT.toFixed(2)}</td>
+				<td class="text-tiny">${oprningbalance.toFixed(2)}</td>
+				<td class="text-tiny">${PARTICULAR}</td>
 		 	</tr>`
-
-				/* Calculatation*/
-				TRANS_AMT_TOTAL += TRANS_AMT
-				VAT_AMT_TOTAL += VAT_AMT
-				if (STAMP_AMT !== null && STAMP_AMT != 0) {
-					STAMP_AMT_TOTAL += 1
-				}
+				total_dr += DR_AMT
+				total_cr += CR_AMT
 			})
 
-			/* Bill Summary */
-
-			document.getElementById('billsummary').innerHTML = `
-		
-		<p>
-		<b>Total Bill Collected: </b>${payload.length} <br/>	
-		<b>Total Net Bill Amount: </b>${TRANS_AMT_TOTAL.toFixed(2)} .BDT<br/>
-		<b>Total Vat Amount:</b>${VAT_AMT_TOTAL.toFixed(2)} .BDT<br/>
-		<b>Total Stamp Used: </b>${STAMP_AMT_TOTAL}<br/>
-		<b>Total Payable: </b>${(TRANS_AMT_TOTAL - VAT_AMT_TOTAL).toFixed(2)} .BDT<br/>
-		<b>Revenue Balance: </b>${(REVBAL_TOTAL).toFixed(2)} .BDT<br/>
-		<b>VAT Balance: </b>${(VATBAL_TOTAL).toFixed(2)} .BDT
-		</p>`
-		})
-		/* for table footer*/
-		document.getElementById('output2').lastElementChild.innerHTML = `
+			/* for table footer*/
+			document.getElementById('output2').lastElementChild.innerHTML = `
 	<tr class="active text-bold">
 	<td class="text-bold" colspan="3">Total</td>
+	<td class="text-bold">${total_dr.toFixed(2)}</td>
+	<td class="text-bold">${total_cr.toFixed(2)}</td>
+	<td class="text-bold">${oprningbalance.toFixed(2)}</td>
 	
-	<td class="text-bold">${(TRANS_AMT_TOTAL - VAT_AMT_TOTAL).toFixed(2)}</td>
-	<td class="text-bold">${VAT_AMT_TOTAL.toFixed(2)}</td>
 	<td colspan="1"></td>
-	<td class="text-bold">${TRANS_AMT_TOTAL.toFixed(2)}</td>
-	
-	<td colspan="3"></td>
-	
-
-	</tr>`
-		printArea()
-		// document.getElementById('printbtn').classList.remove('disabled')
-	
-	
-} catch (e) {
+		</tr>`
+			printArea()
+			// document.getElementById('printbtn').classList.remove('disabled')
+		})
+	} catch (e) {
 		document.getElementById('output').remove
 		document.getElementById('output').innerHTML = `<div class="empty col-12 w100">
 		

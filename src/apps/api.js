@@ -196,5 +196,21 @@ const customerinfo = async (id) => {
 	 WHERE MPHONE = ${id}`
 	return await qurrythis(sql)
 }
+const isaccountexist = async (key) => {
+	try {
+		let sql = `/* Formatted on 2/6/2022 8:04:29 AM (QP5 v5.374) */
+	SELECT COUNT (*)
+	  FROM (SELECT REG_STATUS
+			  FROM AGENT_BANKING.REGINFO R
+			 WHERE MPHONE =  '${key}' AND REG_STATUS != 'R')`
+		if ((await qurrythis(sql)) === 0) {
+			return false
+		} else {
+			return true
+		}
+	} catch (e) {
+		return e
+	}
+}
 
-module.exports = { reginfo, nooftrans, customerinfo }
+module.exports = { reginfo, nooftrans, customerinfo,isaccountexist }
