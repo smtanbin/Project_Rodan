@@ -3,6 +3,8 @@ const app = express()
 const path = require('path')
 const cors = require('cors')
 const apipath = require('./routes/index')
+app.use(cors ({origin: "*"}))
+
 app.use(express.static(__dirname + '/public'))
 app.set('views', path.join(__dirname, '/views'))
 // set the view engine to ejs
@@ -37,6 +39,12 @@ app.get('/', function(req, res, next) {
 	}
 })
 
+app.get('/login', function(req, res) {
+	res.locals = {
+		title: 'Login'
+	}
+	res.render('login')
+})
 /** 
  **Routes**
  **/
@@ -48,12 +56,6 @@ app.get('/', function(req, res) {
 	res.render('index')
 })
 
-app.get('/login', function(req, res) {
-	res.locals = {
-		title: 'Login'
-	}
-	res.render('pages/login')
-})
 
 // registration
 app.get('/report/customerInfo', function(req, res) {
