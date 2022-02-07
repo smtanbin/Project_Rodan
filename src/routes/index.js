@@ -6,16 +6,38 @@ const bodyParser = require('body-parser')
 const cors = require('cors')
 const app = Router()
 
-app.use(cors())
+// Cors Config
+const whitelist = [ '*' ]
+const corsOptions = {
+  origin               : (origin, callback) => {
+    if (whitelist.indexOf(origin) !== -1 || !origin) callback(null, true)
+    else callback(new Error('Not allowed by CORS'))
+  },
+  optionsSuccessStatus : 200,
+}
+
+// Middlewares
+app.use(cors(corsOptions))
 app.use(bodyParser.json())
+
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*')
+  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accepcact')
+  res.header('Access-Control-Allow-Methods', [ 'GET', 'POST', 'PATCH', 'DELETE' ])
+  next()
+})
 
 /* Utility info All utility realated apis data 
 functions are currently imported from api_utilitybill.js */
 
 /* This will bring the list for dropdown*/
+app.get('/test', async (req, res) => {
+	console.log('first');
+	res.send('OK')
+})
 app.get('/utilityreportpbslist', async (req, res) => {
-	const data = await utilityreportpbslist()
-	res.send(data)
+	// const data = await utilityreportpbslist()
+	res.send(' ')
 })
 /* Give the summary data */
 app.post('/utilityinfo', async (req, res) => {

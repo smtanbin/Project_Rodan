@@ -3,6 +3,7 @@ const apiserver = 'http://127.0.0.1/api'
 /* Requesting part start here. */
 const myHeaders = new Headers()
 myHeaders.append('Content-Type', 'application/json')
+myHeaders.append('Access-Control-Allow-Origin', '*')
 
 /* This function get the statement for customer 
 It connect via url which request recived by routes/index as rest Get request

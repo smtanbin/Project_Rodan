@@ -9,7 +9,7 @@ const getuvanls = async () => {
 	const url = `${apiserver}/utilityreportpbslist`
 	const myHeaders = new Headers()
 	myHeaders.append('Content-Type', 'application/json')
-
+	myHeaders.append('Access-Control-Allow-Origin', '*')
 	/* It also work without it its here just for corns problem
      */
 	const requestOptions = {
