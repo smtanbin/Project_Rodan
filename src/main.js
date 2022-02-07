@@ -3,7 +3,7 @@ const app = express()
 const path = require('path')
 const cors = require('cors')
 const apipath = require('./routes/index')
-app.use(cors ({origin: "*"}))
+app.use(cors ({origin:'*'}))
 
 app.use(express.static(__dirname + '/public'))
 app.set('views', path.join(__dirname, '/views'))

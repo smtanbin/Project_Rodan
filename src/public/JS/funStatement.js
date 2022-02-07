@@ -108,7 +108,7 @@ const statement = async () => {
 
 			try {
 				await fetch(urlhead, headrequestOptions).then((response) => response.json()).then((payload) => {
-					console.log(payload)
+				
 				payload.map(
 						(
 							{
@@ -260,6 +260,7 @@ const statement = async () => {
 				document.getElementById('output').innerHTML = `<div class="empty col-12 w100">
 				
 				<p class="empty-title h2 text-error">Stop Code 404</p>
+				<p class="empty-title h2 text-error">Fail to get Body</p>
 				<p class="empty-subtitle">${e}</p>
 
 			</div>`

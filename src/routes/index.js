@@ -2,8 +2,12 @@ const { Router } = require('express')
 const { reginfo, nooftrans, customerinfo,doexist } = require('../apps/api.js')
 const { utilityreportpbslist, utilityinfohead, utilityinfodtl } = require('../apps/api_utilitybill.js')
 const { statementHead, statementBody } = require('../apps/apiStatement.js')
+const bodyParser = require('body-parser')
+const cors = require('cors')
 const app = Router()
-;(bodyParser = require('body-parser')), app.use(bodyParser.json())
+
+app.use(cors())
+app.use(bodyParser.json())
 
 /* Utility info All utility realated apis data 
 functions are currently imported from api_utilitybill.js */
