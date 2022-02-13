@@ -13,9 +13,9 @@ async function qurrythis(sqlqurry) {
 		
 		connection = await oracledb.getConnection({
 			
-			user: process.env.user,
-			password: process.env.password,
-			connectString: process.env.dburl
+			user: 'tanbin',
+			password: '@urA774234',
+			connectString: '10.130.102.103:1525/SBLABS'
 		})
 		const result = await connection.execute(sqlqurry)
 		return result.rows

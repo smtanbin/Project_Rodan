@@ -215,15 +215,11 @@ const customerinfo = async (id) => {
 const doexist = async (key) => {
 	try {
 		let sql = `/* Formatted on 2/6/2022 8:04:29 AM (QP5 v5.374) */
-	SELECT COUNT (*)
+	SELECT COUNT (*) "output"
 	  FROM (SELECT REG_STATUS
 			  FROM AGENT_BANKING.REGINFO R
 			 WHERE MPHONE =  '${key}' AND REG_STATUS != 'R')`
-		if ((await qurrythis(sql)) === 0) {
-			return false
-		} else {
-			return true
-		}
+			 return await qurrythis(sql)
 	} catch (e) {
 		return e
 	}

@@ -2,7 +2,8 @@
 // require('dotenv').config()
 // const apiserver = process.env.apiurl
 /*api server url is in environment file*/
-const apiserver = 'http://127.0.0.1:80/api/'
+const apiserver = '/api/'
+let state
 /* Requesting part start here. */
 const myHeaders = new Headers()
 myHeaders.append('Content-Type', 'application/json')
@@ -36,7 +37,7 @@ remittancehouselist()
 Remember: #output must be loaded
 */
 const printArea = () => {
-	const head = `        <head>
+	const head = `<head>
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -61,7 +62,10 @@ Then it call api_utilitybill from apps folder.
 */
 const remittance = async () => {
 	// removeing old data if there just in case
-	document.getElementById('output').remove
+	if (state){
+	document.getElementById('output').remove()
+	state = false
+	}
 	/*Constracting Url*/
 	
 	const key = document.getElementById('list').value
@@ -195,6 +199,7 @@ const remittance = async () => {
 		<td class="text-bold" colspan="1"></td>
 		
 		</tr>`
+		state = true
 		printArea()
 		// document.getElementById('printbtn').classList.remove('disabled')
 	

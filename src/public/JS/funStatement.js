@@ -1,5 +1,5 @@
 /*api server url is in environment file*/
-const apiserver = 'http://127.0.0.1:80/api/'
+const apiserver = '/api/'
 /* Requesting part start here. */
 const myHeaders = new Headers()
 myHeaders.append('Content-Type', 'application/json')
@@ -33,103 +33,83 @@ const printArea = () => {
 	WinPrint.print()
 }
 
-/* This is the main function that generated the statement.
-*/
-const statement = async () => {
-	// removeing old data if there just in case
-	document.getElementById('output').remove
-	/*Checking account is existed in database. rejacted account also not count as account api/doexisist return boolien data.//#endregion*/
-
-	const key = document.getElementById('key').value
-	/* Post request body content*/
-	const initurl = `${apiserver}/doexist`
-
-	const inithead = JSON.stringify({
-		key: `${key}`
-	})
-
-	const initrequestOptions = {
-		method: 'POST',
-		headers: myHeaders,
-		body: inithead,
-		redirect: 'follow'
-	}
-
-	await fetch(initurl, initrequestOptions).then((response) => response.json()).then(async (payload) => {
-		if (payload === true){
-			let fromdate = document.getElementById('fromdate').value
-			let todate = document.getElementById('todate').value
-			const printday = Date()
-		console.log(fromdate)
-			/*Current date & time*/
-			if (fromdate === null || fromdate === '') {
-				fromdate = printday
-			}
-			if (todate === null || todate === '') {
-				todate = printday
-			}
 
 
-			/* Post request body content*/
-			const urlhead = `${apiserver}/statementhead
-		`
-			const rawhead = JSON.stringify({
-				key: `${key}`,
-				date: `${fromdate}`,
-			})
+	const getstatement = async (key) => {
+		// removeing old data if there just in case
+		let idoutput = document.getElementById("output");
+		if (idoutput.parentNode){
+			idoutput.parentNode.removeChild()
+		}
+		/*Checking account is existed in database. rejacted account also not count as account api/doexisist return boolien data.//#endregion*/
 
-			const headrequestOptions = {
-				method: 'POST',
-				headers: myHeaders,
-				body: rawhead,
-				redirect: 'follow'
-			}
-			/* Post request body content*/
-			const urlbody = `${apiserver}/statementbody`
-			const rawbody = JSON.stringify({
-				key: `${key}`,
-				fromdate: `${fromdate}`,
-				todate: `${todate}`
-			})
+		let fromdate = document.getElementById('fromdate').value
+		let todate = document.getElementById('todate').value
+		const printday = Date()
+		// console.log(fromdate)
 
-			const bodyrequestOptions = {
-				method: 'POST',
-				headers: myHeaders,
-				body: rawbody,
-				redirect: 'follow'
-			}
+		/*Current date & time*/
+		if (fromdate === null || fromdate === '') {
+			fromdate = printday
+		}
+		if (todate === null || todate === '') {
+			todate = printday
+		}
 
-			/*This valus make the summary part.
+		/* Post request body content*/
+		const urlhead = `${apiserver}/statementhead`
+		const rawhead = JSON.stringify({
+			key: `${key}`,
+			date: `${fromdate}`
+		})
+
+		const headrequestOptions = {
+			method: 'POST',
+			headers: myHeaders,
+			body: rawhead,
+			redirect: 'follow'
+		}
+
+		/* Post request body content*/
+		const urlbody = `${apiserver}/statementbody`
+		const rawbody = JSON.stringify({ key: `${key}`, fromdate: `${fromdate}`, todate: `${todate}` })
+		const bodyrequestOptions = {
+			method: 'POST',
+			headers: myHeaders,
+			body: rawbody,
+			redirect: 'follow'
+		}
+
+		/*This valus make the summary part.
 			yes its made by by application. not DB yes!!!! >_<
 			*/
-			/* Totals*/
-			let oprningbalance = 0
-			let total_dr = 0
-			let total_cr = 0
+		/* Totals*/
+		let oprningbalance = 0
+		let total_dr = 0
+		let total_cr = 0
 
-			try {
-				await fetch(urlhead, headrequestOptions).then((response) => response.json()).then((payload) => {
-				
+		try {
+			await fetch(urlhead, headrequestOptions).then((response) => response.json()).then((payload) => {
 				payload.map(
-						(
-							{
-								MPHONE,
-								PMPHONE,
-								ACCOUNT_NAME,
-								TYPE,
-								STATUS,
-								REG_DATE,
-								BALANCE,
-								CON_MOB,
-								ADDR,
-								MATURITY_DATE,
-								CUST_ID
-							},
-							index
-						) => {
-							oprningbalance = BALANCE
+					(
+						{
+							MPHONE,
+							PMPHONE,
+							ACCOUNT_NAME,
+							TYPE,
+							STATUS,
+							REG_DATE,
+							BALANCE,
+							CON_MOB,
+							ADDR,
+							MATURITY_DATE,
+							CUST_ID
+						},
+						index
+					) => {
+						oprningbalance = BALANCE
 
-							document.getElementById('output').innerHTML += `<div class="col-12 p-2">
+						document.getElementById('output').innerHTML += `<div class="col-12 p-2">
 							<div class="px-2 container">
 							
 							
@@ -163,9 +143,9 @@ const statement = async () => {
 										</p>
 									 </div>
 								  </div>
-								  <div class="text-tiny">Statement of Account for the Period: ${new Date(fromdate).toDateString()} <b> To </b> ${new Date(
-									todate
-									).toDateString()}
+								  <div class="text-tiny">Statement of Account for the Period: ${new Date(
+										fromdate
+									).toDateString()} <b> To </b> ${new Date(todate).toDateString()}
 								 </div>
 							   </div>
 							   <div class=" columns col-12 card p-1">
@@ -203,34 +183,37 @@ const statement = async () => {
 							</h6>
 
 						 </div>`
-						}
-					)
-				})
-			} catch (e) {
-				document.getElementById('output').remove
-				document.getElementById('output').innerHTML = `<div class="empty col-12 w100">
+					}
+				)
+			})
+		} catch (e) {
+			let idoutput = document.getElementById("output");
+			if (idoutput.parentNode){
+				idoutput.parentNode.removeChild()
+			}
+			
+			document.getElementById("output").innerHTML = `<div class="empty col-12 w100">
 				
 				<h4 class="empty-title h2 text-error">Stop Code 404</h4>
 				<p class="empty-title h2 text-error">Fail to get Header</p>
 				<p class="empty-subtitle">${e}</p>
 
 			</div>`
-			}
-			try {
-				await fetch(urlbody, bodyrequestOptions).then((response) => response.json()).then((payload) => {
-					if (payload === null){
-						document.getElementById('output2').innerHTML += 
-						`<tr>
+		}
+		try {
+			await fetch(urlbody, bodyrequestOptions).then((response) => response.json()).then((payload) => {
+				console.log(payload)
+				if (payload === null) {
+					document.getElementById('output2').innerHTML += `<tr>
 						<td class="text-tiny text-break" colspan="7"></td>
 						</tr>`
-					} else{
-						console.log(payload)
-						payload.map(({ TRANS_NO, TRANS_DATE, DR_AMT, CR_AMT, PARTICULAR }, index) => {
-							/* Calculatation*/
-							oprningbalance += CR_AMT
-							oprningbalance -= DR_AMT
-	
-							document.getElementById('output2').innerHTML += `<tr>
+				} else {
+					payload.map(({ TRANS_NO, TRANS_DATE, DR_AMT, CR_AMT, PARTICULAR }, index) => {
+						/* Calculatation*/
+						oprningbalance += CR_AMT
+						oprningbalance -= DR_AMT
+
+						document.getElementById('output2').innerHTML += `<tr>
 							<td>${index + 1}</td>
 							<td class="text-tiny text-break">${TRANS_DATE}</td>
 							<td class="text-tiny">${TRANS_NO}</td>
@@ -239,12 +222,13 @@ const statement = async () => {
 							<td class="text-tiny">${oprningbalance.toFixed(2)}</td>
 							<td class="text-tiny text-break">${PARTICULAR}</td>
 						</tr>`
-							total_dr += DR_AMT
-							total_cr += CR_AMT})
-					}
+						total_dr += DR_AMT
+						total_cr += CR_AMT
+					})
+				}
 
-					/* for table footer*/
-					document.getElementById('output2').lastElementChild.innerHTML = `
+				/* for table footer*/
+				document.getElementById('output2').lastElementChild.innerHTML = `
 			<tr class="active text-bold">
 			<td class="text-bold" colspan="3">Total</td>
 			<td class="text-bold text-tiny">${total_dr.toFixed(2)}</td>
@@ -253,28 +237,70 @@ const statement = async () => {
 			
 			<td colspan="1"></td>
 				</tr>`
-					printArea()
-					// document.getElementById('printbtn').classList.remove('disabled')
-				})
-			} catch (e) {
-				document.getElementById('output').remove
-				document.getElementById('output').innerHTML = `<div class="empty col-12 w100">
+				document.getElementById("loading").remove()
+				printArea()
+				// document.getElementById('printbtn').classList.remove('disabled')
+			})
+		} catch (e) {
+			let idoutput = document.getElementById("output");
+			if (idoutput.parentNode){
+				idoutput.parentNode.removeChild()
+			}
+			document.getElementById('output').innerHTML = `<div class="empty col-12 w100">
 				
 				<p class="empty-title h2 text-error">Stop Code 404</p>
 				<p class="empty-title h2 text-error">Fail to get Body</p>
 				<p class="empty-subtitle">${e}</p>
 
 			</div>`
-			}
-		} else{
-			document.getElementById('output').remove
-				document.getElementById('output').innerHTML = `<div class="empty col-12 w100">
-				
+		}
+	}
+
+
+
+
+
+
+/* This is the main function that generated the statement.
+*/
+const statement  = async () => {
+	document.getElementById("output").innerHTML = `<div id="loading" class="loading loading-lg"></div>`
+	const keyvalue = document.getElementById('key').value
+	/* Post request body content*/
+	const initurl = `${apiserver}/doexist`
+
+	const inithead = JSON.stringify({
+		key: `${keyvalue}`
+	})
+
+	const initrequestOptions = {
+		method: 'POST',
+		headers: myHeaders,
+		body: inithead,
+		redirect: 'follow'
+	}
+	try {
+		await fetch(initurl, initrequestOptions).then((response) => response.json()).then(async (payload) => {
+			payload.map(({ output }) => {
+				if (output != 0) {
+				 getstatement(keyvalue)
+				} else {
+					
+					document.getElementById('output').innerHTML = `<div class="empty col-12 w100">
 				<h4 class="empty-title h2 text-error">Account not found.</h4>
 				<p class="empty-title h2 text-error">You maybe miss spilled or account been rejected.</p>
-				
-
 			</div>`
+				}
+			})
+		})
+	} catch (e) {
+		let idoutput = document.getElementById("output");
+		if (idoutput.parentNode){
+			idoutput.parentNode.removeChild()
 		}
-	})
+		document.getElementById('output').innerHTML = `<div class="empty col-12 w100">
+		<h4 class="empty-title h2 text-error">Error Stop code 404!</h4>
+		<p class="empty-title h2 text-error">${e}.</p>
+	</div>`
+	}
 }
