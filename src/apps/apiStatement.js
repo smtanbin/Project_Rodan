@@ -59,13 +59,13 @@ const statementHead = async (date, key) => {
 const statementBody = async (fromdate, todate, key) => {
 	fromdate = oracleDate(fromdate)
 	todate = oracleDate(todate)
+	try{
 
-	const sql = `/* Formatted on 2/6/2022 6:52:24 AM (QP5 v5.374) */
-	SELECT P.CR_AMT,
-		   P.DR_AMT,
+	const sql = `/* Formatted on 2/13/2022 6:47:24 PM (QP5 v5.374) */
+	SELECT NVL (P.CR_AMT, 0)    CR_AMT,
+		   NVL (P.DR_AMT, 0)    DR_AMT,
 		   P.TRANS_NO,
 		   P.TRANS_DATE,
-	
 		   (CASE
 				WHEN CODE = 'RTGSC'
 				THEN
@@ -126,7 +126,8 @@ const statementBody = async (fromdate, todate, key) => {
 											FROM AGENT_BANKING.GL_TRANS_MST
 										  UNION
 										  SELECT *
-											FROM AGENT_BANKING.GL_TRANS_MST_old)WHERE TRANS_NO = P.TRANS_NO)
+											FROM AGENT_BANKING.GL_TRANS_MST_old)
+								   WHERE TRANS_NO = P.TRANS_NO)
 							 WHEN     (SELECT cc.HOTKEY
 										 FROM (SELECT *
 												 FROM AGENT_BANKING.GL_TRANS_MST
@@ -171,13 +172,13 @@ const statementBody = async (fromdate, todate, key) => {
 										WHERE cd.TRANS_NO = P.TRANS_NO) =
 									  P.MPHONE
 							 THEN
-								 (SELECT    'Fund Transfer to account '
-										 || TRANS_TO
+								 (SELECT 'Fund Transfer to account ' || TRANS_TO
 									FROM (SELECT *
 											FROM AGENT_BANKING.GL_TRANS_MST
 										  UNION
 										  SELECT *
-											FROM AGENT_BANKING.GL_TRANS_MST_old)  WHERE TRANS_NO = P.TRANS_NO)
+											FROM AGENT_BANKING.GL_TRANS_MST_old)
+								   WHERE TRANS_NO = P.TRANS_NO)
 							 WHEN     (SELECT cc.HOTKEY
 										 FROM (SELECT *
 												 FROM AGENT_BANKING.GL_TRANS_MST
@@ -202,7 +203,8 @@ const statementBody = async (fromdate, todate, key) => {
 											FROM AGENT_BANKING.GL_TRANS_MST
 										  UNION
 										  SELECT *
-											FROM AGENT_BANKING.GL_TRANS_MST_old)  WHERE TRANS_NO = P.TRANS_NO)
+											FROM AGENT_BANKING.GL_TRANS_MST_old)
+								   WHERE TRANS_NO = P.TRANS_NO)
 						 END),
 						P.PARTICULAR)
 				WHEN CODE NOT IN ('EFTC',
@@ -211,12 +213,13 @@ const statementBody = async (fromdate, todate, key) => {
 								  'CC')
 				THEN
 					P.PARTICULAR
-			END)    PARTICULAR
+			END)                PARTICULAR
 	  FROM (SELECT * FROM AGENT_BANKING.GL_TRANS_DTL
 			UNION
 			SELECT * FROM AGENT_BANKING.GL_TRANS_DTL_OLD) P
-	 WHERE MPHONE = '${key}' and code is not null and code not in ('GLGL')
-	  and trunc(TRANS_DATE) between '${fromdate}' and '${todate}' order by TRANS_DATE asc`
+	 WHERE     MPHONE = '${key}'
+		   AND TRUNC (TRANS_DATE) BETWEEN '${fromdate}' AND '${todate}' 
+  ORDER BY TRANS_NO ASC`
 // console.log(sql)
 const test = `/* Formatted on 2/6/2022 5:42:50 PM (QP5 v5.374) */
 SELECT D.BALANCE_MPHONE                         MPHONE,
@@ -250,13 +253,18 @@ SELECT D.BALANCE_MPHONE                         MPHONE,
    
   FROM (SELECT * FROM AGENT_BANKING.GL_TRANS_DTL UNION SELECT * FROM AGENT_BANKING.GL_TRANS_DTL) D
  WHERE     D.BALANCE_TYPE = 'M'
-       AND TO_DATE (TO_CHAR (D.TRANS_DATE, 'DD/MON/RRRR'), 'DD/MM/RRRR') BETWEEN '${fromdate}'
-                                                                             AND '${todate}'
+       AND TRUNC (TRANS_DATE) BETWEEN '${fromdate}' AND '${todate}'
        AND D.BALANCE_MPHONE = ${key}
 
-ORDER BY 3, TRANS_DATE ASC
---ORDER BY 3, TRANS_SL_NO ASC`
+
+ORDER BY 3, TRANS_SL_NO ASC`
+
 	return await qurrythis(sql)
+	  }catch(e){
+		  console.log(e)
+		  return e
+
+	  }
 }
 
 module.exports = { statementHead, statementBody }

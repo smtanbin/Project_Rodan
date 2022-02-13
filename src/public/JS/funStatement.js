@@ -1,5 +1,6 @@
 /*api server url is in environment file*/
 const apiserver = '/api/'
+
 /* Requesting part start here. */
 const myHeaders = new Headers()
 myHeaders.append('Content-Type', 'application/json')
@@ -37,12 +38,11 @@ const printArea = () => {
 
 	const getstatement = async (key) => {
 		// removeing old data if there just in case
-		let idoutput = document.getElementById("output");
-		if (idoutput.parentNode){
-			idoutput.parentNode.removeChild()
-		}
-		/*Checking account is existed in database. rejacted account also not count as account api/doexisist return boolien data.//#endregion*/
-
+		const output = document.getElementById("output")
+		while (output.hasChildNodes()) {  
+			output.removeChild(output.firstChild);
+		  }
+		
 		let fromdate = document.getElementById('fromdate').value
 		let todate = document.getElementById('todate').value
 		const printday = Date()
@@ -200,9 +200,9 @@ const printArea = () => {
 
 			</div>`
 		}
-		try {
+		// try {
 			await fetch(urlbody, bodyrequestOptions).then((response) => response.json()).then((payload) => {
-				console.log(payload)
+				
 				if (payload === null) {
 					document.getElementById('output2').innerHTML += `<tr>
 						<td class="text-tiny text-break" colspan="7"></td>
@@ -213,9 +213,14 @@ const printArea = () => {
 						oprningbalance += CR_AMT
 						oprningbalance -= DR_AMT
 
+						if (TRANS_DATE === null) {
+							document.getElementById('output2').innerHTML += `<tr>
+								<td class="text-tiny text-break" colspan="7"></td>
+								</tr>`}else{
+
 						document.getElementById('output2').innerHTML += `<tr>
 							<td>${index + 1}</td>
-							<td class="text-tiny text-break">${TRANS_DATE}</td>
+							<td class="text-tiny text-break">${moment(TRANS_DATE).format('LLL')}</td>
 							<td class="text-tiny">${TRANS_NO}</td>
 							<td class="text-tiny">${DR_AMT.toFixed(2)}</td>
 							<td class="text-tiny">${CR_AMT.toFixed(2)}</td>
@@ -224,7 +229,8 @@ const printArea = () => {
 						</tr>`
 						total_dr += DR_AMT
 						total_cr += CR_AMT
-					})
+					}
+				})
 				}
 
 				/* for table footer*/
@@ -237,25 +243,25 @@ const printArea = () => {
 			
 			<td colspan="1"></td>
 				</tr>`
-				document.getElementById("loading").remove()
-				printArea()
-				// document.getElementById('printbtn').classList.remove('disabled')
-			})
-		} catch (e) {
-			let idoutput = document.getElementById("output");
-			if (idoutput.parentNode){
-				idoutput.parentNode.removeChild()
-			}
-			document.getElementById('output').innerHTML = `<div class="empty col-12 w100">
+				document.getElementById("btn").classList.remove("loading");
+				document.getElementById("btnprint").classList.remove("disabled");
 				
-				<p class="empty-title h2 text-error">Stop Code 404</p>
-				<p class="empty-title h2 text-error">Fail to get Body</p>
-				<p class="empty-subtitle">${e}</p>
+			
+			})
+		// } catch (e) {
+		// 	document.getElementById("btn").classList.remove("loading");
+		// 	document.getElementById('output').innerHTML = `<div class="empty col-12 w100">
+				
+		// 		<p class="empty-title h2 text-error">Stop Code 404</p>
+		// 		<p class="empty-title h2 text-error">Fail to get Body</p>
+		// 		<p class="empty-subtitle">${e}</p>
 
-			</div>`
-		}
+		// 	</div>`
+		// }
 	}
-
+const stmtprint =() =>{
+	printArea()
+}
 
 
 
@@ -264,7 +270,9 @@ const printArea = () => {
 /* This is the main function that generated the statement.
 */
 const statement  = async () => {
-	document.getElementById("output").innerHTML = `<div id="loading" class="loading loading-lg"></div>`
+	/*Checking account is existed in database. rejacted account also not count as account api/doexisist return boolien data.//#endregion*/
+
+	document.getElementById("btn").classList.add("loading");
 	const keyvalue = document.getElementById('key').value
 	/* Post request body content*/
 	const initurl = `${apiserver}/doexist`
@@ -285,6 +293,7 @@ const statement  = async () => {
 				if (output != 0) {
 				 getstatement(keyvalue)
 				} else {
+					document.getElementById("btn").classList.remove("loading");
 					
 					document.getElementById('output').innerHTML = `<div class="empty col-12 w100">
 				<h4 class="empty-title h2 text-error">Account not found.</h4>
@@ -294,10 +303,8 @@ const statement  = async () => {
 			})
 		})
 	} catch (e) {
-		let idoutput = document.getElementById("output");
-		if (idoutput.parentNode){
-			idoutput.parentNode.removeChild()
-		}
+		document.getElementById("output").removeChild(firstChild);
+		document.getElementById("btn").classList.remove("loading");
 		document.getElementById('output').innerHTML = `<div class="empty col-12 w100">
 		<h4 class="empty-title h2 text-error">Error Stop code 404!</h4>
 		<p class="empty-title h2 text-error">${e}.</p>
