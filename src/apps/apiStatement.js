@@ -50,7 +50,7 @@ const statementHead = async (date, key) => {
 				   ADDR
 		  FROM AGENT_BANKING.REGINFO R
 		 WHERE MPHONE = ${key}`
-		//  console.log(sql)
+		
 		return await qurrythis(sql)
 	} catch (e) {
 		return e

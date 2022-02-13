@@ -1,22 +1,24 @@
 const qurrythis = require('./db')
 const { oracleDate } = require('./FunCore')
 
-const utilityreportpbslist = async () => {
-	const sql = `SELECT TRANS_SNAME
-	  FROM AGENT_BANKING.UTILITY_PAYMENT_INFO u
-	  where status = 'S'
-	  GROUP BY TRANS_SNAME
-	  ORDER BY TRANS_SNAME ASC`
-	return await qurrythis(sql)
+const pbslist = async () => {
+	try {
+		const sql = `SELECT TRANS_SNAME
+	FROM AGENT_BANKING.UTILITY_PAYMENT_INFO u
+	where status = 'S'
+	GROUP BY TRANS_SNAME
+	ORDER BY TRANS_SNAME ASC`
+		return await qurrythis(sql)
+	} catch (e) {
+		console.log(e)
+		return e
+	}
 }
 
-const utilityinfohead = async (date,key) => {
-	
-	try{
-		// console.log(date+"now")
+const utilityinfohead = async (date, key) => {
+	try {
 		date = oracleDate(date)
-		// console.log(date+"after")
-
+		
 		const sql = `/* Formatted on 2/3/2022 1:50:51 PM (QP5 v5.374) */
 		SELECT (SELECT NAME
 			FROM AGENT_BANKING.REGINFO
@@ -31,11 +33,12 @@ const utilityinfohead = async (date,key) => {
 			SNAME
 			FROM AGENT_BANKING.MERCHANT_CONFIG C
 			WHERE SNAME = '${key}'`
-			console.log(sql)
-	return await qurrythis(sql)
-} catch (e){
-	return 'Stop code: Qurry miss'
-}
+		
+		return await qurrythis(sql)
+	} catch (e) {
+		console.log(e)
+		return 'Stop code: Qurry miss'
+	}
 }
 const utilityinfodtl = async (fromdate, todate, key) => {
 	fromdate = oracleDate(fromdate)
@@ -71,4 +74,4 @@ const utilityinfosummary = async (from, to, key) => {
 	  --and TRANS_SNAME = ${key}`
 	return await qurrythis(sql)
 }
-module.exports = { utilityreportpbslist, utilityinfohead, utilityinfodtl }
+module.exports = { pbslist, utilityinfohead, utilityinfodtl }

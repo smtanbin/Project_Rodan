@@ -116,6 +116,7 @@ async function nooftrans(FROM, TO) {
 }
 
 const customerinfo = async (id) => {
+	try {
 	const sql = `/* Formatted on 1/27/2022 6:36:03 PM (QP5 v5.374) */
 	SELECT TO_CHAR (R.REG_DATE, 'MM/DD/YYYY')         REG_DATE,
 		   UPPER (
@@ -188,13 +189,16 @@ const customerinfo = async (id) => {
 		   MCHARGE_FLAG,
 		   EXCISE_DUE,
 		   (SELECT AC_IMG
-			  FROM AGENT_BANKING.IMAGE_REGINFO
-			 WHERE SL_NO = 1 AND AC_NO = R.MPHONE)    "IMGAE",
+			FROM AGENT_BANKING.IMAGE_REGINFO
+		   WHERE SL_NO = 1 AND AC_NO = R.MPHONE)    "IMGAE",
 		   COMPANY_AC_TYPE
 	  FROM AGENT_BANKING.REGINFO  R
 		   FULL OUTER JOIN AGENT_BANKING.CUSTIDINFO C ON R.CUST_ID = C.CUST_ID
 	 WHERE MPHONE = ${id}`
 	return await qurrythis(sql)
+} catch (e) {
+	return e
+}
 }
 const doexist = async (key) => {
 	try {

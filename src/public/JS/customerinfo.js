@@ -1,12 +1,15 @@
+/*api server url is in environment file*/
+const apiserver = 'http://127.0.0.1:80/api/'
+/* Requesting part start here. */
+const myHeaders = new Headers()
+myHeaders.append('Content-Type', 'application/json')
+myHeaders.append('Access-Control-Allow-Origin', '*')
+
 const custsearch = async () => {
-	const apiserver = 'http://127.0.0.1/api'
+	
 	const url = `${apiserver}/customerinfo`
 	let id = document.getElementById('acno').value
 	console.log(id)
-
-	// request
-	const myHeaders = new Headers()
-	myHeaders.append('Content-Type', 'application/json')
 
 	const raw = JSON.stringify({
 		id: `${id}`
@@ -76,6 +79,7 @@ const custsearch = async () => {
 								ID :<br />
 								TIN :,${TIN_NO}<br />
 								Religion: ${RELIGION}</p>
+								Photo: <img src:"${IMGAE}">
 						</div>
 						<div class="column col-12">
 						<br />
@@ -89,13 +93,13 @@ const custsearch = async () => {
 						<div class="column col-12">
 						<br />
 						<h4>Account Information</h4>
-
-						Account Type: ${CATEGORY}<br />
+												Account Type: ${CATEGORY}<br />
 						Account No: <spam class="text-bold text-primary">${MPHONE} </spam><br/>
 						<p>Product Code: ${AC_TYPE_CODE}<br/>
 						Agent: ${AGENT}[${AGENTAC}]</p>
 
 						</div>
+						
 					</div>
 					
 				</div>
@@ -118,6 +122,7 @@ const custsearch = async () => {
 						ID :<br />
 						TIN :,${TIN_NO}<br />
 						Religion: ${RELIGION}</p>
+						Photo: <img src:"${IMGAE}">
 				</div>
 			</div>
 		</div>

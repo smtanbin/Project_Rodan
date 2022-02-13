@@ -1,4 +1,6 @@
 /* Calling Oracle Database*/
+require('dotenv').config()
+
 const oracledb = require('oracledb')
 let connection
 
@@ -8,10 +10,12 @@ oracledb.outFormat = oracledb.OUT_FORMAT_OBJECT
 
 async function qurrythis(sqlqurry) {
 	try {
+		
 		connection = await oracledb.getConnection({
-			user: 'tanbin',
-			password: '@urA774234',
-			connectString: '10.130.102.103:1525/SBLABS'
+			
+			user: process.env.user,
+			password: process.env.password,
+			connectString: process.env.dburl
 		})
 		const result = await connection.execute(sqlqurry)
 		return result.rows

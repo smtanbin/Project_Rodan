@@ -1,20 +1,17 @@
 const { Router } = require('express')
 const { reginfo, nooftrans, customerinfo,doexist } = require('../apps/api.js')
-const { utilityreportpbslist, utilityinfohead, utilityinfodtl } = require('../apps/api_utilitybill.js')
+const { pbslist, utilityinfohead, utilityinfodtl } = require('../apps/api_utilitybill.js')
+const { remittancehouselist, remittance } = require('../apps/api_remittance')
 const { statementHead, statementBody } = require('../apps/apiStatement.js')
 const bodyParser = require('body-parser')
 const cors = require('cors')
 const app = Router()
 
 // Cors Config
-const whitelist = [ '*' ]
 const corsOptions = {
-  origin               : (origin, callback) => {
-    if (whitelist.indexOf(origin) !== -1 || !origin) callback(null, true)
-    else callback(new Error('Not allowed by CORS'))
-  },
-  optionsSuccessStatus : 200,
-}
+	origin: '*',
+	optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
+  }
 
 // Middlewares
 app.use(cors(corsOptions))
@@ -36,8 +33,9 @@ app.get('/test', async (req, res) => {
 	res.send('OK')
 })
 app.get('/utilityreportpbslist', async (req, res) => {
-	// const data = await utilityreportpbslist()
-	res.send(' ')
+
+	const data = await pbslist()
+	res.send(data)
 })
 /* Give the summary data */
 app.post('/utilityinfo', async (req, res) => {
@@ -68,7 +66,19 @@ app.post('/utilityinfodtl', async (req, res) => {
 		res.send('Stop by error! Check if its help:' + e)
 	}
 })
+/*Remittance*/
+app.get('/remittancehouselist', async (req, res) => {
+	const data = await remittancehouselist()
+	res.send(data)
+})
 
+app.post('/remittance', async (req, res) => {
+	const fromdate = req.body.fromdate
+	const todate = req.body.todate
+	const key = req.body.key
+	const data = await remittance(fromdate,todate,key)
+	res.send(data)
+})
 
 
 /* This will check if account existed */

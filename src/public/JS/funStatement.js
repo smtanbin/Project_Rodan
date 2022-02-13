@@ -1,5 +1,5 @@
 /*api server url is in environment file*/
-const apiserver = 'http://127.0.0.1/api'
+const apiserver = 'http://127.0.0.1:80/api/'
 /* Requesting part start here. */
 const myHeaders = new Headers()
 myHeaders.append('Content-Type', 'application/json')

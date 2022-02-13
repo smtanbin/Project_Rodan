@@ -5,13 +5,13 @@
             <a href="/">Home</a>
         </li>
         <li class="breadcrumb-item">
-            <a href="/report/utilityreport">Utility Report</a>
+            <a href="/report/remittanceReport">Remittance Report</a>
         </li>
 
     </ul>
     <div class="hero bg-gray">
         <div class="hero-body">
-            <h1 class="text-primary">Utility Report</h1>
+            <h1 class="text-primary">Remittance Report</h1>
         </div>
     </div>
     <div class="container">
@@ -21,12 +21,12 @@
             <input type="date" id="fromdate" class="form-input" placeholder="Type Account Number">
             <input type="date" id="todate" class="form-input" placeholder="Type Account Number">
             <div class="form-group">
-                <select class="form-select" id="uvanls">
-
+                <select class="form-select" id="list">
+                    `<option value="ALL">All</option>`
                 </select>
             </div>
 
-            <button class="btn btn-primary-link input-group-btn" onclick="utilityinfo()">Transaction Report
+            <button class="btn btn-primary-link input-group-btn" onclick="remittance()">Search
             </button>
 
         </div>
@@ -43,6 +43,6 @@
     </div>
     </div>
     </div>
-    <script src="/js/funUtilityReport.js"></script>
+    <script src="/js/funRemittance.js"></script>
 
 </main>

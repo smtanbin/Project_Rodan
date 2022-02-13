@@ -1,9 +1,13 @@
 const express = require('express')
+require('dotenv').config();
 const app = express()
 const path = require('path')
 const cors = require('cors')
 const apipath = require('./routes/index')
-app.use(cors ({origin:'*'}))
+const corsOptions = {
+	origin: '*',
+	optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
+  }
 
 app.use(express.static(__dirname + '/public'))
 app.set('views', path.join(__dirname, '/views'))
@@ -12,21 +16,11 @@ app.set('view engine', 'ejs')
 // use res.render to load up an ejs view file
 let autho = false
 
-// Cors Config
-// const whitelist = [ '*', 'http://10.140.8.126', 'http://10.140.8.125' ]
-// const corsOptions = {
-//   origin               : (origin, callback) => {
-//     if (whitelist.indexOf(origin) !== -1 || !origin) callback(null, true)
-//     else callback(new Error('Not allowed by CORS'))
-//   },
-//   methods: ['POST', 'GET', 'PATCH', 'DELETE', 'OPTIONS'],
-//   allowedHeaders: ['Content-Type', 'Authorization'],
-//   optionsSuccessStatus : 200,
-// }
+
 
 
 // Middelwears
-// app.use(cors(corsOptions))
+app.use(cors(corsOptions))
 
 app.get('/', function(req, res, next) {
 	if (autho === true) {
@@ -75,6 +69,12 @@ app.get('/report/accountStatment', function(req, res) {
 		title: 'Account Report'
 	}
 	res.render('pages/statement')
+})
+app.get('/report/remittanceReport', function(req, res) {
+	res.locals = {
+		title: 'Remittance Report'
+	}
+	res.render('pages/remittanceReport')
 })
 
 // API
