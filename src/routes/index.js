@@ -1,5 +1,5 @@
 const { Router } = require('express')
-const { reginfo, nooftrans, customerinfo,doexist } = require('../apps/api.js')
+const { timeline, nooftrans, customerinfo,doexist } = require('../apps/api.js')
 const { pbslist, utilityinfohead, utilityinfodtl } = require('../apps/api_utilitybill.js')
 const { remittancehouselist, remittance } = require('../apps/api_remittance')
 const { statementHead, statementBody } = require('../apps/apiStatement.js')
@@ -28,9 +28,9 @@ app.use((req, res, next) => {
 functions are currently imported from api_utilitybill.js */
 
 /* This will bring the list for dropdown*/
-app.get('/test', async (req, res) => {
-	console.log('first');
-	res.send('OK')
+app.get('/timeline', async (req, res) => {
+	const data = await timeline()
+	res.send(data)
 })
 app.get('/utilityreportpbslist', async (req, res) => {
 

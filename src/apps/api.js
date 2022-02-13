@@ -29,6 +29,18 @@ async function reginfo() {
 	const sql = `SELECT MPHONE "ACNO",NVL(PMPHONE,MPHONE) "AGENT",REG_STATUS,STATUS,BALANCE_M FROM AGENT_BANKING.reginfo`
 	return qurrythis(sql)
 }
+async function timeline() {
+	try{
+
+		const sql = `SELECT TRANS_NO,TRANS_DATE,TRANS_FROM,TRANS_TO,REF_PHONE,PAY_AMT,MERCHANT_SNAME,MSG_AMT,SCHARGE_AMT,PARTICULAR,CODE,NOTE
+		FROM AGENT_BANKING.GL_TRANS_MST
+		ORDER BY TRANS_NO DESC`
+		return qurrythis(sql)
+	} catch (e){
+		return e
+
+	}
+}
 async function nooftrans(FROM, TO) {
 	const sql = `(SELECT TRANS_FROM "PMPHONE",COUNT (TRANS_NO) "NO OF",SUM(PAY_AMT) "BALANCE",'PAYMENT' TYPE FROM AGENT_BANKING.GL_TRANS_MST_OLD GLD WHERE TRUNC (TRANS_DATE) BETWEEN '${FROM}' AND '${TO}' AND TRANS_FROM IN (  SELECT PMPHONE
 		FROM AGENT_BANKING.REGINFO GROUP BY PMPHONE) AND FROM_CAT_ID = 'D' AND TO_CAT_ID = 'U' GROUP BY TRANS_FROM)UNION ALL(SELECT TRANS_FROM "PMPHONE",COUNT (TRANS_NO),SUM (PAY_AMT) "BALANCE",'DEPOSIT' TYPE FROM AGENT_BANKING.GL_TRANS_MST_OLD GLD
@@ -217,4 +229,4 @@ const doexist = async (key) => {
 	}
 }
 
-module.exports = { reginfo, nooftrans, customerinfo,doexist }
+module.exports = { timeline, nooftrans, customerinfo,doexist,timeline }
