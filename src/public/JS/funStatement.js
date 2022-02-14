@@ -1,6 +1,6 @@
 /*api server url is in environment file*/
 const apiserver = '/api/'
-
+// const STATE = null
 /* Requesting part start here. */
 const myHeaders = new Headers()
 myHeaders.append('Content-Type', 'application/json')
@@ -88,13 +88,33 @@ globalFunction
 						},
 						index
 					) => {
+						
+						// if (STATUS = 'Active'){ 
+						// 	STATE = `<span class='text-success'>Active</span>`
+						// }
+						// if (STATUS = 'DID'){ 
+						// 	STATE = `<span class='text-warning'>DID</span>`
+						// }
+						// if (STATUS = 'Close'){ 
+						// 	STATE = `<span class='text-error'>DID</span>`
+						// } else {STATE = `<span>${STATUS}</span>`}
 						oprningbalance = BALANCE
+
 
 						document.getElementById('output').innerHTML += `<div class="col-12 p-2">
 							<div class="px-2 container">
 							
 							
-							<img src="/img/sblnewfull.png" style="hight:" 30px";" class="img-responsive p-2 column p-centered col-4">
+							<div class="columns col-gapless py-1">
+								<div class="column col-8">
+									<img src="/img/sblnewfull.png" style="hight:" 25px";" class="img-responsive p-2 column col-4">
+								</div>
+								<div class="column container col-4">Agent Banking Division<br/>
+									<span style="font-size:11px;" class="text-gray m-0 text-right">
+										Metropolitan Chamber Building (3rd Floor) 122-124 Motijheel C/A, Dhaka-1000, Bangladesh <br/>Tel:+8802-9578385 +8801 709-654772 Email: agentbanking@standardbankbd.com
+								</span>
+								</div>
+							</div>
 							
 							
 
@@ -107,6 +127,7 @@ globalFunction
 										<b>Account No: </b>${MPHONE} <br/>	
 										<b>Address :</b> ${ADDR}<br />
 										<b>Contact :</b> +88${CON_MOB}<br />
+										<b>Currency : </b>BDT<br />
 										<b>Status : </b>${STATUS}
 										</p>
 										</div>
@@ -152,17 +173,14 @@ globalFunction
 									 </tbody>
 								  </table>
 							   </div>
-							</div>
+							</>
 							<div class="col-12 w100  p-2 mt-2 text-tiny">
 							   <b>Print Date:</b> ${printday}
-							   <p class="p-centered text-small">Standard Bank Ltd. <br />Agent Banking Division, Head Office
-								  Metropolitan Chamber Building (3rd Floor) 122-124 Motijheel C/A, Dhaka-1000, Bangladesh<br />
-								  Telephone +8802223358385 ,+8802223385106 Email:agentbanking@standardbankbd.com Web: www.standardbankbd.com
+							   <p class="p-centered text-small">This is an electronically generated report, hence does not require a signature.
 							   </p>
 							</div>
-							<h6 class="p-centered text-tiny">This is an electronically generated report, hence does not require a signature.
-							</h6>
-
+							
+							<div class="text-center p-centered text-gray">Copyright © standardbankbd.com</div>
 						 </div>`
 					}
 				)
