@@ -2,6 +2,7 @@ const { Router } = require('express')
 const { timeline, nooftrans, customerinfo,doexist } = require('../apps/api.js')
 const { pbslist, utilityinfohead, utilityinfodtl } = require('../apps/api_utilitybill.js')
 const { remittancehouselist, remittance } = require('../apps/api_remittance')
+const { transactionsreport } = require('../apps/api_transactionsreport')
 const { statementHead, statementBody } = require('../apps/apiStatement.js')
 const bodyParser = require('body-parser')
 const cors = require('cors')
@@ -23,15 +24,19 @@ app.use((req, res, next) => {
   res.header('Access-Control-Allow-Methods', [ 'GET', 'POST', 'PATCH', 'DELETE' ])
   next()
 })
+/*Timeline*/
+
+app.get('/timeline', async (req, res) => {
+	const data = await timeline()
+	res.send(data)
+})
+
+
 
 /* Utility info All utility realated apis data 
 functions are currently imported from api_utilitybill.js */
 
 /* This will bring the list for dropdown*/
-app.get('/timeline', async (req, res) => {
-	const data = await timeline()
-	res.send(data)
-})
 app.get('/utilityreportpbslist', async (req, res) => {
 
 	const data = await pbslist()
@@ -66,6 +71,11 @@ app.post('/utilityinfodtl', async (req, res) => {
 		res.send('Stop by error! Check if its help:' + e)
 	}
 })
+
+
+
+
+
 /*Remittance*/
 app.get('/remittancehouselist', async (req, res) => {
 	const data = await remittancehouselist()
@@ -90,8 +100,7 @@ app.post('/doexist', async (req, res) => {
 
 
 
-/* Account Statment Part starts here
-currently there are 2 api 
+/* Account Statment Part
 */
 
 /* Give the summary data */
@@ -114,25 +123,21 @@ app.post('/statementbody', async (req, res) => {
 	}
 })
 
-app.post('/numberoftrans', async (req, res) => {
-	const from = req.body.from
-	const to = req.body.to
-	console.log(req)
+/* transactionsreport*/
 
-	const data = await nooftrans(from, to)
-	res.send(data)
-})
-app.get('/numberoftrans', async (req, res) => {
-	console.log(req)
-
-	const data = await nooftrans('01-dec-2021', '31-dec-2021')
-	res.send(data)
+app.post('/transactionsreport', async (req, res) => {
+	res.status(200)
+	try {
+		const data = await transactionsreport(req.body.key)
+		res.send(data)
+	} catch (e) {
+		res.status(400)
+		res.send('Stop by error! Check if its help:' + e)
+	}
 })
 
-app.get('/customerinfo', async (req, res) => {
-	const data = await customerinfo(10834000654)
-	res.send(data)
-})
+
+
 
 app.post('/customerinfo', async (req, res) => {
 	const data = await customerinfo(req.body.id)

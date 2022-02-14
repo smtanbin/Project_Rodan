@@ -111,10 +111,16 @@ const utilityinfo = async () => {
 				REVBAL_TOTAL = REVBAL
 				VATBAL_TOTAL = VATBAL
 				document.getElementById('output').innerHTML += `<div class="col-12 p-2">
-    <div class="p-2 container p-centered">
-        <div class="card w100 columns col-12 p-1 bg-gray">
-            <img src="/img/sblnewfull.png" style="hight:" 30px";" class="img-responsive column p-centered col-4">
-            <h5 class="p-centered text-small">Agent Banking Division</h5>
+				<div class="px-2 container">
+							
+							
+				<div class="columns col-gapless py-1">
+					<div class="column col-8">
+						<img src="/img/sblnewfull.png" style="hight:" 30px";" class="img-responsive p-2 column col-5">
+					</div>
+					<div class="column container col-4">Agent Banking Division<br/>
+					</div>
+				</div>
             <h6 class="p-centered text-tiny my-2">Utility Colllection Report</h6>
             <div class="columns px-2">
                 <div class="column float-left text-tiny ">
@@ -155,16 +161,18 @@ const utilityinfo = async () => {
 
                 </div>
             </div>
-            <div class="col-12 w100  p-2 mt-2 text-tiny">
+        
+			<div class="col-12 w100  p-2 mt-2 text-tiny">
 			<b>Print Date:</b> ${printday}
-                <p class="p-centered text-small">Standard Bank Ltd. <br />Agent Banking Division, Head Office
-                    Metropolitan Chamber Building (3rd Floor) 122-124 Motijheel C/A, Dhaka-1000, Bangladesh<br />
-                    Telephone +8802223358385 ,+8802223385106 Email:agentbanking@standardbankbd.com Web: www.standardbankbd.com
-                </p>
-            </div>
-            <h6 class="p-centered text-tiny">This is an electronically generated report, hence does not require a signature.
-            </h6>
-            Copyright © Standard Bank Ltd.
+			<p class="p-centered text-small">This is an electronically generated report, hence does not require a signature.
+			</p>
+		 </div>
+		 
+		 <div class="text-center p-centered text-gray">
+		 <span class="text-tiny">
+		 Metropolitan Chamber Building (3rd Floor) 122-124 Motijheel C/A, Dhaka-1000, Bangladesh <br/>Tel:+8802-9578385 +8801 709-654772 Email: agentbanking@standardbankbd.com
+ 			</span>
+		 <br/>Copyright © standardbankbd.com</div>
         </div>
 
     </div>`})
@@ -186,15 +194,22 @@ const utilityinfo = async () => {
 	
 		await fetch(urlbody, bodyrequestOptions).then((response) => response.json()).then((payload) => {
 			if (payload === null){
-				document.getElementById('output2').innerHTML += 
+				document.getElementById('output2').innerHTML = 
 				`<tr>
 				<td class="text-tiny text-break" colspan="9">No Bill Found</td>
 				</tr>`
 			} else{
-			payload.map(({ ENTRY_DATE, TRANS_NO, TRANS_AMT, VAT_AMT, STAMP_AMT, ACNO, BOOKNO, MONTH }, index) => {
-				document.getElementById('output2').innerHTML += `<tr>
+				document.getElementById('output2').innerHTML = payload.map(({ ENTRY_DATE, TRANS_NO, TRANS_AMT, VAT_AMT, STAMP_AMT, ACNO, BOOKNO, MONTH }, index) => {
+								
+					/* Calculatation*/
+					TRANS_AMT_TOTAL += TRANS_AMT
+					VAT_AMT_TOTAL += VAT_AMT
+					if (STAMP_AMT !== null && STAMP_AMT != 0) {
+									STAMP_AMT_TOTAL += 1}
+									
+				return `<tr>
 				<td>${index + 1}</td>
-				<td class="text-tiny text-break">${new Date(ENTRY_DATE).toDateString()}</td>
+				<td class="text-tiny text-break">${moment(ENTRY_DATE).format('LLL')}</td>
 				<td class="text-tiny text-break">${TRANS_NO}</td>
 				<td class="text-tiny">${(TRANS_AMT - VAT_AMT).toFixed(2)}</td>
 				<td class="text-tiny">${VAT_AMT.toFixed(2)}</td>
@@ -205,13 +220,8 @@ const utilityinfo = async () => {
 				<td class="text-tiny">${MONTH}</td>
 		 	</tr>`
 
-				/* Calculatation*/
-				TRANS_AMT_TOTAL += TRANS_AMT
-				VAT_AMT_TOTAL += VAT_AMT
-				if (STAMP_AMT !== null && STAMP_AMT != 0) {
-					STAMP_AMT_TOTAL += 1
-				}
-			})
+
+			}).join('')
 			
 			/* Bill Summary */
 			
@@ -229,7 +239,7 @@ const utilityinfo = async () => {
 		}
 		})
 		/* for table footer*/
-		document.getElementById('output2').lastElementChild.innerHTML = `
+		document.getElementById('output2').innerHTML += `
 		<tr class="active text-bold">
 		<td class="text-bold" colspan="3">Total</td>
 		

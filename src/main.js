@@ -50,6 +50,12 @@ app.get('/', function(req, res) {
 	res.render('index')
 })
 
+app.get('/timeline', function(req, res) {
+	res.locals = {
+		title: 'Timeline'
+	}
+	res.render('pages/timeline')
+})
 
 // registration
 app.get('/report/customerInfo', function(req, res) {
@@ -75,6 +81,12 @@ app.get('/report/remittanceReport', function(req, res) {
 		title: 'Remittance Report'
 	}
 	res.render('pages/remittanceReport')
+})
+app.get('/report/transactionsReport', function(req, res) {
+	res.locals = {
+		title: 'Transactions Report'
+	}
+	res.render('pages/transactionsReport')
 })
 
 // API

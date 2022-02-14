@@ -55,7 +55,7 @@ const utilityinfodtl = async (fromdate, todate, key) => {
 		   UPPER(u.BILL_INFO_3) MONTH
 	  FROM AGENT_BANKING.UTILITY_PAYMENT_INFO u
 	  where status = 'S' and trunc(entry_date) between '${fromdate}' and '${todate}'
-	  and TRANS_SNAME = '${key}'`
+	  and TRANS_SNAME = '${key}' order by ENTRY_DATE`
 
 	return await qurrythis(sql)
 }
