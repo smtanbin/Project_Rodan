@@ -86,15 +86,7 @@ const getstatement = async (key) => {
 					},
 					index
 				) => {
-					// if (STATUS = 'Active'){
-					// 	STATE = `<span class='text-success'>Active</span>`
-					// }
-					// if (STATUS = 'DID'){
-					// 	STATE = `<span class='text-warning'>DID</span>`
-					// }
-					// if (STATUS = 'Close'){
-					// 	STATE = `<span class='text-error'>DID</span>`
-					// } else {STATE = `<span>${STATUS}</span>`}
+
 					oprningbalance = BALANCE
 
 					document.getElementById('output').innerHTML += `<div class="col-12 p-2">
@@ -105,7 +97,7 @@ const getstatement = async (key) => {
 								<div class="column col-8">
 									<img src="/img/sblnewfull.png" style="hight:" 25px";" class="img-responsive p-2 column col-5">
 								</div>
-								<div class="column container col-4">Agent Banking Division<br/>
+								<div class="column container col-4">Agent Banking<br/>
 							
 								</div>
 							</div>
@@ -141,8 +133,8 @@ const getstatement = async (key) => {
 									).toDateString()} <b> To </b> ${new Date(todate).toDateString()}
 								 </div>
 							   </div>
-							   <div class=" columns col-12 card p-1">
-							   <!--  <table class="table table-striped"> -->
+							   <div class="columns col-12 card p-1">
+							 
 								   <table class="table table-striped table-cluster">
 									 <thead>
 										<tr>
@@ -165,7 +157,7 @@ const getstatement = async (key) => {
 									 <tr id="output3"></tr>
 								  </table>
 							   </div>
-							</>
+							</div>
 							<div class="col-12 w100  p-2 mt-2 text-tiny">
 							   <b>Print Date:</b> ${printday}
 							   <p class="p-centered text-small">This is an electronically generated report, hence does not require a signature.
@@ -221,21 +213,17 @@ const getstatement = async (key) => {
 						</tr>`
 				})
 				.join('')
-		}
-		/* for table footer*/
-		document.getElementById(
-			'output3'
-		).innerHTML = payload.map(({ TRANS_NO, TRANS_DATE, DR_AMT, CR_AMT, PARTICULAR }, index) => {
-			/* Calculatation*/
-			return `
-					
-					<td class="text-bold" colspan="3">Total</td>
+/* for table footer*/
+				document.getElementById('output2').innerHTML +=
+				`<td class="text-bold" colspan="3">Total</td>
 					<td class="text-bold text-tiny">${total_dr.toFixed(2)}</td>
 					<td class="text-bold text-tiny">${total_cr.toFixed(2)}</td>
 					<td class="text-bold text-tiny">${oprningbalance.toFixed(2)}</td>
-					<td colspan="1"></td>
-					`
-		})
+					<td colspan="1"></td>`
+		}
+		
+		
+		
 
 		document.getElementById('btn-loading').classList.remove('loading')
 		document.getElementById('btnprint').classList.remove('disabled')
