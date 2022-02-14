@@ -1,5 +1,6 @@
 const { Router } = require('express')
-const { timeline, nooftrans, customerinfo,doexist } = require('../apps/api.js')
+const {nooftrans, customerinfo,doexist } = require('../apps/api.js')
+const {timeline} = require('../apps/api_timeline')
 const { pbslist, utilityinfohead, utilityinfodtl } = require('../apps/api_utilitybill.js')
 const { remittancehouselist, remittance } = require('../apps/api_remittance')
 const { transactionsreport } = require('../apps/api_transactionsreport')

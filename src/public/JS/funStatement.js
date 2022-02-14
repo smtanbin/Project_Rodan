@@ -16,11 +16,7 @@ globalFunction
 */
 
 const getstatement = async (key) => {
-	// removeing old data if there just in case
-	const output = document.getElementById('output')
-	while (output.hasChildNodes()) {
-		output.removeChild(output.firstChild)
-	}
+
 
 	let fromdate = document.getElementById('fromdate').value
 	let todate = document.getElementById('todate').value
@@ -89,7 +85,7 @@ const getstatement = async (key) => {
 
 					oprningbalance = BALANCE
 
-					document.getElementById('output').innerHTML += `<div class="col-12 p-2">
+					document.getElementById('output').innerHTML = `<div class="col-12 p-2">
 							<div class="px-2 container">
 							
 							

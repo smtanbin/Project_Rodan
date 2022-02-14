@@ -172,7 +172,7 @@ const custPrint = async () => {
 				BALANCE,
 				LIEN_M,
 				NAME,
-				IMGAE,
+				IMGAE,LINK_AC,
 				FATHER_NAME,
 				MOTHER_NAME,
 				SPOUSE_NAME,
@@ -240,6 +240,7 @@ const custPrint = async () => {
 						Account Type: ${CATEGORY}<br />
 						Account No: <spam class="text-bold text-primary">${MPHONE} </spam><br/>
 						<p>Product Code: ${AC_TYPE_CODE}<br/>
+						<p>Link AC: ${LINK_AC}<br/>
 						Agent: ${AGENT}[${AGENTAC}]</p>
 
 						</div>

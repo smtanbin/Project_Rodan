@@ -1,3 +1,13 @@
+@font-face {
+	font-family: 'RobotoSlab';
+	src: url('./font/RobotoSlab-Regular.ttf');
+	font-weight: normal;
+	font-style: normal;
+}
+* {
+	font-family: 'Roboto Slab', serif;
+}
+
 :root {
 	--frost: rgba(255, 255, 255, 0.7);
 	--default-bg-blur: blur(10px);

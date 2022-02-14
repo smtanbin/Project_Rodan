@@ -37,8 +37,8 @@ It connect via url which request recived by routes/index as rest Post request
 Then it call api_utilitybill from apps folder.
 */
 const utilityinfo = async () => {
-	// removeing old data if there just in case
-	document.getElementById('output').remove
+	document.getElementById('btn-loading').classList.add('loading')
+
 	/*Constracting Url*/
 	
 	const key = document.getElementById('uvanls').value
@@ -110,7 +110,7 @@ const utilityinfo = async () => {
 			payload.map(({ TITEL,REVAC,VATAC,REVBAL,VATBAL,BILL_TITLE_1,BILL_TITLE_2,BILL_TITLE_3 }, index) => {
 				REVBAL_TOTAL = REVBAL
 				VATBAL_TOTAL = VATBAL
-				document.getElementById('output').innerHTML += `<div class="col-12 p-2">
+				document.getElementById('output').innerHTML = `<div class="col-12 p-2">
 				<div class="px-2 container">
 							
 							
@@ -252,8 +252,8 @@ const utilityinfo = async () => {
 	
 
 	</tr>`
-		printArea()
-		// document.getElementById('printbtn').classList.remove('disabled')
+	document.getElementById('btn-loading').classList.remove('loading')
+		document.getElementById('btn-print').classList.remove('disabled')
 	
 	
 } catch (e) {

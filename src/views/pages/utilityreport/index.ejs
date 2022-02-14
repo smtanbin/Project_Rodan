@@ -1,4 +1,4 @@
-<main class="content">
+<main class="content m-2">
 
     <ul class="breadcrumb">
         <li class="breadcrumb-item">
@@ -9,12 +9,12 @@
         </li>
 
     </ul>
-    <div class="hero bg-gray">
+    <div data-aos="zoom-out" class="hero-sm bg-white my-2">
         <div class="hero-body">
             <h1 class="text-primary">Utility Report</h1>
         </div>
     </div>
-    <div class="container">
+    <div data-aos="zoom-out" class="container">
         <!-- normal input group with button -->
         <div class="input-group">
 
@@ -26,11 +26,12 @@
                 </select>
             </div>
 
-            <button class="btn btn-primary-link input-group-btn" id="btn-loading" onclick="utilityinfo()"
+            <button class="btn btn-primary input-group-btn" id="btn-loading" onclick="utilityinfo()"
                 id="btnloading">Transaction
                 Report
             </button>
-
+            <button class="btn btn-primary input-group-btn disabled" id="btn-print" onclick="printArea()">Print
+            </button>
         </div>
 
     </div>

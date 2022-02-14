@@ -168,6 +168,7 @@ const customerinfo = async (id) => {
 		   C.DOB                                      DOB,
 		   C.EDUCATION,
 		   SIM_NO,
+		   R.LINK_AC
 		   R.TIN_NO,
 		   FORM_SERIAL,
 		   FIRST_NOMINEE_NAME,
