@@ -6,7 +6,7 @@ myHeaders.append('Content-Type', 'application/json')
 myHeaders.append('Access-Control-Allow-Origin', '*')
 
 const custsearch = async () => {
-	
+	document.getElementById("btn-loading").classList.add("loading");
 	const url = `${apiserver}/customerinfo`
 	let id = document.getElementById('acno').value
 	console.log(id)
@@ -274,4 +274,5 @@ const custPrint = async () => {
 `)
 		})
 	})
+	document.getElementById("btn-loading").classList.remove("loading");
 }

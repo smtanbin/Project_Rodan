@@ -12,27 +12,8 @@ Then it call apistatement.js from apps folder.
 */
 
 /* Printing Dialog and window genarated by this function. 
-Remember: #output must be loaded
+globalFunction
 */
-const printArea = () => {
-	const head = `        <head>
-	<meta charset="UTF-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<link href="/style/aos/aos.css" rel="stylesheet">
-	<link rel="stylesheet" href="/style/styles.css">
-	<link rel="stylesheet" href="/style/spectre/spectre.min.css">
-	<link rel="stylesheet" href="/style/spectre/spectre-icons.min.css">
-	<link rel="stylesheet" href="/style/spectre/spectre-exp.min.css">
-  </head>`
-	const printContent = document.getElementById('output')
-	const WinPrint = window.open('', '', 'width=3508px,height=2480px')
-	WinPrint.document.write(head + printContent.innerHTML)
-	WinPrint.document.close()
-	WinPrint.focus()
-	//Bring out the print popup
-	WinPrint.print()
-}
 
 
 
@@ -243,7 +224,7 @@ const printArea = () => {
 			
 			<td colspan="1"></td>
 				</tr>`
-				document.getElementById("btn").classList.remove("loading");
+				document.getElementById("btn-loading").classList.remove("loading");
 				document.getElementById("btnprint").classList.remove("disabled");
 				
 			
@@ -272,7 +253,7 @@ const stmtprint =() =>{
 const statement  = async () => {
 	/*Checking account is existed in database. rejacted account also not count as account api/doexisist return boolien data.//#endregion*/
 
-	document.getElementById("btn").classList.add("loading");
+	document.getElementById("btn-loading").classList.add("loading");
 	const keyvalue = document.getElementById('key').value
 	/* Post request body content*/
 	const initurl = `${apiserver}/doexist`
@@ -293,7 +274,7 @@ const statement  = async () => {
 				if (output != 0) {
 				 getstatement(keyvalue)
 				} else {
-					document.getElementById("btn").classList.remove("loading");
+					document.getElementById("btn-loading").classList.remove("loading");
 					
 					document.getElementById('output').innerHTML = `<div class="empty col-12 w100">
 				<h4 class="empty-title h2 text-error">Account not found.</h4>
@@ -304,7 +285,7 @@ const statement  = async () => {
 		})
 	} catch (e) {
 		document.getElementById("output").removeChild(firstChild);
-		document.getElementById("btn").classList.remove("loading");
+		document.getElementById("btn-loading").classList.remove("loading");
 		document.getElementById('output').innerHTML = `<div class="empty col-12 w100">
 		<h4 class="empty-title h2 text-error">Error Stop code 404!</h4>
 		<p class="empty-title h2 text-error">${e}.</p>
