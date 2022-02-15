@@ -47,7 +47,11 @@ const timeline = async () => {
 			<td class="text-tiny text-clip" py-1>${FROM_GL}</td>
 			<td class="text-tiny" py-1>${TRANS_TO}</td>
 			<td class="text-tiny text-clip" py-1>${TO_GL}</td>
-			<td class="text-tiny text-success text-clip py-1">${PAY_AMT}</td>
+			<td class="text-tiny text-success text-clip py-1">${PAY_AMT.toLocaleString('en-BD', {
+				maximumFractionDigits: 2,
+				style: 'currency',
+				currency: 'BDT'
+			})}</td>
 			<td class="text-tiny py-1">${MERCHANT_SNAME}</td>
 			<td class="text-tiny py-1">${REF_PHONE}</td>
 			<td class="text-tiny py-1">${PARTICULAR}</td>
@@ -129,10 +133,26 @@ const model = async (trno) => {
 		</p>
 		<h6 class="text-primary h6">Amount</h6>
 		<p>
-		<b>Total Amount:</b> ${PAY_AMT}<br/>
-		<b>Amount:</b> ${MSG_AMT}<br/>
-		<b>Charge:</b> ${SCHARGE_AMT}<br/>
-		<b>Vat:</b> ${VAT_AMT}<br/>
+		<b>Total Amount:</b> ${PAY_AMT.toLocaleString('en-BD', {
+			maximumFractionDigits: 2,
+			style: 'currency',
+			currency: 'BDT'
+		})}<br/>
+		<b>Amount:</b> ${MSG_AMT.toLocaleString('en-BD', {
+			maximumFractionDigits: 2,
+			style: 'currency',
+			currency: 'BDT'
+		})}<br/>
+		<b>Charge:</b> ${SCHARGE_AMT.toLocaleString('en-BD', {
+			maximumFractionDigits: 2,
+			style: 'currency',
+			currency: 'BDT'
+		})}<br/>
+		<b>Vat:</b> ${VAT_AMT.toLocaleString('en-BD', {
+			maximumFractionDigits: 2,
+			style: 'currency',
+			currency: 'BDT'
+		})}<br/>
 		</p>
 		<h6 class="text-primary h6">Authorization</h6>
 		<p>
@@ -178,8 +198,6 @@ const search = () => {
 	tr = table.getElementsByTagName('tr')
 	for (i = 0; i < tr.length; i++) {
 		td = tr[i].getElementsByTagName('td')[1]
-		td = tr[i].getElementsByTagName('td')[2]
-		td = tr[i].getElementsByTagName('td')[4]
 
 		if (td) {
 			txtValue = td.textContent || td.innerText

@@ -206,18 +206,36 @@ const getstatement = async (key) => {
 						<td>${index + 1}</td>
 						<td class="text-tiny text-break">${moment(TRANS_DATE).format('lll')}</td>
 						<td class="text-tiny text-clip">${TRANS_NO}</td>
-						<td class="text-tiny">${DR_AMT.toFixed(2)}</td>
-						<td class="text-tiny">${CR_AMT.toFixed(2)}</td>
-						<td class="text-tiny ">${oprningbalance.toFixed(2)}</td>
+						<td class="text-tiny">${DR_AMT.toLocaleString('en-BD', {
+							maximumFractionDigits: 2
+						})}</td>
+						<td class="text-tiny">${CR_AMT.toLocaleString('en-BD', {
+							maximumFractionDigits: 2
+						})}</td>
+						<td class="text-tiny ">${oprningbalance.toLocaleString('en-BD', {
+							maximumFractionDigits: 2
+						})}</td>
 						<td class="text-tiny text-break">${PARTICULAR}</td>
 						</tr>`
 				})
 				.join('')
 			/* for table footer*/
 			document.getElementById('output2').innerHTML += `<td class="text-bold" colspan="3">Total</td>
-					<td class="text-bold text-tiny">${total_dr.toFixed(2)}</td>
-					<td class="text-bold text-tiny">${total_cr.toFixed(2)}</td>
-					<td class="text-bold text-tiny">${oprningbalance.toFixed(2)}</td>
+					<td class="text-bold text-tiny">${total_dr.toLocaleString('en-BD', {
+						maximumFractionDigits: 2,
+						style: 'currency',
+						currency: 'BDT'
+					})}</td>
+					<td class="text-bold text-tiny">${total_cr.toLocaleString('en-BD', {
+						maximumFractionDigits: 2,
+						style: 'currency',
+						currency: 'BDT'
+					})}</td>
+					<td class="text-bold text-tiny">${oprningbalance.toLocaleString('en-BD', {
+						maximumFractionDigits: 2,
+						style: 'currency',
+						currency: 'BDT'
+					})}</td>
 					<td colspan="1"></td>`
 		}
 
@@ -234,9 +252,6 @@ const getstatement = async (key) => {
 
 	// 	</div>`
 	// }
-}
-const stmtprint = () => {
-	printArea()
 }
 
 /* This is the main function that generated the statement.

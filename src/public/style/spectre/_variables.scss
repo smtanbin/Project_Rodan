@@ -4,8 +4,13 @@ $version: "0.5.9";
 // Core features
 $rtl: false !default;
 
-// Core colors
+// Color List 
 // $primary-color: #112D32 !default;
+// $primary-color: #007AFF !default;
+// SBL Color
+// $primary-color: #003616 !default;
+
+// Core colors
 $primary-color: #007AFF !default;
 $primary-color-dark: darken($primary-color, 3%) !default;
 $primary-color-light: lighten($primary-color, 3%) !default;

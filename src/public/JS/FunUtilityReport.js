@@ -124,7 +124,7 @@ const utilityinfo = async () => {
 					<b>Revenue Account:</b> ${REVAC}<br />
 					<b>VAT Account :</b> ${VATAC}<br />
 					
-					<b>From :</b> ${new Date(fromdate).toDateString()} <br /><b>To :</b> ${new Date(todate).toDateString()}</p>
+					<b>From :</b> ${moment(fromdate).format('LLL')} <br /><b>To :</b> ${moment(todate).format('LLL')}</p>
                 </div>
                 <div class="divider-vert">
                 </div>
@@ -157,7 +157,7 @@ const utilityinfo = async () => {
             </div>
         
 			<div class="col-12 w100  p-2 mt-2 text-tiny">
-			<b>Print Date:</b> ${printday}
+			<b>Print Date:</b> ${moment(printday).format('LLL')}
 			<p class="p-centered text-small">This is an electronically generated report, hence does not require a signature.
 			</p>
 		 </div>
@@ -210,10 +210,18 @@ const utilityinfo = async () => {
 				<td>${index + 1}</td>
 				<td class="text-tiny text-break">${moment(ENTRY_DATE).format('LLL')}</td>
 				<td class="text-tiny text-break">${TRANS_NO}</td>
-				<td class="text-tiny">${(TRANS_AMT - VAT_AMT).toFixed(2)}</td>
-				<td class="text-tiny">${VAT_AMT.toFixed(2)}</td>
-				<td class="text-tiny">${STAMP_AMT}</td>
-				<td class="text-tiny">${TRANS_AMT.toFixed(2)}</td>
+				<td class="text-tiny">${(TRANS_AMT - VAT_AMT).toLocaleString('en-BD', {
+					maximumFractionDigits: 2
+				})}</td>
+				<td class="text-tiny">${VAT_AMT.toLocaleString('en-BD', {
+					maximumFractionDigits: 2
+				})}</td>
+				<td class="text-tiny">${STAMP_AMT.toLocaleString('en-BD', {
+					maximumFractionDigits: 2
+				})}</td>
+				<td class="text-tiny">${TRANS_AMT.toLocaleString('en-BD', {
+					maximumFractionDigits: 2
+				})}</td>
 				<td class="text-tiny">${BOOKNO}</td>
 				<td class="text-tiny">${ACNO}</td>
 				<td class="text-tiny">${MONTH}</td>
@@ -227,12 +235,32 @@ const utilityinfo = async () => {
 			
 			<p>
 			<b>Total Bill Collected: </b>${payload.length} <br/>	
-			<b>Total Net Bill Amount: </b>${TRANS_AMT_TOTAL.toFixed(2)} .BDT<br/>
-			<b>Total Vat Amount:</b>${VAT_AMT_TOTAL.toFixed(2)} .BDT<br/>
+			<b>Total Net Bill Amount: </b>${TRANS_AMT_TOTAL.toLocaleString('en-BD', {
+				maximumFractionDigits: 2,
+				style: 'currency',
+				currency: 'BDT'
+			})} <br/>
+			<b>Total Vat Amount:</b>${VAT_AMT_TOTAL.toLocaleString('en-BD', {
+				maximumFractionDigits: 2,
+				style: 'currency',
+				currency: 'BDT'
+			})} <br/>
 			<b>Total Stamp Used: </b>${STAMP_AMT_TOTAL}<br/>
-			<b>Total Payable: </b>${(TRANS_AMT_TOTAL - VAT_AMT_TOTAL).toFixed(2)} .BDT<br/>
-			<b>Revenue Balance: </b>${REVBAL_TOTAL.toFixed(2)} .BDT<br/>
-			<b>VAT Balance: </b>${VATBAL_TOTAL.toFixed(2)} .BDT
+			<b>Total Payable: </b>${(TRANS_AMT_TOTAL - VAT_AMT_TOTAL).toLocaleString('en-BD', {
+				maximumFractionDigits: 2,
+				style: 'currency',
+				currency: 'BDT'
+			})}<br/>
+			<b>Revenue Balance: </b>${REVBAL_TOTAL.toLocaleString('en-BD', {
+				maximumFractionDigits: 2,
+				style: 'currency',
+				currency: 'BDT'
+			})}<br/>
+			<b>VAT Balance: </b>${VATBAL_TOTAL.toLocaleString('en-BD', {
+				maximumFractionDigits: 2,
+				style: 'currency',
+				currency: 'BDT'
+			})}
 			</p>`
 			}
 		})
@@ -241,10 +269,22 @@ const utilityinfo = async () => {
 		<tr class="active text-bold">
 		<td class="text-bold" colspan="3">Total</td>
 		
-		<td class="text-bold">${(TRANS_AMT_TOTAL - VAT_AMT_TOTAL).toFixed(2)}</td>
-		<td class="text-bold">${VAT_AMT_TOTAL.toFixed(2)}</td>
+		<td class="text-bold">${(TRANS_AMT_TOTAL - VAT_AMT_TOTAL).toLocaleString('en-BD', {
+			maximumFractionDigits: 2,
+			style: 'currency',
+			currency: 'BDT'
+		})}</td>
+		<td class="text-bold">${VAT_AMT_TOTAL.toLocaleString('en-BD', {
+			maximumFractionDigits: 2,
+			style: 'currency',
+			currency: 'BDT'
+		})}</td>
 		<td colspan="1"></td>
-	<td class="text-bold">${TRANS_AMT_TOTAL.toFixed(2)}</td>
+	<td class="text-bold">${TRANS_AMT_TOTAL.toLocaleString('en-BD', {
+		maximumFractionDigits: 2,
+		style: 'currency',
+		currency: 'BDT'
+	})}</td>
 	
 	<td colspan="3"></td>
 	

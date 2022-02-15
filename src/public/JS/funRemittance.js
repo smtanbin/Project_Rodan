@@ -181,8 +181,16 @@ const remittance = async () => {
 						<td class="text-tiny">${NID_NO_PASSPORT_NO}</td>
 						<td class="text-tiny">${SENDER_NAME}</td>
 						<td class="text-tiny">${SOURCE_COUNTRY}</td>
-						<td class="text-tiny">${AMOUNT_REMITTED_BDT.toFixed(2)}</td>
-						<td class="text-tiny">${AMOUNT_OF_INCENTIVE_BDT.toFixed(2)}</td>
+						<td class="text-tiny">${AMOUNT_REMITTED_BDT.toLocaleString('en-BD', {
+							maximumFractionDigits: 2,
+							style: 'currency',
+							currency: 'BDT'
+						})}</td>
+						<td class="text-tiny">${AMOUNT_OF_INCENTIVE_BDT.toLocaleString('en-BD', {
+							maximumFractionDigits: 2,
+							style: 'currency',
+							currency: 'BDT'
+						})}</td>
 						<td class="text-tiny">${DATE_OF_PAYMENT_OF_INCENTIVE}</td>
 						<td class="text-tiny">${COMMENTS}</td>
 					 </tr>`

@@ -40,6 +40,7 @@ const printArea = async () => {
 	const printContent = document.getElementById('output')
 	const WinPrint = window.open('', '', 'width=3508px,height=2480px')
 	await WinPrint.document.write(head + printContent.innerHTML)
+
 	WinPrint.document.close()
 	WinPrint.focus()
 	//Bring out the print popup
