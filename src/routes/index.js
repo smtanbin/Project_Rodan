@@ -3,7 +3,7 @@ const { doexist } = require('../apps/api.js')
 const { customerinfo } = require('../apps/api_customerinfo')
 const { timeline, trSearch } = require('../apps/api_timeline')
 const { pbslist, utilityinfohead, utilityinfodtl } = require('../apps/api_utilitybill.js')
-const { remittancehouselist, remittance } = require('../apps/api_remittance')
+const { remittancehouselist, remittance, remittancesummary } = require('../apps/api_remittance')
 const { transactionsreport } = require('../apps/api_transactionsreport')
 const { statementHead, statementBody } = require('../apps/apiStatement.js')
 const bodyParser = require('body-parser')
@@ -91,6 +91,12 @@ app.post('/remittance', async (req, res) => {
 	const todate = req.body.todate
 	const key = req.body.key
 	const data = await remittance(fromdate, todate, key)
+	res.send(data)
+})
+app.post('/remittancesummary', async (req, res) => {
+	const fromdate = req.body.fromdate
+	const todate = req.body.todate
+	const data = await remittancesummary(fromdate, todate)
 	res.send(data)
 })
 

@@ -120,9 +120,10 @@ const getstatement = async (key) => {
 										</p>
 									 </div>
 								  </div>
-								  <div class="text-tiny">Statement of Account for the Period: ${new Date(
-										fromdate
-									).toDateString()} <b> To </b> ${new Date(todate).toDateString()}
+							
+								  <div class="text-tiny">Statement of Account for the Period: ${moment(fromdate).format(
+										'LLL'
+									)} <b> To </b> ${moment(todate).format('LLL')}
 								 </div>
 							   </div>
 							   <div class="columns col-12 card p-1">
