@@ -1,6 +1,7 @@
 const { Router } = require('express')
-const {nooftrans, customerinfo,doexist } = require('../apps/api.js')
-const {timeline} = require('../apps/api_timeline')
+const { doexist } = require('../apps/api.js')
+const { customerinfo } = require('../apps/api_customerinfo')
+const { timeline, trSearch } = require('../apps/api_timeline')
 const { pbslist, utilityinfohead, utilityinfodtl } = require('../apps/api_utilitybill.js')
 const { remittancehouselist, remittance } = require('../apps/api_remittance')
 const { transactionsreport } = require('../apps/api_transactionsreport')
@@ -13,17 +14,17 @@ const app = Router()
 const corsOptions = {
 	origin: '*',
 	optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
-  }
+}
 
 // Middlewares
 app.use(cors(corsOptions))
 app.use(bodyParser.json())
 
 app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', '*')
-  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accepcact')
-  res.header('Access-Control-Allow-Methods', [ 'GET', 'POST', 'PATCH', 'DELETE' ])
-  next()
+	res.header('Access-Control-Allow-Origin', '*')
+	res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accepcact')
+	res.header('Access-Control-Allow-Methods', [ 'GET', 'POST', 'PATCH', 'DELETE' ])
+	next()
 })
 /*Timeline*/
 
@@ -31,15 +32,23 @@ app.get('/timeline', async (req, res) => {
 	const data = await timeline()
 	res.send(data)
 })
-
-
+app.post('/trsearch', async (req, res) => {
+	const key = req.body.key
+	try {
+		const data = await trSearch(key)
+		res.send(data)
+	} catch (e) {
+		console.log(e)
+		res.send(e)
+		res.status(403)
+	}
+})
 
 /* Utility info All utility realated apis data 
 functions are currently imported from api_utilitybill.js */
 
 /* This will bring the list for dropdown*/
 app.get('/utilityreportpbslist', async (req, res) => {
-
 	const data = await pbslist()
 	res.send(data)
 })
@@ -52,8 +61,6 @@ app.post('/utilityinfo', async (req, res) => {
 })
 /* Give the deteals data */
 app.post('/utilityinfohead', async (req, res) => {
-	console.log(req.body)
-
 	try {
 		const data = await utilityinfohead(req.body.date, req.body.key)
 		res.send(data)
@@ -73,10 +80,6 @@ app.post('/utilityinfodtl', async (req, res) => {
 	}
 })
 
-
-
-
-
 /*Remittance*/
 app.get('/remittancehouselist', async (req, res) => {
 	const data = await remittancehouselist()
@@ -87,10 +90,9 @@ app.post('/remittance', async (req, res) => {
 	const fromdate = req.body.fromdate
 	const todate = req.body.todate
 	const key = req.body.key
-	const data = await remittance(fromdate,todate,key)
+	const data = await remittance(fromdate, todate, key)
 	res.send(data)
 })
-
 
 /* This will check if account existed */
 app.post('/doexist', async (req, res) => {
@@ -99,8 +101,6 @@ app.post('/doexist', async (req, res) => {
 	res.send(data)
 })
 
-
-
 /* Account Statment Part
 */
 
@@ -108,7 +108,7 @@ app.post('/doexist', async (req, res) => {
 app.post('/statementhead', async (req, res) => {
 	const date = req.body.date
 	const key = req.body.key
-	const data = await statementHead(date,key)
+	const data = await statementHead(date, key)
 	res.send(data)
 })
 /* Give the deteals data */
@@ -136,9 +136,6 @@ app.post('/transactionsreport', async (req, res) => {
 		res.send('Stop by error! Check if its help:' + e)
 	}
 })
-
-
-
 
 app.post('/customerinfo', async (req, res) => {
 	const data = await customerinfo(req.body.id)

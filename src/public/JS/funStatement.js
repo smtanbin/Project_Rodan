@@ -16,8 +16,6 @@ globalFunction
 */
 
 const getstatement = async (key) => {
-
-
 	let fromdate = document.getElementById('fromdate').value
 	let todate = document.getElementById('todate').value
 	const printday = Date()
@@ -82,23 +80,21 @@ const getstatement = async (key) => {
 					},
 					index
 				) => {
-
 					oprningbalance = BALANCE
 
 					document.getElementById('output').innerHTML = `<div class="col-12 p-2">
 							<div class="px-2 container">
-							
-							
-							<div class="columns col-gapless py-1">
-								<div class="column col-8">
-									<img src="/img/sblnewfull.png" style="hight:" 25px";" class="img-responsive p-2 column col-5">
-								</div>
-								<div class="column container col-4">Agent Banking<br/>
-							
-								</div>
+							<div class="container">
+							<div class="columns">
+							  <div class="column col-9">
+							  <img src="/img/Standardbankltd-color.svg" style="hight:" 25px";" class="img-responsive py-2 column col-5">
+							  </div>
+							  <div class="column col-3"><div class="column" style="roght=0"><h5 class="text-clip h5">Agent Banking</h5></div></div>
 							</div>
+						  </div>
+
 							   <div class="card w100 columns col-12 p-1 bg-gray">
-								  <h6 class="p-centered text-tiny my-2">Account Statment</h6>
+								  <h6 class="p-centered text-tiny text-bold my-2">Account Statment</h6>
 								  <div class="columns px-2">
 									 <div class="column float-left text-tiny ">
 									 
@@ -116,10 +112,10 @@ const getstatement = async (key) => {
 										
 										<p>
 										<b>Branch: </b>Agent Banking<br/>	
-										<b>Account Type:</b>${TYPE}<br/>
+										<b>Account Type:</b> ${TYPE}<br/>
 										   <b>Customer ID: </b>${CUST_ID}<br/>
 										   <b>Opening Date: </b>${REG_DATE}<br/>
-										   <b>Maturity Date: </b>${MATURITY_DATE}<br/>
+										   <b>Expiry Date: </b>${MATURITY_DATE}<br/>
 										   <b>Agent: </b>${PMPHONE}	
 										</p>
 									 </div>
@@ -156,15 +152,23 @@ const getstatement = async (key) => {
 							</div>
 							<div class="col-12 w100  p-2 mt-2 text-tiny">
 							   <b>Print Date:</b> ${printday}
-							   <p class="p-centered text-small">This is an electronically generated report, hence does not require a signature.
-							   </p>
+							
 							</div>
 							
-							<div class="text-center p-centered text-gray">
+							<div class="text-center p-centered">
+							<h6 class="text-bold h6">Thanks for banking with us.</h6>
+							<p class="text-tiny text-left text-break">The Customer should examine promptly the statement received and notify the bank in writing within 15 calendar days after the statement is mailed,
+							transmitted, or otherwise made available to customer of any errors, discrepancies or irregularities detected, failing which the statement will deem to
+							be correct.This is an electronically generated report, hence does not require a signature. 
+							</p>
+							
+							<div class="card bg-gray w100">
 							<span class="text-tiny">
-							Metropolitan Chamber Building (3rd Floor) 122-124 Motijheel C/A, Dhaka-1000, Bangladesh <br/>Tel:+8802-9578385 +8801 709-654772 Email: agentbanking@standardbankbd.com
-								</span>
-							<br/>Copyright © standardbankbd.com</div>
+							Agent Banking Division <br/>
+							Standard Bank Ltd. Head Office, Metropolitan Chamber Building (3rd Floor) 122-124 Motijheel C/A, Dhaka-1000, Bangladesh <br/>Tel:+8802-9578385 +8802 9612-316428 +8801 709-654772 +8801 709-654773 Email: agentbanking@standardbankbd.com
+							</span>
+							<br/><a href="https://www.standardbankbd.com" class="text-gray text-tiny">Copyright © 2022 Standard Bank Ltd</a></div>
+							</div>
 						 </div>`
 				}
 			)
@@ -200,26 +204,22 @@ const getstatement = async (key) => {
 
 					return `<tr>
 						<td>${index + 1}</td>
-						<td class="text-tiny text-break">${moment(TRANS_DATE).format('LLL')}</td>
-						<td class="text-tiny">${TRANS_NO}</td>
+						<td class="text-tiny text-break">${moment(TRANS_DATE).format('lll')}</td>
+						<td class="text-tiny text-clip">${TRANS_NO}</td>
 						<td class="text-tiny">${DR_AMT.toFixed(2)}</td>
 						<td class="text-tiny">${CR_AMT.toFixed(2)}</td>
-						<td class="text-tiny">${oprningbalance.toFixed(2)}</td>
+						<td class="text-tiny ">${oprningbalance.toFixed(2)}</td>
 						<td class="text-tiny text-break">${PARTICULAR}</td>
 						</tr>`
 				})
 				.join('')
-/* for table footer*/
-				document.getElementById('output2').innerHTML +=
-				`<td class="text-bold" colspan="3">Total</td>
+			/* for table footer*/
+			document.getElementById('output2').innerHTML += `<td class="text-bold" colspan="3">Total</td>
 					<td class="text-bold text-tiny">${total_dr.toFixed(2)}</td>
 					<td class="text-bold text-tiny">${total_cr.toFixed(2)}</td>
 					<td class="text-bold text-tiny">${oprningbalance.toFixed(2)}</td>
 					<td colspan="1"></td>`
 		}
-		
-		
-		
 
 		document.getElementById('btn-loading').classList.remove('loading')
 		document.getElementById('btnprint').classList.remove('disabled')
