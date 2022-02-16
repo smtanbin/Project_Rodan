@@ -78,16 +78,10 @@ const remittance = async () => {
 
 	let AMOUNT_REMITTED_BDT_TOTAL = 0
 	let AMOUNT_OF_INCENTIVE_BDT_TOTAL = 0
-	document.getElementById('output').innerHTML = `<div class="col-12 p-2">
-	<div class="container">
-	<div class="columns">
-	<div class="column col-9">
-	<img src="/img/Standardbankltd-color.svg" style="hight:" 25px";" class="img-responsive py-2 column col-5">
-	</div>
-	<div class="column col-3"><div class="column" style="roght=0"><h5 class="text-clip h5">Agent Banking</h5></div></div>
-  </div>
-			 
-			 <p>		
+	document.getElementById('output').innerHTML = `<div class="col-12 p-2 container m-2">
+
+	<h5 class="p-centered text-center text-bold my-2 h5">Remittance Report</h5>
+			 <p class="text-tiny">			
 			 <b>From :</b> ${moment(fromdate).format('LLL')} <b>To :</b> ${moment(todate).format('LLL')}</p>
                     <table class="table table-striped table-cluster">
                         <thead>
@@ -115,31 +109,7 @@ const remittance = async () => {
                     </table>
 
                 </div>
-            
-				<div class="col-12 w100  p-2 mt-2 text-tiny">
-				<b>Print Date:</b> ${printday}
-				<p class="p-centered text-small">This is an electronically generated report, hence does not require a signature.
-				</p>
-			 </div>
-			 
-			 <div class="text-center p-centered">
-			 <h6 class="text-bold h6">Thanks for banking with us.</h6>
-			 <p class="text-tiny text-left text-break">The Customer should examine promptly the statement received and notify the bank in writing within 15 calendar days after the statement is mailed,
-			 transmitted, or otherwise made available to customer of any errors, discrepancies or irregularities detected, failing which the statement will deem to
-			 be correct.This is an electronically generated report, hence does not require a signature. 
-			 </p>
-			 
-			 <div class="card bg-gray w100">
-			 <span class="text-tiny">
-			 Agent Banking Division <br/>
-			 Standard Bank Ltd. Head Office, Metropolitan Chamber Building (3rd Floor) 122-124 Motijheel C/A, Dhaka-1000, Bangladesh <br/>Tel:+8802-9578385 +8802 9612-316428 +8801 709-654772 +8801 709-654773 Email: agentbanking@standardbankbd.com
-			 </span>
-			 <br/><a href="https://www.standardbankbd.com" class="text-gray text-tiny">Copyright © 2022 Standard Bank Ltd</a></div>
-			 </div>
-		  
-        
-
-    </div>`
+                </div>`
 	// try {
 	await fetch(url, requestOptions).then((response) => response.json()).then((payload) => {
 		console.log(payload)
@@ -266,16 +236,10 @@ const remittancesummary = async () => {
 		redirect: 'follow'
 	}
 
-	document.getElementById('output').innerHTML = `<div class="col-12 p-2">
-	<div class="container">
-	<div class="columns">
-	<div class="column col-9">
-	<img src="/img/Standardbankltd-color.svg" style="hight:" 25px";" class="img-responsive py-2 column col-5">
-	</div>
-	<div class="column col-3"><div class="column" style="roght=0"><h5 class="text-clip h5">Agent Banking</h5></div></div>
-  </div>
-			 
-			 <p>		
+	document.getElementById('output').innerHTML = `<div class="col-12 p-2 container m-2">
+
+	<h5 class="p-centered h5 text-center text-bold my-2">Remittance Summary Report</h5>
+			 <p class="text-tiny">		
 			 <b>From :</b> ${moment(fromdate).format('LLL')} <b>To :</b> ${moment(todate).format('LLL')}</p>
                     <table class="table table-striped table-cluster">
                         <thead>
@@ -293,30 +257,6 @@ const remittancesummary = async () => {
                     </table>
 
                 </div>
-            
-				<div class="col-12 w100  p-2 mt-2 text-tiny">
-				<b>Print Date:</b> ${printday}
-				<p class="p-centered text-small">This is an electronically generated report, hence does not require a signature.
-				</p>
-			 </div>
-			 
-			 <div class="text-center p-centered">
-			 <h6 class="text-bold h6">Thanks for banking with us.</h6>
-			 <p class="text-tiny text-left text-break">The Customer should examine promptly the statement received and notify the bank in writing within 15 calendar days after the statement is mailed,
-			 transmitted, or otherwise made available to customer of any errors, discrepancies or irregularities detected, failing which the statement will deem to
-			 be correct.This is an electronically generated report, hence does not require a signature. 
-			 </p>
-			 
-			 <div class="card bg-gray w100">
-			 <span class="text-tiny">
-			 Agent Banking Division <br/>
-			 Standard Bank Ltd. Head Office, Metropolitan Chamber Building (3rd Floor) 122-124 Motijheel C/A, Dhaka-1000, Bangladesh <br/>Tel:+8802-9578385 +8802 9612-316428 +8801 709-654772 +8801 709-654773 Email: agentbanking@standardbankbd.com
-			 </span>
-			 <br/><a href="https://www.standardbankbd.com" class="text-gray text-tiny">Copyright © 2022 Standard Bank Ltd</a></div>
-			 </div>
-		  
-        
-
     </div>`
 	// try {
 	await fetch(url, requestOptions).then((response) => response.json()).then((payload) => {

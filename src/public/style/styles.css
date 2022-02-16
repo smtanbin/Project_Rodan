@@ -63,8 +63,9 @@ h3 {
 }
 
 :root {
-	--frost: rgba(255, 255, 255, 0.7);
-	--default-bg-blur: blur(10px);
+	/* --frost: rgba(255, 255, 255, 0.555); */
+	--frost: rgba(230, 230, 230, 0.301);
+	--default-bg-blur: blur(3px);
 }
 
 #navbar {

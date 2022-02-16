@@ -89,8 +89,8 @@ const utilityinfo = async () => {
 	let VAT_AMT_TOTAL = 0
 	let REVBAL_TOTAL = 0
 	let VATBAL_TOTAL = 0
-
-	let STAMP_AMT_TOTAL = 0 //Stumps counter
+	let STAMP_COUNT = 0 //Stumps counter
+	let STAMP_AMT_TOTAL = 0
 
 	/* Prints Head portation 
     'output2' is responsiable for table printing.
@@ -102,19 +102,12 @@ const utilityinfo = async () => {
 			payload.map(({ TITEL, REVAC, VATAC, REVBAL, VATBAL, BILL_TITLE_1, BILL_TITLE_2, BILL_TITLE_3 }, index) => {
 				REVBAL_TOTAL = REVBAL
 				VATBAL_TOTAL = VATBAL
-				document.getElementById('output').innerHTML = `<div class="col-12 p-2">
-				<div class="px-2 container">
-							
-							
-				<div class="container">
-				<div class="columns">
-				<div class="column col-9">
-				<img src="/img/Standardbankltd-color.svg" style="hight:" 25px";" class="img-responsive py-2 column col-5">
-				</div>
-				<div class="column col-3"><div class="column" style="roght=0"><h5 class="text-clip h5">Agent Banking</h5></div></div>
-			  </div>
-            <h6 class="p-centered text-tiny my-2">Utility Colllection Report</h6>
-            <div class="columns px-2">
+				document.getElementById('output').innerHTML = `
+	<div class="col-12 p-2 container">
+		<div class="p-2 p-centered text-center container">
+            <h5 class="text-tiny my-2 p-centered w100 text-bold h5">Utility Colllection Report</h5>
+            </div>
+			<div class="columns px-2">
                 <div class="column float-left text-tiny ">
                     <p><b>Marchent :</b> ${TITEL}<br />
 					<b>Revenue Account:</b> ${REVAC}<br />
@@ -129,7 +122,8 @@ const utilityinfo = async () => {
 						</div>
 					</div>
 			</div>
-			 <div class=" columns col-12 card p-1">
+			
+			<div class=" columns col-12 card p-1">
                     <table class="table table-striped table-cluster">
                         <thead>
                             <tr>
@@ -148,31 +142,9 @@ const utilityinfo = async () => {
                         </thead>
                         <tbody class="" id="output2"></tbody>
                     </table>
-
-                </div>
             </div>
-        
-			<div class="col-12 w100  p-2 mt-2 text-tiny">
-			<b>Print Date:</b> ${moment(printday).format('LLL')}
-			<p class="p-centered text-small">This is an electronically generated report, hence does not require a signature.
-			</p>
-		 </div>
-		 
-		 <div class="text-center p-centered">
-		 <h6 class="text-bold h6">Thanks for banking with us.</h6>
-		 <p class="text-tiny text-left text-break">The Customer should examine promptly the statement received and notify the bank in writing within 15 calendar days after the statement is mailed,
-		 transmitted, or otherwise made available to customer of any errors, discrepancies or irregularities detected, failing which the statement will deem to
-		 be correct.This is an electronically generated report, hence does not require a signature. 
-		 </p>
-		 
-		 <div class="card bg-gray w100">
-		 <span class="text-tiny">
-		 Agent Banking Division <br/>
-		 Standard Bank Ltd. Head Office, Metropolitan Chamber Building (3rd Floor) 122-124 Motijheel C/A, Dhaka-1000, Bangladesh <br/>Tel:+8802-9578385 +8802 9612-316428 +8801 709-654772 +8801 709-654773 Email: agentbanking@standardbankbd.com
-		 </span>
-		 <br/><a href="https://www.standardbankbd.com" class="text-gray text-tiny">Copyright © 2022 Standard Bank Ltd</a></div>
-		 </div>
 
+        
     </div>`
 			})
 		})
@@ -198,8 +170,9 @@ const utilityinfo = async () => {
 						/* Calculatation*/
 						TRANS_AMT_TOTAL += TRANS_AMT
 						VAT_AMT_TOTAL += VAT_AMT
+						STAMP_AMT_TOTAL += STAMP_AMT
 						if (STAMP_AMT !== null && STAMP_AMT != 0) {
-							STAMP_AMT_TOTAL += 1
+							STAMP_COUNT += 1
 						}
 
 						return `<tr>
@@ -241,7 +214,7 @@ const utilityinfo = async () => {
 				style: 'currency',
 				currency: 'BDT'
 			})} <br/>
-			<b>Total Stamp Used: </b>${STAMP_AMT_TOTAL}<br/>
+			<b>Total Stamp Used: </b>${STAMP_COUNT} Ps<br/>
 			<b>Total Payable: </b>${(TRANS_AMT_TOTAL - VAT_AMT_TOTAL).toLocaleString('en-BD', {
 				maximumFractionDigits: 2,
 				style: 'currency',
@@ -265,18 +238,23 @@ const utilityinfo = async () => {
 		<tr class="active text-bold">
 		<td class="text-bold" colspan="3">Total</td>
 		
-		<td class="text-bold">${(TRANS_AMT_TOTAL - VAT_AMT_TOTAL).toLocaleString('en-BD', {
+		<td class="text-bold text-tiny">${(TRANS_AMT_TOTAL - VAT_AMT_TOTAL).toLocaleString('en-BD', {
 			maximumFractionDigits: 2,
 			style: 'currency',
 			currency: 'BDT'
 		})}</td>
-		<td class="text-bold">${VAT_AMT_TOTAL.toLocaleString('en-BD', {
+		<td class="text-bold text-tiny">${VAT_AMT_TOTAL.toLocaleString('en-BD', {
 			maximumFractionDigits: 2,
 			style: 'currency',
 			currency: 'BDT'
 		})}</td>
-		<td colspan="1"></td>
-	<td class="text-bold">${TRANS_AMT_TOTAL.toLocaleString('en-BD', {
+		
+	<td class="text-bold text-tiny">${STAMP_AMT_TOTAL.toLocaleString('en-BD', {
+		maximumFractionDigits: 2,
+		style: 'currency',
+		currency: 'BDT'
+	})}</td>
+	<td class="text-bold text-tiny">${TRANS_AMT_TOTAL.toLocaleString('en-BD', {
 		maximumFractionDigits: 2,
 		style: 'currency',
 		currency: 'BDT'
@@ -332,7 +310,7 @@ const utilitySummary = async () => {
 
 	let TRANS_AMT_TOTAL = 0
 	let VAT_AMT_TOTAL = 0
-	let STAMP_AMT_TOTAL = 0 //Stumps counter
+	let STAMP_AMT_TOTAL = 0
 
 	/* Prints Head portation 
     'output2' is responsiable for table printing.
@@ -340,14 +318,12 @@ const utilitySummary = async () => {
     */
 
 	try {
-		document.getElementById('output').innerHTML = `<div class="col-12 p-2">
-				<div class="container">
-				<div class="columns">
-				<div class="column col-9">
-				<img src="/img/Standardbankltd-color.svg" style="hight:" 25px";" class="img-responsive py-2 column col-5">
-				</div>
-				<div class="column col-3"><div class="column" style="roght=0"><h5 class="text-clip h5">Agent Banking</h5></div></div>
-			  </div>
+		document.getElementById('output').innerHTML = `
+		<div class="col-12 p-2 m-2 container">
+		<div class="p-2 p-centered text-center container">
+            <h5 class="my-2 p-centered w100 text-bold h5">Utility Colllection Report</h5>
+            </div>
+		
 						 
 						 <p>		
 						 <b>From :</b> ${moment(fromdate).format('LLL')} <b>To :</b> ${moment(todate).format('LLL')}</p>
@@ -370,30 +346,6 @@ const utilitySummary = async () => {
 								</table>
 			
 							</div>
-						
-							<div class="col-12 w100  p-2 mt-2 text-tiny">
-							<b>Print Date:</b> ${printday}
-							<p class="p-centered text-small">This is an electronically generated report, hence does not require a signature.
-							</p>
-						 </div>
-						 
-						 <div class="text-center p-centered">
-						 <h6 class="text-bold h6">Thanks for banking with us.</h6>
-						 <p class="text-tiny text-left text-break">The Customer should examine promptly the statement received and notify the bank in writing within 15 calendar days after the statement is mailed,
-						 transmitted, or otherwise made available to customer of any errors, discrepancies or irregularities detected, failing which the statement will deem to
-						 be correct.This is an electronically generated report, hence does not require a signature. 
-						 </p>
-						 
-						 <div class="card bg-gray w100">
-						 <span class="text-tiny">
-						 Agent Banking Division <br/>
-						 Standard Bank Ltd. Head Office, Metropolitan Chamber Building (3rd Floor) 122-124 Motijheel C/A, Dhaka-1000, Bangladesh <br/>Tel:+8802-9578385 +8802 9612-316428 +8801 709-654772 +8801 709-654773 Email: agentbanking@standardbankbd.com
-						 </span>
-						 <br/><a href="https://www.standardbankbd.com" class="text-gray text-tiny">Copyright © 2022 Standard Bank Ltd</a></div>
-						 </div>
-					  
-					
-			
 				</div>`
 
 		await fetch(url, requestOptions).then((response) => response.json()).then((payload) => {
