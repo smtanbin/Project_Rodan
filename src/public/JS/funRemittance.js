@@ -78,7 +78,7 @@ const remittance = async () => {
 
 	let AMOUNT_REMITTED_BDT_TOTAL = 0
 	let AMOUNT_OF_INCENTIVE_BDT_TOTAL = 0
-	document.getElementById('output').innerHTML += `<div class="col-12 p-2">
+	document.getElementById('output').innerHTML = `<div class="col-12 p-2">
 	<div class="container">
 	<div class="columns">
 	<div class="column col-9">
@@ -102,8 +102,8 @@ const remittance = async () => {
                                 
                                 <th class="text-tiny">Sender Name</th>
                                 <th class="text-tiny">Source Country</th>
-                                <th class="text-tiny">Amount Remitted (BDT)</th>
-                                <th class="text-tiny">Amount of Incentive (BDT)</th>
+                                <th class="text-tiny text-right">Amount Remitted</th>
+                                <th class="text-tiny text-right">Amount of Incentive</th>
                                 <th class="text-tiny">Date of Payment of Incentive</th>
                                 <th class="text-tiny">Comments</th>
                                 
@@ -181,12 +181,12 @@ const remittance = async () => {
 						<td class="text-tiny">${NID_NO_PASSPORT_NO}</td>
 						<td class="text-tiny">${SENDER_NAME}</td>
 						<td class="text-tiny">${SOURCE_COUNTRY}</td>
-						<td class="text-tiny">${AMOUNT_REMITTED_BDT.toLocaleString('en-BD', {
+						<td class="text-tiny text-right">${AMOUNT_REMITTED_BDT.toLocaleString('en-BD', {
 							maximumFractionDigits: 2,
 							style: 'currency',
 							currency: 'BDT'
 						})}</td>
-						<td class="text-tiny">${AMOUNT_OF_INCENTIVE_BDT.toLocaleString('en-BD', {
+						<td class="text-tiny text-right">${AMOUNT_OF_INCENTIVE_BDT.toLocaleString('en-BD', {
 							maximumFractionDigits: 2,
 							style: 'currency',
 							currency: 'BDT'
@@ -203,12 +203,12 @@ const remittance = async () => {
 	document.getElementById('output2').innerHTML += `
 		<tr class="active text-bold" id="output3">
 		<td class="text-bold" colspan="9">Total</td>
-		<td class="text-bold">${AMOUNT_REMITTED_BDT_TOTAL.toLocaleString('en-BD', {
+		<td class="text-bold text-right">${AMOUNT_REMITTED_BDT_TOTAL.toLocaleString('en-BD', {
 			maximumFractionDigits: 2,
 			style: 'currency',
 			currency: 'BDT'
 		})}</td>
-		<td class="text-bold">${AMOUNT_OF_INCENTIVE_BDT_TOTAL.toLocaleString('en-BD', {
+		<td class="text-bold text-right">${AMOUNT_OF_INCENTIVE_BDT_TOTAL.toLocaleString('en-BD', {
 			maximumFractionDigits: 2,
 			style: 'currency',
 			currency: 'BDT'
@@ -283,9 +283,9 @@ const remittancesummary = async () => {
 							<th class="text-tiny">Agent No</th>
 							<th class="text-tiny">Agent Name</th>
 							<th class="text-tiny">No Of Remittance</th>
-							<th class="text-tiny">Total Remittance Amount</th>
+							<th class="text-tiny text-right">Total Remittance Amount</th>
 							<th class="text-tiny">No Of Incentive</th>
-							<th class="text-tiny">Total Incentive Amount</th>
+							<th class="text-tiny text-right">Total Incentive Amount</th>
                             </tr>
                         </thead>
                         <tbody class="" id="output2"></tbody>
@@ -341,13 +341,13 @@ const remittancesummary = async () => {
 						<td class="text-tiny">${PMPHONE}</td>
 						<td class="text-tiny">${NAME}</td>
 						<td class="text-tiny">${REMINO}</td>
-						<td class="text-tiny">${REMITTANCE.toLocaleString('en-BD', {
+						<td class="text-tiny text-right">${REMITTANCE.toLocaleString('en-BD', {
 							maximumFractionDigits: 2,
 							style: 'currency',
 							currency: 'BDT'
 						})}</td>
 						<td class="text-tiny">${INCNO}</td>
-						<td class="text-tiny">${INCE.toLocaleString('en-BD', {
+						<td class="text-tiny text-right">${INCE.toLocaleString('en-BD', {
 							maximumFractionDigits: 2,
 							style: 'currency',
 							currency: 'BDT'

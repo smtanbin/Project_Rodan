@@ -47,7 +47,7 @@ const timeline = async () => {
 			<td class="text-tiny text-clip" py-1>${FROM_GL}</td>
 			<td class="text-tiny" py-1>${TRANS_TO}</td>
 			<td class="text-tiny text-clip" py-1>${TO_GL}</td>
-			<td class="text-tiny text-success text-clip py-1">${PAY_AMT.toLocaleString('en-BD', {
+			<td class="text-tiny text-success text-clip py-1 text-right">${PAY_AMT.toLocaleString('en-BD', {
 				maximumFractionDigits: 2,
 				style: 'currency',
 				currency: 'BDT'

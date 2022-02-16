@@ -2,7 +2,7 @@ const { Router } = require('express')
 const { doexist } = require('../apps/api.js')
 const { customerinfo } = require('../apps/api_customerinfo')
 const { timeline, trSearch } = require('../apps/api_timeline')
-const { pbslist, utilityinfohead, utilityinfodtl } = require('../apps/api_utilitybill.js')
+const { pbslist, utilityinfohead, utilityinfodtl, utilityinfosummary } = require('../apps/api_utilitybill.js')
 const { remittancehouselist, remittance, remittancesummary } = require('../apps/api_remittance')
 const { transactionsreport } = require('../apps/api_transactionsreport')
 const { statementHead, statementBody } = require('../apps/apiStatement.js')
@@ -73,6 +73,16 @@ app.post('/utilityinfodtl', async (req, res) => {
 	res.status(200)
 	try {
 		const data = await utilityinfodtl(req.body.fromdate, req.body.todate, req.body.key)
+		res.send(data)
+	} catch (e) {
+		res.status(400)
+		res.send('Stop by error! Check if its help:' + e)
+	}
+})
+app.post('/utilityinfosummary', async (req, res) => {
+	res.status(200)
+	try {
+		const data = await utilityinfosummary(req.body.fromdate, req.body.todate)
 		res.send(data)
 	} catch (e) {
 		res.status(400)

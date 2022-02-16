@@ -18,7 +18,7 @@ const pbslist = async () => {
 const utilityinfohead = async (date, key) => {
 	try {
 		date = oracleDate(date)
-		
+
 		const sql = `/* Formatted on 2/3/2022 1:50:51 PM (QP5 v5.374) */
 		SELECT (SELECT NAME
 			FROM AGENT_BANKING.REGINFO
@@ -33,7 +33,7 @@ const utilityinfohead = async (date, key) => {
 			SNAME
 			FROM AGENT_BANKING.MERCHANT_CONFIG C
 			WHERE SNAME = '${key}'`
-		
+
 		return await qurrythis(sql)
 	} catch (e) {
 		console.log(e)
@@ -59,19 +59,40 @@ const utilityinfodtl = async (fromdate, todate, key) => {
 
 	return await qurrythis(sql)
 }
-const utilityinfosummary = async (from, to, key) => {
-	const sql = `/* Formatted on 2/1/2022 3:19:21 PM (QP5 v5.374) */
-	SELECT u.ENTRY_DATE,
-		   u.TRANS_NO,
-		   ROUND (u.TRANS_AMT, 2) TRANS_AMT,
-		   ROUND (VAT_AMT, 2) VAT_AMT,
-		   ROUND (STAMP_AMT, 2) STAMP_AMT,
-		   u.BILL_INFO_1 ACNO,
-		   u.BILL_INFO_2 BOOKNO,
-		   UPPER(u.BILL_INFO_3) MONTH
-	  FROM AGENT_BANKING.UTILITY_PAYMENT_INFO u
-	  where status = 'S' and trunc(entry_date) between ${from} and ${to}
-	  --and TRANS_SNAME = ${key}`
+const utilityinfosummary = async (fromdate, todate) => {
+	fromdate = oracleDate(fromdate)
+	todate = oracleDate(todate)
+	const sql = `/* Formatted on 2/2/2021 4:45:50 PM (QP5 v5.326) */
+	SELECT
+	  ENTRY_BY PMPHONE,
+	  (
+	  SELECT
+		  name
+	  FROM
+		  agent_banking.reginfo
+	  WHERE
+		  mphone = upi.ENTRY_BY) "NAME",
+		   COUNT (ID) "BILLNO",
+	  TRANS_SNAME "MERCHANT",
+	  TRANS_TO "REVAC",
+	  (SELECT VAT_MPHONE FROM AGENT_BANKING.MERCHANT_CONFIG mc WHERE mc.MPHONE = upi.TRANS_TO) "VATAC",
+  
+	  SUM (VAT_AMT) "VAT",
+	  SUM (STAMP_AMT) "STMP",
+	  SUM (TRANS_AMT) "TOTAL"
+  
+  FROM
+	  AGENT_BANKING.UTILITY_PAYMENT_INFO upi
+  WHERE
+	  STATUS != 'R'
+	  AND TRUNC (ENTRY_DATE) BETWEEN '${fromdate}' AND '${todate}'
+  GROUP BY
+	  ENTRY_BY,
+	  TRANS_SNAME,
+	  TRANS_TO
+  ORDER BY
+	  ENTRY_BY
+  `
 	return await qurrythis(sql)
 }
-module.exports = { pbslist, utilityinfohead, utilityinfodtl }
+module.exports = { pbslist, utilityinfohead, utilityinfodtl, utilityinfosummary }

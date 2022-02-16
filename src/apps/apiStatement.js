@@ -1,8 +1,6 @@
 const qurrythis = require('./db')
 const { oracleDate } = require('./FunCore')
 
-
-
 const statementHead = async (date, key) => {
 	try {
 		date = oracleDate(date)
@@ -50,7 +48,7 @@ const statementHead = async (date, key) => {
 				   ADDR
 		  FROM AGENT_BANKING.REGINFO R
 		 WHERE MPHONE = ${key}`
-		
+
 		return await qurrythis(sql)
 	} catch (e) {
 		return e
@@ -59,9 +57,8 @@ const statementHead = async (date, key) => {
 const statementBody = async (fromdate, todate, key) => {
 	fromdate = oracleDate(fromdate)
 	todate = oracleDate(todate)
-	try{
-
-	const sql = `/* Formatted on 2/13/2022 6:47:24 PM (QP5 v5.374) */
+	try {
+		const sql = `/* Formatted on 2/13/2022 6:47:24 PM (QP5 v5.374) */
 	SELECT NVL (P.CR_AMT, 0)    CR_AMT,
 		   NVL (P.DR_AMT, 0)    DR_AMT,
 		   P.TRANS_NO,
@@ -118,7 +115,7 @@ const statementBody = async (fromdate, todate, key) => {
 												 FROM AGENT_BANKING.GL_TRANS_MST_old)
 											  cd
 										WHERE cd.TRANS_NO = P.TRANS_NO) =
-									  P.MPHONE
+									  P.BALANCE_MPHONE 
 							 THEN
 								 (SELECT    'Premium for Scheam account '
 										 || TRANS_TO
@@ -145,7 +142,7 @@ const statementBody = async (fromdate, todate, key) => {
 												 FROM AGENT_BANKING.GL_TRANS_MST_old)
 											  cd
 										WHERE cd.TRANS_NO = P.TRANS_NO) =
-									  P.MPHONE
+									  P.BALANCE_MPHONE 
 							 THEN
 								 (SELECT 'Premium Recived from ' || TRANS_FROM
 									FROM (SELECT *
@@ -170,7 +167,7 @@ const statementBody = async (fromdate, todate, key) => {
 												 FROM AGENT_BANKING.GL_TRANS_MST_old)
 											  cd
 										WHERE cd.TRANS_NO = P.TRANS_NO) =
-									  P.MPHONE
+									  P.BALANCE_MPHONE 
 							 THEN
 								 (SELECT 'Fund Transfer to account ' || TRANS_TO
 									FROM (SELECT *
@@ -196,7 +193,7 @@ const statementBody = async (fromdate, todate, key) => {
 												 FROM AGENT_BANKING.GL_TRANS_MST_old)
 											  cd
 										WHERE cd.TRANS_NO = P.TRANS_NO) =
-									  P.MPHONE
+									  P.BALANCE_MPHONE 
 							 THEN
 								 (SELECT 'Fund Recived from ' || TRANS_FROM
 									FROM (SELECT *
@@ -213,58 +210,21 @@ const statementBody = async (fromdate, todate, key) => {
 								  'CC')
 				THEN
 					P.PARTICULAR
+					WHEN CODE is null  THEN  P.PARTICULAR
 			END)                PARTICULAR
 	  FROM (SELECT * FROM AGENT_BANKING.GL_TRANS_DTL
 			UNION
 			SELECT * FROM AGENT_BANKING.GL_TRANS_DTL_OLD) P
-	 WHERE     MPHONE = '${key}'
+	 WHERE     BALANCE_MPHONE = '${key}'
 		   AND TRUNC (TRANS_DATE) BETWEEN '${fromdate}' AND '${todate}' 
   ORDER BY TRANS_NO ASC`
-// console.log(sql)
-const test = `/* Formatted on 2/6/2022 5:42:50 PM (QP5 v5.374) */
-SELECT D.BALANCE_MPHONE                         MPHONE,
-       D.TRANS_DATE                             "DATE",
-       TO_CHAR (D.TRANS_DATE, 'DD/MM/YY')       TRANS_DATE,
-       TO_CHAR (D.TRANS_DATE, 'HH:MI:SS AM')    TRANS_TIME,
-       D.TRANS_NO,
-      
-       CASE
-           WHEN D.CODE = 'CCCQ'
-           THEN
-                  D.PARTICULAR
-               || ' , Chq No '
-               || (SELECT SUBSTR (BILLNO, -7)
-                     FROM AGENT_BANKING.GL_TRANS_MST
-                    WHERE TRANS_NO = D.TRANS_NO)
-           WHEN D.CODE = 'CACQ'
-           THEN
-                  D.PARTICULAR
-               || ' , Chq No '
-               || (SELECT SUBSTR (BILLNO, 1, 7)
-                     FROM AGENT_BANKING.GL_TRANS_MST
-                    WHERE TRANS_NO = D.TRANS_NO)
-           ELSE
-               D.PARTICULAR
-       END                                      PARTICULAR,
-       D.TRANS_REF_NO,
-       D.VALUE_DATE,
-       D.DR_AMT,
-       D.CR_AMT
-   
-  FROM (SELECT * FROM AGENT_BANKING.GL_TRANS_DTL UNION SELECT * FROM AGENT_BANKING.GL_TRANS_DTL) D
- WHERE     D.BALANCE_TYPE = 'M'
-       AND TRUNC (TRANS_DATE) BETWEEN '${fromdate}' AND '${todate}'
-       AND D.BALANCE_MPHONE = ${key}
+		console.log(sql)
 
-
-ORDER BY 3, TRANS_SL_NO ASC`
-
-	return await qurrythis(sql)
-	  }catch(e){
-		  console.log(e)
-		  return e
-
-	  }
+		return await qurrythis(sql)
+	} catch (e) {
+		console.log(e)
+		return e
+	}
 }
 
 module.exports = { statementHead, statementBody }
