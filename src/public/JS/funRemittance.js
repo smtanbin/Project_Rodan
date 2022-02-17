@@ -144,7 +144,8 @@ const remittance = async () => {
 						<td>${index + 1}</td>
 						<td class="text-tiny text-break">${NAME_OF_EXCHANGE_HOUSE}</td>
 						<td class="text-tiny text-break">${RefNo_TT_NO}</td>
-						<td class="text-tiny text-break">${DATE_OF_ORGINATING_REMITTANCE}</td>
+						
+						<td class="text-tiny text-break">${moment(DATE_OF_ORGINATING_REMITTANCE).format('LLL')}</td>
 						<td class="text-tiny">${NAME}</td>
 						<td class="text-tiny">${DOCUMENT_TYPE}</td>
 						<td class="text-tiny">${NID_NO_PASSPORT_NO}</td>
@@ -160,7 +161,7 @@ const remittance = async () => {
 							style: 'currency',
 							currency: 'BDT'
 						})}</td>
-						<td class="text-tiny">${DATE_OF_PAYMENT_OF_INCENTIVE}</td>
+						<td class="text-tiny">${moment(DATE_OF_PAYMENT_OF_INCENTIVE).format('LLL')}</td>
 						
 					 </tr>`
 					}
