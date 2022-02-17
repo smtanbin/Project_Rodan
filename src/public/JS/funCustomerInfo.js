@@ -22,128 +22,169 @@ const custsearch = async () => {
 	}
 
 	await fetch(url, requestOptions).then((response) => response.json()).then((payload) => {
+		console.log(payload)
 		payload.map((data) => {
 			const {
-				REG_DATE,
-				REG_STATUS,
-				AUTHO_BY,
-				UPDATE_BY,
-				UPDATE_DATE,
-				STATUS,
-				CATEGORY,
+				ACCOUNT_NAME,
+				AC_TYPE,
 				AC_TYPE_CODE,
-				MPHONE,
 				AGENT,
 				AGENTAC,
+				AUTHO_BY,
 				BALANCE,
-				LIEN_M,
-				NAME,
+				BIOMATRIC,
+				CATEGORY,
+				COMPANY_AC_TYPE,
+				DR_LINK_ACC,
+				ENTRY_DATE,
+				EXCISE_DUE,
+				FORM_SERIAL,
 				IMGAE,
+				LAST_TRANS_DATE,
+				LIEN_M,
+				MATURITY_DATE,
+				MCHARGE_FLAG,
+				MOD_AC_OPRN,
+				MPHONE,
+				REG_DATE,
+				REG_STATUS,
+				SLAB_SL_NO,
+				SOURCE_OFFUND,
+				STATUS,
+				TIN_NO,
+				UPDATE_BY,
+				UPDATE_DATE,
+				BLOOD_GROUP,
+				CON_MOB,
+				CUSTOMER_NAME,
+				CUST_ID,
+				DOB,
 				FATHER_NAME,
 				MOTHER_NAME,
+				GENDER,
+				OCCUPATION,
+				PMPHONE,
+				REG_DATE,
+				RELIGION,
 				SPOUSE_NAME,
-				DATE_OF_BIRTH,
-				SIM_NO,
-				LINK_AC,
-				TIN_NO,
-				RELIGION
+				TIN_NO
 			} = data
 
-			document.getElementById('output').innerHTML = `
-
-<!-- grid nesting example -->
-<div class="card bg-gray col-12 p-2">
-	<div class="p-2">
-		<div class="container">
-			<div class="columns col-sm-12">
-				<div class="column col-sm-6">
-					<h2 class="text-bold text-primary">${NAME}</h2>
-					<h6 class="text-small">Status: ${STATUS}</h6>
-		
-					<div class="columns">
-						<div class="column col-12 show-sm">
-						<br />
-						<h3 >
-						Balance : <span class="text-success">BDT. ${BALANCE - LIEN_M}</span> 
-						</h3>
-						<p class="text-warning"><span  class="text-error">Blocked Amount: BDT. ${LIEN_M}<br/></span>
-						<span>Total Amount: </span>BDT. ${BALANCE}
-						</p>
-						<br />
-							<h4 class="text-bold mt-2">KYC</h4>
-							<p>Father Name: ${FATHER_NAME}<br />
-								Mother Name: ${MOTHER_NAME}<br />
-								Spouse Name: ${SPOUSE_NAME}<br />
-								Date Of Birth: ${DATE_OF_BIRTH}<br />
-								Gender:${SIM_NO}<br />
-								ID :<br />
-								TIN :,${TIN_NO}<br />
-								Religion: ${RELIGION}</p>
-								Photo: <img src:"${IMGAE}">
-						</div>
-						<div class="column col-12">
-						<br />
-						<h4>Reg Status</h4>
-						Reg Status: ${REG_STATUS}<br />
-						Reg date: ${REG_DATE}<br/>
-						<p>Authorized By: ${AUTHO_BY}<br/>
-						Last Updated By: ${UPDATE_BY} At ${UPDATE_DATE}</p>
-
-						</div>
-						<div class="column col-12">
-						<br />
-						<h4>Account Information</h4>
-												Account Type: ${CATEGORY}<br />
-						Account No: <spam class="text-bold text-primary">${MPHONE} </spam><br/>
-						<p>Product Code: ${AC_TYPE_CODE}<br/>
-						Link Account: ${LINK_AC}}<br/>
-						Agent: ${AGENT}[${AGENTAC}]
-						</p>
-
-						</div>
-						
-					</div>
-					
-				</div>
-				
-				<div class="column col-sm-6 hide-sm">
+			document.getElementById('output').innerHTML = `<div class="container p-2">
+			<h5 class="text-center w100 text-bold p-2">Customer Information
+			</h5>
+			<div class="columns">
+			  <div class="column col-8 w100 card bg-gray p-2 ">
+				<h4 class="h4 text-primary text-clip">${ACCOUNT_NAME}</h4>
+  
+				<p class="text-tiny">Customer Type: ${NAME}</p>
 				<br />
-				<h3 >
-				Balance : <span class="text-success">${(BALANCE - LIEN_M).toLocaleString('en-BD', {
-					maximumFractionDigits: 2,
-					style: 'currency',
-					currency: 'BDT'
-				})}</span> 
-				</h3>
-				<p><span  class="text-error">Blocked Amount:${LIEN_M.toLocaleString('en-BD', {
-					maximumFractionDigits: 2,
-					style: 'currency',
-					currency: 'BDT'
-				})}<br/></span>
-				<span>Total Amount: </span>${BALANCE.toLocaleString('en-BD', {
-					maximumFractionDigits: 2,
-					style: 'currency',
-					currency: 'BDT'
-				})}
+				<h5 class="h5 text-primary text-clip">Customer Information</h5>
+				<p class="text-tiny">
+				  Customer ID: ${CAST_ID} <br />
+				  Name: ${CUSTOMER_NAME} <br />
+				  Father Name: ${NAME} <br />
+				  Mother Name: ${NAME} <br />
+				  Spouse Name: ${NAME} <br />
+				  Date of Birth: ${NAME} <br />
+				  Photo ID: ${NAME} <br />
+				  Contact No: ${NAME} <br />
+				  Address: ${NAME} <br />
+				  TIN: ${NAME} <br />
+				  Ocupation: ${NAME} <br />
+				  Blood Group: ${NAME} <br />
+				  Religion: ${NAME} <br />
 				</p>
-				<br />
-					<h4 class="text-bold mt-2">KYC</h4>
-					<p>Father Name: ${FATHER_NAME}<br />
-						Mother Name: ${MOTHER_NAME}<br />
-						Spouse Name: ${SPOUSE_NAME}<br />
-						Date Of Birth: ${DATE_OF_BIRTH}<br />
-						Gender:${SIM_NO}<br />
-						ID :<br />
-						TIN :,${TIN_NO}<br />
-						Religion: ${RELIGION}</p>
-						Photo: <img src:"${IMGAE}">
-				</div>
+			  </div>
+			  <div class="column col-4 card bg-gray p-2 w100">
+				<h5 class="h5 text-primary text-clip">Image</h5>
+				<img src="" alt="No Data Found" srcset="">
+			  </div>
 			</div>
+			<div class="columns">
+  
+  
+			  <div class="column col-12 card bg-gray p-2 w100">
+				<h5 class="h5 text-primary text-clip">Account Information</h5>
+				<table class="table">
+				  <thead>
+					<tr>
+  
+					  <th class="text-tiny text-bold">SL</th>
+					  <th class="text-tiny text-bold">Titel</th>
+					  <th class="text-tiny text-bold">Type</th>
+					  <th class="text-tiny text-bold">No</th>
+					  <th class="text-tiny text-bold">Status</th>
+					</tr>
+				  </thead>
+				  <tbody id="acinfo">
+					<tr>
+					  <td class="text-tiny">SL</td>
+					  <td class="text-tiny">Titel</td>
+					  <td class="text-tiny">Type</td>
+					  <td class="text-tiny">No</td>
+					  <td class="text-tiny">Status</td>
+					</tr>
+  
+				  </tbody>
+				</table>
+  
+  
+  
+  
+				<h5 class="h5 text-primary text-clip p-2">Nominee Information</h5>
+  
+				<div class="columns" id="nominee">
+  
+				  <div class="column card m-1 col-4">
+					<h6 class="h6 text-primary text-bold">
+					  Name: ${NAME}
+					</h6>
+					<p class="text-tiny">
+					  Father: ${NAME} <br />
+					  Mother: ${NAME} <br />
+					  Spouse: ${NAME} <br />
+					  Date of Birth: ${NAME} <br />
+					  Photo ID: ${NAME} <br />
+					  Contact No: ${NAME} <br />
+					  Address: ${NAME} <br />
+					  Ocupation: ${NAME} <br />
+					  Nominee Share: ${NAME} <br />
+					  Type: ${NAME} <br />
+					</p>
+				  </div>
+  
+				</div>
+				<div class="column col-12">
+				  <div class="columns">
+					<div class="column col-6">
+					  <h5 class="h5 text-primary text-clip">Authorization Information</h5>
+					  <h6 class="h6 text-clip">Reg Status</h6>
+					  <p class="text-tiny" id="introducer">
+						Reg Status: ${NAME} <br />
+						Reg date: ${NAME} <br />
+						Authorized By: ${NAME} <br />
+						Last Updated By: ${NAME} <br />
+						Link Account: ${NAME} <br />
+						Agent: ${NAME} <br />
+					  </p>
+					</div>
+					<div class="column col-6">
+					  <h5 class="h5 text-primary text-clip">Introducer Information</h5>
+					  <p class="text-tiny" id="introducer">
+						Name: ${NAME} <br />
+						Address: ${NAME} <br />
+						Relation: ${NAME} <br />
+						Contact No: ${NAME} <br />
+					  </p>
+					</div>
+				  </div>
+				</div>
+			  </div>
+			</div>
+		  </div>
 		</div>
-	</div>
-</div>
-
-`
+	  </div>`
 		})
 	})
 

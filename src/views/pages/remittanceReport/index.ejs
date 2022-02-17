@@ -27,14 +27,16 @@
                 </select>
             </div>
 
-            <button class="btn btn-primary-link input-group-btn" id="btn-loading" onclick="remittance()">Remittance
+            <button class="btn btn-primary input-group-btn" id="btn-loading" onclick="remittance()">Remittance
                 Report
+            </button>
+            <button class="btn btn-primary-link input-group-btn" id="btn-csv" onclick="getCSV()">Remittance
+                Report CSV
             </button>
             <button class="btn btn-primary-link input-group-btn" id="btn-loading-1"
                 onclick="remittancesummary()">Remittance Summary Report
             </button>
-
-            <button class="btn btn-primary-link input-group-btn disabled" id="btn-print" onclick="printArea()">Print
+            <button class="btn btn-primary input-group-btn disabled" id="btn-print" onclick="printArea()">Print
             </button>
 
         </div>
@@ -43,11 +45,12 @@
 
     <div class="container">
 
-        <div data-aos="fade-up" data-aos-anchor-placement="bottom-bottom" class="columns" id="output">
+        <div data-aos="fade-up" class="columns" id="output">
 
         </div>
     </div>
 
     <script src="/js/funRemittance.js" defer></script>
+    <script src="/js/CSVExport.js" defer></script>
 
 </main>

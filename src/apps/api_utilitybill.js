@@ -43,8 +43,8 @@ const utilityinfohead = async (date, key) => {
 const utilityinfodtl = async (fromdate, todate, key) => {
 	fromdate = oracleDate(fromdate)
 	todate = oracleDate(todate)
-
-	const sql = `/* Formatted on 2/1/2022 3:19:21 PM (QP5 v5.374) */
+	if (key == 'ALL') {
+		const sql = `/* Formatted on 2/1/2022 3:19:21 PM (QP5 v5.374) */
 	SELECT u.ENTRY_DATE,
 		   u.TRANS_NO,
 		   ROUND (u.TRANS_AMT, 2) TRANS_AMT,
@@ -56,8 +56,22 @@ const utilityinfodtl = async (fromdate, todate, key) => {
 	  FROM AGENT_BANKING.UTILITY_PAYMENT_INFO u
 	  where status = 'S' and trunc(entry_date) between '${fromdate}' and '${todate}'
 	  and TRANS_SNAME = '${key}' order by ENTRY_DATE`
-
-	return await qurrythis(sql)
+		return await qurrythis(sql)
+	} else {
+		const sql = `/* Formatted on 2/1/2022 3:19:21 PM (QP5 v5.374) */
+	SELECT u.ENTRY_DATE,
+		   u.TRANS_NO,
+		   ROUND (u.TRANS_AMT, 2) TRANS_AMT,
+		   ROUND (VAT_AMT, 2) VAT_AMT,
+		   ROUND (STAMP_AMT, 2) STAMP_AMT,
+		   u.BILL_INFO_1 ACNO,
+		   u.BILL_INFO_2 BOOKNO,
+		   UPPER(u.BILL_INFO_3) MONTH
+	  FROM AGENT_BANKING.UTILITY_PAYMENT_INFO u
+	  where status = 'S' and trunc(entry_date) between '${fromdate}' and '${todate}'
+	  order by ENTRY_DATE`
+		return await qurrythis(sql)
+	}
 }
 const utilityinfosummary = async (fromdate, todate) => {
 	fromdate = oracleDate(fromdate)

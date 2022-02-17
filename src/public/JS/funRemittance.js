@@ -99,7 +99,7 @@ const remittance = async () => {
                                 <th class="text-tiny text-right">Amount Remitted</th>
                                 <th class="text-tiny text-right">Amount of Incentive</th>
                                 <th class="text-tiny">Date of Payment of Incentive</th>
-                                <th class="text-tiny">Comments</th>
+                                
                                 
                   
                             </tr>
@@ -132,8 +132,7 @@ const remittance = async () => {
 							SOURCE_COUNTRY,
 							AMOUNT_REMITTED_BDT,
 							AMOUNT_OF_INCENTIVE_BDT,
-							DATE_OF_PAYMENT_OF_INCENTIVE,
-							COMMENTS
+							DATE_OF_PAYMENT_OF_INCENTIVE
 						},
 						index
 					) => {
@@ -162,7 +161,7 @@ const remittance = async () => {
 							currency: 'BDT'
 						})}</td>
 						<td class="text-tiny">${DATE_OF_PAYMENT_OF_INCENTIVE}</td>
-						<td class="text-tiny">${COMMENTS}</td>
+						
 					 </tr>`
 					}
 				)
@@ -188,6 +187,7 @@ const remittance = async () => {
 
 	// printArea()
 	document.getElementById('btn-print').classList.remove('disabled')
+	// document.getElementById('btn-csv').classList.remove('disabled')
 	// } catch (e) {
 
 	// 	document.getElementById('output').innerHTML = `<div class="empty col-12 w100">
@@ -198,6 +198,7 @@ const remittance = async () => {
 	//   </div>`
 	// }
 }
+
 const remittancesummary = async () => {
 	/*Constracting Url*/
 	let fromdate = document.getElementById('fromdate').value
@@ -326,4 +327,43 @@ const remittancesummary = async () => {
 
 	//   </div>`
 	// }
+}
+
+const getCSV = async () => {
+	const key = document.getElementById('list').value
+	let fromdate = document.getElementById('fromdate').value
+	let todate = document.getElementById('todate').value
+	const printday = Date()
+
+	/*Current date & time*/
+	if (fromdate === null || fromdate === '') {
+		fromdate = printday
+	}
+	if (todate === null || todate === '') {
+		todate = printday
+	}
+
+	/* Requesting part start here. */
+	const myHeaders = new Headers()
+	myHeaders.append('Content-Type', 'application/json')
+
+	/* Post request body content*/
+	const url = `${apiserver}/remittance`
+	const raw = JSON.stringify({
+		key: `${key}`,
+		fromdate: `${fromdate}`,
+		todate: `${todate}`
+	})
+
+	const requestOptions = {
+		method: 'POST',
+		headers: myHeaders,
+		body: raw,
+		redirect: 'follow'
+	}
+
+	await fetch(url, requestOptions).then((response) => response.json()).then((payload) => {
+		const download = new CSVExport(payload)
+		return false
+	})
 }
