@@ -5,7 +5,8 @@ const { timeline, trSearch } = require('../apps/api_timeline')
 const { pbslist, utilityinfohead, utilityinfodtl, utilityinfosummary } = require('../apps/api_utilitybill.js')
 const { remittancehouselist, remittance, remittancesummary } = require('../apps/api_remittance')
 const { transactionsreport } = require('../apps/api_transactionsreport')
-const { statementHead, statementBody } = require('../apps/apiStatement.js')
+const { statementHead, statementBody } = require('../apps/apiStatement')
+const { pichart } = require('../apps/api_home')
 const bodyParser = require('body-parser')
 const cors = require('cors')
 const app = Router()
@@ -41,6 +42,16 @@ app.post('/trsearch', async (req, res) => {
 		console.log(e)
 		res.send(e)
 		res.status(403)
+	}
+})
+
+app.get('/pichart', async (req, res) => {
+	try {
+		const data = await pichart()
+
+		res.send(data)
+	} catch (e) {
+		return e
 	}
 })
 
@@ -155,7 +166,7 @@ app.post('/transactionsreport', async (req, res) => {
 
 app.post('/customerinfo', async (req, res) => {
 	const data = await customerinfo(req.body.id)
-	console.log(req.body.id)
+
 	res.send(data)
 })
 

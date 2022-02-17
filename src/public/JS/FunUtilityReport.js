@@ -82,7 +82,7 @@ const utilityinfo = async () => {
 	}
 
 	/*This valus make the summary part.
-    yes its made by by application. not DB yes!!!! >_<
+    yes its made by by application.
     */
 	/* Totals*/
 	let TRANS_AMT_TOTAL = 0
@@ -129,11 +129,11 @@ const utilityinfo = async () => {
                             <tr>
 							<th class="text-tiny">SL.</th>
                                 <th class="text-tiny">Date</th>
-                                <th class="text-tiny">Trans NO</th>
-                                <th class="text-tiny">Revenue</th>
-                                <th class="text-tiny">Vat</th>
-                                <th class="text-tiny">Stamp</th>
-                                <th class="text-tiny">Total</th>
+                                <th class="text-tiny text-left">Trans NO</th>
+                                <th class="text-tiny text-right text-ellipsis">Revenue</th>
+                                <th class="text-tiny text-right">Vat</th>
+                                <th class="text-tiny text-right">Stamp</th>
+                                <th class="text-tiny text-right">Total</th>
                                 <th class="text-tiny">${BILL_TITLE_1}</th>
                                 <th class="text-tiny">${BILL_TITLE_2}</th>
                                 <th class="text-tiny">${BILL_TITLE_3}</th>
@@ -176,24 +176,24 @@ const utilityinfo = async () => {
 						}
 
 						return `<tr>
-				<td>${index + 1}</td>
-				<td class="text-tiny text-break">${moment(ENTRY_DATE).format('LLL')}</td>
-				<td class="text-tiny text-break">${TRANS_NO}</td>
-				<td class="text-tiny">${(TRANS_AMT - VAT_AMT).toLocaleString('en-BD', {
+				<td class="text-tiny">${index + 1}</td>
+				<td class="text-tiny text-break">${moment(ENTRY_DATE).format('lll')}</td>
+				<td class="text-tiny text-break text-left">${TRANS_NO}</td>
+				<td class="text-tiny text-right">${(TRANS_AMT - VAT_AMT).toLocaleString('en-BD', {
 					maximumFractionDigits: 2
 				})}</td>
-				<td class="text-tiny">${VAT_AMT.toLocaleString('en-BD', {
+				<td class="text-tiny text-right">${VAT_AMT.toLocaleString('en-BD', {
 					maximumFractionDigits: 2
 				})}</td>
-				<td class="text-tiny">${STAMP_AMT.toLocaleString('en-BD', {
+				<td class="text-tiny text-right">${STAMP_AMT.toLocaleString('en-BD', {
 					maximumFractionDigits: 2
 				})}</td>
-				<td class="text-tiny">${TRANS_AMT.toLocaleString('en-BD', {
+				<td class="text-tiny text-right">${TRANS_AMT.toLocaleString('en-BD', {
 					maximumFractionDigits: 2
 				})}</td>
 				<td class="text-tiny">${BOOKNO}</td>
 				<td class="text-tiny">${ACNO}</td>
-				<td class="text-tiny">${MONTH}</td>
+				<td class="text-tiny text-break">${MONTH}</td>
 		 	</tr>`
 					})
 					.join('')
