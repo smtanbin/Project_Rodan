@@ -953,6 +953,18 @@
   background: transparent;
 }
 
+.progress-warning {
+  color: tomato !important;
+}
+
+.progress-error {
+  color: #ffb700 !important;
+}
+
+.progress-sucess {
+  color: #32b643 !important;
+}
+
 @-webkit-keyframes progress-indeterminate {
   0% {
     background-position: 200% 0;

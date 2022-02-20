@@ -6,7 +6,7 @@ const { pbslist, utilityinfohead, utilityinfodtl, utilityinfosummary } = require
 const { remittancehouselist, remittance, remittancesummary } = require('../apps/api_remittance')
 const { transactionsreport } = require('../apps/api_transactionsreport')
 const { statementHead, statementBody } = require('../apps/apiStatement')
-const { pichart } = require('../apps/api_home')
+const { pichart, agentstatus } = require('../apps/api_home')
 const bodyParser = require('body-parser')
 const cors = require('cors')
 const app = Router()
@@ -48,6 +48,15 @@ app.post('/trsearch', async (req, res) => {
 app.get('/pichart', async (req, res) => {
 	try {
 		const data = await pichart()
+
+		res.send(data)
+	} catch (e) {
+		return e
+	}
+})
+app.get('/agentstatus', async (req, res) => {
+	try {
+		const data = await agentstatus()
 
 		res.send(data)
 	} catch (e) {

@@ -33,12 +33,28 @@
       background: transparent;
     }
   }
+
 }
+
+.progress-warning {
+  color: $error-color !important;
+}
+
+.progress-error {
+  color: $warning-color !important;
+}
+
+.progress-sucess {
+  color: $success-color !important;
+}
+
+
 
 @keyframes progress-indeterminate {
   0% {
     background-position: 200% 0;
   }
+
   100% {
     background-position: -200% 0;
   }

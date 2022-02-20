@@ -165,3 +165,14 @@ h3 {
 	stroke-dashoffset: -134;
 	stroke-width: 6;
 }
+
+.bg-shade {
+	background-color: rgb(214, 214, 214);
+}
+
+.card-shadow {
+	box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+}
+.card {
+	box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+}

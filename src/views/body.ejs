@@ -7,6 +7,7 @@
         <img src="/img/Standardbankltd-color.svg" alt="" class="col-3 p-2" srcset="">
         <!-- <p>You have no new messages</p> -->
         <br />
+
         <div class="input-group input-inline p-2">
           <input class="form-input disabled" type="text" placeholder="search">
           <button class="btn btn-primary input-group-btn disabled">Search</button>
@@ -16,16 +17,70 @@
 
   </div>
 </section>
+
+<progress class="progress" id="loading" max="100"></progress>
+
 <section class="w100 column col-12">
   <div class="container">
     <div class="columns">
       <div class="column col-6">
-        <canvas id="Chart" style="width:100%;max-width:600px"></canvas>
+        <div class="card p-2 m-1">
+          <div class="card-header">
+            <div class="card-title text-primary h5">Balance</div>
+
+          </div>
+          <canvas id="Chart" style="width:100%;max-width:600px"></canvas>
+        </div>
+        <div class="card p-2 m-1">
+          <div class="card-header">
+            <div class="card-title text-primary h5">Agent Balance</div>
+
+          </div>
+          <canvas id="agentChart" style="width:100%;max-width:600px"></canvas>
+        </div>
+        <div class="card p-2 m-1">
+          <div class="card-header">
+            <div class="card-title text-primary h5">Customer Balance</div>
+
+          </div>
+          <canvas id="customerChart" style="width:100%;max-width:600px"></canvas>
+        </div>
+        <br />
       </div>
-      <div class="column col-6">Place holder</div>
+      <div class="column col-6 my-1">
+        <section class="card  column p-2 mt-1 bg-shade">
+
+          <h4 class="h text-primary text-center" id="remainer-text">Time Remaining</h4>
+          <progress class="progress" id="remainer" value="0" max="1070"></progress>
+
+        </section>
+        <section class="card my-2">
+
+          <h4 class="text-primary p-2 h4 ">Alart</h4>
+
+          <div class="tile">
+            <div class="tile-icon">
+              <!-- <figure class="avatar avatar-lg"><img src="../img/avatar-2.png" alt="Avatar"></figure> -->
+            </div>
+            <div class="tile-content">
+              <p class="tile-title">The S.H.I.E.L.D.</p>
+              <p class="tile-subtitle">The Strategic Homeland Intervention, Enforcement, and Logistics Division...</p>
+              <p>
+                <button class="btn btn-primary btn-sm">Join</button>
+                <button class="btn btn-sm">Contact</button>
+              </p>
+            </div>
+          </div>
+        </section>
+        <!-- Place holder -->
+      </div>
     </div>
+
   </div>
 
 </section>
+
+
+
 <script src="/JS/chart.js"></script>
-<script src="/JS/funHome.js"></script>
+<script src="/JS/funHome.js" async></script>
