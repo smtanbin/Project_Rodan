@@ -7,6 +7,8 @@ const apiserver = '/api/'
 const myHeaders = new Headers()
 myHeaders.append('Content-Type', 'application/json')
 myHeaders.append('Access-Control-Allow-Origin', '*')
+
+/* This is a color chart for pie chat*/
 const barColors = [
 	'rgba(255, 99, 132, 1)',
 	'rgba(54, 162, 235, 1)',
@@ -79,6 +81,7 @@ const agentstatus = async () => {
 	let loacl_cy = []
 
 	await fetch(url, requestOptions).then((response) => response.json()).then((payload) => {
+		/*Contracting a string with , to separate value*/
 		payload.map(({ MPHONE, ACCOUNT_NAME, YESTERDAY, TODAY, CUSTOMER_CURRENT, CUSTOMER_YESTERDAY }) => {
 			local_mphone += `${MPHONE},`
 			loacl_today += `${TODAY.toFixed(2)},`
@@ -86,6 +89,7 @@ const agentstatus = async () => {
 			loacl_cc += `${CUSTOMER_CURRENT.toFixed(2)},`
 			loacl_cy += `${CUSTOMER_YESTERDAY.toFixed(2)},`
 		})
+		// turning INTO ARRAY
 		local_mphone = local_mphone.split(',')
 		loacl_today = loacl_today.split(',')
 		local_yesterday = local_yesterday.split(',')
@@ -155,34 +159,90 @@ const agentstatus = async () => {
 	})
 	document.getElementById('loading').remove()
 }
-
-setInterval(() => {
+const timer = () => {
 	let now = new Date()
 	let hour = now.getHours()
 	hour = hour * 60
 	let minute = now.getMinutes()
 	let remaintime = hour + minute
-
-	// var distance = countDownDate - now
-	// var days = Math.floor(distance / (1000 * 60 * 60 * 24))
-	// var showhours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))
-	// var showminutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60))
-	// var showseconds = Math.floor((distance % (1000 * 60)) / 1000)
-
-	// document.getElementById('remainer-text').innerHTML = days + 'd ' + hours + 'h ' + minutes + 'm ' + seconds + 's '
-
-	if (remaintime >= 960) {
+	console.log(remaintime)
+	if (remaintime > 960) {
 		document.getElementById('remainer').setAttribute('value', remaintime)
-		document.getElementById('remainer').classList.add('bg-warning')
-		document.getElementById('remainer-text').classList.add('text-warning')
-	} else if (remaintime >= 1020) {
+		// document.getElementById('remainer').classList.add('bg-warning')
+		document.getElementById('remainer-body').classList.add('bg-warning')
+	}
+	if (remaintime > 1020) {
 		document.getElementById('remainer').setAttribute('value', remaintime)
-		document.getElementById('remainer').classList.add('bg-error')
-		document.getElementById('remainer-text').classList.add('text-error')
+		// document.getElementById('remainer').classList.add('bg-error')
+		document.getElementById('remainer-body').classList.add('bg-error')
 	} else {
 		document.getElementById('remainer').setAttribute('value', remaintime)
 	}
-}, 1000)
+}
 
+// setInterval(async () => {
+// 	const url = `${apiserver}/cashEntry`
+
+// 	const requestOptions = {
+// 		method: 'GET',
+// 		headers: myHeaders,
+// 		redirect: 'follow'
+// 	}
+
+// 	await fetch(url, requestOptions).then((response) => response.json()).then((payload) => {
+// 		console.log(payload)
+// 		if (payload != null) {
+// 			document.getElementById('taleRail').innerHTML = payload
+// 				.map(
+// 					(
+// 						TRANS_NO,
+// 						TRACER_NO,
+// 						AC_NO,
+// 						ADVICE_NO,
+// 						AMOUNT,
+// 						TRANS_DATE,
+// 						CREATE_USER,
+// 						CHECKED_DATE,
+// 						CHECKED_USER,
+// 						APPROVED_USER,
+// 						APPROVED_DATE,
+// 						MSG
+// 					) => {
+// 						return `
+// 			          <div class="tile">
+//             <div class="tile-icon">
+//               <!-- <figure class="avatar avatar-lg"><img src="../img/avatar-2.png" alt="Avatar"></figure> -->
+//             </div>
+//             <div class="tile-content">
+//               <p class="tile-title">Cash Load</p>
+//               <p class="tile-subtitle">
+// 			  To: ${AC_NO} <br/>
+// 			  Tracer No: ${TRACER_NO} <br/>
+// 			  Advice No: ${ADVICE_NO} <br/>
+// 			  <span class="text-primary">${AMOUNT}<span/>
+// 			  Date: ${TRANS_DATE} <br/>
+// 			  Entry By: ${CREATE_USER} at ${TRANS_DATE} <br/>
+// 			  Check By: ${CHECKED_USER} at ${CHECKED_DATE} <br/>
+// 			  Approved: ${APPROVED_USER} at ${APPROVED_DATE} <br/>
+
+// 			  </p>
+// 			  <h5>${MSG}</h5>
+//               <p>
+// 			  <small>${TRANS_NO}</small>
+//                 <button class="btn btn-primary btn-sm">Join</button>
+//                 <button class="btn btn-sm">Contact</button>
+//               </p>
+//             </div>
+
+//           </div>`
+// 						const warning = new Audio('/assact/warning.mp3')
+// 						warning.play()
+// 					}
+// 				)
+// 				.join('')
+// 		}
+// 	})
+// }, 50000)
+timer()
 pichat()
 agentstatus()

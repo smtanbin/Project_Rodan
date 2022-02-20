@@ -46,4 +46,33 @@ const agentstatus = async () => {
 	}
 }
 
-module.exports = { pichart, agentstatus }
+const cashEntry = async () => {
+	try {
+		sql = `/* Formatted on 2/20/2022 4:28:54 PM (QP5 v5.374) */
+	SELECT TRANS_NO,
+		   AC_NO,
+		   TRACER_NO,
+		   ADVICE_NO,
+		   AMOUNT,
+		   TRANS_DATE,
+		   CREATE_USER,
+		   TRANS_DATE,
+		   CHECKED_DATE,
+		   CHECKED_USER,
+		   APPROVED_USER,
+		   APPROVED_DATE,
+		   nvl(CASE
+			   WHEN CHECKED_USER IS NULL THEN 'Waiting for Chckerd'
+			   WHEN APPROVED_USER IS NULL THEN 'Waiting for Approvel'
+		   END,'Unknown') MSG
+	  FROM agent_banking.TBL_CASH_ENTRY
+	 WHERE STATUS IS NOT NULL AND ROWNUM  < 5`
+
+		return await qurrythis(sql)
+	} catch (e) {
+		console.log('api function cashEntry' + e)
+		return e
+	}
+}
+
+module.exports = { pichart, agentstatus, cashEntry }
