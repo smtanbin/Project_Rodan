@@ -168,12 +168,12 @@ const timer = () => {
 	console.log(remaintime)
 	if (remaintime > 960) {
 		document.getElementById('remainer').setAttribute('value', remaintime)
-		// document.getElementById('remainer').classList.add('bg-warning')
+		document.getElementById('remainer-text').classList.remove('text-primary')
 		document.getElementById('remainer-body').classList.add('bg-warning')
 	}
 	if (remaintime > 1020) {
 		document.getElementById('remainer').setAttribute('value', remaintime)
-		// document.getElementById('remainer').classList.add('bg-error')
+		document.getElementById('remainer-text').classList.remove('text-primary')
 		document.getElementById('remainer-body').classList.add('bg-error')
 	} else {
 		document.getElementById('remainer').setAttribute('value', remaintime)
