@@ -56,17 +56,17 @@ const cashEntry = async () => {
 		   AMOUNT,
 		   TRANS_DATE,
 		   CREATE_USER,
-		   TRANS_DATE,
+		
+		   nvl(CHECKED_USER,'Waiting for Chackerd') CHECKED_USER,
 		   CHECKED_DATE,
-		   CHECKED_USER,
-		   APPROVED_USER,
-		   APPROVED_DATE,
+	
+		
 		   nvl(CASE
-			   WHEN CHECKED_USER IS NULL THEN 'Waiting for Chckerd'
+			   WHEN CHECKED_USER IS NULL THEN 'Waiting for Chackerd'
 			   WHEN APPROVED_USER IS NULL THEN 'Waiting for Approvel'
 		   END,'Unknown') MSG
 	  FROM agent_banking.TBL_CASH_ENTRY
-	 WHERE STATUS IS NOT NULL AND ROWNUM  < 5`
+	 WHERE STATUS = 'A'`
 
 		return await qurrythis(sql)
 	} catch (e) {

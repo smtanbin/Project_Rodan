@@ -688,6 +688,10 @@ html:lang(ko),
   background: #f7f7f7;
 }
 
+.table.table-cluster td {
+  padding: .1rem !important;
+}
+
 .table.table-scroll {
   display: block;
   overflow-x: auto;
@@ -3981,6 +3985,10 @@ a.text-error:visited {
 
 .text-tiny {
   font-size: .8em;
+}
+
+.text-micro {
+  font-size: .4em;
 }
 
 .text-muted {

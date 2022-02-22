@@ -1,28 +1,39 @@
-<ul class="nav bg-gray" id="sidenav">
-    <li class="nav-item">
-        <a href="#">Elements</a>
-    </li>
-    <li class="nav-item active">
-        <a href="#">Layout</a>
-        <ul class="nav">
-            <li class="nav-item">
-                <a href="#">Flexbox grid</a>
-            </li>
-            <li class="nav-item">
-                <a href="#">Responsive</a>
-            </li>
-            <li class="nav-item">
-                <a href="#">Navbar</a>
-            </li>
-            <li class="nav-item">
-                <a href="#">Empty states</a>
-            </li>
-        </ul>
-    </li>
-    <li class="nav-item">
-        <a href="#">Components</a>
-    </li>
-    <li class="nav-item">
-        <a href="#">Utilities</a>
-    </li>
-</ul>
+<div data-aos="zoom-in-left" class="column col-6 col-xs-12 p-fixed bg-frost" id="sidenav">
+    <div class="panel">
+        <div class="panel-header">
+
+            <div class="panel-title  text-primary py-1 d-flex" style="justify-content: space-between;">
+                <h4 class="h4">
+                    Notification
+                </h4>
+
+                <button class="btn btn-link ml-1 text-error" onclick="sidenavclose()">Close</button>
+            </div>
+
+
+            <div class="input-group">
+                <input class="form-input" type="text" placeholder="Hello">
+                <button class="btn btn-primary-link input-group-btn-link">Send</button>
+            </div>
+        </div>
+        <div class="panel-body" id="panel-body">
+            <!-- <div class="tile">
+                <div class="tile-icon">
+                    <figure class="avatar"><img src="../img/avatar-1.png" alt="Avatar"></figure>
+                </div>
+                <div class="tile-content">
+                    <p class="tile-title text-bold">Thor Odinson</p>
+                    <p class="tile-subtitle">Earth's Mightiest Heroes joined forces to take on threats that were too big
+                        for any one hero to tackle...</p>
+                </div>
+            </div> -->
+
+
+
+
+            <div class="panel-footer">
+
+            </div>
+        </div>
+    </div>
+    <script src="/JS/funNotification.js" async></script>

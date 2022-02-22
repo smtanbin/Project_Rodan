@@ -65,7 +65,18 @@ const pichat = async () => {
 		})
 	})
 }
+
 const agentstatus = async () => {
+	/****************************************** Error! ***********************************
+Function connection.close() face a error!
+Error: NJS-003: invalid connection
+    at Connection.close (E:\Current Workspace\rodan-1\node_modules\oracledb\lib\connection.js:175:14)
+    at Connection.<anonymous> (E:\Current Workspace\rodan-1\node_modules\oracledb\lib\util.js:208:25)
+    at async qurrythis (E:\Current Workspace\rodan-1\src\apps\db.js:25:5)
+    at async agentstatus (E:\Current Workspace\rodan-1\src\apps\api_home.js:42:10)
+    at async E:\Current Workspace\rodan-1\src\routes\index.js:68:16
+*****************************************************************************/
+
 	/* Post request body content*/
 	const url = `${apiserver}agentstatus`
 	const requestOptions = {
@@ -159,13 +170,14 @@ const agentstatus = async () => {
 	})
 	document.getElementById('loading').remove()
 }
+
 const timer = () => {
 	let now = new Date()
 	let hour = now.getHours()
 	hour = hour * 60
 	let minute = now.getMinutes()
 	let remaintime = hour + minute
-	console.log(remaintime)
+
 	if (remaintime > 960) {
 		document.getElementById('remainer').setAttribute('value', remaintime)
 		document.getElementById('remainer-text').classList.remove('text-primary')
@@ -180,69 +192,6 @@ const timer = () => {
 	}
 }
 
-// setInterval(async () => {
-// 	const url = `${apiserver}/cashEntry`
-
-// 	const requestOptions = {
-// 		method: 'GET',
-// 		headers: myHeaders,
-// 		redirect: 'follow'
-// 	}
-
-// 	await fetch(url, requestOptions).then((response) => response.json()).then((payload) => {
-// 		console.log(payload)
-// 		if (payload != null) {
-// 			document.getElementById('taleRail').innerHTML = payload
-// 				.map(
-// 					(
-// 						TRANS_NO,
-// 						TRACER_NO,
-// 						AC_NO,
-// 						ADVICE_NO,
-// 						AMOUNT,
-// 						TRANS_DATE,
-// 						CREATE_USER,
-// 						CHECKED_DATE,
-// 						CHECKED_USER,
-// 						APPROVED_USER,
-// 						APPROVED_DATE,
-// 						MSG
-// 					) => {
-// 						return `
-// 			          <div class="tile">
-//             <div class="tile-icon">
-//               <!-- <figure class="avatar avatar-lg"><img src="../img/avatar-2.png" alt="Avatar"></figure> -->
-//             </div>
-//             <div class="tile-content">
-//               <p class="tile-title">Cash Load</p>
-//               <p class="tile-subtitle">
-// 			  To: ${AC_NO} <br/>
-// 			  Tracer No: ${TRACER_NO} <br/>
-// 			  Advice No: ${ADVICE_NO} <br/>
-// 			  <span class="text-primary">${AMOUNT}<span/>
-// 			  Date: ${TRANS_DATE} <br/>
-// 			  Entry By: ${CREATE_USER} at ${TRANS_DATE} <br/>
-// 			  Check By: ${CHECKED_USER} at ${CHECKED_DATE} <br/>
-// 			  Approved: ${APPROVED_USER} at ${APPROVED_DATE} <br/>
-
-// 			  </p>
-// 			  <h5>${MSG}</h5>
-//               <p>
-// 			  <small>${TRANS_NO}</small>
-//                 <button class="btn btn-primary btn-sm">Join</button>
-//                 <button class="btn btn-sm">Contact</button>
-//               </p>
-//             </div>
-
-//           </div>`
-// 						const warning = new Audio('/assact/warning.mp3')
-// 						warning.play()
-// 					}
-// 				)
-// 				.join('')
-// 		}
-// 	})
-// }, 50000)
 timer()
 pichat()
 agentstatus()
