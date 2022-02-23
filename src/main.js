@@ -1,37 +1,30 @@
 const express = require('express')
+const jwt = require('jsonwebtoken')
 // require('dotenv').config();
+
 const app = express()
+let autho = false
+
 const path = require('path')
 const cors = require('cors')
+
 const apipath = require('./routes/index')
+const { login } = require('./apps/api_login')
+const { setCookie, getCookie, eraseCookie } = require('./apps/FunCore')
 const corsOptions = {
 	origin: '*',
 	optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
-  }
+}
 
 app.use(express.static(__dirname + '/public'))
 app.set('views', path.join(__dirname, '/views'))
 // set the view engine to ejs
 app.set('view engine', 'ejs')
 // use res.render to load up an ejs view file
-let autho = false
-
-
-
+app.use(express.json())
 
 // Middelwears
 app.use(cors(corsOptions))
-
-app.get('/', function(req, res, next) {
-	if (autho === true) {
-		res.locals = {
-			title: 'Login'
-		}
-		res.render('login')
-	} else {
-		next()
-	}
-})
 
 app.get('/login', function(req, res) {
 	res.locals = {
@@ -39,8 +32,48 @@ app.get('/login', function(req, res) {
 	}
 	res.render('login')
 })
+
+app.get('/oauth', async (req, res) => {
+	// const user = req.body.user
+	// const passwd = req.body.passwd
+	try {
+		// 	autho = await login(user, passwd)
+
+		const user = req.body.user
+		const token = jwt.sign('user', '774gsg342%%#sgsrq2234')
+
+		res.cookie('auth', token)
+		// res.json(token)
+		res.send()
+		// setCookie('auth', 'token', 7)
+
+		// res.send(data)
+	} catch (e) {
+		console.log(e)
+		res.send(e)
+		res.status(403)
+	}
+})
+
+app.get('/', (req, res, next) => {
+	console.log(getCookie('auth'))
+	// const authoHeader = req.headers['authorization']
+	// const token = authoHeader && authoHeader.split(' ')[1]
+	// if (autho == null) {
+	// 	res.locals = {
+	// 		title: 'Login'
+	// 	}
+	// 	res.render('login')
+	// } else {
+	// 	jwt.verify(token, '774gsg342%%#sgsrq2234', (err, user) => {
+	// 		if (err) return res.sendStatus(403)
+	// 		req.user = user
+	// 		next()
+	// 	})
+	// }
+})
 /** 
- **Routes**
+ Routes
  **/
 // index page
 app.get('/', function(req, res) {
