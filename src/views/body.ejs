@@ -1,12 +1,12 @@
 <section style="margin-top: 50px;">
-  <div class="modal" id="modal-id">
+  <!-- <div class="modal active" id="modal-id">
     <a class="modal-overlay" aria-label="Close"></a>
     <div class="modal-container" id="output">
 
     </div>
-  </div>
+  </div> -->
 </section>
-<section data-aos="zoom-in" class="w100 column col-12">
+<section class="w100 column col-12">
   <div class="columns">
     <div class="hero bg-bright w100 column col-12">
       <div class="hero-body"
@@ -33,7 +33,7 @@
       <div class="column col-6">
         <div class="card p-2 m-1">
           <div class="card-header">
-            <div data-aos="fade-up" class="card-title text-primary h5 text">Balance</div>
+            <div data-aos="fade-right" class="card-title text-primary h5 text">Balance</div>
 
           </div>
           <canvas data-aos="fade-up" id="Chart" style="width:100%;max-width:600px"></canvas>
@@ -49,7 +49,7 @@
               <thead>
                 <tr>
                   <th class="text-tiny text-bold ">AC</th>
-                  <th class="text-tiny text-bold ">Name</th>
+                  <th class="text-tiny text-bold text-ellipsis">Name</th>
                   <th class="text-tiny text-bold ">Today</th>
                   <th class="text-tiny text-bold ">Yesterday</th>
                 </tr>
@@ -66,13 +66,13 @@
 
           </div>
           <canvas data-aos="fade-right" id="customerChart" style="width:100%;max-width:600px"></canvas>
-          <table data-aos="fade-right" class="table table-striped table-cluster ">
+          <table data-aos="fade-right" class="table table-striped table-cluster">
             <thead>
               <tr>
                 <th class="text-tiny text-bold ">Agent</th>
-                <th class="text-tiny text-bold ">Name</th>
+                <th class="text-tiny text-bold text-ellipsis">Name</th>
                 <th class="text-tiny text-bold ">Today</th>
-                <th class="text-tiny text-bold t">Yesterday</th>
+                <th class="text-tiny text-bold ">Yesterday</th>
               </tr>
             </thead>
             <tbody id="customerInfo">

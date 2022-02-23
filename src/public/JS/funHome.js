@@ -217,8 +217,8 @@ const agentstatus = async () => {
 			loaclTatalYesterday += YESTERDAY
 
 			document.getElementById('agentInfo').innerHTML += `			<tr>
-			<td class="text-tiny"><button class="btn btn-link" onclick=model(${MPHONE})>${MPHONE}<button/></td>
-			<td class="text-tiny text-left">${ACCOUNT_NAME}</td>
+			<td class="text-tiny">${MPHONE}</td>
+			<td class="text-tiny text-left text-ellipsis">${ACCOUNT_NAME}</td>
 			<td class="text-tiny text-right ">${TODAY.toLocaleString('en-BD', {
 				maximumFractionDigits: 2
 			})}</td>
@@ -298,7 +298,7 @@ const customerstatus = async () => {
 			localCustomerYday += CUSTOMER_YESTERDAY
 			document.getElementById('customerInfo').innerHTML += `<tr>
 			<td class="text-tiny">${MPHONE}</td>
-			<td class="text-tiny">${ACCOUNT_NAME}</td>
+			<td class="text-tiny text-ellipsis">${ACCOUNT_NAME}</td>
 			<td class="text-tiny text-right">${CUSTOMER_CURRENT.toLocaleString('en-BD', {
 				maximumFractionDigits: 2
 			})}</td>
@@ -380,83 +380,83 @@ const timer = () => {
 	}
 }
 
-const model = async (acno) => {
-	const url = `${apiserver}monthlyActivity`
-	const raw = JSON.stringify({
-		key: `${acno}`
-	})
-	const requestOptions = {
-		method: 'POST',
-		headers: myHeaders,
-		body: raw,
-		redirect: 'follow'
-	}
+// const model = async (acno) => {
+// 	const url = `${apiserver}monthlyActivity`
+// 	const raw = JSON.stringify({
+// 		key: `${acno}`
+// 	})
+// 	const requestOptions = {
+// 		method: 'POST',
+// 		headers: myHeaders,
+// 		body: raw,
+// 		redirect: 'follow'
+// 	}
+// 	let DR = 0
+// 	let CR = 0
+// 	let date = null
 
-	await fetch(url, requestOptions).then((response) => response.json()).then((payload) => {
-		let DR_AMT
-		let CR_AMT
-		let TRANS_DATE
-		document.getElementById('output').innerHTML = payload.map(({ TRANS_DATE, DR_AMT, CR_AMT, MPHONE }) => {
-			DR_AMT += `${DR_AMT.toFixed(2)},`
-			CR_AMT += `${CR_AMT.toFixed(2)},`
-			TRANS_DATE += `${TRANS_DATE},`
+// 	await fetch(url, requestOptions).then((response) => response.json()).then((payload) => {
+// 		document.getElementById('output').innerHTML = payload.map(({ TRANS_DATE, DR_AMT, CR_AMT, MPHONE }) => {
+// 			DR += `${DR_AMT.toFixed(2)},`
+// 			CR += `${CR_AMT.toFixed(2)},`
+// 			date += `${TRANS_DATE},`
 
-			return `<div class="modal-header">
-				<a onclick="closeModel()" class="btn btn-link float-right" aria-label="Close"><i class="material-icons">close</i></a>
-				<a onclick="printArea()" class="btn btn-link float-right"><i class="material-icons">print</i></a>
-	<div id="modal-title" class="modal-title text-primary h5">${MPHONE}</div>
-	</div>
-	<div class="modal-body">
-	<canvas data-aos="fade-up" id="quickchart" style="width:100%;max-width:600px"></canvas>
-	<div class="content">
-	
-</div>
-<div class="modal-footer">
+// 			document.getElementById('agentInfo').innerHTML += `<div class="modal-header">
+// 				<a onclick="closeModel()" class="btn btn-link float-right" aria-label="Close"><i class="material-icons">close</i></a>
+// 				<a onclick="printArea()" class="btn btn-link float-right"><i class="material-icons">print</i></a>
+// 	<div id="modal-title" class="modal-title text-primary h5">${MPHONE}</div>
+// 	</div>
+// 	<div class="modal-body">
+// 	<canvas data-aos="fade-up" id="quickchart" style="width:100%;max-width:600px"></canvas>
+// 	<div class="content">
 
-</div>`
+// </div>
+// <div class="modal-footer">
 
-			// turning INTO ARRAY
-			const DR_AMT = local_mphone.split(',')
-			const CR_AMT = loacl_today.split(',')
-			const TRANS_DATE = loacl_today.split(',')
+// </div>`
 
-			new Chart('quickchart', {
-				type: 'line',
-				data: {
-					labels: date,
-					datasets: [
-						{
-							data: DR,
-							label: 'Today',
-							backgroundColor: 'dodgerblue',
-							fill: false
-						},
-						{
-							data: CR,
-							label: 'Yesterday',
-							backgroundColor: 'tomato',
-							fill: false
-						}
-					]
-				},
-				options: {
-					legend: { display: true, text: 'Today' },
-					title: {
-						display: false,
-						position: 'top',
-						text: 'Agent Balance'
-					}
-				}
-			})
+// 			// turning INTO ARRAY
+// 			const DR = local_mphone.split(',')
+// 			const CR = loacl_today.split(',')
+// 			const date = loacl_today.split(',')
 
-			document.getElementById('modal-id').classList.add('active')
-		})
-	})
-}
-const closeModel = () => {
-	document.getElementById('modal-id').classList.remove('active')
-	// location.reload()
-}
+// 			new Chart('quickchart', {
+// 				type: 'line',
+// 				data: {
+// 					labels: date,
+// 					datasets: [
+// 						{
+// 							data: DR,
+// 							label: 'Today',
+// 							backgroundColor: 'dodgerblue',
+// 							fill: false
+// 						},
+// 						{
+// 							data: CR,
+// 							label: 'Yesterday',
+// 							backgroundColor: 'tomato',
+// 							fill: false
+// 						}
+// 					]
+// 				},
+// 				options: {
+// 					legend: { display: true, text: 'Today' },
+// 					title: {
+// 						display: false,
+// 						position: 'top',
+// 						text: 'Agent Balance'
+// 					}
+// 				}
+// 			})
+
+// 			document.getElementById('modal-id').classList.add('active')
+// 		})
+// 	})
+// }
+// const closeModel = () => {
+// 	document.getElementById('modal-id').classList.remove('active')
+// 	// location.reload()
+// }
 
 timer()
 pichat()
