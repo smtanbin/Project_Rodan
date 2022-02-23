@@ -1,10 +1,17 @@
+<section style="margin-top: 50px;">
+  <div class="modal" id="modal-id">
+    <a class="modal-overlay" aria-label="Close"></a>
+    <div class="modal-container" id="output">
+
+    </div>
+  </div>
+</section>
 <section data-aos="zoom-in" class="w100 column col-12">
   <div class="columns">
-
-    <div class="hero w100 column col-12">
+    <div class="hero bg-bright w100 column col-12">
       <div class="hero-body"
         style="display: flex; flex-direction: column; justify-content: center;justify-items: center; align-items: center;">
-        <img data-aos="flip-right" src="/img/Standardbankltd-color.svg" alt="" class="col-3 p-2" srcset="">
+        <img data-aos="flip-right" src="/img/abdlogo.svg" alt="" class="col-2 p-2" srcset="">
         <!-- <p>You have no new messages</p> -->
         <br />
 
@@ -26,36 +33,85 @@
       <div class="column col-6">
         <div class="card p-2 m-1">
           <div class="card-header">
-            <div data-aos="fade-up" class="card-title text-primary h5">Balance</div>
+            <div data-aos="fade-up" class="card-title text-primary h5 text">Balance</div>
 
           </div>
-          <canvas data-aos="zoom-in" id="Chart" style="width:100%;max-width:600px"></canvas>
+          <canvas data-aos="fade-up" id="Chart" style="width:100%;max-width:600px"></canvas>
         </div>
-        <div class="card p-2 m-1">
-          <div class="card-header">
-            <div data-aos="fade-up" class="card-title text-primary h5">Agent Balance</div>
+        <section data-aos="fade-right">
+          <div class="card p-2 m-1">
+            <div class="card-header">
+              <div class="card-title text-primary h5">Agent Balance</div>
 
+            </div>
+            <canvas data-aos="fade-right" id="agentChart" style="width:100%;max-width:600px"></canvas>
+            <table data-aos="fade-right" class="table table-striped table-cluster ">
+              <thead>
+                <tr>
+                  <th class="text-tiny text-bold ">AC</th>
+                  <th class="text-tiny text-bold ">Name</th>
+                  <th class="text-tiny text-bold ">Today</th>
+                  <th class="text-tiny text-bold ">Yesterday</th>
+                </tr>
+              </thead>
+              <tbody id="agentInfo">
+
+              </tbody>
+            </table>
           </div>
-          <canvas data-aos="fade-right" id="agentChart" style="width:100%;max-width:600px"></canvas>
-        </div>
-        <div class="card p-2 m-1">
+        </section>
+        <section data-aos="fade-right" class="card p-2 m-1">
           <div class="card-header">
             <div data-aos="fade-up" class="card-title text-primary h5">Customer Balance</div>
 
           </div>
           <canvas data-aos="fade-right" id="customerChart" style="width:100%;max-width:600px"></canvas>
-        </div>
+          <table data-aos="fade-right" class="table table-striped table-cluster ">
+            <thead>
+              <tr>
+                <th class="text-tiny text-bold ">Agent</th>
+                <th class="text-tiny text-bold ">Name</th>
+                <th class="text-tiny text-bold ">Today</th>
+                <th class="text-tiny text-bold t">Yesterday</th>
+              </tr>
+            </thead>
+            <tbody id="customerInfo">
+
+            </tbody>
+          </table>
+
+        </section>
         <br />
       </div>
       <div class="column col-6 my-1">
+
         <section data-aos="fade-up" class="card  column p-2 mt-1" id="remainer-body">
-
-          <h4 class="h4 text-primary text-center text-bold" id="remainer-text">Time Remaining</h4>
-          <progress class="progress" id="remainer" value="0" max="1070"></progress>
-
+          <h4 class="h4 text-primary text-center text-bold" id="remainer-text">Today Time Remaining</h4>
+          <progress class="progress" id="remainer" value="0" max="540"></progress>
         </section>
+        <section data-aos="fade-left" class="card my-2 p-2">
+          <div class="card-title text-primary h5">Account Status</div>
+          <canvas data-aos="fade-left" id="accountStatus" style="width:100%;max-width:600px"></canvas>
+          <table data-aos="fade-left" class="table table-striped table-cluster ">
+            <thead>
+              <tr>
+                <th class="text-tiny text-bold ">Agent</th>
+                <th class="text-tiny text-bold ">Today Open</th>
+                <th class="text-tiny text-bold ">Today Close</th>
+                <th class="text-tiny text-bold ">Yesterday Open</th>
+                <th class="text-tiny text-bold ">Yesterday Close</th>
+                <th class="text-tiny text-bold ">Total</th>
+              </tr>
+            </thead>
+            <tbody id="accountStatusTable">
+
+            </tbody>
+          </table>
+        </section>
+
         <section class="card my-2">
-          <h4 class="text-primary p-2 h4 " data-aos="zoom-in-up">Place Holder</h4>
+          <h4 class="text-primary p-2 h4 ">Place Holder</h4>
+
 
           <div class="ot">
 

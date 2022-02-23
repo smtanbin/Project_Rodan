@@ -3,10 +3,10 @@ const { doexist } = require('../apps/api.js')
 const { customerinfo } = require('../apps/api_customerinfo')
 const { timeline, trSearch } = require('../apps/api_timeline')
 const { pbslist, utilityinfohead, utilityinfodtl, utilityinfosummary } = require('../apps/api_utilitybill.js')
-const { remittancehouselist, remittance, remittancesummary } = require('../apps/api_remittance')
+const { remittancehouselist, remittance, remittancesummary, remittanceRequest } = require('../apps/api_remittance')
 const { transactionsreport } = require('../apps/api_transactionsreport')
 const { statementHead, statementBody } = require('../apps/apiStatement')
-const { pichart, agentstatus, cashEntry } = require('../apps/api_home')
+const { pichart, agentstatus, cashEntry, customerstatus, accountStatus, monthlyActivity } = require('../apps/api_home')
 const bodyParser = require('body-parser')
 const cors = require('cors')
 const app = Router()
@@ -72,6 +72,15 @@ app.get('/agentstatus', async (req, res) => {
 		return e
 	}
 })
+app.get('/customerstatus', async (req, res) => {
+	try {
+		const data = await customerstatus()
+
+		res.send(data)
+	} catch (e) {
+		return e
+	}
+})
 
 /* Utility info All utility realated apis data 
 functions are currently imported from api_utilitybill.js */
@@ -120,6 +129,10 @@ app.post('/utilityinfosummary', async (req, res) => {
 })
 
 /*Remittance*/
+app.get('/remittanceRequest', async (req, res) => {
+	const data = await remittanceRequest()
+	res.send(data)
+})
 app.get('/remittancehouselist', async (req, res) => {
 	const data = await remittancehouselist()
 	res.send(data)
@@ -184,8 +197,20 @@ app.post('/transactionsreport', async (req, res) => {
 
 app.post('/customerinfo', async (req, res) => {
 	const data = await customerinfo(req.body.id)
-
 	res.send(data)
+})
+app.post('/monthlyActivity', async (req, res) => {
+	const data = await monthlyActivity(req.body.key)
+	res.send(data)
+})
+app.get('/accountStatus', async (req, res) => {
+	try {
+		const data = await accountStatus()
+		res.send(data)
+	} catch (e) {
+		console.log(e)
+		res.send(e)
+	}
 })
 
 app.get('/', async (req, res) => {

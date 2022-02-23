@@ -85,4 +85,21 @@ const remittancesummary = async (fromdate, todate) => {
 	}
 }
 
-module.exports = { remittancehouselist, remittance, remittancesummary }
+const remittanceRequest = async () => {
+	try {
+		sql = `/* Formatted on 2/23/2022 10:04:17 AM (QP5 v5.374) */
+	SELECT rim.NAME_OF_MTC,
+		   BEN_NAME,
+		   SEN_REM_AMT,AUTHO_DATE,
+		   (SELECT name
+			  FROM agent_banking.reginfo
+			 WHERE mphone = REC_AGENT_ACC)    REC_AGENT_ACC
+	  FROM AGENT_BANKING.REMITTANCE_INFO rim where STATUS is null`
+		return await qurrythis(sql)
+	} catch (e) {
+		console.log(e)
+		return 404
+	}
+}
+
+module.exports = { remittancehouselist, remittance, remittancesummary, remittanceRequest }
