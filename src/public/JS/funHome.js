@@ -13,19 +13,7 @@ const redAlart = (input) => {
 }
 
 /* This is a color chart for pie chat*/
-const barColors = [
-	'rgba(255, 99, 132, 1)',
-	'rgba(54, 162, 235, 1)',
-	'rgba(255, 206, 86, 1)',
-	'rgba(75, 192, 192, 1)',
-	'rgba(153, 102, 255, 1)',
-	'#b91d47',
-	'#00aba9',
-	'#2b5797',
-	'#e8c3b9',
-	'#1e7145',
-	'rgba(105, 010, 034, 1)'
-]
+const barColors = [ '#F50F0F', '#2285F5', '#9064F5', '#24F490', '#F5BC58', '#F59FD7', '#AA9FF5', '#2596be', '#A9016E' ]
 
 /* Account Status give a graf with table data*/
 const accountStatus = async () => {

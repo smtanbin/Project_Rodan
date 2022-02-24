@@ -33,18 +33,19 @@ app.get('/login', function(req, res) {
 	res.render('login')
 })
 
-app.get('/oauth', async (req, res) => {
-	// const user = req.body.user
-	// const passwd = req.body.passwd
+app.post('/oauth', async (req, res) => {
+	const user = req.body.user
+	const passwd = req.body.passwd
 	try {
-		// 	autho = await login(user, passwd)
+		// let res = await login(user, passwd)
+		console.log(user)
+		console.log(passwd)
+		res.send(await login(user, passwd))
+		// const token = jwt.sign('user', '774gsg342%%#sgsrq2234')
 
-		const user = req.body.user
-		const token = jwt.sign('user', '774gsg342%%#sgsrq2234')
-
-		res.cookie('auth', token)
+		// res.cookie('auth', token)
 		// res.json(token)
-		res.send()
+		// res.send()
 		// setCookie('auth', 'token', 7)
 
 		// res.send(data)
@@ -56,7 +57,8 @@ app.get('/oauth', async (req, res) => {
 })
 
 app.get('/', (req, res, next) => {
-	console.log(getCookie('auth'))
+	// console.log(getCookie('auth'))
+	// console.log(req.headers)
 	// const authoHeader = req.headers['authorization']
 	// const token = authoHeader && authoHeader.split(' ')[1]
 	// if (autho == null) {
@@ -68,7 +70,7 @@ app.get('/', (req, res, next) => {
 	// 	jwt.verify(token, '774gsg342%%#sgsrq2234', (err, user) => {
 	// 		if (err) return res.sendStatus(403)
 	// 		req.user = user
-	// 		next()
+	next()
 	// 	})
 	// }
 })

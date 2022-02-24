@@ -22,12 +22,11 @@ const custsearch = async () => {
 	}
 
 	await fetch(url, requestOptions).then((response) => response.json()).then((payload) => {
-		console.log(payload)
+		console.log(payload[0])
 		payload.map((data) => {
 			const {
 				ACCOUNT_NAME,
-				AC_TYPE,
-				AC_TYPE_CODE,
+
 				AGENT,
 				AGENTAC,
 				AUTHO_BY,
@@ -51,7 +50,7 @@ const custsearch = async () => {
 				SLAB_SL_NO,
 				SOURCE_OFFUND,
 				STATUS,
-				TIN_NO,
+				NAME,
 				UPDATE_BY,
 				UPDATE_DATE,
 				BLOOD_GROUP,
@@ -63,8 +62,8 @@ const custsearch = async () => {
 				MOTHER_NAME,
 				GENDER,
 				OCCUPATION,
-				PMPHONE,
-				REG_DATE,
+
+				CAST_ID,
 				RELIGION,
 				SPOUSE_NAME,
 				TIN_NO
@@ -77,23 +76,25 @@ const custsearch = async () => {
 			  <div class="column col-8 w100 card bg-gray p-2 ">
 				<h4 class="h4 text-primary text-clip">${ACCOUNT_NAME}</h4>
   
-				<p class="text-tiny">Customer Type: ${NAME}</p>
+				<p class="text-tiny">Customer Type: ${CATEGORY}</p>
 				<br />
 				<h5 class="h5 text-primary text-clip">Customer Information</h5>
 				<p class="text-tiny">
-				  Customer ID: ${CAST_ID} <br />
+				  Customer ID: ${CUST_ID} <br />
 				  Name: ${CUSTOMER_NAME} <br />
-				  Father Name: ${NAME} <br />
-				  Mother Name: ${NAME} <br />
-				  Spouse Name: ${NAME} <br />
-				  Date of Birth: ${NAME} <br />
+				  Father Name: ${FATHER_NAME} <br />
+				  Mother Name: ${MOTHER_NAME} <br />
+				  Spouse Name: ${SPOUSE_NAME} <br />
+				  Gender: ${GENDER} <br />
+				  Date of Birth: ${DOB} <br />
 				  Photo ID: ${NAME} <br />
-				  Contact No: ${NAME} <br />
+				  Contact No: ${CON_MOB} <br />
 				  Address: ${NAME} <br />
-				  TIN: ${NAME} <br />
-				  Ocupation: ${NAME} <br />
-				  Blood Group: ${NAME} <br />
-				  Religion: ${NAME} <br />
+				  TIN: ${TIN_NO} <br />
+				  Ocupation: ${OCCUPATION} <br />
+				  Blood Group: ${BLOOD_GROUP} <br />
+				  Religion: ${RELIGION} <br />
+				  Agent: ${AGENT} <br />
 				</p>
 			  </div>
 			  <div class="column col-4 card bg-gray p-2 w100">
@@ -138,19 +139,23 @@ const custsearch = async () => {
   
 				  <div class="column card m-1 col-4">
 					<h6 class="h6 text-primary text-bold">
-					  Name: ${NAME}
+					  Name: ${'NAME'}
 					</h6>
 					<p class="text-tiny">
-					  Father: ${NAME} <br />
-					  Mother: ${NAME} <br />
-					  Spouse: ${NAME} <br />
-					  Date of Birth: ${NAME} <br />
-					  Photo ID: ${NAME} <br />
-					  Contact No: ${NAME} <br />
-					  Address: ${NAME} <br />
-					  Ocupation: ${NAME} <br />
-					  Nominee Share: ${NAME} <br />
-					  Type: ${NAME} <br />
+					  Father: ${FATHER_NAME} <br />
+					  Mother: ${MOTHER_NAME} <br />	
+					  
+					  
+					  
+					  Spouse: ${'NAME'} <br />
+					  Date of Birth: ${'NAME'} <br />
+					  Date of Birth: ${'GENDER'} <br />
+					  Photo ID: ${'NAME'} <br />
+					  Contact No: ${'NAME'} <br />
+					  Address: ${'NAME'} <br />
+					  Ocupation: ${OCCUPATION} <br />
+					  Nominee Share: ${'NAME'} <br />
+					  Type: ${'NAME'} <br />
 					</p>
 				  </div>
   
@@ -161,21 +166,21 @@ const custsearch = async () => {
 					  <h5 class="h5 text-primary text-clip">Authorization Information</h5>
 					  <h6 class="h6 text-clip">Reg Status</h6>
 					  <p class="text-tiny" id="introducer">
-						Reg Status: ${NAME} <br />
-						Reg date: ${NAME} <br />
-						Authorized By: ${NAME} <br />
-						Last Updated By: ${NAME} <br />
-						Link Account: ${NAME} <br />
-						Agent: ${NAME} <br />
+						Reg Status: ${'NAME'} <br />
+						Reg date: ${REG_DATE} <br />
+						Authorized By: ${'NAME'} <br />
+						Last Updated By: ${UPDATE_BY} <br />
+						Link Account: ${UPDATE_DATE} <br />
+						Agent: ${AGENT} <br />
 					  </p>
 					</div>
 					<div class="column col-6">
 					  <h5 class="h5 text-primary text-clip">Introducer Information</h5>
 					  <p class="text-tiny" id="introducer">
-						Name: ${NAME} <br />
-						Address: ${NAME} <br />
-						Relation: ${NAME} <br />
-						Contact No: ${NAME} <br />
+						Name: ${'NAME'} <br />
+						Address: ${'NAME'} <br />
+						Relation: ${'NAME'} <br />
+						Contact No: ${'NAME'} <br />
 					  </p>
 					</div>
 				  </div>
