@@ -4,11 +4,13 @@ require('dotenv').config()
 const oracledb = require('oracledb')
 /* This one very importent. In make sure the output.
 */
+const oracleClient = require('./dep/oracle/client/instantclient')
 oracledb.outFormat = oracledb.OUT_FORMAT_OBJECT
 let connection
 
 async function qurrythis(sqlqurry) {
 	try {
+		oracledb.initOracleClient({ libDir: oracleClient })
 		connection = await oracledb.getConnection({
 			user: 'tanbin',
 			password: '@urA774234',
@@ -60,7 +62,6 @@ async function qurrythis(sqlqurry) {
  *
  *****************************************************************************/
 
-
 //   function qurrythis(sqlqurry) {
 //  oracledb.getConnection(
 //    {
@@ -88,7 +89,7 @@ async function qurrythis(sqlqurry) {
 // 	   });
 //    });
 // }
- 
+
 //  function doRelease(connection)
 //  {
 //    connection.release(
