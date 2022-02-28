@@ -223,7 +223,7 @@ const dpsMaturity = async () => {
 		sql = `/* Formatted on 2/28/2022 1:06:07 PM (QP5 v5.374) */
 		SELECT MPHONE,
 			   MATURITY_DATE,
-			   ACC_CLS_FEE,
+			   R.BALANCE_M,
 			   DOB
 		  FROM AGENT_BANKING.REGINFO R
 		 WHERE     TRUNC (MATURITY_DATE) <= (SELECT SYSDATE FROM DUAL)

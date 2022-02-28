@@ -1,4 +1,3 @@
-let notificationcount = 0
 /*api server url is in environment file*/
 const apiserveralt = '/api/'
 
@@ -45,7 +44,7 @@ const cashnotification = async () => {
 						index
 					) => {
 						// index += notificationcount
-						notificationcount += 1
+						bellIcon(index + 1)
 
 						return `<div class="tile bg-gray p-2">
 					<div class="tile-icon">
@@ -91,7 +90,7 @@ const reminotification = async () => {
 		} else {
 			document.getElementById('panel-body').innerHTML += payload
 				.map(({ NAME_OF_MTC, BEN_NAME, AUTHO_DATE, SEN_REM_AMT, REC_AGENT_ACC }, index) => {
-					notificationcount += 1
+					bellIcon(index + 1)
 
 					return `<div class="tile bg-gray p-2">
 					<div class="tile-icon">
@@ -127,10 +126,9 @@ const dpsMaturity = async () => {
 			document.getElementById('panel-body').innerHTML = ` `
 		} else {
 			document.getElementById('panel-body').innerHTML += payload
-				.map(({ MPHONE, MATURITY_DATE, DOB, ACC_CLS_FEE }) => {
-					notificationcount += 1
-
-					return `<div class="tile bg-gray p-2">
+				.map(({ MPHONE, MATURITY_DATE, DOB, BALANCE_M }, index) => {
+					bellIcon(index + 1)
+					return `<div class="tile bg-frost p-2">
 					<div class="tile-icon">
 					  <!-- <figure class="avatar avatar-lg"><img src="../img/avatar-2.png" alt="Avatar"></figure> -->
 					</div>
@@ -139,12 +137,10 @@ const dpsMaturity = async () => {
 					  <p class="tile-subtitle text-tiny">
 					  <span class="text-primary text-bold">${MPHONE}</span> is mature on <span class="text-bold">${moment(
 						MATURITY_DATE
-					).format('LLL')}</span>  account Date of birth is ${moment(DOB).format(
-						'LLL'
-					)} and closing charge is ${ACC_CLS_FEE}
+					).format('LLL')}</span>  account Date of birth is ${moment(DOB).format('LLL')}
 					  
-		
-					  </p>
+					Account Balance is ${BALANCE_M}
+					</p>
 					</div>
 
 				  </div>`
@@ -154,7 +150,8 @@ const dpsMaturity = async () => {
 	})
 }
 
-const bellIcon = () => {
+const bellIcon = (notificationcount) => {
+	// notificationcount += notificationcount
 	if (notificationcount === 0) {
 		document.getElementById('navbtn').innerHTML = `
         <i class="material-icons">notifications</i>
