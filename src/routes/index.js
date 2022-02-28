@@ -6,7 +6,15 @@ const { pbslist, utilityinfohead, utilityinfodtl, utilityinfosummary } = require
 const { remittancehouselist, remittance, remittancesummary, remittanceRequest } = require('../apps/api_remittance')
 const { transactionsreport } = require('../apps/api_transactionsreport')
 const { statementHead, statementBody } = require('../apps/apiStatement')
-const { pichart, agentstatus, cashEntry, customerstatus, accountStatus, monthlyActivity } = require('../apps/api_home')
+const {
+	pichart,
+	agentstatus,
+	cashEntry,
+	customerstatus,
+	accountStatus,
+	monthlyActivity,
+	dpsMaturity
+} = require('../apps/api_home')
 const bodyParser = require('body-parser')
 const cors = require('cors')
 const app = Router()
@@ -45,6 +53,15 @@ app.post('/trsearch', async (req, res) => {
 	}
 })
 
+app.get('/dpsMaturity', async (req, res) => {
+	try {
+		const data = await dpsMaturity()
+
+		res.send(data)
+	} catch (e) {
+		return e
+	}
+})
 app.get('/pichart', async (req, res) => {
 	try {
 		const data = await pichart()

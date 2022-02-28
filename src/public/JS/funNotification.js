@@ -120,6 +120,39 @@ const reminotification = async () => {
 		}
 	})
 }
+const dpsMaturity = async () => {
+	const url = `${apiserveralt}dpsMaturity`
+	await fetch(url, requestOptions).then((response) => response.json()).then((payload) => {
+		if (payload === null) {
+			document.getElementById('panel-body').innerHTML = ` `
+		} else {
+			document.getElementById('panel-body').innerHTML += payload
+				.map(({ MPHONE, MATURITY_DATE, DOB, ACC_CLS_FEE }) => {
+					notificationcount += 1
+
+					return `<div class="tile bg-gray p-2">
+					<div class="tile-icon">
+					  <!-- <figure class="avatar avatar-lg"><img src="../img/avatar-2.png" alt="Avatar"></figure> -->
+					</div>
+					<div class="tile-content">
+					  <h6 class="tile-title text-primary h6 text-bold">Mature Request</h6>
+					  <p class="tile-subtitle text-tiny">
+					  <span class="text-primary text-bold">${MPHONE}</span> is mature on <span class="text-bold">${moment(
+						MATURITY_DATE
+					).format('LLL')}</span>  account Date of birth is ${moment(DOB).format(
+						'LLL'
+					)} and closing charge is ${ACC_CLS_FEE}
+					  
+		
+					  </p>
+					</div>
+
+				  </div>`
+				})
+				.join('')
+		}
+	})
+}
 
 const bellIcon = () => {
 	if (notificationcount === 0) {
@@ -133,6 +166,14 @@ const bellIcon = () => {
 	}
 }
 
-cashnotification()
-reminotification()
-bellIcon()
+const notificationFun = () => {
+	try {
+		dpsMaturity()
+		cashnotification()
+		reminotification()
+		bellIcon()
+	} catch (e) {
+		console.log('Error in notification function init ' + e)
+	}
+}
+notificationFun()

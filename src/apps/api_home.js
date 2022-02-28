@@ -218,5 +218,26 @@ const monthlyActivity = async (mphone) => {
 		return e
 	}
 }
+const dpsMaturity = async () => {
+	try {
+		sql = `/* Formatted on 2/28/2022 1:06:07 PM (QP5 v5.374) */
+		SELECT MPHONE,
+			   MATURITY_DATE,
+			   ACC_CLS_FEE,
+			   DOB
+		  FROM AGENT_BANKING.REGINFO R
+		 WHERE     TRUNC (MATURITY_DATE) <= (SELECT SYSDATE FROM DUAL)
+			   AND RENWL_WIT IS NULL
+			   AND RENWAL_PRINCIPLE IS NULL
+			   --       AND R.STATUS not in ('C','F')
+			   AND R.STATUS = 'M'
+			   AND R.REG_STATUS != 'R'`
 
-module.exports = { pichart, agentstatus, cashEntry, customerstatus, accountStatus, monthlyActivity }
+		return await qurrythis(sql)
+	} catch (e) {
+		console.log('api function dpsMaturity' + e)
+		return e
+	}
+}
+
+module.exports = { pichart, agentstatus, cashEntry, dpsMaturity, customerstatus, accountStatus, monthlyActivity }
