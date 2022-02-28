@@ -132,7 +132,9 @@ h3 {
 	height: 100%;
 	/* max-width: 30vw; */
 	top: 0;
+	width: 100%;
 	right: 0;
+	/* left: 0; */
 	z-index: 900;
 	overflow: scroll;
 	opacity: 0;
@@ -144,4 +146,8 @@ h3 {
 
 .font-roboto {
 	font-family: Roboto, Arial, Helvetica, sans-serif !important;
+}
+
+.displaynull {
+	display: none;
 }

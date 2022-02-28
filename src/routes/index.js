@@ -1,5 +1,5 @@
 const { Router } = require('express')
-const { doexist } = require('../apps/api.js')
+const { doexist, holyday } = require('../apps/api.js')
 const { customerinfo } = require('../apps/api_customerinfo')
 const { timeline, trSearch } = require('../apps/api_timeline')
 const { pbslist, utilityinfohead, utilityinfodtl, utilityinfosummary } = require('../apps/api_utilitybill.js')
@@ -35,6 +35,14 @@ app.use((req, res, next) => {
 	res.header('Access-Control-Allow-Methods', [ 'GET', 'POST', 'PATCH', 'DELETE' ])
 	next()
 })
+
+// VisualViewport
+
+app.get('/holyday', async (req, res) => {
+	const data = await holyday()
+	res.send(data)
+})
+
 /*Timeline*/
 
 app.get('/timeline', async (req, res) => {

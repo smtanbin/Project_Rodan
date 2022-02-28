@@ -89,7 +89,7 @@ const remittanceRequest = async () => {
 	try {
 		sql = `/* Formatted on 2/23/2022 10:04:17 AM (QP5 v5.374) */
 	SELECT rim.NAME_OF_MTC,
-		   BEN_NAME,
+		   BEN_NAME,ENTRY_DATE,
 		   SEN_REM_AMT,AUTHO_DATE,
 		   (SELECT name
 			  FROM agent_banking.reginfo

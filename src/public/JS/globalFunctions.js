@@ -93,3 +93,33 @@ const binSearch = (arr, x, start, end) => {
 		// search in the right half of mid
 		return recursiveFunction(arr, x, mid + 1, end)
 }
+
+const showmore = (id) => {
+	if (document.getElementById(id).style.display === 'none') {
+		document.getElementById(id).style.display = 'block'
+	} else {
+		document.getElementById(id).style.display = 'none'
+	}
+}
+// const showless = (id) => {
+// 	document.getElementById(id).classList.remove('displaynull')
+// }
+
+const bellIcon = (notificationcount) => {
+	// notificationcount += notificationcount
+	if (notificationcount === 0 || notificationcount === null) {
+		document.getElementById('navbtn').innerHTML = `
+        <i class="material-icons text-secondary">notifications</i>
+        `
+	} else {
+		document.getElementById('navbtn').innerHTML = `
+        <i class="material-icons ">notifications_active</i>
+        `
+	}
+	// } else {
+	// 	document.getElementById('navbtn').innerHTML = ` <span class="badge" data-badge="${notificationcount}">
+	//     <i class="material-icons">notifications_active</i>
+	//     </span>`
+	// }
+}
+// bellIcon()

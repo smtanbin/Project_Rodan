@@ -46,7 +46,7 @@ const cashnotification = async () => {
 						// index += notificationcount
 						bellIcon(index + 1)
 
-						return `<div class="tile bg-gray p-2">
+						return `<div class="tile bg-gray p-2 my-1">
 					<div class="tile-icon">
 					  <!-- <figure class="avatar avatar-lg"><img src="../img/avatar-2.png" alt="Avatar"></figure> -->
 					</div>
@@ -89,30 +89,33 @@ const reminotification = async () => {
 			document.getElementById('panel-body').innerHTML = ` `
 		} else {
 			document.getElementById('panel-body').innerHTML += payload
-				.map(({ NAME_OF_MTC, BEN_NAME, AUTHO_DATE, SEN_REM_AMT, REC_AGENT_ACC }, index) => {
+				.map(({ NAME_OF_MTC, BEN_NAME, AUTHO_DATE, SEN_REM_AMT, REC_AGENT_ACC, ENTRY_DATE }, index) => {
 					bellIcon(index + 1)
 
-					return `<div class="tile bg-gray p-2">
+					return `<div class="tile bg-gray p-2 my-1">
 					<div class="tile-icon">
 					  <!-- <figure class="avatar avatar-lg"><img src="../img/avatar-2.png" alt="Avatar"></figure> -->
 					</div>
 					<div class="tile-content">
 					  <h6 class="tile-title text-primary h6 text-bold">Remittance Request</h6>
 					  <p class="tile-subtitle text-tiny">
-					  A remittance request for remittance exchaange house<span class="text-primary text-bold"> ${NAME_OF_MTC} with amount of ${SEN_REM_AMT.toLocaleString(
+					  A remittance request for remittance exchaange house<span class="text-primary text-bold"> ${NAME_OF_MTC} </span> with amount of ${SEN_REM_AMT.toLocaleString(
 						'en-BD',
 						{
 							maximumFractionDigits: 2,
 							style: 'currency',
 							currency: 'BDT'
 						}
-					)} </span> have been requested by ${REC_AGENT_ACC}
-                      at ${moment(AUTHO_DATE).format('LLL')} for  ${BEN_NAME}
+					)}  have been requested by ${REC_AGENT_ACC}
+                      at ${moment(ENTRY_DATE).format('LLL')} for  ${BEN_NAME}
 					  
 			
 					  </p>
 					</div>
 
+<div class="tile-action">
+<small>Time: ${moment(ENTRY_DATE).format('llll')}</small>
+</div>
 				  </div>`
 				})
 				.join('')
@@ -128,7 +131,7 @@ const dpsMaturity = async () => {
 			document.getElementById('panel-body').innerHTML += payload
 				.map(({ MPHONE, MATURITY_DATE, DOB, BALANCE_M }, index) => {
 					bellIcon(index + 1)
-					return `<div class="tile bg-frost p-2">
+					return `<div class="tile bg-gray p-2 my-1">
 					<div class="tile-icon">
 					  <!-- <figure class="avatar avatar-lg"><img src="../img/avatar-2.png" alt="Avatar"></figure> -->
 					</div>
@@ -137,9 +140,11 @@ const dpsMaturity = async () => {
 					  <p class="tile-subtitle text-tiny">
 					  <span class="text-primary text-bold">${MPHONE}</span> is mature on <span class="text-bold">${moment(
 						MATURITY_DATE
-					).format('LLL')}</span>  account Date of birth is ${moment(DOB).format('LLL')}
+					).format('lll')}</span> account Date of birth is <span class="text-bold">${moment(
+						DOB
+					).calendar()}</span>
 					  
-					Account Balance is ${BALANCE_M}
+					& account Balance is ${BALANCE_M}.
 					</p>
 					</div>
 
@@ -150,25 +155,29 @@ const dpsMaturity = async () => {
 	})
 }
 
-const bellIcon = (notificationcount) => {
-	// notificationcount += notificationcount
-	if (notificationcount === 0) {
-		document.getElementById('navbtn').innerHTML = `
-        <i class="material-icons">notifications</i>
-        `
-	} else {
-		document.getElementById('navbtn').innerHTML = ` <span class="badge" data-badge="${notificationcount}">
-        <i class="material-icons">notifications_active</i>
-        </span>`
-	}
-}
+// const bellIcon = (notificationcount) => {
+// 	// notificationcount += notificationcount
+// 	if (notificationcount === 0) {
+// 		document.getElementById('navbtn').innerHTML = `
+//         <i class="material-icons text-secondary">notifications</i>
+//         `
+// 	} else {
+// 		document.getElementById('navbtn').innerHTML = `
+//         <i class="material-icons ">notifications_active</i>
+//         `
+// 	}
+// 	// } else {
+// 	// 	document.getElementById('navbtn').innerHTML = ` <span class="badge" data-badge="${notificationcount}">
+// 	//     <i class="material-icons">notifications_active</i>
+// 	//     </span>`
+// 	// }
+// }
 
 const notificationFun = () => {
 	try {
 		dpsMaturity()
 		cashnotification()
 		reminotification()
-		bellIcon()
 	} catch (e) {
 		console.log('Error in notification function init ' + e)
 	}

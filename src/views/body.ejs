@@ -38,35 +38,15 @@
           </div>
           <canvas data-aos="fade-up" id="Chart" style="width:100%;max-width:600px"></canvas>
         </div>
-        <section data-aos="fade-right">
-          <div class="card p-2 m-1">
-            <div class="card-header">
-              <div class="card-title text-primary h5">Agent Balance</div>
-
-            </div>
-            <canvas data-aos="fade-right" id="agentChart" style="width:100%;max-width:600px"></canvas>
-            <table data-aos="fade-right" class="table table-striped table-cluster ">
-              <thead>
-                <tr>
-                  <th class="text-tiny text-bold ">AC</th>
-                  <th class="text-tiny text-bold text-ellipsis">Name</th>
-                  <th class="text-tiny text-bold ">Today</th>
-                  <th class="text-tiny text-bold ">Yesterday</th>
-                </tr>
-              </thead>
-              <tbody id="agentInfo">
-
-              </tbody>
-            </table>
-          </div>
-        </section>
         <section data-aos="fade-right" class="card p-2 m-1">
           <div class="card-header">
             <div data-aos="fade-up" class="card-title text-primary h5">Customer Balance</div>
 
           </div>
           <canvas data-aos="fade-right" id="customerChart" style="width:100%;max-width:600px"></canvas>
-          <table data-aos="fade-right" class="table table-striped table-cluster">
+          <button class="btn btn-link" onclick="showmore('customer')">Show More</button>
+          <table data-aos="fade-right" id="customer" class="table table-striped table-cluster p-1"
+            style="display: none;">
             <thead>
               <tr>
                 <th class="text-tiny text-bold ">Agent</th>
@@ -81,18 +61,45 @@
           </table>
 
         </section>
+        <section data-aos="fade-right">
+          <div class="card p-2 m-1">
+            <div class="card-header">
+              <div class="card-title text-primary h5">Agent Balance</div>
+
+            </div>
+            <canvas data-aos="fade-right" id="agentChart" style="width:100%;max-width:600px"></canvas>
+            <button class="btn btn-link" onclick="showmore('agent')">Show More</button>
+            <table data-aos="fade-right" id="agent" class="table table-striped table-cluster p-1"
+              style="display: none;">
+
+              <thead>
+                <tr>
+                  <th class="text-tiny text-bold ">AC</th>
+                  <th class="text-tiny text-bold text-ellipsis">Name</th>
+                  <th class="text-tiny text-bold ">Today</th>
+                  <th class="text-tiny text-bold ">Yesterday</th>
+                </tr>
+              </thead>
+              <tbody id="agentInfo">
+
+              </tbody>
+            </table>
+          </div>
+        </section>
         <br />
       </div>
       <div class="column col-6 my-1">
 
-        <section data-aos="fade-up" class="card  column p-2 mt-1" id="remainer-body">
-          <h4 class="h4 text-primary text-center text-bold" id="remainer-text">Today Time Remaining</h4>
+        <section data-aos="fade-up" class="card  column p-2 " id="remainer-body">
+          <h5 class="h5 text-primary text-center text-bold" id="remainer-text">Today Time Remaining</h5>
           <progress class="progress" id="remainer" value="0" max="540"></progress>
         </section>
         <section data-aos="fade-left" class="card my-2 p-2">
           <div class="card-title text-primary h5">Account Status</div>
           <canvas data-aos="fade-left" id="accountStatus" style="width:100%;max-width:600px"></canvas>
-          <table data-aos="fade-left" class="table table-striped table-cluster ">
+          <button class="btn btn-link " onclick="showmore('Status')">Show More</button>
+
+          <table data-aos="fade-left" id="Status" class="table table-striped table-cluster " style="display: none;">
             <thead>
               <tr>
                 <th class="text-tiny text-bold ">Agent</th>
@@ -110,7 +117,7 @@
         </section>
 
         <section class="card my-2">
-          <h4 class="text-primary p-2 h4 ">Place Holder</h4>
+          <h2 class="text-primary p-2 h2 ">Place Holder</h2>
 
 
           <div class="ot">
@@ -128,6 +135,6 @@
 </section>
 
 
-
+<script src="/JS/funNotification.js" async></script>
 <script src="/JS/chart.js"></script>
-<script src="/JS/funHome.js" async></script>
+<script src="/JS/funHome.js" defer></script>

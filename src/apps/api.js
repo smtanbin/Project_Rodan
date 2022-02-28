@@ -30,15 +30,13 @@ async function reginfo() {
 	return qurrythis(sql)
 }
 async function timeline() {
-	try{
-
+	try {
 		const sql = `SELECT TRANS_NO,TRANS_DATE,TRANS_FROM,TRANS_TO,REF_PHONE,PAY_AMT,MERCHANT_SNAME,MSG_AMT,SCHARGE_AMT,PARTICULAR,CODE,NOTE
 		FROM AGENT_BANKING.GL_TRANS_MST
 		ORDER BY TRANS_NO DESC`
 		return qurrythis(sql)
-	} catch (e){
+	} catch (e) {
 		return e
-
 	}
 }
 async function nooftrans(FROM, TO) {
@@ -129,7 +127,7 @@ async function nooftrans(FROM, TO) {
 
 const customerinfo = async (id) => {
 	try {
-	const sql = `/* Formatted on 1/27/2022 6:36:03 PM (QP5 v5.374) */
+		const sql = `/* Formatted on 1/27/2022 6:36:03 PM (QP5 v5.374) */
 	SELECT TO_CHAR (R.REG_DATE, 'MM/DD/YYYY')         REG_DATE,
 		   UPPER (
 			   CASE
@@ -208,10 +206,10 @@ const customerinfo = async (id) => {
 	  FROM AGENT_BANKING.REGINFO  R
 		   FULL OUTER JOIN AGENT_BANKING.CUSTIDINFO C ON R.CUST_ID = C.CUST_ID
 	 WHERE MPHONE = ${id}`
-	return await qurrythis(sql)
-} catch (e) {
-	return e
-}
+		return await qurrythis(sql)
+	} catch (e) {
+		return e
+	}
 }
 const doexist = async (key) => {
 	try {
@@ -220,10 +218,21 @@ const doexist = async (key) => {
 	  FROM (SELECT REG_STATUS
 			  FROM AGENT_BANKING.REGINFO R
 			 WHERE MPHONE =  '${key}' AND REG_STATUS != 'R')`
-			 return await qurrythis(sql)
+		return await qurrythis(sql)
 	} catch (e) {
 		return e
 	}
 }
 
-module.exports = { timeline, nooftrans, customerinfo,doexist,timeline }
+const holyday = async () => {
+	const { HolidayAPI } = require('holidayapi')
+
+	const key = `d520f718-97ae-4fac-bb4b-dadfefff82bd`
+	const holidayApi = new HolidayAPI({ key })
+	return holidayApi.holidays({
+		country: 'BD',
+		year: '2021'
+	})
+}
+
+module.exports = { doexist, holyday }
