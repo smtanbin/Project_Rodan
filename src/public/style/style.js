@@ -1,16 +1,17 @@
 // const sidenav = document.getElementById('sidenav').classList
-const sidenav = document.getElementById('sidenav').style
+const sidenav = document.getElementById('sidenav')
+
 const sidenavopen = () => {
-	sidenav.opacity = '100'
-	sidenav.visibility = 'visible'
-	sidenav.pointerEvents = 'auto'
-	sidenav.userSelect = 'auto'
+	sidenav.style.opacity = '100'
+	sidenav.style.visibility = 'visible'
+	sidenav.style.pointerEvents = 'auto'
+	sidenav.style.userSelect = 'auto'
 }
 const sidenavclose = () => {
-	sidenav.opacity = '0'
-	sidenav.visibility = 'hidden'
-	sidenav.pointerEvents = 'none'
-	sidenav.userSelect = 'none'
+	sidenav.style.opacity = '0'
+	sidenav.style.visibility = 'hidden'
+	sidenav.style.pointerEvents = 'none'
+	sidenav.style.userSelect = 'none'
 }
 
 // module.exports = { setnotificationcount }

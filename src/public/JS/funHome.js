@@ -238,13 +238,13 @@ const agentstatus = async () => {
 					{
 						data: intloacl_today,
 						label: 'Today',
-						backgroundColor: 'dodgerblue',
+						backgroundColor: '#01783f',
 						fill: false
 					},
 					{
 						data: intlocal_yesterday,
 						label: 'Yesterday',
-						backgroundColor: 'tomato',
+						backgroundColor: '#00ff84',
 						fill: false
 					}
 				]
@@ -263,7 +263,6 @@ const agentstatus = async () => {
 
 const customerstatus = async () => {
 	let local_mphone = []
-
 	let loacl_cc = []
 	let loacl_cy = []
 	/* Post request body content*/
@@ -318,22 +317,18 @@ const customerstatus = async () => {
 					{
 						data: loacl_cc,
 						label: 'Today',
-						backgroundColor: '#6495ED'
+						backgroundColor: '#0e3150'
 					},
 					{
 						data: loacl_cy,
 						label: 'Yesterday',
-						backgroundColor: 'tomato'
+						backgroundColor: '#288bfc'
 					}
 				]
 			},
 			options: {
 				legend: {
-					display: true,
-					labels: {
-						text: 'Yesterday',
-						color: 'rgb(255, 99, 132)'
-					}
+					display: true
 				},
 				title: {
 					display: false,
@@ -343,7 +338,6 @@ const customerstatus = async () => {
 			}
 		})
 	})
-
 	document.getElementById('loading').remove()
 }
 
@@ -367,84 +361,6 @@ const timer = () => {
 		document.getElementById('remainer').setAttribute('value', remaintime)
 	}
 }
-
-// const model = async (acno) => {
-// 	const url = `${apiserver}monthlyActivity`
-// 	const raw = JSON.stringify({
-// 		key: `${acno}`
-// 	})
-// 	const requestOptions = {
-// 		method: 'POST',
-// 		headers: myHeaders,
-// 		body: raw,
-// 		redirect: 'follow'
-// 	}
-// 	let DR = 0
-// 	let CR = 0
-// 	let date = null
-
-// 	await fetch(url, requestOptions).then((response) => response.json()).then((payload) => {
-// 		document.getElementById('output').innerHTML = payload.map(({ TRANS_DATE, DR_AMT, CR_AMT, MPHONE }) => {
-// 			DR += `${DR_AMT.toFixed(2)},`
-// 			CR += `${CR_AMT.toFixed(2)},`
-// 			date += `${TRANS_DATE},`
-
-// 			document.getElementById('agentInfo').innerHTML += `<div class="modal-header">
-// 				<a onclick="closeModel()" class="btn btn-link float-right" aria-label="Close"><i class="material-icons">close</i></a>
-// 				<a onclick="printArea()" class="btn btn-link float-right"><i class="material-icons">print</i></a>
-// 	<div id="modal-title" class="modal-title text-primary h5">${MPHONE}</div>
-// 	</div>
-// 	<div class="modal-body">
-// 	<canvas data-aos="fade-up" id="quickchart" style="width:100%;max-width:600px"></canvas>
-// 	<div class="content">
-
-// </div>
-// <div class="modal-footer">
-
-// </div>`
-
-// 			// turning INTO ARRAY
-// 			const DR = local_mphone.split(',')
-// 			const CR = loacl_today.split(',')
-// 			const date = loacl_today.split(',')
-
-// 			new Chart('quickchart', {
-// 				type: 'line',
-// 				data: {
-// 					labels: date,
-// 					datasets: [
-// 						{
-// 							data: DR,
-// 							label: 'Today',
-// 							backgroundColor: 'dodgerblue',
-// 							fill: false
-// 						},
-// 						{
-// 							data: CR,
-// 							label: 'Yesterday',
-// 							backgroundColor: 'tomato',
-// 							fill: false
-// 						}
-// 					]
-// 				},
-// 				options: {
-// 					legend: { display: true, text: 'Today' },
-// 					title: {
-// 						display: false,
-// 						position: 'top',
-// 						text: 'Agent Balance'
-// 					}
-// 				}
-// 			})
-
-// 			document.getElementById('modal-id').classList.add('active')
-// 		})
-// 	})
-// }
-// const closeModel = () => {
-// 	document.getElementById('modal-id').classList.remove('active')
-// 	// location.reload()
-// }
 
 timer()
 pichat()

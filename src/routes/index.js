@@ -6,6 +6,7 @@ const { pbslist, utilityinfohead, utilityinfodtl, utilityinfosummary } = require
 const { remittancehouselist, remittance, remittancesummary, remittanceRequest } = require('../apps/api_remittance')
 const { transactionsreport } = require('../apps/api_transactionsreport')
 const { statementHead, statementBody } = require('../apps/apiStatement')
+const { accountInfo } = require('../apps/api_accountInfo')
 const {
 	pichart,
 	agentstatus,
@@ -104,6 +105,19 @@ app.get('/customerstatus', async (req, res) => {
 		res.send(data)
 	} catch (e) {
 		return e
+	}
+})
+
+/* Account Api*/ accountInfo
+app.post('/accountInfo', async (req, res) => {
+	res.status(200)
+	try {
+		const data = await accountInfo(req.body.key)
+		// console.log(data)
+		res.send(data)
+	} catch (e) {
+		res.status(400)
+		res.send('Stop by error! Check if its help:' + e)
 	}
 })
 

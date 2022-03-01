@@ -218,7 +218,6 @@ const statementBody = async (fromdate, todate, key) => {
 	 WHERE     BALANCE_MPHONE = '${key}'
 		   AND TRUNC (TRANS_DATE) BETWEEN '${fromdate}' AND '${todate}' 
   ORDER BY TRANS_NO ASC`
-		console.log(sql)
 
 		return await qurrythis(sql)
 	} catch (e) {

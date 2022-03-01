@@ -107,14 +107,16 @@ const showmore = (id) => {
 
 const bellIcon = (notificationcount) => {
 	// notificationcount += notificationcount
-	if (notificationcount === 0 || notificationcount === null) {
-		document.getElementById('navbtn').innerHTML = `
-        <i class="material-icons text-secondary">notifications</i>
-        `
+	// if (notificationcount === 0 || notificationcount === null) {
+
+	if (notificationcount === 0 || notificationcount === undefined) {
+		document.getElementById(
+			'navbtn'
+		).innerHTML = `<div class="chip text-dark"><i class="material-icons ">notifications_none</i>No Notification</div>`
 	} else {
-		document.getElementById('navbtn').innerHTML = `
-        <i class="material-icons ">notifications_active</i>
-        `
+		document.getElementById(
+			'navbtn'
+		).innerHTML = `<div class="chip p-1"><i class="material-icons ">notifications_active</i> New Notification</div>`
 	}
 	// } else {
 	// 	document.getElementById('navbtn').innerHTML = ` <span class="badge" data-badge="${notificationcount}">
@@ -122,4 +124,4 @@ const bellIcon = (notificationcount) => {
 	//     </span>`
 	// }
 }
-// bellIcon()
+bellIcon()

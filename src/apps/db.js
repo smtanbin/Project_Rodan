@@ -27,7 +27,7 @@ async function qurrythis(sqlqurry) {
 				await connection.close()
 			} catch (err) {
 				console.log('Function connection.close() face a error!')
-				// console.error(err)
+				console.error(err)
 			}
 		}
 	}

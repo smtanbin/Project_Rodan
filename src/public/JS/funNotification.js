@@ -140,7 +140,7 @@ const dpsMaturity = async () => {
 					  <p class="tile-subtitle text-tiny">
 					  <span class="text-primary text-bold">${MPHONE}</span> is mature on <span class="text-bold">${moment(
 						MATURITY_DATE
-					).format('lll')}</span> account Date of birth is <span class="text-bold">${moment(
+					).format('L')}</span> account Date of birth is <span class="text-bold">${moment(
 						DOB
 					).calendar()}</span>
 					  

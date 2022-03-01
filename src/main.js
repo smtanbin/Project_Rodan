@@ -107,7 +107,7 @@ app.get('/report/utilityreport', function(req, res) {
 })
 app.get('/report/accountStatment', function(req, res) {
 	res.locals = {
-		title: 'Account Report'
+		title: 'Account Statment'
 	}
 	res.render('pages/statement')
 })
@@ -122,6 +122,12 @@ app.get('/report/transactionsReport', function(req, res) {
 		title: 'Transactions Report'
 	}
 	res.render('pages/transactionsReport')
+})
+app.get('/report/accountInfo', function(req, res) {
+	res.locals = {
+		title: 'Account Information'
+	}
+	res.render('pages/accountInfo')
 })
 
 // API

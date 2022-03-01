@@ -1,0 +1,38 @@
+<main class="content m-2">
+
+
+  <ul class="breadcrumb">
+    <li class="breadcrumb-item">
+      <a href="/">Home</a>
+    </li>
+    <li class="breadcrumb-item">
+      <a href="/report/accountInfo">Account Info</a>
+    </li>
+
+  </ul>
+  <div class="hero-sm bg-gray">
+    <div class="hero-body">
+      <h1 class="text-primary">Account Information</h1>
+    </div>
+  </div>
+  <div class="container">
+    <!-- normal input group with button -->
+    <div class="input-group">
+
+      <input type="text" id="key" class="form-input" placeholder="Type Agent Account Number">
+      <button class="btn btn-primary input-group-btn" id="btn-loading" onclick="getAccountinfo()"> Search</button>
+      <button class="btn btn-primary input-group-btn disabled" onclick="printArea()" id="btnprint">Print</button>
+    </div>
+    <div class="container">
+      <br>
+      <div class="columns" id="output">
+
+
+      </div>
+    </div>
+  </div>
+  </div>
+  </div>
+  </div>
+  <script src="/js/funAccountInfo.js"></script>
+</main>
