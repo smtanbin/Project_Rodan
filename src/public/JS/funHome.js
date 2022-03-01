@@ -365,6 +365,67 @@ const customerstatus = async () => {
 	document.getElementById('loading').remove()
 }
 
+const dailydrcr = async () => {
+	let local_HOUR = []
+	let loacl_DR = []
+	let loacl_CR = []
+	/* Post request body content*/
+
+	const url = `${apiserver}dailydrcr`
+	const requestOptions = {
+		method: 'GET',
+		headers: myHeaders,
+		redirect: 'follow'
+	}
+	await fetch(url, requestOptions).then((response) => response.json()).then((payload) => {
+		/*Contracting a string with , to separate value*/
+		let localCustomerToday = 0
+		let localCustomerYday = 0
+		let style = 'text-dark'
+		payload.map(({ HOUR, DR, CR }) => {
+			local_HOUR += `${HOUR},`
+			loacl_DR += `${DR.toFixed(2)},`
+			loacl_CR += `${CR.toFixed(2)},`
+		})
+		// turning INTO ARRAY
+
+		local_HOUR = local_HOUR.split(',')
+		loacl_DR = loacl_DR.split(',')
+		loacl_CR = loacl_CR.split(',')
+
+		new Chart('dailydrcr', {
+			type: 'line',
+			data: {
+				labels: local_HOUR,
+				datasets: [
+					{
+						data: loacl_DR,
+						label: 'DR',
+						borderColor: '#009c2c',
+						fill: false
+					},
+					{
+						data: loacl_CR,
+						label: 'CR',
+						borderColor: '#d1002d',
+						fill: false
+					}
+				]
+			},
+			options: {
+				legend: {
+					display: true
+				},
+				title: {
+					display: false,
+					position: 'top',
+					text: 'Customer Balance'
+				}
+			}
+		})
+	})
+	document.getElementById('loading').remove()
+}
 const timer = () => {
 	let now = new Date()
 	let hour = now.getHours()
@@ -388,6 +449,7 @@ const timer = () => {
 
 timer()
 pichat()
+dailydrcr()
 agentstatus()
 customerstatus()
 accountStatus()

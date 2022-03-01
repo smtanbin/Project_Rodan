@@ -46,6 +46,20 @@ app.get('/holyday', async (req, res) => {
 
 /*Timeline*/
 
+/* chart Api*/
+const { dailydrcr } = require('../api/chartsData')
+app.get('/dailydrcr', async (req, res) => {
+	const data = await dailydrcr()
+	res.send(data)
+})
+
+/* timeline Api*/
+/* timeline Api*/
+/* timeline Api*/
+/* timeline Api*/
+/* timeline Api*/
+/* timeline Api*/
+
 app.get('/timeline', async (req, res) => {
 	const data = await timeline()
 	res.send(data)
@@ -251,6 +265,12 @@ app.get('/accountStatus', async (req, res) => {
 		res.send(e)
 	}
 })
+
+/* APi server Status*/
+// const { cpu } = require('../apps/app')
+// app.get('/cpu', async (req, res) => {
+// 	res.send(cpu)
+// })
 
 app.get('/', async (req, res) => {
 	res.send('Welcome to Restful API Power by Tanbin Hassan Bappi')
