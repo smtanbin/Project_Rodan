@@ -83,35 +83,43 @@ const accountStatus = async () => {
 						label: 'New Account Today',
 						data: arrOpenToday,
 						borderColor: '#00C746',
-						backgroundColor: '#00C74640'
-						// fill: false
+						backgroundColor: '#00C74640',
+						// backgroundColor: '#00C746',
+						fill: true,
+						tension: 0.1
 					},
 					{
 						data: arrOpenYesterday,
 						label: 'New Account Yesterday',
 						borderColor: '#2596be',
-						backgroundColor: '#2596be40'
-						// fill: false
+						backgroundColor: '#2596be40',
+						// backgroundColor: '#2596be',
+						fill: true,
+						tension: 0.1
 					},
 					{
 						data: arrCloseToday,
 						label: 'Close Account Today',
 						borderColor: '#C72302',
-						backgroundColor: '#C7230240'
-						// fill: false
+						backgroundColor: '#C7230240',
+						// backgroundColor: '#C72302',
+						fill: true,
+						tension: 0.1
 					},
 					{
 						data: arrCloseYesterday,
 						label: 'Close Account Yesterday',
 						borderColor: '#f3711e',
-						backgroundColor: '#f3711e40'
-						// fill: false
+						backgroundColor: '#f3711e40',
+						// backgroundColor: '#f3711e',
+						fill: true,
+						tension: 0.1
 					}
 				]
 			},
 			options: {
 				layout: {
-					padding: 20
+					padding: 5
 				},
 				legend: { display: true, text: 'Today' },
 				title: {
@@ -193,6 +201,7 @@ const agentstatus = async () => {
 	let local_yesterday = []
 	let loaclTatalToday = 0
 	let loaclTatalYesterday = 0
+	let style = 'text-dark'
 
 	await fetch(url, requestOptions).then((response) => response.json()).then((payload) => {
 		/*Contracting a string with , to separate value*/
@@ -200,14 +209,19 @@ const agentstatus = async () => {
 			local_mphone += `${MPHONE},`
 			loacl_today += `${TODAY.toFixed(2)},`
 			local_yesterday += `${YESTERDAY.toFixed(2)},`
-
 			loaclTatalToday += TODAY
 			loaclTatalYesterday += YESTERDAY
-
+			if (YESTERDAY > TODAY) {
+				style = 'text-error'
+			} else if (TODAY > YESTERDAY) {
+				style = 'text-success'
+			} else {
+				style = 'text-dark'
+			}
 			document.getElementById('agentInfo').innerHTML += `			<tr>
 			<td class="text-tiny">${MPHONE}</td>
 			<td class="text-tiny text-left text-ellipsis">${ACCOUNT_NAME}</td>
-			<td class="text-tiny text-right ">${TODAY.toLocaleString('en-BD', {
+			<td class="text-tiny ${style} text-right ">${TODAY.toLocaleString('en-BD', {
 				maximumFractionDigits: 2
 			})}</td>
 			<td class="text-tiny text-right ">${YESTERDAY.toLocaleString('en-BD', {
@@ -238,13 +252,13 @@ const agentstatus = async () => {
 					{
 						data: intloacl_today,
 						label: 'Today',
-						backgroundColor: '#01783f',
+						backgroundColor: '#0e3150',
 						fill: false
 					},
 					{
 						data: intlocal_yesterday,
 						label: 'Yesterday',
-						backgroundColor: '#00ff84',
+						backgroundColor: '#288bfc',
 						fill: false
 					}
 				]
@@ -277,16 +291,26 @@ const customerstatus = async () => {
 		/*Contracting a string with , to separate value*/
 		let localCustomerToday = 0
 		let localCustomerYday = 0
+		let style = 'text-dark'
 		payload.map(({ MPHONE, ACCOUNT_NAME, CUSTOMER_CURRENT, CUSTOMER_YESTERDAY }) => {
 			local_mphone += `${MPHONE},`
 			loacl_cc += `${CUSTOMER_CURRENT.toFixed(2)},`
 			loacl_cy += `${CUSTOMER_YESTERDAY.toFixed(2)},`
 			localCustomerToday += CUSTOMER_CURRENT
 			localCustomerYday += CUSTOMER_YESTERDAY
+
+			if (CUSTOMER_YESTERDAY > CUSTOMER_CURRENT) {
+				style = 'text-error'
+			} else if (CUSTOMER_CURRENT > CUSTOMER_YESTERDAY) {
+				style = 'text-success'
+			} else {
+				style = 'text-dark'
+			}
+
 			document.getElementById('customerInfo').innerHTML += `<tr>
 			<td class="text-tiny">${MPHONE}</td>
 			<td class="text-tiny text-ellipsis">${ACCOUNT_NAME}</td>
-			<td class="text-tiny text-right">${CUSTOMER_CURRENT.toLocaleString('en-BD', {
+			<td class="text-tiny ${style} text-right">${CUSTOMER_CURRENT.toLocaleString('en-BD', {
 				maximumFractionDigits: 2
 			})}</td>
 			<td class="text-tiny text-right">${CUSTOMER_YESTERDAY.toLocaleString('en-BD', {

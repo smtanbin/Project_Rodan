@@ -51,7 +51,7 @@ const getAccountinfo = async () => {
                 <th class="text-tiny">Renew Date</th>
                 <th class="text-tiny">Amount</th>
                 <th class="text-tiny">Due</th>
-                <th class="text-tiny">Due Payable</th>
+                <th class="text-tiny">Total</th>
            
                 </tr>
              </thead>
