@@ -1,3 +1,5 @@
+// const { raw } = require('express')
+
 /*api server url is in environment file*/
 const apiserver = '/api/'
 
@@ -365,30 +367,37 @@ const customerstatus = async () => {
 	document.getElementById('loading').remove()
 }
 
-const dailydrcr = async () => {
+const balancePerformance = async () => {
 	let local_HOUR = []
-	let loacl_DR = []
-	let loacl_CR = []
-	/* Post request body content*/
+	let loacl_TDR = []
+	let loacl_TCR = []
+	let loacl_PDR = []
+	let loacl_PCR = []
 
-	const url = `${apiserver}dailydrcr`
+	/* Post request body content*/
+	const url = `${apiserver}balancePerformance`
 	const requestOptions = {
 		method: 'GET',
 		headers: myHeaders,
 		redirect: 'follow'
 	}
+
 	await fetch(url, requestOptions).then((response) => response.json()).then((payload) => {
 		/*Contracting a string with , to separate value*/
-		payload.map(({ HOUR, DR, CR }) => {
+		payload.map(({ HOUR, TDR, TCR, PDR, PCR }) => {
 			local_HOUR += `${HOUR},`
-			loacl_DR += `${DR.toFixed(2)},`
-			loacl_CR += `${CR.toFixed(2)},`
+			loacl_TDR += `${TDR.toFixed(2)},`
+			loacl_TCR += `${TCR.toFixed(2)},`
+			loacl_PDR += `${PDR.toFixed(2)},`
+			loacl_PCR += `${PCR.toFixed(2)},`
 		})
 
 		// turning INTO ARRAY
 		local_HOUR = local_HOUR.split(',')
-		loacl_DR = loacl_DR.split(',')
-		loacl_CR = loacl_CR.split(',')
+		loacl_PDR = loacl_PDR.split(',')
+		loacl_PCR = loacl_PCR.split(',')
+		loacl_TDR = loacl_TDR.split(',')
+		loacl_TCR = loacl_TCR.split(',')
 
 		new Chart('dailydrcr', {
 			type: 'line',
@@ -396,15 +405,35 @@ const dailydrcr = async () => {
 				labels: local_HOUR,
 				datasets: [
 					{
-						data: loacl_DR,
-						label: 'DR',
-						borderColor: '#009c2c',
+						data: loacl_TDR,
+						label: 'Today DR',
+						borderColor: '#00751F',
+						// backgroundColor: '#00751F40',
+						backgroundColor: '#00751F',
 						fill: false
 					},
 					{
-						data: loacl_CR,
-						label: 'CR',
-						borderColor: '#d1002d',
+						data: loacl_TCR,
+						label: 'Today CR',
+						borderColor: '#F53327',
+						// backgroundColor: '#F5332740',
+						backgroundColor: '#F53327',
+						fill: false
+					},
+					{
+						data: loacl_PDR,
+						label: 'Yesterday DR',
+						borderColor: '#02F5BC',
+						// backgroundColor: '#02F5BC40',
+						backgroundColor: '#02F5BC',
+						fill: false
+					},
+					{
+						data: loacl_PCR,
+						label: 'Yesterday CR',
+						borderColor: '#DB1446',
+						// backgroundColor: '#DB144640',
+						backgroundColor: '#DB1446',
 						fill: false
 					}
 				]
@@ -430,21 +459,29 @@ const closeModel = () => {
 	document.getElementById('homeModel').classList.remove('active')
 }
 
+/******************************************************************************************
+*							
+*
+									Indiviual Agent balance chart
+*
+*
+*******************************************************************************************/
+
 const agentBalancePerformance = async (mphone) => {
 	openModel()
 	let local_DAY = []
 	let loacl_DR = []
 	let loacl_CR = []
 	/* Post request body content*/
-	const raw = JSON.stringify({ key: `${mphone}` })
 	const url = `${apiserver}agentBalancePerformance`
+	const raw = JSON.stringify({ key: `${mphone}` })
 	const requestOptions = {
 		method: 'POST',
 		headers: myHeaders,
 		body: raw,
 		redirect: 'follow'
 	}
-	// console.log(requestOptions)
+
 	await fetch(url, requestOptions).then((response) => response.json()).then((payload) => {
 		console.log(payload)
 
@@ -455,7 +492,6 @@ const agentBalancePerformance = async (mphone) => {
 		})
 
 		// turning INTO ARRAY
-
 		local_DAY = local_DAY.split(',')
 		loacl_DR = loacl_DR.split(',')
 		loacl_CR = loacl_CR.split(',')
@@ -493,6 +529,14 @@ const agentBalancePerformance = async (mphone) => {
 	})
 }
 
+/******************************************************************************************
+*							
+*
+									Timer Widget code 
+*
+*
+*******************************************************************************************/
+
 const timer = () => {
 	let now = new Date()
 	let hour = now.getHours()
@@ -514,10 +558,26 @@ const timer = () => {
 	}
 }
 
+/******************************************************************************************
+*							
+*
+									Function Init
+*
+*/
+/* Timeer Function*/
 timer()
+/* Timeer Function*/
 pichat()
-dailydrcr()
+/* Function replaced*/
+// dailydrcr()
+/* Agent Status Function*/
 agentstatus()
+/* Account Status Function*/
 accountStatus()
-// Always buttom
+/* Balance Comparidun Function*/
+balancePerformance()
+/* 
+	Customer calling
+	! Always buttom
+*/
 customerstatus()

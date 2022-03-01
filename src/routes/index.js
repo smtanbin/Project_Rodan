@@ -47,16 +47,22 @@ app.get('/holyday', async (req, res) => {
 /*Timeline*/
 
 /* chart Api*/
-const { dailydrcr, drcragent } = require('../api/chartsData')
+const { dailydrcr, drcragent, balancePerformance } = require('../api/chartsData')
+
 app.get('/dailydrcr', async (req, res) => {
 	const data = await dailydrcr()
 	res.send(data)
 })
 
+app.get('/balancePerformance', async (req, res) => {
+	const data = await balancePerformance()
+	res.send(data)
+})
+
 app.post('/agentBalancePerformance', async (req, res) => {
 	const data = await drcragent(req.body.key)
-	console.log(data)
 	res.send(data)
+	console.log(data)
 })
 
 /* timeline Api*/
