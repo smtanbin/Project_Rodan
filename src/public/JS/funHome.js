@@ -219,12 +219,12 @@ const agentstatus = async () => {
 				style = 'text-dark'
 			}
 			document.getElementById('agentInfo').innerHTML += `			<tr>
-			<td class="text-tiny">${MPHONE}</td>
-			<td class="text-tiny text-left text-ellipsis">${ACCOUNT_NAME}</td>
-			<td class="text-tiny ${style} text-right ">${TODAY.toLocaleString('en-BD', {
+			<td class="text-tiny"><a type="button" class="btn btn-link" onclick="agentBalancePerformance('${MPHONE}')">${MPHONE}</a></td>
+			<td class="text-left text-tiny text-ellipsis">${ACCOUNT_NAME}</td>
+			<td class=" ${style} text-right ">${TODAY.toLocaleString('en-BD', {
 				maximumFractionDigits: 2
 			})}</td>
-			<td class="text-tiny text-right ">${YESTERDAY.toLocaleString('en-BD', {
+			<td class=" text-right ">${YESTERDAY.toLocaleString('en-BD', {
 				maximumFractionDigits: 2
 			})}</td>
 		  </tr>`
@@ -379,16 +379,13 @@ const dailydrcr = async () => {
 	}
 	await fetch(url, requestOptions).then((response) => response.json()).then((payload) => {
 		/*Contracting a string with , to separate value*/
-		let localCustomerToday = 0
-		let localCustomerYday = 0
-		let style = 'text-dark'
 		payload.map(({ HOUR, DR, CR }) => {
 			local_HOUR += `${HOUR},`
 			loacl_DR += `${DR.toFixed(2)},`
 			loacl_CR += `${CR.toFixed(2)},`
 		})
-		// turning INTO ARRAY
 
+		// turning INTO ARRAY
 		local_HOUR = local_HOUR.split(',')
 		loacl_DR = loacl_DR.split(',')
 		loacl_CR = loacl_CR.split(',')
@@ -424,8 +421,78 @@ const dailydrcr = async () => {
 			}
 		})
 	})
-	document.getElementById('loading').remove()
 }
+
+const openModel = () => {
+	document.getElementById('homeModel').classList.add('active')
+}
+const closeModel = () => {
+	document.getElementById('homeModel').classList.remove('active')
+}
+
+const agentBalancePerformance = async (mphone) => {
+	openModel()
+	let local_DAY = []
+	let loacl_DR = []
+	let loacl_CR = []
+	/* Post request body content*/
+	const raw = JSON.stringify({ key: `${mphone}` })
+	const url = `${apiserver}agentBalancePerformance`
+	const requestOptions = {
+		method: 'POST',
+		headers: myHeaders,
+		body: raw,
+		redirect: 'follow'
+	}
+	// console.log(requestOptions)
+	await fetch(url, requestOptions).then((response) => response.json()).then((payload) => {
+		console.log(payload)
+
+		payload.map(({ DAY, DR, CR }) => {
+			local_DAY += `${DAY},`
+			loacl_DR += `${DR.toFixed(2)},`
+			loacl_CR += `${CR.toFixed(2)},`
+		})
+
+		// turning INTO ARRAY
+
+		local_DAY = local_DAY.split(',')
+		loacl_DR = loacl_DR.split(',')
+		loacl_CR = loacl_CR.split(',')
+
+		new Chart('dailydrcragent', {
+			type: 'line',
+			data: {
+				labels: days,
+				datasets: [
+					{
+						data: dr,
+						label: 'DR',
+						borderColor: '#009c2c',
+						fill: false
+					},
+					{
+						data: cr,
+						label: 'CR',
+						borderColor: '#d1002d',
+						fill: false
+					}
+				]
+			},
+			options: {
+				legend: {
+					display: true
+				},
+				title: {
+					display: false,
+					position: 'top',
+					text: 'Agent Balance'
+				}
+			}
+		})
+	})
+}
+
 const timer = () => {
 	let now = new Date()
 	let hour = now.getHours()
@@ -451,5 +518,6 @@ timer()
 pichat()
 dailydrcr()
 agentstatus()
-customerstatus()
 accountStatus()
+// Always buttom
+customerstatus()
