@@ -33,8 +33,25 @@ const balancePerformance = async () => {
 				   ON new.HOUR = old.HOUR
 	  --GROUP BY HOUR
 	  ORDER BY HOUR`
+		sqlalt = `/* Formatted on 3/2/2022 2:41:49 PM (QP5 v5.374) */
+		SELECT NVL(TIME,PTIME) PTIME,NVL(CDAY,0) CDAY,NVL(YDAY,0) YDAY
+		  FROM (  SELECT TIME, NVL (SUM (BALANCE), 0) CDAY
+					FROM (SELECT TO_CHAR (TRANS_DATE, 'HH24') || ':00'     TIME,
+								 PAY_AMT                                   AS BALANCE
+							FROM AGENT_BANKING.GL_TRANS_MST)
+				GROUP BY TIME) C
+			   FULL JOIN
+			   (  SELECT TIME PTIME, SUM (BALANCE) YDAY
+					FROM (SELECT TO_CHAR (TRANS_DATE, 'HH24') || ':00'     TIME,
+								 PAY_AMT                                   AS BALANCE
+							FROM AGENT_BANKING.GL_TRANS_MST_OLD
+						   WHERE TRUNC (TRANS_DATE) =
+								 (SELECT TRUNC (SYSDATE - 1) FROM DUAL))
+				GROUP BY TIME) Y
+				   ON Y.PTIME = C.TIME
+				   order by PTIME`
 		// console.log(sql)
-		return qurrythis(sql)
+		return qurrythis(sqlalt)
 	} catch (e) {
 		console.log(e)
 		return e

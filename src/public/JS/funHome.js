@@ -368,11 +368,9 @@ const customerstatus = async () => {
 }
 
 const balancePerformance = async () => {
-	let local_HOUR = []
-	let loacl_TDR = []
-	let loacl_TCR = []
-	let loacl_PDR = []
-	let loacl_PCR = []
+	let hour = []
+	let today = []
+	let yesterday = []
 
 	/* Post request body content*/
 	const url = `${apiserver}balancePerformance`
@@ -384,56 +382,35 @@ const balancePerformance = async () => {
 
 	await fetch(url, requestOptions).then((response) => response.json()).then((payload) => {
 		/*Contracting a string with , to separate value*/
-		payload.map(({ HOUR, TDR, TCR, PDR, PCR }) => {
-			local_HOUR += `${HOUR},`
-			loacl_TDR += `${TDR.toFixed(2)},`
-			loacl_TCR += `${TCR.toFixed(2)},`
-			loacl_PDR += `${PDR.toFixed(2)},`
-			loacl_PCR += `${PCR.toFixed(2)},`
+		// payload.map(({ HOUR, TDR, TCR, PDR, PCR }) => {
+		payload.map(({ PTIME, CDAY, YDAY }) => {
+			hour += `${PTIME},`
+			today += `${CDAY},`
+			yesterday += `${YDAY},`
 		})
 
 		// turning INTO ARRAY
-		local_HOUR = local_HOUR.split(',')
-		loacl_PDR = loacl_PDR.split(',')
-		loacl_PCR = loacl_PCR.split(',')
-		loacl_TDR = loacl_TDR.split(',')
-		loacl_TCR = loacl_TCR.split(',')
+		hour = hour.split(',')
+		today = today.split(',')
+		yesterday = yesterday.split(',')
 
 		new Chart('dailydrcr', {
 			type: 'line',
 			data: {
-				labels: local_HOUR,
+				labels: hour,
 				datasets: [
 					{
-						data: loacl_TDR,
-						label: 'Today DR',
-						borderColor: '#00751F',
-						// backgroundColor: '#00751F40',
-						backgroundColor: '#00751F',
+						data: today,
+						// label: 'Today DR',
+						label: 'Today',
+						borderColor: '#0e3150',
 						fill: false
 					},
 					{
-						data: loacl_TCR,
-						label: 'Today CR',
-						borderColor: '#F53327',
-						// backgroundColor: '#F5332740',
-						backgroundColor: '#F53327',
-						fill: false
-					},
-					{
-						data: loacl_PDR,
-						label: 'Yesterday DR',
-						borderColor: '#02F5BC',
-						// backgroundColor: '#02F5BC40',
-						backgroundColor: '#02F5BC',
-						fill: false
-					},
-					{
-						data: loacl_PCR,
-						label: 'Yesterday CR',
-						borderColor: '#DB1446',
-						// backgroundColor: '#DB144640',
-						backgroundColor: '#DB1446',
+						data: yesterday,
+
+						label: 'Yesterday',
+						borderColor: '#288bfc',
 						fill: false
 					}
 				]
@@ -504,13 +481,13 @@ const agentBalancePerformance = async (mphone) => {
 					{
 						data: dr,
 						label: 'DR',
-						borderColor: '#009c2c',
+						borderColor: '#0e3150',
 						fill: false
 					},
 					{
 						data: cr,
 						label: 'CR',
-						borderColor: '#d1002d',
+						borderColor: '#288bfc',
 						fill: false
 					}
 				]

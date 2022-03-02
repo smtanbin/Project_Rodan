@@ -8,7 +8,6 @@ let autho = false
 const path = require('path')
 const cors = require('cors')
 
-const apipath = require('./routes/index')
 const { login } = require('./apps/api_login')
 const { setCookie, getCookie, eraseCookie } = require('./apps/FunCore')
 const corsOptions = {
@@ -130,7 +129,7 @@ app.get('/report/accountInfo', function(req, res) {
 	res.render('pages/accountInfo')
 })
 
-// API
+const apipath = require('./routes/index')
 app.use('/api', apipath)
 
 const port = process.env.PORT
