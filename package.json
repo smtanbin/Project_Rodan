@@ -17,14 +17,13 @@
 		"express": "^4.17.1",
 		"holidayapi": "^5.1.0",
 		"jsonwebtoken": "^8.5.1",
-		"oracledb": "^5.3.0",
-		"webpack": "^5.69.1",
-		"webpack-cli": "^4.9.2"
+		"oracledb": "^5.3.0"
+
 	},
 	"devDependencies": {
-		"ejs": "^2.6.2",
+		"ejs": "^3.1.6",
 		"express": "^4.17.1",
-		"webpack": "^4.39.1",
-		"webpack-cli": "^3.3.6"
+		"webpack": "5.69.1",
+		"webpack-cli": "4.9.2"
 	}
 }
