@@ -3,29 +3,26 @@
 <%- include('head'); %>
 
   <body>
-    <div class="container">
+    <section id="loading"
+      style="z-index: 999; position: absolute; width: 100vw; height: 100vh; display: flex; justify-content: center; background-color: #1874d2;">
+      <img src="/img/loading.gif" alt="">
+    </section>
+    <div class="container" id="loader" style="display: none;">
+
       <div class="columns">
+
         <div class="row column col-12">
           <%- include('navbar'); %>
             <%- include('sidenav'); %>
-
         </div>
         <div class="columns col-12 row">
-
-
-
           <%- include('body'); %>
-
         </div>
         <div class="row column col-12">
           <%- include('footer'); %>
         </div>
-
-
-
-
-
       </div>
+
     </div>
   </body>
 

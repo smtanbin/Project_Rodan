@@ -402,15 +402,15 @@ const balancePerformance = async () => {
 					{
 						data: today,
 						// label: 'Today DR',
+						borderColor: '#288bfc',
+						backgroundColor: '#288bfc40',
 						label: 'Today',
-						borderColor: '#0e3150',
-						fill: false
+						fill: true
 					},
 					{
 						data: yesterday,
-
 						label: 'Yesterday',
-						borderColor: '#288bfc',
+						borderColor: '#0e3150',
 						fill: false
 					}
 				]
