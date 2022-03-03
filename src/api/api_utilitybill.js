@@ -1,5 +1,5 @@
-const qurrythis = require('./db')
-const { oracleDate } = require('./FunCore')
+const qurrythis = require('../apps/db')
+const { oracleDate } = require('../apps/FunCore')
 
 const pbslist = async () => {
 	try {
@@ -73,6 +73,7 @@ const utilityinfodtl = async (fromdate, todate, key) => {
 		return await qurrythis(sql)
 	}
 }
+
 const utilityinfosummary = async (fromdate, todate) => {
 	fromdate = oracleDate(fromdate)
 	todate = oracleDate(todate)
@@ -93,6 +94,7 @@ const utilityinfosummary = async (fromdate, todate) => {
   
 	  SUM (VAT_AMT) "VAT",
 	  SUM (STAMP_AMT) "STMP",
+	  COUNT (TRANS_AMT) "COUNT",
 	  SUM (TRANS_AMT) "TOTAL"
   
   FROM

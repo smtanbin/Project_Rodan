@@ -311,6 +311,7 @@ const utilitySummary = async () => {
 	let TRANS_AMT_TOTAL = 0
 	let VAT_AMT_TOTAL = 0
 	let STAMP_AMT_TOTAL = 0
+	let COUNT_TOTAL = 0
 
 	/* Prints Head portation 
     'output2' is responsiable for table printing.
@@ -335,6 +336,8 @@ const utilitySummary = async () => {
 										<th class="text-tiny">Merchant</th>
 										<th class="text-tiny">Revenue Account</th>
 										<th class="text-tiny">VAT Account</th>
+										<th class="text-tiny">NO</th>
+
 										<th class="text-tiny text-right">Net Amount</th>
 										<th class="text-tiny text-right">VAT Amount</th>
 										<th class="text-tiny text-right">Stamp Amount</th>
@@ -355,11 +358,12 @@ const utilitySummary = async () => {
 				</tr>`
 			} else {
 				document.getElementById('output2').innerHTML = payload
-					.map(({ PMPHONE, NAME, MERCHANT, REVAC, VATAC, VAT, STMP, TOTAL }) => {
+					.map(({ PMPHONE, NAME, MERCHANT, COUNT, REVAC, VATAC, VAT, STMP, TOTAL }) => {
 						/* Calculatation*/
 						TRANS_AMT_TOTAL += TOTAL
 						VAT_AMT_TOTAL += VAT
 						STAMP_AMT_TOTAL += STMP
+						COUNT_TOTAL += COUNT
 
 						return `<tr>
 				<td class="text-tiny">${PMPHONE}</td>
@@ -367,6 +371,7 @@ const utilitySummary = async () => {
 				<td class="text-tiny">${MERCHANT}</td>
 				<td class="text-tiny">${REVAC}</td>
 				<td class="text-tiny">${VATAC}</td>
+				<td class="text-tiny">${COUNT}</td>
 				<td class="text-tiny text-right">${(TOTAL - VAT).toLocaleString('en-BD', {
 					maximumFractionDigits: 2
 				})}</td>
@@ -389,6 +394,7 @@ const utilitySummary = async () => {
 		document.getElementById('output2').innerHTML += `
 		<tr class="active text-bold">
 		<td class="text-bold" colspan="5">Total</td>
+		<td class="text-bold text-tiny">${COUNT_TOTAL}</td>
 		
 		<td class="text-bold text-tiny">${(TRANS_AMT_TOTAL - VAT_AMT_TOTAL).toLocaleString('en-BD', {
 			maximumFractionDigits: 2,

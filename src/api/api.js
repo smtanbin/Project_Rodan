@@ -1,29 +1,5 @@
-const oracledb = require('oracledb')
-oracledb.outFormat = oracledb.OUT_FORMAT_OBJECT
-let connection
-// oracle working db
-async function qurrythis(sqlqurry) {
-	try {
-		connection = await oracledb.getConnection({
-			user: 'tanbin',
-			password: '@urA774234',
-			connectString: '10.130.102.103:1525/SBLABS'
-		})
-		const result = await connection.execute(sqlqurry)
-		// console.log(result.rows)
-		return result.rows
-	} catch (err) {
-		console.error(err)
-	} finally {
-		if (connection) {
-			try {
-				await connection.close()
-			} catch (err) {
-				console.error(err)
-			}
-		}
-	}
-}
+const qurrythis = require('../apps/db')
+const { oracleDate } = require('../apps/FunCore')
 
 async function reginfo() {
 	const sql = `SELECT MPHONE "ACNO",NVL(PMPHONE,MPHONE) "AGENT",REG_STATUS,STATUS,BALANCE_M FROM AGENT_BANKING.reginfo`

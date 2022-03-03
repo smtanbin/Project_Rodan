@@ -1,5 +1,5 @@
-const qurrythis = require('./db')
-const { oracleDate } = require('./FunCore')
+const qurrythis = require('../apps/db')
+const { oracleDate } = require('../apps/FunCore')
 
 const statementHead = async (date, key) => {
 	try {

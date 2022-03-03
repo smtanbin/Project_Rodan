@@ -77,7 +77,7 @@ const accountStatus = async () => {
 		let arrCloseYesterday = calCloseYesterday.split(',')
 
 		new Chart('accountStatus', {
-			type: 'line',
+			type: 'bar',
 			data: {
 				labels: arrMphone,
 				datasets: [
@@ -85,37 +85,33 @@ const accountStatus = async () => {
 						label: 'New Account Today',
 						data: arrOpenToday,
 						borderColor: '#00C746',
-						backgroundColor: '#00C74640',
-						// backgroundColor: '#00C746',
-						fill: true,
-						tension: 0.1
+						backgroundColor: '#00C746',
+						// tension: 0.1,
+						fill: true
 					},
 					{
 						data: arrOpenYesterday,
 						label: 'New Account Yesterday',
 						borderColor: '#2596be',
-						backgroundColor: '#2596be40',
-						// backgroundColor: '#2596be',
-						fill: true,
-						tension: 0.1
+						backgroundColor: '#2596be',
+						// tension: 0.1,
+						fill: true
 					},
 					{
 						data: arrCloseToday,
 						label: 'Close Account Today',
 						borderColor: '#C72302',
-						backgroundColor: '#C7230240',
-						// backgroundColor: '#C72302',
-						fill: true,
-						tension: 0.1
+						backgroundColor: '#C72302',
+						// tension: 0.1,
+						fill: true
 					},
 					{
 						data: arrCloseYesterday,
 						label: 'Close Account Yesterday',
 						borderColor: '#f3711e',
-						backgroundColor: '#f3711e40',
-						// backgroundColor: '#f3711e',
-						fill: true,
-						tension: 0.1
+						backgroundColor: '#f3711e',
+						// tension: 0.1,
+						fill: true
 					}
 				]
 			},
@@ -276,7 +272,14 @@ const agentstatus = async () => {
 		})
 	})
 }
+/*
 
+
+
+
+
+
+*/
 const customerstatus = async () => {
 	let local_mphone = []
 	let loacl_cc = []
@@ -296,8 +299,8 @@ const customerstatus = async () => {
 		let style = 'text-dark'
 		payload.map(({ MPHONE, ACCOUNT_NAME, CUSTOMER_CURRENT, CUSTOMER_YESTERDAY }) => {
 			local_mphone += `${MPHONE},`
-			loacl_cc += `${CUSTOMER_CURRENT.toFixed(2)},`
-			loacl_cy += `${CUSTOMER_YESTERDAY.toFixed(2)},`
+			loacl_cc += `${(CUSTOMER_CURRENT / 100000).toFixed(2)},`
+			loacl_cy += `${(CUSTOMER_YESTERDAY / 100000).toFixed(2)},`
 			localCustomerToday += CUSTOMER_CURRENT
 			localCustomerYday += CUSTOMER_YESTERDAY
 
@@ -335,6 +338,8 @@ const customerstatus = async () => {
 		loacl_cc = loacl_cc.split(',')
 		loacl_cy = loacl_cy.split(',')
 
+		local_mphone.sort()
+
 		new Chart('customerChart', {
 			type: 'bar',
 			data: {
@@ -366,7 +371,13 @@ const customerstatus = async () => {
 	})
 	document.getElementById('loading').remove()
 }
+/*
 
+
+
+
+
+*/
 const balancePerformance = async () => {
 	let hour = []
 	let today = []
@@ -393,11 +404,14 @@ const balancePerformance = async () => {
 		hour = hour.split(',')
 		today = today.split(',')
 		yesterday = yesterday.split(',')
+		moment(hour).format('T')
 
 		new Chart('dailydrcr', {
 			type: 'line',
+
 			data: {
 				labels: hour,
+
 				datasets: [
 					{
 						data: today,
@@ -411,7 +425,8 @@ const balancePerformance = async () => {
 						data: yesterday,
 						label: 'Yesterday',
 						borderColor: '#0e3150',
-						fill: false
+						backgroundColor: '#0e315040',
+						fill: true
 					}
 				]
 			},
@@ -460,8 +475,6 @@ const agentBalancePerformance = async (mphone) => {
 	}
 
 	await fetch(url, requestOptions).then((response) => response.json()).then((payload) => {
-		console.log(payload)
-
 		payload.map(({ DAY, DR, CR }) => {
 			local_DAY += `${DAY},`
 			loacl_DR += `${DR.toFixed(2)},`

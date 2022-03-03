@@ -89,7 +89,7 @@ const reminotification = async () => {
 			document.getElementById('panel-body').innerHTML = ` `
 		} else {
 			document.getElementById('panel-body').innerHTML += payload
-				.map(({ NAME_OF_MTC, BEN_NAME, AUTHO_DATE, SEN_REM_AMT, REC_AGENT_ACC, ENTRY_DATE }, index) => {
+				.map(({ NAME_OF_MTC, BEN_NAME, STATUS, SEN_REM_AMT, REC_AGENT_ACC, ENTRY_DATE }, index) => {
 					bellIcon(index + 1)
 
 					return `<div class="tile bg-gray p-2 my-1">
@@ -97,7 +97,7 @@ const reminotification = async () => {
 					  <!-- <figure class="avatar avatar-lg"><img src="../img/avatar-2.png" alt="Avatar"></figure> -->
 					</div>
 					<div class="tile-content">
-					  <h6 class="tile-title text-primary h6 text-bold">Remittance Request</h6>
+					  <h6 class="tile-title text-primary h6 text-bold">Remittance Request ${STATUS}</h6>
 					  <p class="tile-subtitle text-tiny">
 					  A remittance request for remittance exchaange house<span class="text-primary text-bold"> ${NAME_OF_MTC} </span> with amount of ${SEN_REM_AMT.toLocaleString(
 						'en-BD',

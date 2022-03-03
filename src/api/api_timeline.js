@@ -1,4 +1,4 @@
-const qurrythis = require('./db')
+const qurrythis = require('../apps/db')
 
 const timeline = async () => {
 	try {

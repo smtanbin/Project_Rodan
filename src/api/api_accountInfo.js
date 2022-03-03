@@ -1,4 +1,5 @@
-const qurrythis = require('./db')
+const qurrythis = require('../apps/db')
+
 const accountInfo = async (key) => {
 	try {
 		let sql = `/* Formatted on 2/28/2022 7:49:59 PM (QP5 v5.374) */

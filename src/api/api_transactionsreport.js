@@ -1,6 +1,4 @@
-
-const qurrythis = require('./db')
-const { oracleDate } = require('./FunCore')
+const qurrythis = require('../apps/db')
 
 const transactionsreport = async () => {
 	try {
@@ -16,4 +14,4 @@ const transactionsreport = async () => {
 	}
 }
 
-module.exports = { transactionsreport}
+module.exports = { transactionsreport }

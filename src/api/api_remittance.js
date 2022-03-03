@@ -1,5 +1,5 @@
-const qurrythis = require('./db')
-const { oracleDate } = require('./FunCore')
+const qurrythis = require('../apps/db')
+const { oracleDate } = require('../apps/FunCore')
 
 const remittancehouselist = async () => {
 	try {
@@ -39,6 +39,7 @@ const remittance = async (fromdate, todate, key) => {
 		return 'Stop code: Qurry miss'
 	}
 }
+
 const remittancesummary = async (fromdate, todate) => {
 	try {
 		fromdate = oracleDate(fromdate)
@@ -87,14 +88,22 @@ const remittancesummary = async (fromdate, todate) => {
 
 const remittanceRequest = async () => {
 	try {
-		sql = `/* Formatted on 2/23/2022 10:04:17 AM (QP5 v5.374) */
-	SELECT rim.NAME_OF_MTC,
-		   BEN_NAME,ENTRY_DATE,
-		   SEN_REM_AMT,AUTHO_DATE,
-		   (SELECT name
-			  FROM agent_banking.reginfo
-			 WHERE mphone = REC_AGENT_ACC)    REC_AGENT_ACC
-	  FROM AGENT_BANKING.REMITTANCE_INFO rim where STATUS is null`
+		sql = `/* Formatted on 3/3/2022 2:24:33 PM (QP5 v5.374) */
+		SELECT rim.NAME_OF_MTC,
+			   BEN_NAME,
+			   ENTRY_DATE,
+			   SEN_REM_AMT,
+			   (CASE
+					WHEN STATUS = 'P' THEN 'Ready for payment'
+					WHEN STATUS = 'M' THEN 'Waiting fot correction'
+				END)                              "STATUS",
+			   AUTHO_DATE,
+			   (SELECT name
+				  FROM agent_banking.reginfo
+				 WHERE mphone = REC_AGENT_ACC)    REC_AGENT_ACC,
+			   STATUS
+		  FROM AGENT_BANKING.REMITTANCE_INFO rim
+		 WHERE STATUS NOT IN ('R', 'A')`
 		return await qurrythis(sql)
 	} catch (e) {
 		console.log(e)

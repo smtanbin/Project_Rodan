@@ -112,7 +112,7 @@ const bellIcon = (notificationcount) => {
 	if (notificationcount === 0 || notificationcount === undefined) {
 		document.getElementById(
 			'navbtn'
-		).innerHTML = `<div class="chip text-dark"><i class="material-icons ">notifications_none</i>No Notification</div>`
+		).innerHTML = `<div class="chip text-dark p-1"><i class="material-icons ">notifications_none</i></div>`
 	} else {
 		document.getElementById(
 			'navbtn'

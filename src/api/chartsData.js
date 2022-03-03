@@ -2,47 +2,16 @@ const qurrythis = require('../apps/db')
 
 const balancePerformance = async () => {
 	try {
-		const sql = `/* Formatted on 3/1/2022 5:56:13 PM (QP5 v5.374) */
-		SELECT old.HOUR,
-			   NVL (TDR, 0)     TDR,
-			   NVL (PDR, 0)     PDR,
-			   NVL (TCR, 0)     TCR,
-			   NVL (PCR, 0)     PCR
-		  FROM (  SELECT CURRENT_HOUR "HOUR", SUM (DR_AMT) TDR, SUM (CR_AMT) TCR
-					FROM (SELECT BALANCE_MPHONE,
-								 ROUND (CR_AMT, 2)                        CR_AMT,
-								 ROUND (DR_AMT, 2)                        DR_AMT,
-								 TO_CHAR (TRANS_DATE, 'HH24') || ':00'    AS CURRENT_HOUR
-								 FROM (SELECT * FROM AGENT_BANKING.GL_TRANS_DTL
-									UNION
-									SELECT * FROM AGENT_BANKING.GL_TRANS_DTL_OLD)
-						   WHERE BALANCE_MPHONE IS NOT NULL AND TRUNC (TRANS_DATE) <=
-						   (SELECT TRUNC (SYSDATE) FROM DUAL))
-				GROUP BY CURRENT_HOUR) new
-			   FULL OUTER JOIN
-			   ((  SELECT CURRENT_HOUR "HOUR", SUM (DR_AMT) PDR, SUM (CR_AMT) PCR
-					 FROM (SELECT BALANCE_MPHONE,
-								  ROUND (CR_AMT, 2)                        CR_AMT,
-								  ROUND (DR_AMT, 2)                        DR_AMT,
-								  TO_CHAR (TRANS_DATE, 'HH24') || ':00'    AS CURRENT_HOUR
-							 FROM AGENT_BANKING.GL_TRANS_DTL_OLD
-							WHERE     BALANCE_MPHONE IS NOT NULL
-								  AND TRUNC (TRANS_DATE) <=
-									  (SELECT TRUNC (SYSDATE - 1) FROM DUAL))
-				 GROUP BY CURRENT_HOUR)) old
-				   ON new.HOUR = old.HOUR
-	  --GROUP BY HOUR
-	  ORDER BY HOUR`
-		sqlalt = `/* Formatted on 3/2/2022 2:41:49 PM (QP5 v5.374) */
+		const sql = `/* Formatted on 3/2/2022 2:41:49 PM (QP5 v5.374) */
 		SELECT NVL(TIME,PTIME) PTIME,NVL(CDAY,0) CDAY,NVL(YDAY,0) YDAY
 		  FROM (  SELECT TIME, NVL (SUM (BALANCE), 0) CDAY
-					FROM (SELECT TO_CHAR (TRANS_DATE, 'HH24') || ':00'     TIME,
+					FROM (SELECT TO_CHAR (TRANS_DATE, 'HH24')     TIME,
 								 PAY_AMT                                   AS BALANCE
-							FROM AGENT_BANKING.GL_TRANS_MST)
+							FROM (AGENT_BANKING.GL_TRANS_MST))
 				GROUP BY TIME) C
 			   FULL JOIN
 			   (  SELECT TIME PTIME, SUM (BALANCE) YDAY
-					FROM (SELECT TO_CHAR (TRANS_DATE, 'HH24') || ':00'     TIME,
+					FROM (SELECT TO_CHAR (TRANS_DATE, 'HH24')    TIME,
 								 PAY_AMT                                   AS BALANCE
 							FROM AGENT_BANKING.GL_TRANS_MST_OLD
 						   WHERE TRUNC (TRANS_DATE) =
@@ -51,7 +20,7 @@ const balancePerformance = async () => {
 				   ON Y.PTIME = C.TIME
 				   order by PTIME`
 		// console.log(sql)
-		return qurrythis(sqlalt)
+		return qurrythis(sql)
 	} catch (e) {
 		console.log(e)
 		return e

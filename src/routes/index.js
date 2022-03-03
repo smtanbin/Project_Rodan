@@ -1,12 +1,11 @@
 const { Router } = require('express')
-const { doexist, holyday } = require('../apps/api.js')
-const { customerinfo } = require('../apps/api_customerinfo')
-const { timeline, trSearch } = require('../apps/api_timeline')
-const { pbslist, utilityinfohead, utilityinfodtl, utilityinfosummary } = require('../apps/api_utilitybill.js')
-const { remittancehouselist, remittance, remittancesummary, remittanceRequest } = require('../apps/api_remittance')
-const { transactionsreport } = require('../apps/api_transactionsreport')
-const { statementHead, statementBody } = require('../apps/apiStatement')
-const { accountInfo } = require('../apps/api_accountInfo')
+const { doexist, holyday } = require('../api/api.js')
+const { customerinfo } = require('../api/api_customerinfo')
+const { pbslist, utilityinfohead, utilityinfodtl, utilityinfosummary } = require('../api/api_utilitybill.js')
+const { remittancehouselist, remittance, remittancesummary, remittanceRequest } = require('../api/api_remittance')
+const { transactionsreport } = require('../api/api_transactionsreport')
+const { statementHead, statementBody } = require('../api/apiStatement')
+const { accountInfo } = require('../api/api_accountInfo')
 const {
 	pichart,
 	agentstatus,
@@ -15,7 +14,7 @@ const {
 	accountStatus,
 	monthlyActivity,
 	dpsMaturity
-} = require('../apps/api_home')
+} = require('../api/api_home')
 const bodyParser = require('body-parser')
 const cors = require('cors')
 const app = Router()
@@ -37,18 +36,25 @@ app.use((req, res, next) => {
 	next()
 })
 
-// VisualViewport
+// Visual Viewport Api
+/**************************************** Start ****************************************
+ */
 
 app.get('/holyday', async (req, res) => {
 	const data = await holyday()
 	res.send(data)
 })
 
-/*Timeline*/
+/************************************** End ******************************************/
 
-/* chart Api*/
+// Chart Api
+/**************************************** Start ****************************************
+ Importing
+ */
 const { dailydrcr, drcragent, balancePerformance } = require('../api/chartsData')
 
+/* 	Get Requests
+*/
 app.get('/dailydrcr', async (req, res) => {
 	const data = await dailydrcr()
 	res.send(data)
@@ -59,18 +65,71 @@ app.get('/balancePerformance', async (req, res) => {
 	res.send(data)
 })
 
+app.get('/dpsMaturity', async (req, res) => {
+	try {
+		const data = await dpsMaturity()
+
+		res.send(data)
+	} catch (e) {
+		return e
+	}
+})
+
+app.get('/pichart', async (req, res) => {
+	try {
+		const data = await pichart()
+
+		res.send(data)
+	} catch (e) {
+		return e
+	}
+})
+
+app.get('/cashEntry', async (req, res) => {
+	try {
+		const data = await cashEntry()
+
+		res.send(data)
+	} catch (e) {
+		return e
+	}
+})
+
+app.get('/agentstatus', async (req, res) => {
+	try {
+		const data = await agentstatus()
+
+		res.send(data)
+	} catch (e) {
+		return e
+	}
+})
+
+app.get('/customerstatus', async (req, res) => {
+	try {
+		const data = await customerstatus()
+
+		res.send(data)
+	} catch (e) {
+		return e
+	}
+})
+
+/* 	Post Requests
+*/
 app.post('/agentBalancePerformance', async (req, res) => {
 	const data = await drcragent(req.body.key)
 	res.send(data)
 	console.log(data)
 })
 
+/************************************** End ******************************************/
+
 /* timeline Api*/
-/* timeline Api*/
-/* timeline Api*/
-/* timeline Api*/
-/* timeline Api*/
-/* timeline Api*/
+/************************************** Start *****************************************
+* 
+*/
+const { timeline, trSearch } = require('../api/api_timeline')
 
 app.get('/timeline', async (req, res) => {
 	const data = await timeline()
@@ -87,54 +146,12 @@ app.post('/trsearch', async (req, res) => {
 		res.status(403)
 	}
 })
+/************************************** End ******************************************/
 
-app.get('/dpsMaturity', async (req, res) => {
-	try {
-		const data = await dpsMaturity()
+/* Account Api*/
 
-		res.send(data)
-	} catch (e) {
-		return e
-	}
-})
-app.get('/pichart', async (req, res) => {
-	try {
-		const data = await pichart()
+/************************************** Start ******************************************/
 
-		res.send(data)
-	} catch (e) {
-		return e
-	}
-})
-app.get('/cashEntry', async (req, res) => {
-	try {
-		const data = await cashEntry()
-
-		res.send(data)
-	} catch (e) {
-		return e
-	}
-})
-app.get('/agentstatus', async (req, res) => {
-	try {
-		const data = await agentstatus()
-
-		res.send(data)
-	} catch (e) {
-		return e
-	}
-})
-app.get('/customerstatus', async (req, res) => {
-	try {
-		const data = await customerstatus()
-
-		res.send(data)
-	} catch (e) {
-		return e
-	}
-})
-
-/* Account Api*/ accountInfo
 app.post('/accountInfo', async (req, res) => {
 	res.status(200)
 	try {
@@ -279,7 +296,7 @@ app.get('/accountStatus', async (req, res) => {
 })
 
 /* APi server Status*/
-// const { cpu } = require('../apps/app')
+// const { cpu } = require('../api/app')
 // app.get('/cpu', async (req, res) => {
 // 	res.send(cpu)
 // })
