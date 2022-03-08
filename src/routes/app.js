@@ -8,11 +8,8 @@ const corsOptions = {
 	origin: '*',
 	optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
 }
-
-// Middlewares
 app.use(cors(corsOptions))
 app.use(bodyParser.json())
-
 app.use((req, res, next) => {
 	res.header('Access-Control-Allow-Origin', '*')
 	res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accepcact')
@@ -21,8 +18,7 @@ app.use((req, res, next) => {
 })
 
 // Visual Viewport Api
-/**************************************** Start ****************************************
- */
+/*********************************************************************************/
 app.get('/', function(req, res) {
 	res.locals = {
 		userid: req.cookies.USERNAME,
@@ -40,21 +36,16 @@ app.get('/timeline', function(req, res) {
 	res.render('./pages/timeline')
 })
 
-// registration
-app.get('/report/customerInfo', function(req, res) {
+// Report Panal
+app.get('/customerInfo', function(req, res) {
 	res.locals = {
 		userid: req.cookies.USERNAME,
 		title: 'Customer Info'
 	}
 	res.render('./pages/customerInfo')
 })
-app.get('/report/utilityreport', function(req, res) {
-	res.locals = {
-		userid: req.cookies.USERNAME,
-		title: 'Utility Report'
-	}
-	res.render('./pages/utilityreport')
-})
+/********************************************************************************
+ */
 app.get('/report/accountStatment', function(req, res) {
 	res.locals = {
 		userid: req.cookies.USERNAME,
@@ -69,6 +60,14 @@ app.get('/report/remittanceReport', function(req, res) {
 	}
 	res.render('./pages/remittanceReport')
 })
+app.get('/report/utilityreport', function(req, res) {
+	res.locals = {
+		userid: req.cookies.USERNAME,
+		title: 'Utility Report'
+	}
+	res.render('./pages/utilityreport')
+})
+
 app.get('/report/transactionsReport', function(req, res) {
 	res.locals = {
 		userid: req.cookies.USERNAME,

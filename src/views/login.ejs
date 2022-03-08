@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Login</title>
     <%- include('head'); %>
         <style>
             body {
@@ -527,34 +527,45 @@
 
 <body class="container columns" style="display: flex; justify-content: center; align-items: center;">
     <div data-aos="zoom-in" class="card card-shadow col-8" style="background-color: #fce69a;">
+
         <div class="card-body">
+
             <div class="columns">
                 <div class="column">
                     <img src="/img/login.gif" class="col-12">
                 </div>
                 <div class="column col-4 p-2">
                     <h3 class="h3 text-center text-dark text-bold">Login</h3>
-
-
-
-
                     <div class="form-group" id="error-input">
-                        <label class="form-label">Use your agentbanking ID & password</label>
+                        <label class="form-label text-tiny text-center w100">Use your agentbanking ID & password</label>
                         <input onfocus="removeError()" class="form-input input-lg has-error" type="text" id="user"
                             placeholder="User ID">
                         <input onfocus="removeError()" class="form-input my-2 input-lg " type="password" id="passwd"
                             placeholder="Password">
                         <p id="error" style="opacity:0;" class="form-input-hint">Invalid Login Information</p>
-                        <button id="submit" id="error-btn" class="btn text-bold w100"
+                        <button id="submit" id="error-btn" class="btn btn-primary w100"
                             onclick="authorized()">Login</button>
                     </div>
                 </div>
             </div>
+            <small>Copyright © 2022 Standard Bank Ltd. </small>
         </div>
     </div>
 
 
+    <script>
 
+        if (navigator.userAgent.indexOf('MSIE') !== -1
+            || navigator.appVersion.indexOf('Trident/') > -1) {
+            /* Microsoft Internet Explorer detected in. */
+            window.alert('Microsoft Internet Explorer detected. This browser older then you so stop using it')
+            // document.getElementById('error-input').innerHTML = `Microsoft Internet Explorer detected. This browser older then me so stop using it.`
+        }
+        if (navigator.userAgent.indexOf('OPR/33.0.1990.115') > -1) {
+            window.alert('Opera 33.0.1990.115 detected. This is a old version os app only for java applet. Please switch to new browser.')
+
+        }
+    </script>
 
     <script src="/style/aos/aos.js"></script>
     <script src="/JS/login.js"></script>

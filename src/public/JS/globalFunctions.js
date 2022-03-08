@@ -130,3 +130,13 @@ const logout = () => {
 	document.cookie = 'auth' + '=; Max-Age=-99999999;'
 	window.location.href = '/'
 }
+
+const isFirefox = navigator.userAgent.toLowerCase().indexOf('firefox') > -1
+if (navigator.userAgent.toLowerCase().indexOf('firefox') > -1) {
+	// window.alert('Firefox not supported')
+	document.getElementById('dispasmsg').innerHTML = `
+
+	Due to Gecko rendering engine use by Mozilla some function might not work.
+	We advice you to use and Chromium based browser such as Google Chorme, Edge, Brave .
+`
+}
