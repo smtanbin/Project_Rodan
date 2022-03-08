@@ -77,7 +77,7 @@ const accountStatus = async () => {
 		let arrCloseYesterday = calCloseYesterday.split(',')
 
 		new Chart('accountStatus', {
-			type: 'bar',
+			type: 'line',
 			data: {
 				labels: arrMphone,
 				datasets: [
@@ -85,32 +85,24 @@ const accountStatus = async () => {
 						label: 'New Account Today',
 						data: arrOpenToday,
 						borderColor: '#00C746',
-						backgroundColor: '#00C746',
-						// tension: 0.1,
+						// backgroundColor: '#00C746',
+						tension: 0,
 						fill: true
 					},
 					{
 						data: arrOpenYesterday,
 						label: 'New Account Yesterday',
 						borderColor: '#2596be',
-						backgroundColor: '#2596be',
-						// tension: 0.1,
+						// backgroundColor: '#2596be',
+						tension: 0,
 						fill: true
 					},
 					{
 						data: arrCloseToday,
 						label: 'Close Account Today',
 						borderColor: '#C72302',
-						backgroundColor: '#C72302',
-						// tension: 0.1,
-						fill: true
-					},
-					{
-						data: arrCloseYesterday,
-						label: 'Close Account Yesterday',
-						borderColor: '#f3711e',
-						backgroundColor: '#f3711e',
-						// tension: 0.1,
+						// backgroundColor: '#C72302',
+						tension: 0,
 						fill: true
 					}
 				]
@@ -250,13 +242,13 @@ const agentstatus = async () => {
 					{
 						data: intloacl_today,
 						label: 'Today',
-						backgroundColor: '#0e3150',
+						backgroundColor: '#288bfc',
 						fill: false
 					},
 					{
 						data: intlocal_yesterday,
 						label: 'Yesterday',
-						backgroundColor: '#288bfc',
+						backgroundColor: '#0e3150',
 						fill: false
 					}
 				]
@@ -348,12 +340,12 @@ const customerstatus = async () => {
 					{
 						data: loacl_cc,
 						label: 'Today',
-						backgroundColor: '#0e3150'
+						backgroundColor: '#288bfc'
 					},
 					{
 						data: loacl_cy,
 						label: 'Yesterday',
-						backgroundColor: '#288bfc'
+						backgroundColor: '#0e3150'
 					}
 				]
 			},
@@ -494,13 +486,13 @@ const agentBalancePerformance = async (mphone) => {
 					{
 						data: dr,
 						label: 'DR',
-						borderColor: '#0e3150',
+						borderColor: '#288bfc',
 						fill: false
 					},
 					{
 						data: cr,
 						label: 'CR',
-						borderColor: '#288bfc',
+						borderColor: '#0e3150',
 						fill: false
 					}
 				]

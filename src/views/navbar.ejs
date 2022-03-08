@@ -31,42 +31,43 @@
             </ul>
         </div>
         <div class="dropdown dropdown-right">
-            <a href="#" class="disabled btn btn-link dropdown-toggle" tabindex="0">
-                Setting <i class="icon icon-caret"></i>
+            <a href="#" class="btn btn-link dropdown-toggle" tabindex="0">
+                <figure class="avatar avatar-sm" data-initial="<%= userid.substring(2, 0); %>"></figure>
+                <i class="icon icon-caret"></i>
             </a>
 
             <ul class="menu">
 
-                <li class="divider" data-content="Profiles">
+                <li class="divider" data-content=" <%= userid %>">
                 </li>
-
+                <!-- 
                 <li class="menu-item">
                     <label class="form-checkbox">
                         <input type="checkbox disabled">
                         <i class="form-icon"></i> Dark Mode
                     </label>
-                </li>
+                </li> -->
 
                 <li class="divider"></li>
 
-                <li class="menu-item">
+                <!-- <li class="menu-item">
                     <a href="#" class="disabled">
                         <i class="icon icon-people "></i> User
 
                     </a>
 
-                </li>
+                </li> -->
 
-                <li class="menu-item">
+                <!-- <li class="menu-item">
                     <a href="#" class="disabled"> <i class="icon 
                         icon-message"></i> Massage</a>
                     <div class="menu-badge">
                         <label class="label label-primary">2</label>
                     </div>
-                </li>
+                </li> -->
 
                 <li class="menu-item">
-                    <a onclick="" class="disabled">
+                    <a onclick="logout()" type="button">
                         <i class="icon icon-shutdown text-error"></i> Logout
                     </a>
                 </li>

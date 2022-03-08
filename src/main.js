@@ -1,15 +1,8 @@
 const express = require('express')
-const jwt = require('jsonwebtoken')
-require('dotenv').config()
-
 const app = express()
-let autho = false
-
 const path = require('path')
 const cors = require('cors')
 
-const { login } = require('./apps/api_login')
-const { setCookie, getCookie, eraseCookie } = require('./apps/FunCore')
 const corsOptions = {
 	origin: '*',
 	optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
@@ -32,54 +25,81 @@ app.get('/login', function(req, res) {
 	res.render('login')
 })
 
-app.post('/oauth', async (req, res) => {
-	const user = req.body.user
+/* ---------------------------------- Authorization and verification --------------------------------------
+*
+*
+*/
+/* JSON Web Token
+JSON Web Token (JWT) is an open standard (RFC 7519) that defines a compact and self-contained way
+for securely transmitting information between parties as a JSON object. This information can be
+verified and trusted because it is digitally signed. JWTs can be signed using a secret
+(with the HMAC algorithm) or a public/private key pair using RSA or ECDSA.
+Link: https://jwt.io
+*/
+const jwt = require('jsonwebtoken')
+/* JWTAUTHOKEY is the veriable for key
+> require('crypto').randomBytes(64).toString('hex')
+*/
+require('dotenv').config()
+/* Api
+ tokenadd(), tokenver() */
+// need cookieParser middleware before we can do anything with cookies
+const cookieParser = require('cookie-parser')
+app.use(cookieParser())
+const { verification, tokenadd } = require('./apps/api_login')
+
+app.post('/oauth', async (req, res, next) => {
+	const userid = req.body.user
 	const passwd = req.body.passwd
+
 	try {
-		// let res = await login(user, passwd)
-		console.log(user)
-		console.log(passwd)
-		res.send(await login(user, passwd))
-		// const token = jwt.sign('user', '774gsg342%%#sgsrq2234')
+		let state = await verification(userid, passwd)
+		if (state !== false) {
+			state.map(async ({ USERNAME, ROLE }) => {
+				const claims = { user: userid, role: ROLE, name: USERNAME }
+				const token = jwt.sign(claims, process.env.JWTAUTHOKEY, {
+					expiresIn: '10m' // expires in 1 hours
+				})
 
-		// res.cookie('auth', token)
-		// res.json(token)
-		// res.send()
-		// setCookie('auth', 'token', 7)
-
-		// res.send(data)
+				// await tokenadd(userid, token) //Add token to database
+				console.log(token)
+				res.cookie(`auth`, token)
+				res.send(state)
+			})
+		} else {
+			res.send(state)
+		}
 	} catch (e) {
-		console.log(e)
-		res.send(e)
-		res.status(403)
+		console.log('otho error ' + e)
 	}
 })
 
 app.get('/', (req, res, next) => {
-	// console.log(getCookie('auth'))
-	// console.log(req.headers)
-	// const authoHeader = req.headers['authorization']
-	// const token = authoHeader && authoHeader.split(' ')[1]
-	// if (autho == null) {
-	// 	res.locals = {
-	// 		title: 'Login'
-	// 	}
-	// 	res.render('login')
-	// } else {
-	// 	jwt.verify(token, '774gsg342%%#sgsrq2234', (err, user) => {
-	// 		if (err) return res.sendStatus(403)
-	// 		req.user = user
-	next()
-	// 	})
-	// }
+	// console.log(req.cookies)
+	const token = req.cookies.auth
+	jwt.verify(token, process.env.JWTAUTHOKEY, (err) => {
+		if (err) {
+			res.locals = {
+				title: 'Login'
+			}
+			res.render('login')
+		} else {
+			next()
+		}
+	})
 })
 /** 
  Routes
  **/
 // index page
+const jwt_decode = require('jwt-decode')
 app.get('/', function(req, res) {
+	const token = req.cookies.auth
+	const { name } = jwt_decode(token)
+
 	res.locals = {
-		title: 'Home'
+		title: 'Home',
+		userid: name
 	}
 	res.render('index')
 })
@@ -130,7 +150,16 @@ app.get('/report/accountInfo', function(req, res) {
 })
 
 const apipath = require('./routes/index')
+const { isNullOrUndefined } = require('util')
 app.use('/api', apipath)
+
+app.get('*', function(req, res) {
+	res.locals = {
+		title: '404!'
+	}
+	res.render('pages/404')
+	res.send(404)
+})
 
 const port = process.env.PORT
 app.listen(port)

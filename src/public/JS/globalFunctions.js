@@ -116,7 +116,7 @@ const bellIcon = (notificationcount) => {
 	} else {
 		document.getElementById(
 			'navbtn'
-		).innerHTML = `<div class="chip p-1"><i class="material-icons ">notifications_active</i> New Notification</div>`
+		).innerHTML = `<div class="chip text-error p-1"><i class="material-icons ">notifications_active</i> New Notification</div>`
 	}
 	// } else {
 	// 	document.getElementById('navbtn').innerHTML = ` <span class="badge" data-badge="${notificationcount}">
@@ -125,3 +125,8 @@ const bellIcon = (notificationcount) => {
 	// }
 }
 bellIcon()
+
+const logout = () => {
+	document.cookie = 'auth' + '=; Max-Age=-99999999;'
+	window.location.href = '/'
+}

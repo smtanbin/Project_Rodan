@@ -29,14 +29,18 @@ const binSearch = (arr, x, start, end) => {
 		return recursiveFunction(arr, x, mid + 1, end)
 }
 
-function setCookie(name, value, days) {
-	var expires = ''
-	if (days) {
-		var date = new Date()
-		date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000)
-		expires = '; expires=' + date.toUTCString()
+const setCookie = (name, value, days) => {
+	try {
+		let expires = ''
+		if (days) {
+			const date = new Date()
+			date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000)
+			expires = '; expires=' + date.toUTCString()
+		}
+		document.cookie = name + '=' + (value || '') + expires + '; path=/'
+	} catch (e) {
+		console.log('error during creating cookie' + e)
 	}
-	document.cookie = name + '=' + (value || '') + expires + '; path=/'
 }
 function getCookie(name) {
 	var nameEQ = name + '='
