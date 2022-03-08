@@ -1,7 +1,41 @@
+/*MIT License
+Copyright (c) 2022 Tanbin
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.*/
+
 const express = require('express')
 const app = express()
 const path = require('path')
 const cors = require('cors')
+/*Environment Data*/
+require('dotenv').config()
+/* JSON Web Token
+JSON Web Token (JWT) is an open standard (RFC 7519) that defines a compact and self-contained way
+for securely transmitting information between parties as a JSON object. This information can be
+verified and trusted because it is digitally signed. JWTs can be signed using a secret
+(with the HMAC algorithm) or a public/private key pair using RSA or ECDSA.
+Link: https://jwt.io
+*/
+const jwt = require('jsonwebtoken')
+/* JWTAUTHOKEY is the veriable for key
+> require('crypto').randomBytes(64).toString('hex')
+*/
+const jwt_decode = require('jwt-decode')
 
 const corsOptions = {
 	origin: '*',
@@ -29,41 +63,37 @@ app.get('/login', function(req, res) {
 *
 *
 */
-/* JSON Web Token
-JSON Web Token (JWT) is an open standard (RFC 7519) that defines a compact and self-contained way
-for securely transmitting information between parties as a JSON object. This information can be
-verified and trusted because it is digitally signed. JWTs can be signed using a secret
-(with the HMAC algorithm) or a public/private key pair using RSA or ECDSA.
-Link: https://jwt.io
-*/
-const jwt = require('jsonwebtoken')
-/* JWTAUTHOKEY is the veriable for key
-> require('crypto').randomBytes(64).toString('hex')
-*/
-require('dotenv').config()
+
 /* Api
  tokenadd(), tokenver() */
 // need cookieParser middleware before we can do anything with cookies
 const cookieParser = require('cookie-parser')
 app.use(cookieParser())
-const { verification, tokenadd } = require('./apps/api_login')
 
-app.post('/oauth', async (req, res, next) => {
+const { verification } = require('./apps/api_login')
+
+app.post('/oauth', async (req, res) => {
 	const userid = req.body.user
 	const passwd = req.body.passwd
-
 	try {
 		let state = await verification(userid, passwd)
 		if (state !== false) {
 			state.map(async ({ USERNAME, ROLE }) => {
-				const claims = { user: userid, role: ROLE, name: USERNAME }
-				const token = jwt.sign(claims, process.env.JWTAUTHOKEY, {
-					expiresIn: '10m' // expires in 1 hours
-				})
+				// const token = createToken(userid, ROLE)
 
-				// await tokenadd(userid, token) //Add token to database
-				console.log(token)
-				res.cookie(`auth`, token)
+				// Creating Refrash Token
+				const rtoken = jwt.sign({ user: userid }, process.env.JWTREFRASHKEY)
+
+				// Creating Cluster
+				const inputs = { user: userid, role: ROLE, refrashtoken: rtoken }
+				// Keeping token to Database
+				const token = jwt.sign(inputs, process.env.JWTAUTHOKEY, {
+					expiresIn: '2s' // expires in 1 hours
+				})
+				res.setHeader('secret', token)
+				res.cookie(`auth`, token, { expire: 200 + Date.now() })
+				let auth = req.cookies.auth
+				res.cookie(`USERNAME`, USERNAME)
 				res.send(state)
 			})
 		} else {
@@ -74,85 +104,98 @@ app.post('/oauth', async (req, res, next) => {
 	}
 })
 
-app.get('/', (req, res, next) => {
-	// console.log(req.cookies)
-	const token = req.cookies.auth
-	jwt.verify(token, process.env.JWTAUTHOKEY, (err) => {
-		if (err) {
+/* -----------------------------------------------------------------------
+*
+*						Middelware & Verification
+*
+--------------------------------------------------------------------------*/
+app.get('/*', (req, res, next) => {
+	try {
+		// console.log(req.headers)
+		//Importing token from cookies
+		const token = req.cookies.auth
+		/*If there is no valid auth cookie present in browser*/
+		if (!token /*token not found*/) {
+			/*Init Login Page*/
 			res.locals = {
 				title: 'Login'
 			}
-			res.render('login')
+			res.render('login') //Page Renderd
 		} else {
 			next()
 		}
-	})
-})
-/** 
- Routes
- **/
-// index page
-const jwt_decode = require('jwt-decode')
-app.get('/', function(req, res) {
-	const token = req.cookies.auth
-	const { name } = jwt_decode(token)
-
-	res.locals = {
-		title: 'Home',
-		userid: name
+	} catch (e) {
+		console.log('error: ' + e)
 	}
-	res.render('index')
 })
 
-app.get('/timeline', function(req, res) {
-	res.locals = {
-		title: 'Timeline'
-	}
-	res.render('pages/timeline')
-})
+// app.get('/', (req, res, next) => {
+// 	console.log(res.cookies)
+// 	try {
+// 		//Importing token from cookies
+// 		const token = req.cookies.auth
+// 		/*If there is no valid auth cookie present in browser*/
+// 		if (!token /*token not found*/) {
+// 			/*Init Login Page*/
+// 			res.locals = {
+// 				title: 'Login'
+// 			}
+// 			res.render('login') //Page Renderd
+// 		} else {
+// 			/*If there is a auth cookie present in browser */
 
-// registration
-app.get('/report/customerInfo', function(req, res) {
-	res.locals = {
-		title: 'Customer Info'
-	}
-	res.render('pages/customerInfo')
-})
-app.get('/report/utilityreport', function(req, res) {
-	res.locals = {
-		title: 'Utility Report'
-	}
-	res.render('pages/utilityreport')
-})
-app.get('/report/accountStatment', function(req, res) {
-	res.locals = {
-		title: 'Account Statment'
-	}
-	res.render('pages/statement')
-})
-app.get('/report/remittanceReport', function(req, res) {
-	res.locals = {
-		title: 'Remittance Report'
-	}
-	res.render('pages/remittanceReport')
-})
-app.get('/report/transactionsReport', function(req, res) {
-	res.locals = {
-		title: 'Transactions Report'
-	}
-	res.render('pages/transactionsReport')
-})
-app.get('/report/accountInfo', function(req, res) {
-	res.locals = {
-		title: 'Account Information'
-	}
-	res.render('pages/accountInfo')
-})
+// 			/*Verifying If provied token valid*/
+// 			jwt.verify(token, process.env.JWTAUTHOKEY, (err) => {
+// 				/*JWT autho token present in env file*/
+// 				if (!err /*Token is not valid*/) {
+// 					const { user, role, refrashtoken } = jwt_decode(token)
+// 					jwt.verify(token, process.env.JWTREFRASHKEY, async (err) => {
+// 						if (!err) {
+// 							/* Getting Database*/
+// 							const qurrythis = require('./apps/db')
+// 							// Creating SQL
+// 							let sql = `SELECT count(TOKEN) FROM TANBIN.JWT WHERE TOKEN = ${refrashtoken}`
+// 							// const checking = await qurrythis(sql)
 
-const apipath = require('./routes/index')
-const { isNullOrUndefined } = require('util')
+// 							// if (checking !== 0 /*Checking If record found?*/) {
+// 							const inputs = { user: userid, role: role, refrashtoken: refrashtoken }
+// 							const token = jwt.sign(inputs, process.env.JWTREFRASHKEY, {
+// 								expiresIn: '5s' // expires in 1 hours
+// 							})
+// 							await qurrythis(
+// 								/* Keeping token to Database*/
+// 								`INSERT INTO TANBIN.JWT (USERID, TOKEN,ORGDATE) VALUES ('${userid}', '${token}', (SELECT CURRENT_TIMESTAMP FROM dual)); commit`
+// 							)
+// 							res.cookie(`auth`, createRefrashToken(user, role, refrashtoken))
+// 							next()
+// 							// } else {
+// 							// return 'Invalid'
+// 							// }
+// 						} else console.log(err)
+// 					})
+// 				} else {
+// 					console.log('No Error Found')
+// 					next()
+// 				}
+// 			})
+// 		}
+// 	} catch (e) {
+// 		console.log('Error on middelware ' + e)
+// 	}
+// })
+
+/*******************************************************************
+ * 
+ * 								Routes
+ * 
+ * ******************************************************************/
+/*Every Application page path location in */
+const apppath = require('./routes/app')
+app.use('/', apppath)
+/*And Every apis path here*/
+const apipath = require('./routes/api')
 app.use('/api', apipath)
-
+/*If Page not found (404) this path handels it*/
 app.get('*', function(req, res) {
 	res.locals = {
 		title: '404!'
@@ -160,27 +203,15 @@ app.get('*', function(req, res) {
 	res.render('pages/404')
 	res.send(404)
 })
+const { isNullOrUndefined } = require('util')
 
-const port = process.env.PORT
+/********************************************************************
+ * 
+ * 		Express Config
+ * 
+*********************************************************************/
+/* Port come from env file if fail so it will run at 3000 port*/
+const port = process.env.PORT || 3000
+/* Express Init*/
 app.listen(port)
-
-// console.log(`MIT License
-// Copyright (c) 2022 Tanbin
-// Permission is hereby granted, free of charge, to any person obtaining a copy
-// of this software and associated documentation files (the "Software"), to deal
-// in the Software without restriction, including without limitation the rights
-// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-// copies of the Software, and to permit persons to whom the Software is
-// furnished to do so, subject to the following conditions:
-
-// The above copyright notice and this permission notice shall be included in all
-// copies or substantial portions of the Software.
-
-// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-// SOFTWARE.`)
-console.log('Starting Morathi Server is listening on port' + port)
+console.log('Starting Morathi Server is listening on port ' + port)

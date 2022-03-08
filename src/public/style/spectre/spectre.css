@@ -677,7 +677,7 @@ html:lang(ko),
 }
 
 .table.table-striped tbody tr:nth-of-type(odd) {
-  background: white;
+  background: #f7f7f7;
 }
 
 .table tbody tr.active, .table.table-striped tbody tr.active {

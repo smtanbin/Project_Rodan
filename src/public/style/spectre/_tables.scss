@@ -15,7 +15,7 @@
   &.table-striped {
     tbody {
       tr:nth-of-type(odd) {
-        background: $bg-color;
+        background: darken($bg-color, 3%)
       }
     }
   }
