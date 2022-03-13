@@ -78,8 +78,8 @@ const remittance = async () => {
 
 	let AMOUNT_REMITTED_BDT_TOTAL = 0
 	let AMOUNT_OF_INCENTIVE_BDT_TOTAL = 0
-	document.getElementById('output').innerHTML = `<div class="col-12 p-2 container m-2">
-
+	document.getElementById('output').innerHTML = `
+	<div class="col-12 p-2 container m-2">
 	<h5 class="p-centered text-center text-bold my-2 h5">Remittance Report</h5>
 			 <p class="text-tiny">			
 			 <b>From :</b> ${moment(fromdate).format('LLL')} <b>To :</b> ${moment(todate).format('LLL')}</p>
@@ -93,26 +93,20 @@ const remittance = async () => {
                                 <th class="text-tiny">Name</th>
                                 <th class="text-tiny">Document Type</th>
                                 <th class="text-tiny">NID/PASSPORT NO.</th>
-                                
                                 <th class="text-tiny">Sender Name</th>
                                 <th class="text-tiny">Source Country</th>
                                 <th class="text-tiny text-right">Amount Remitted</th>
                                 <th class="text-tiny text-right">Amount of Incentive</th>
                                 <th class="text-tiny">Date of Payment of Incentive</th>
-                                
-                                
-                  
                             </tr>
                         </thead>
                         <tbody class="" id="output2"></tbody>
-						
+			
                     </table>
-
                 </div>
                 </div>`
 	// try {
 	await fetch(url, requestOptions).then((response) => response.json()).then((payload) => {
-		console.log(payload)
 		if (payload === null) {
 			document.getElementById('output2').innerHTML = `<tr>
 				<td class="text-tiny text-break" colspan="9">Null Found</td>
@@ -262,7 +256,6 @@ const remittancesummary = async () => {
     </div>`
 	// try {
 	await fetch(url, requestOptions).then((response) => response.json()).then((payload) => {
-		console.log(payload)
 		if (payload === null) {
 			document.getElementById('output2').innerHTML = `<tr>
 				<td class="text-tiny text-break" colspan="9">Null Found</td>
@@ -343,28 +336,39 @@ const getCSV = async () => {
 	if (todate === null || todate === '') {
 		todate = printday
 	}
+	try {
+		/* Requesting part start here. */
+		const myHeaders = new Headers()
+		myHeaders.append('Content-Type', 'application/json')
 
-	/* Requesting part start here. */
-	const myHeaders = new Headers()
-	myHeaders.append('Content-Type', 'application/json')
+		/* Post request body content*/
+		const url = `${apiserver}/remittance`
+		const raw = JSON.stringify({
+			key: `${key}`,
+			fromdate: `${fromdate}`,
+			todate: `${todate}`
+		})
 
-	/* Post request body content*/
-	const url = `${apiserver}/remittance`
-	const raw = JSON.stringify({
-		key: `${key}`,
-		fromdate: `${fromdate}`,
-		todate: `${todate}`
-	})
+		const requestOptions = {
+			method: 'POST',
+			headers: myHeaders,
+			body: raw,
+			redirect: 'follow'
+		}
 
-	const requestOptions = {
-		method: 'POST',
-		headers: myHeaders,
-		body: raw,
-		redirect: 'follow'
+		await fetch(url, requestOptions).then((response) => response.json()).then((payload) => {
+			const download = new CSVExport(payload)
+			return false
+		})
+	} catch (e) {
+		document.getElementById('output').innerHTML = `<div class="empty">
+		<div class="empty-icon w100">
+		</div>
+		<p class="empty-title h5 text-error">Error!</p>
+		<p class="empty-subtitle">Process stop with a error</p>
+		<div class="empty-action">
+	${e}
+		</div>
+	  </div>`
 	}
-
-	await fetch(url, requestOptions).then((response) => response.json()).then((payload) => {
-		const download = new CSVExport(payload)
-		return false
-	})
 }

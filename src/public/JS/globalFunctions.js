@@ -3,6 +3,8 @@ Remember: #output must be loaded
 */
 const printArea = async () => {
 	const printday = Date()
+	const username = document.getElementById('username').getAttribute('data-content')
+
 	const head = `<head>
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -29,6 +31,8 @@ const printArea = async () => {
 </div>`
 
 	const footer = `<div class="col-12 w100  p-2 mt-2 text-tiny">
+	
+	<b>Genarated by Id:</b> ${username}
 	<b>Print Date:</b> ${printday}
 	<p class="p-centered text-small">This is an electronically generated report, hence does not require a signature.
 	</p>

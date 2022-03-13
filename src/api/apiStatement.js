@@ -18,7 +18,7 @@ const statementHead = async (date, key) => {
 				   STATUS,
 			   TO_CHAR (REG_DATE, 'MONTH dd, YYYY')
 				   REG_DATE,
-			   ROUND((TANBIN.GET_ACC_BALANC (r.MPHONE, (TO_DATE ('${date}') - 1))
+			   ROUND((TANBIN.GETBALANCE (r.MPHONE, (TO_DATE ('${date}') - 1))
 				   ),2)BALANCE, TO_CHAR (MATURITY_DATE, 'MONTH dd, YYYY') MATURITY_DATE,
 				   CUST_ID,
 			   CON_MOB,

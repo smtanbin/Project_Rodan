@@ -163,6 +163,34 @@ app.post('/accountInfo', async (req, res) => {
 		res.send('Stop by error! Check if its help:' + e)
 	}
 })
+/************************************** End ******************************************/
+
+/* businessInfo  Api*/
+
+/************************************** Start ******************************************/
+
+const { businessinfo, sbs2 } = require('../api/api_businessinfo')
+app.post('/businessinfo', async (req, res) => {
+	try {
+		const data = await businessinfo(req.body.frommonth, req.body.tomonth, req.body.key)
+		res.send(data)
+	} catch (e) {
+		console.log(e)
+		res.send('Stop by error! Check if its help:' + e)
+		res.status(400)
+	}
+})
+app.post('/sbs', async (req, res) => {
+	res.status(200)
+	try {
+		const data = await sbs2(req.body.fromdate, req.body.todate, req.body.key)
+		// console.log(data)
+		res.send(data)
+	} catch (e) {
+		res.status(400)
+		res.send('Stop by error! Check if its help:' + e)
+	}
+})
 
 /* Utility info All utility realated apis data 
 functions are currently imported from api_utilitybill.js */

@@ -36,7 +36,6 @@ app.get('/timeline', function(req, res) {
 	res.render('./pages/timeline')
 })
 
-// Report Panal
 app.get('/customerInfo', function(req, res) {
 	res.locals = {
 		userid: req.cookies.USERNAME,
@@ -44,6 +43,7 @@ app.get('/customerInfo', function(req, res) {
 	}
 	res.render('./pages/customerInfo')
 })
+// Report Panal
 /********************************************************************************
  */
 app.get('/report/accountStatment', function(req, res) {
@@ -81,6 +81,13 @@ app.get('/report/accountInfo', function(req, res) {
 		title: 'Account Information'
 	}
 	res.render('./pages/accountInfo')
+})
+app.get('/report/businessinfo', function(req, res) {
+	res.locals = {
+		userid: req.cookies.USERNAME,
+		title: 'Business Information'
+	}
+	res.render('./pages/businessinfo')
 })
 
 module.exports = app

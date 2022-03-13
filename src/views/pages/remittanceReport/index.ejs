@@ -1,6 +1,4 @@
 <main class="content m-2">
-
-
     <ul class="breadcrumb">
         <li class="breadcrumb-item">
             <a href="/">Home</a>
@@ -8,17 +6,15 @@
         <li class="breadcrumb-item">
             <a href="/report/remittanceReport">Remittance Report</a>
         </li>
-
     </ul>
     <div class="hero-sm bg-white">
         <div class="hero-body">
             <h1 class="text-primary">Remittance Report</h1>
         </div>
     </div>
+
     <div class="container">
-
-        <div class="input-group">
-
+        <div class="input-group col-9">
             <input type="date" id="fromdate" class="form-input" placeholder="Type Account Number">
             <input type="date" id="todate" class="form-input" placeholder="Type Account Number">
             <div class="form-group">
@@ -38,19 +34,14 @@
             </button>
             <button class="btn btn-primary input-group-btn disabled" id="btn-print" onclick="printArea()">Print
             </button>
-
         </div>
-
     </div>
 
     <div class="container">
-
-        <div data-aos="fade-up" class="columns" id="output">
-
-        </div>
+        <div data-aos="fade-up" class="columns" id="output"></div>
     </div>
-
+    <script src="/JS/lib/CSVExport.js" async></script>
     <script src="/js/funRemittance.js" defer></script>
-    <script src="/js/CSVExport.js" defer></script>
+
 
 </main>

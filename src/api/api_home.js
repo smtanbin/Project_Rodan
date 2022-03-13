@@ -17,7 +17,7 @@ const agentstatus = async () => {
 			   r.ACCOUNT_NAME,
 			   BALANCE_M
 				   TODAY,
-			   TANBIN.GET_ACC_BALANC (
+			   TANBIN.GETBALANCE (
 				   MPHONE,
 				   (SELECT TO_DATE (CURRENT_DATE - 1) AS yesterday_date FROM DUAL))
 				   YESTERDAY

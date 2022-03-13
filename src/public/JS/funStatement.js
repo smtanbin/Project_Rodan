@@ -63,6 +63,7 @@ const getstatement = async (key) => {
 
 	try {
 		await fetch(urlhead, headrequestOptions).then((response) => response.json()).then((payload) => {
+	
 			payload.map(
 				(
 					{
@@ -149,11 +150,6 @@ const getstatement = async (key) => {
 			)
 		})
 	} catch (e) {
-		let idoutput = document.getElementById('output')
-		if (idoutput.parentNode) {
-			idoutput.parentNode.removeChild()
-		}
-
 		document.getElementById('output').innerHTML = `<div class="empty col-12 w100">
 				
 				<h4 class="empty-title h2 text-error">Stop Code 404</h4>
