@@ -16,30 +16,32 @@
     </div>
     <div class="container">
         <!-- normal input group with button -->
-        <div class="input-group">
+        <div style="display: flex; justify-content: center; align-items: center; flex-direction: column;">
+            <div class="input-group">
 
-            <input type="date" id="fromdate" class="form-input" placeholder="Type Account Number">
-            <input type="date" id="todate" class="form-input" placeholder="Type Account Number">
-            <div class="form-group">
-                <select class="form-select" id="uvanls">
+                <input type="date" id="fromdate" class="form-input" placeholder="Type Account Number">
+                <input type="date" id="todate" class="form-input" placeholder="Type Account Number">
+                <div class="form-group">
+                    <select class="form-select" id="uvanls">
 
-                </select>
-            </div>
+                    </select>
+                </div>
 
-            <button class="btn btn-primary input-group-btn" id="btn-loading" onclick="utilityinfo()"
-                id="btnloading">Transaction
-                Report
-            </button>
-            <!-- <button class="btn btn-primary-link input-group-btn" id="btn-loading" onclick="trsummary()" id="btnloading">
+                <button class="btn btn-primary input-group-btn" id="btn-loading" onclick="utilityinfo()"
+                    id="btnloading">Transaction
+                    Report
+                </button>
+                <!-- <button class="btn btn-primary-link input-group-btn" id="btn-loading" onclick="trsummary()" id="btnloading">
                 Transaction Summary
             </button> -->
 
-            <button class="btn btn-primary-link input-group-btn" id="btn-loading-1" onclick="utilitySummary()"
-                id="btnloading">
-                Summary
-            </button>
-            <button class="btn btn-primary input-group-btn disabled" id="btn-print" onclick="printArea()">Print
-            </button>
+                <button class="btn btn-primary-link input-group-btn" id="btn-loading-1" onclick="utilitySummary()"
+                    id="btnloading">
+                    Summary
+                </button>
+                <button class="btn btn-primary input-group-btn disabled" id="btn-print" onclick="printArea()">Print
+                </button>
+            </div>
         </div>
 
     </div>

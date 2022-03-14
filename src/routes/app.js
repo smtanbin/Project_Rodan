@@ -89,5 +89,12 @@ app.get('/report/businessinfo', function(req, res) {
 	}
 	res.render('./pages/businessinfo')
 })
+app.get('/report/mis', function(req, res) {
+	res.locals = {
+		userid: req.cookies.USERNAME,
+		title: 'MIS'
+	}
+	res.render('./pages/mis')
+})
 
 module.exports = app

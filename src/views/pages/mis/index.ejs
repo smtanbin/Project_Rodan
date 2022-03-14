@@ -1,0 +1,164 @@
+<main class="content m-2">
+
+
+    <ul class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a href="/">Home</a>
+        </li>
+        <li class="breadcrumb-item">
+            <a>MIS</a>
+        </li>
+
+    </ul>
+    <div data-aos="zoom-out" class="hero-sm bg-white">
+        <div class="hero-body">
+            <h1 class="text-primary">Management Information System</h1>
+        </div>
+    </div>
+    <div data-aos="zoom-out" class="container">
+        <!-- normal input group with button -->
+        <div class="input-group">
+
+            <input type="date" id="fromdate" class="form-input" placeholder="Type Account Number">
+            <input type="date" id="todate" class="form-input" placeholder="Type Account Number">
+            <input type="number" id="key" class="form-input" placeholder="Type Account Number">
+            <button class="btn btn-primary input-group-btn" onclick="statement()" id="btn-loading">Search
+            </button>
+            <button class="btn btn-primary input-group-btn disabled" onclick="printArea()" id="btnprint">Print
+            </button>
+
+        </div>
+
+    </div>
+
+    <div data-aos="zoom-in" class="container">
+
+        <div class="columns" id="output">
+            <!-- cut -->
+
+            <div class="card p-2 ">
+                <div class="hero hero-sm bg-gray">
+                    <div class="hero-body">
+                        <h5 class="h5 text-primary text-center">Agent Wise Comparative Business Performance as on</h5>
+                    </div>
+                </div>
+                <p class="text-rignt text-tiny">(Figure In Lac)</p>
+                <table class="table table-claster text-tiny">
+                    <thead class="active">
+                        <tr>
+                            <th>Name of Agent</th>
+                            <th>Location fo Agent Outlet</th>
+                            <th>Date of Opening</th>
+                            <th>No. of Account</th>
+                            <th>No. of Account</th>
+                            <th>No. of Account</th>
+                            <th>Deposit as on </th>
+                            <th>Deposit as on </th>
+                            <th>Deposit as on </th>
+                            <th>F. Remittance</th>
+                            <th>F. Remittance</th>
+                            <th>F. Remittance</th>
+                            <th>Utility Bill Collection</th>
+                            <th>Utility Bill Collection</th>
+                            <th>Utility Bill Collection</th>
+                            <th>Commission paid to Agent</th>
+                            <th>Commission paid to Agent</th>
+                            <th>Commission paid to Agent</th>
+                            <th>Remarks</th>
+                        </tr>
+                    </thead>
+                </table>
+
+                <div class="columns">
+                    <h5 class="m-2 p-1">Summary</h5>
+                    <div class="column w100 col-12">
+                        <div class="column col-6 w100">
+
+                            <table class="table table-striped text-tiny table-cluster">
+                                <thead>
+                                    <tr>
+                                        <th class="text-small">Income / Expenses</th>
+                                        <th class="text-small">last month</th>
+                                        <th class="text-small">Current Month</th>
+                                        <th class="text-small">Possition</th>
+                                        <th class="text-small">Remarks</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td class="text-tiny active">INCOME</td>
+                                        <td colspan="5"></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-tiny">Profit Received from SBL Gen A/c & Commission Earned</td>
+                                        <td>x</td>
+                                        <td>x</td>
+
+                                        <td>x</td>
+                                        <td colspan="1"></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-tiny">Account Maintenance charges</td>
+                                        <td>x</td>
+                                        <td>x</td>
+                                        <td>x</td>
+
+                                        <td colspan="1"></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-tiny">Total Income</td>
+                                        <td>x</td>
+                                        <td>x</td>
+                                        <td>x</td>
+                                        <td colspan="1"></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-tiny active">EXPENSES</td>
+                                        <td colspan="5"></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-tiny">Profit Paid to Depositors & other exp</td>
+                                        <td>x</td>
+                                        <td>x</td>
+                                        <td>x</td>
+                                        <td colspan="1"></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-tiny">Agent Commission Paid </td>
+                                        <td>x</td>
+                                        <td>x</td>
+                                        <td>x</td>
+                                        <td colspan="1"></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-tiny">Total Expenses</td>
+                                        <td>x</td>
+                                        <td>x</td>
+                                        <td>x</td>
+                                        <td colspan="1"></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-tiny active">Operating Profit</td>
+                                        <td>x</td>
+                                        <td>x</td>
+                                        <td>x</td>
+                                        <td colspan="1"></td>
+                                    </tr>
+
+
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="column col-6 w100">
+                            <!-- column content -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- end -->
+        </div>
+    </div>
+
+    <script src="/js/funStatement.js"></script>
+
+</main>

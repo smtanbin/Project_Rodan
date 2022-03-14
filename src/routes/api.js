@@ -169,15 +169,26 @@ app.post('/accountInfo', async (req, res) => {
 
 /************************************** Start ******************************************/
 
-const { businessinfo, sbs2 } = require('../api/api_businessinfo')
+const { businessinfo, sbs2, businessinfoheader } = require('../api/api_businessinfo')
 app.post('/businessinfo', async (req, res) => {
 	try {
-		const data = await businessinfo(req.body.frommonth, req.body.tomonth, req.body.key)
+		const data = await businessinfo(req.body.frommonth, req.body.tomonth)
 		res.send(data)
 	} catch (e) {
 		console.log(e)
 		res.send('Stop by error! Check if its help:' + e)
 		res.status(400)
+	}
+})
+app.post('/businessinfoheader', async (req, res) => {
+	res.status(200)
+	try {
+		const data = await businessinfoheader(req.body.from, req.body.to)
+
+		res.send(data)
+	} catch (e) {
+		res.status(400)
+		res.send('Stop by error! Check if its help:' + e)
 	}
 })
 app.post('/sbs', async (req, res) => {

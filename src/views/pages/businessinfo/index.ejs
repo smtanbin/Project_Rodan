@@ -6,34 +6,36 @@
       <a href="/">Home</a>
     </li>
     <li class="breadcrumb-item">
-      <a href="/report/accountInfo">Business Info</a>
+      <a href="/report/accountInfo">Account Info</a>
     </li>
 
   </ul>
   <div class="hero-sm bg-gray">
     <div class="hero-body">
-      <h1 class="text-primary">Business Information</h1>
+      <h1 class="text-primary">Account Information</h1>
     </div>
   </div>
   <div class="container">
     <!-- normal input group with button -->
-    <div class="input-group col-6">
-      <input type="month" id="frommonth" style="display: none;" class="form-input">
-      <input type="month" id="tomonth" class="form-input">
-      <input type="text" id="key" class="form-input" placeholder="Type Agent Account Number">
-      <button class="btn btn-primary input-group-btn" id="btn-loading" onclick="businessinfo()">BusnessInfo</button>
-      <button class="btn btn-primary input-group-btn disabled" onclick="printArea()" id="btnprint">Print</button>
-    </div>
-    <div class="input-group col-6">
-      <label class="form-switch">Enable Starting Month
-        <input type="checkbox" onclick="enablePreviousMonth()"><i class="form-icon"></i>
-      </label>
+    <div style="display: flex; justify-content: center; align-items: center; flex-direction: column;">
+      <div class="input-group col-6 ">
+        <span class="input-group-addon" id="frommonthtext">From Month</span>
+        <input type="month" id="frommonth" class="form-input">
+        <span class="input-group-addon">To Month</span>
+        <input type="month" id="tomonth" class="form-input">
+        <input type="text" id="key" class="form-input" placeholder="Type Agent Account Number" style="display: none;">
+        <button class="btn btn-primary input-group-btn" id="btn-loading" onclick="businessinfoheader()">Search</button>
+        <button class="btn btn-primary input-group-btn disabled" onclick="printArea()" id="btnprint">Print</button>
+      </div>
+      <div class="input-group col-6">
+        <label class="form-switch">From Start
+          <input type="checkbox" onclick="enablePreviousMonth()"><i class="form-icon"></i>
+        </label>
+      </div>
     </div>
     <div class="container">
       <br>
       <div class="columns" id="output">
-
-
       </div>
     </div>
   </div>

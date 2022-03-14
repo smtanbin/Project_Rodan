@@ -17,16 +17,18 @@
     </div>
     <div data-aos="zoom-out" class="container">
         <!-- normal input group with button -->
-        <div class="input-group">
-
-            <input type="date" id="fromdate" class="form-input" placeholder="Type Account Number">
-            <input type="date" id="todate" class="form-input" placeholder="Type Account Number">
-            <input type="number" id="key" class="form-input" placeholder="Type Account Number">
-            <button class="btn btn-primary input-group-btn" onclick="statement()" id="btn-loading">Search
-            </button>
-            <button class="btn btn-primary input-group-btn disabled" onclick="printArea()" id="btnprint">Print
-            </button>
-
+        <div style="display: flex; justify-content: center; align-items: center; flex-direction: column;">
+            <div class="input-group">
+                <span class="input-group-addon" id="frommonthtext">From</span>
+                <input type="date" id="fromdate" class="form-input" placeholder="Type Account Number">
+                <span class="input-group-addon" id="frommonthtext">To</span>
+                <input type="date" id="todate" class="form-input" placeholder="Type Account Number">
+                <input type="number" id="key" class="form-input" placeholder="Type Account Number">
+                <button class="btn btn-primary input-group-btn" onclick="statement()" id="btn-loading">Search
+                </button>
+                <button class="btn btn-primary input-group-btn disabled" onclick="printArea()" id="btnprint">Print
+                </button>
+            </div>
         </div>
 
     </div>
