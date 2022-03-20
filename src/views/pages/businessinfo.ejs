@@ -4,8 +4,16 @@
 
     <body id="body-pd">
         <%- include('../navbar'); %>
-            <%- include('businessinfo/index'); %>
-                <%- include('../footer'); %>
+            <div class="columns col-12 row">
+                <div class="column col-2 hide-sm">
+                    <%- include('../sidenav'); %>
+                </div>
+                <div class="column col-10">
+                    <%- include('businessinfo/index'); %>
+                </div>
+            </div>
+
+            <%- include('../footer'); %>
     </body>
 
 </html>

@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-<%- include('head'); %>
+<%- include('../head'); %>
 
   <body>
     <section id="loading"
@@ -10,16 +10,19 @@
     <div class="container" id="loader" style="display: none;">
 
       <div class="columns">
-
         <div class="row column col-12">
-          <%- include('navbar'); %>
-            <%- include('sidenav'); %>
+          <%- include('../navbar'); %>
         </div>
         <div class="columns col-12 row">
-          <%- include('body'); %>
+          <div class="column col-2 hide-sm">
+            <%- include('../sidenav'); %>
+          </div>
+          <div class="column col-10">
+            <%- include('body'); %>
+          </div>
         </div>
         <div class="row column col-12">
-          <%- include('footer'); %>
+          <%- include('../footer'); %>
         </div>
       </div>
 

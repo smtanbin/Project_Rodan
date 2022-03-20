@@ -32,7 +32,6 @@ const authorized = async () => {
 					document.getElementById('error-input').classList.toggle('has-error')
 				} else {
 					window.location.href = '/'
-					console.log(payload)
 				}
 			})
 		} catch (e) {

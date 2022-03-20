@@ -110,7 +110,7 @@ const dpsMaturity = async () => {
 	const url = `${apiserveralt}dpsMaturity`
 	await fetch(url, requestOptions).then((response) => response.json()).then((payload) => {
 		if (payload != null) {
-			payload.map(({ MPHONE, MATURITY_DATE, DOB, BALANCE_M }, index) => {
+			payload.map(({ MPHONE, MATURITY_DATE, DOB, BALANCE_M, ENTRY_DATE, STATUS }, index) => {
 				const titel = 'Mature TDR'
 				const body = `${MPHONE}</span> is mature on <span class="text-bold">${moment(MATURITY_DATE).format(
 					'L'
@@ -125,79 +125,32 @@ const dpsMaturity = async () => {
 			})
 		}
 
-		if (payload === null) {
-			document.getElementById('panel-body').innerHTML = ` `
-		} else {
-			document.getElementById('panel-body').innerHTML += payload
-				.map(({ MPHONE, MATURITY_DATE, DOB, BALANCE_M }, index) => {
-					bellIcon(index + 1)
-					return `<div class="tile bg-gray p-2 my-1">
-					<div class="tile-icon">
-					  <!-- <figure class="avatar avatar-lg"><img src="../img/avatar-2.png" alt="Avatar"></figure> -->
-					</div>
-					<div class="tile-content">
-					  <h6 class="tile-title text-primary h6 text-bold">Mature Request</h6>
-					  <p class="tile-subtitle text-tiny">
-					  <span class="text-primary text-bold">${MPHONE}</span> is mature on <span class="text-bold">${moment(
-						MATURITY_DATE
-					).format('L')}</span> account Date of birth is <span class="text-bold">${moment(
-						DOB
-					).calendar()}</span>
-					  
-					& account Balance is ${BALANCE_M}.
-					</p>
-					</div>
+		// if (payload === null) {
+		// 	document.getElementById('panel-body').innerHTML = ` `
+		// } else {
+		// 	document.getElementById('panel-body').innerHTML += payload
+		// 		.map(({ MPHONE, MATURITY_DATE, DOB, BALANCE_M }, index) => {
+		// 			bellIcon(index + 1)
+		// 			return `<div class="tile bg-gray p-2 my-1">
+		// 			<div class="tile-icon">
+		// 			  <!-- <figure class="avatar avatar-lg"><img src="../img/avatar-2.png" alt="Avatar"></figure> -->
+		// 			</div>
+		// 			<div class="tile-content">
+		// 			  <h6 class="tile-title text-primary h6 text-bold">Mature Request</h6>
+		// 			  <p class="tile-subtitle text-tiny">
+		// 			  <span class="text-primary text-bold">${MPHONE}</span> is mature on <span class="text-bold">${moment(
+		// 				MATURITY_DATE
+		// 			).format('L')}</span> account Date of birth is <span class="text-bold">${moment(
+		// 				DOB
+		// 			).calendar()}</span>
 
-				  </div>`
-				})
-				.join('')
-		}
+		// 			& account Balance is ${BALANCE_M}.
+		// 			</p>
+		// 			</div>
+
+		// 		  </div>`
+		// 		})
+		// 		.join('')
+		// }
 	})
 }
-
-const sendNotification = (titel, subtitel, time, body, action) => {
-	if (titel === null || titel === body) {
-		document.getElementById('panel-body').innerHTML = ` `
-	} else if (action === null) {
-		document.getElementById('panel-body').innerHTML += `
-		<div class="tile">
-		<div class="tile-icon">
-		  <figure class="avatar avatar-lg"><img src="../img/avatar-3.png" alt="Avatar"></figure>
-		</div>
-		<div class="tile-content">
-		  <p class="tile-title">${titel}</p>
-		  <sup>${subtitel}</sup>
-		  <p class="tile-subtitle">${body}</p>
-		</div>
-		<div class="tile-action">
-		  <small>${time}</small>
-		</div>
-	  </div>`
-	} else {
-		document.getElementById('panel-body').innerHTML += `
-		<div class="tile">
-		<div class="tile-icon">
-		 <figure class="avatar avatar-lg"></figure>
-		</div>
-		<div class="tile-content">
-		  <p class="tile-title">${titel}</p>
-		  <sup>${subtitel}</sup>
-		  <p class="tile-subtitle">${body}</p>
-		</div>
-		<div class="tile-action">
-		  <small class="text-break text-tiny">${time}</small>
-		</div>
-	  </div>`
-	}
-}
-
-const notificationFun = () => {
-	try {
-		dpsMaturity()
-		cashnotification()
-		reminotification()
-	} catch (e) {
-		console.log('Error in notification function init ' + e)
-	}
-}
-notificationFun()

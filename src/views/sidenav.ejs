@@ -1,27 +1,104 @@
-<div data-aos="zoom-in-left" class="columns  p-fixed" id="sidenav">
-    <div class="panel column col-6 bg-frost p-centered ">
-        <div class="panel-header">
-            <div class="panel-title  text-primary py-1 d-flex" style="justify-content: space-between;">
-                <h1 class="h1">
-                    Notification
-                </h1>
-                <button class="btn btn-link  text-error" onclick="sidenavclose()"><i
-                        class="material-icons ">close</i></button>
-            </div>
-            <!-- <div class="input-group">
-                <input class="form-input" type="text" placeholder="Search">
-            </div> -->
-        </div>
-        <!-- <ul class="tab tab-block">
-            <li class="tab-item active">
-                <a href="#">Resent</a>
-            </li>
-            <li class="tab-item">
-                <a href="#">Previous</a>
-            </li>
-        </ul> -->
-        <div class="panel-body" id="panel-body">
-            <div class="panel-footer">
-            </div>
-        </div>
+<ul class="nav m-0" id="sidenav">
+    <div class="w100 ">
+
+        <figure class="avatar avatar-sm" data-initial="<%= userid.substring(2, 0); %>">
+        </figure>
+        <%= userid %>
+
     </div>
+    <li class="divider bg-primary"></li>
+    <li class="nav-item">
+        <!-- <span class="text-primary h5">app <i class="icon icon-more-horiz" style="font-size:small"></i></span> -->
+        <samp class="text-primary h5">Apps</samp>
+        <ul class="nav" id="app">
+            <% if(role==='ADMIN' || role==='APPROVAL' ){ %>
+
+                <li class="nav-item">
+                    <a href="/timeline">Timeline</a>
+                </li>
+                <% } %>
+                    <% if(role==='ADMIN' || role==='APPROVAL' ){ %>
+
+                        <li class="nav-item">
+                            <a href="/report/customerInfo">Customer Info</a>
+                        </li>
+                        <% } %>
+                            <% if(role==="USER" || role==="AGENT" ){ %>
+                                <li class="divider bg-primary" data-content="Registration"></li>
+                                <ul class="nav" id="app">
+                                    <li class="nav-item"><a href="/report/accountInfo">Add Customer</a></li>
+                                    <li class="divider" data-content="Link up"></li>
+                                    <li class="nav-item"><a href="/report/accountInfo">Add Account</a></li>
+                                </ul>
+                                <% } %>
+
+                                    <% if(role==="USER" || role==="AGENT" ){ %>
+                                        <li class="divider" data-content="Transaction"></li>
+                                        <li class="nav-item"><a href="/report/accountInfo">Teller Operation</a></li>
+                                        <ul class="nav" id="app">
+                                            <li class="divider" data-content="Payment"></li>
+                                            <li class="nav-item"><a href="/report/accountInfo">Remittance</a></li>
+                                            <li class="nav-item"><a href="/report/accountInfo">Utility</a></li>
+                                        </ul>
+                                        <% } %>
+        </ul>
+    </li>
+    <!-- 
+        <li class="nav-item">
+         test with dropdown
+        <div class="dropdown">
+            <div class="btn-group">
+
+                <a href="#" class="btn dropdown-toggle btn-link" tabindex="0">
+                    Teller<i class="icon icon-caret"></i>
+                </a>
+
+               
+                <ul class="menu">
+
+                    <li class="nav-item"><a href="/report/accountInfo">Utility</a></li>
+                </ul>
+            </div>
+        </div>
+    </li> -->
+    <li class="nav-item">
+        <samp class="text-primary h5">Reports</samp>
+        <ul class="nav" id="app">
+
+            <li class="nav-item "><a href="/report/accountStatment">Statment</a></li>
+
+            <% if(role==='ADMIN' || role==='APPROVAL' ){ %>
+                <li class="nav-item"><a href="/report/accountInfo">Account Status</a></li>
+                <% } %>
+                    <% if(role==='ADMIN' || role==='APPROVAL' ){ %>
+                        <li class="nav-item"><a href="/report/businessinfo">Account Info</a></li>
+
+                        <% } %>
+                            <% if(role==='ADMIN' || role==='APPROVAL' ){ %>
+                                <li class="nav-item"><a href="/report/remittanceReport">Remittance Report</a>
+                                </li>
+
+                                <% } %>
+
+                                    <li class="nav-item"><a href="/report/utilityreport">Utility Report</a>
+                                    </li>
+
+
+                                    <% if(role==='ADMIN' || role==='APPROVAL' ){ %>
+                                        <li class="nav-item"><a href="/report/mis">MIS</a></li>
+
+                                        <% } %>
+
+
+        </ul>
+    </li>
+    <!-- <li class="nav-item">
+        <samp class="text-primary h5">Setting</samp>
+        <ul class="nav" id="app">
+
+            <li class="nav-item">
+                <a onclick="logout()" class="text-error text-bold">Logout</a>
+            </li>
+        </ul>
+    </li> -->
+</ul>

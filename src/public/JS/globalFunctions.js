@@ -144,3 +144,49 @@ if (navigator.userAgent.toLowerCase().indexOf('firefox') > -1) {
 	We advice you to use and Chromium based browser such as Google Chorme, Edge, Brave .
 `
 }
+
+const sendNotification = (titel, subtitel, time, body, action) => {
+	if (titel === null || titel === body) {
+		document.getElementById('panel-body').innerHTML = ` `
+	} else if (action === null) {
+		document.getElementById('panel-body').innerHTML += `<div class="tile">
+		<div class="tile-icon">
+		<!-- <figure class="avatar avatar-lg"><img src="../img/avatar-3.png" alt="Avatar"></figure> -->
+		</div>
+		<div class="tile-content">
+		<small class="text-primary">${time}</small>
+		  <p class="tile-title">${titel}</p>
+		  <sup>${subtitel}</sup>
+		  <p class="tile-subtitle">${body}</p>
+		  <div class="tile-action">
+		  </div>
+		</div>
+	  </div>`
+	} else {
+		document.getElementById('panel-body').innerHTML += `<div class="tile">
+		<div class="tile-icon">
+		<!-- <figure class="avatar avatar-lg"><img src="../img/avatar-3.png" alt="Avatar"></figure> -->
+		</div>
+		<div class="tile-content">
+		<small class="text-primary">${time}</small>
+		  <p class="tile-title">${titel}</p>
+		  <sup>${subtitel}</sup>
+		  <p class="tile-subtitle">${body}</p>
+		  <div class="tile-action">
+		  ${action}
+		  </div>
+		</div>
+	  </div>`
+	}
+}
+
+const notificationFun = () => {
+	try {
+		dpsMaturity()
+		cashnotification()
+		reminotification()
+		notificationFun()
+	} catch (e) {
+		console.log('Error in notification function init ' + e)
+	}
+}

@@ -17,84 +17,158 @@ app.use((req, res, next) => {
 	next()
 })
 
+const jwt_decode = require('jwt-decode')
+const { roleCheck } = require('../apps/roles')
 // Visual Viewport Api
 /*********************************************************************************/
-app.get('/', function(req, res) {
-	res.locals = {
-		userid: req.cookies.USERNAME,
-		title: 'Home'
-	}
-	res.render('./index')
+app.get('/', async (req, res) => {
+	const token = req.cookies.auth
+	const { user } = jwt_decode(token)
+	const data = await roleCheck(user)
+
+	// if (data != null || data != 'unfed') {
+	data.map(({ ROLE, USERNAME }) => {
+		res.locals = {
+			userid: USERNAME,
+			title: 'Home'
+		}
+
+		if (ROLE === 'ADMIN' || ROLE === 'APPROVAL') {
+			res.render('./admin/index', { role: ROLE })
+		} else {
+			res.render('./common/index', { role: ROLE })
+		}
+	})
+	// } else {
+	// res.locals = {
+	// title: '404'
+	// }
+	// res.render('./pages/404')
+	// }
 })
 
-app.get('/timeline', function(req, res) {
-	const name = req.cookies.USERNAME
-	res.locals = {
-		userid: name,
-		title: 'Timeline'
-	}
-	res.render('./pages/timeline')
+app.get('/timeline', async (req, res) => {
+	const token = req.cookies.auth
+	const { user } = jwt_decode(token)
+	const data = await roleCheck(user)
+
+	// if (data != null || data != 'unfed') {
+	data.map(({ ROLE, USERNAME }) => {
+		res.locals = {
+			userid: USERNAME,
+			title: 'Timeline'
+		}
+		res.render('./pages/timeline', { role: ROLE })
+	})
 })
 
-app.get('/customerInfo', function(req, res) {
-	res.locals = {
-		userid: req.cookies.USERNAME,
-		title: 'Customer Info'
-	}
-	res.render('./pages/customerInfo')
+app.get('/customerInfo', async (req, res) => {
+	const token = req.cookies.auth
+	const { user } = jwt_decode(token)
+	const data = await roleCheck(user)
+
+	data.map(({ ROLE, USERNAME }) => {
+		res.locals = {
+			userid: USERNAME,
+			title: 'Customer Info'
+		}
+		res.render('./pages/customerInfo', { role: ROLE })
+	})
 })
 // Report Panal
 /********************************************************************************
  */
-app.get('/report/accountStatment', function(req, res) {
-	res.locals = {
-		userid: req.cookies.USERNAME,
-		title: 'Account Statment'
-	}
-	res.render('./pages/statement')
+app.get('/report/accountStatment', async (req, res) => {
+	const token = req.cookies.auth
+	const { user } = jwt_decode(token)
+	const data = await roleCheck(user)
+
+	data.map(({ ROLE, USERNAME }) => {
+		res.locals = {
+			userid: req.cookies.USERNAME,
+			title: 'Account Statment'
+		}
+		res.render('./pages/statement', { role: ROLE })
+	})
 })
-app.get('/report/remittanceReport', function(req, res) {
-	res.locals = {
-		userid: req.cookies.USERNAME,
-		title: 'Remittance Report'
-	}
-	res.render('./pages/remittanceReport')
+app.get('/report/remittanceReport', async (req, res) => {
+	const token = req.cookies.auth
+	const { user } = jwt_decode(token)
+	const data = await roleCheck(user)
+
+	data.map(({ ROLE, USERNAME }) => {
+		res.locals = {
+			userid: req.cookies.USERNAME,
+			title: 'Remittance Report'
+		}
+		res.render('./pages/remittanceReport', { role: ROLE })
+	})
 })
-app.get('/report/utilityreport', function(req, res) {
-	res.locals = {
-		userid: req.cookies.USERNAME,
-		title: 'Utility Report'
-	}
-	res.render('./pages/utilityreport')
+app.get('/report/utilityreport', async (req, res) => {
+	const token = req.cookies.auth
+	const { user } = jwt_decode(token)
+	const data = await roleCheck(user)
+
+	data.map(({ ROLE, USERNAME }) => {
+		res.locals = {
+			userid: req.cookies.USERNAME,
+			title: 'Utility Report'
+		}
+		res.render('./pages/utilityreport', { role: ROLE })
+	})
 })
 
-app.get('/report/transactionsReport', function(req, res) {
-	res.locals = {
-		userid: req.cookies.USERNAME,
-		title: 'Transactions Report'
-	}
-	res.render('./pages/transactionsReport')
+app.get('/report/transactionsReport', async (req, res) => {
+	const token = req.cookies.auth
+	const { user } = jwt_decode(token)
+	const data = await roleCheck(user)
+
+	data.map(({ ROLE, USERNAME }) => {
+		res.locals = {
+			userid: req.cookies.USERNAME,
+			title: 'Transactions Report'
+		}
+		res.render('./pages/transactionsReport', { role: ROLE })
+	})
 })
-app.get('/report/accountInfo', function(req, res) {
-	res.locals = {
-		userid: req.cookies.USERNAME,
-		title: 'Account Information'
-	}
-	res.render('./pages/accountInfo')
+app.get('/report/accountInfo', async (req, res) => {
+	const token = req.cookies.auth
+	const { user } = jwt_decode(token)
+	const data = await roleCheck(user)
+
+	data.map(({ ROLE, USERNAME }) => {
+		res.locals = {
+			userid: req.cookies.USERNAME,
+			title: 'Account Information'
+		}
+		res.render('./pages/accountInfo', { role: ROLE })
+	})
 })
-app.get('/report/businessinfo', function(req, res) {
-	res.locals = {
-		userid: req.cookies.USERNAME,
-		title: 'Business Information'
-	}
-	res.render('./pages/businessinfo')
+app.get('/report/businessinfo', async (req, res) => {
+	const token = req.cookies.auth
+	const { user } = jwt_decode(token)
+	const data = await roleCheck(user)
+
+	data.map(({ ROLE, USERNAME }) => {
+		res.locals = {
+			userid: req.cookies.USERNAME,
+			title: 'Business Information'
+		}
+		res.render('./pages/businessinfo', { role: ROLE })
+	})
 })
-app.get('/report/mis', function(req, res) {
-	res.locals = {
-		userid: req.cookies.USERNAME,
-		title: 'MIS'
-	}
-	res.render('./pages/mis')
+app.get('/report/mis', async (req, res) => {
+	const token = req.cookies.auth
+	const { user } = jwt_decode(token)
+	const data = await roleCheck(user)
+
+	data.map(({ ROLE, USERNAME }) => {
+		res.locals = {
+			userid: req.cookies.USERNAME,
+			title: 'MIS'
+		}
+		res.render('./pages/mis', { role: ROLE })
+	})
 })
 
 module.exports = app

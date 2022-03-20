@@ -131,7 +131,7 @@ h3 {
 	border: none !important;
 }
 
-#sidenav {
+#notification {
 	position: absolute;
 	height: 100%;
 	/* max-width: 30vw; */
@@ -148,6 +148,24 @@ h3 {
 	user-select: none;
 	transition: ease-in .3s;
 }
+#sidenav {
+	position: fixed;
+	left: 0;
+	top: 0;
+	z-index: 1;
+	width: 100%;
+	max-width: 200px;
+	height: 100%;
+	/* background-color: #c9e2fc; */
+
+	/* background-color: #eeeeee; */
+	background-color: #f8f8f8;
+	padding: 90px 0 0 10px;
+	/* overflow-y: scroll; */
+}
+#sidenav span {
+	transition: ease-in-out;
+}
 
 .font-roboto {
 	font-family: Roboto, Arial, Helvetica, sans-serif !important;
@@ -155,4 +173,10 @@ h3 {
 
 .displaynull {
 	display: none;
+}
+.mui-adjust {
+	display: flex !important;
+	justify-content: left;
+	align-items: center;
+	flex-direction: row;
 }

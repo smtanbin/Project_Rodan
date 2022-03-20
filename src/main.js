@@ -78,22 +78,21 @@ app.post('/oauth', async (req, res) => {
 	try {
 		let state = await verification(userid, passwd)
 		if (state !== false) {
-			state.map(async ({ USERNAME, ROLE }) => {
+			state.map(async ({ USERNAME }) => {
 				// const token = createToken(userid, ROLE)
 
 				// Creating Refrash Token
 				const rtoken = jwt.sign({ user: userid }, process.env.JWTREFRASHKEY)
 
 				// Creating Cluster
-				const inputs = { user: userid, role: ROLE, refrashtoken: rtoken }
+				const inputs = { user: userid, refrashtoken: rtoken }
 				// Keeping token to Database
 				const token = jwt.sign(inputs, process.env.JWTAUTHOKEY, {
-					expiresIn: '2s' // expires in 1 hours
+					expiresIn: '13m' // expires in 1 hours
 				})
 				res.setHeader('secret', token)
 				res.cookie(`auth`, token, { expire: 200 + Date.now() })
 				let auth = req.cookies.auth
-				res.cookie(`USERNAME`, USERNAME)
 				res.send(state)
 			})
 		} else {

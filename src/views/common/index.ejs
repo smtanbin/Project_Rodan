@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include('../head'); %>
+
+  <body>
+    <section id="loading"
+      style="z-index: 999; position: absolute; width: 100vw; height: 100vh; display: flex;align-items: center; justify-content: center; background-color: #ffffff;">
+      <img src="/img/loading.svg" alt="Loading" width="100" height="100">
+    </section>
+    <div class="container" id="loader" style="display: none;">
+
+      <div class="columns">
+        <div class="row column col-12">
+          <%- include('../navbar'); %>
+        </div>
+        <div class="columns col-12 row">
+          <div class="column col-2 hide-sm">
+            <%- include('../sidenav'); %>
+          </div>
+          <div class="column col-10">
+            <%- include('body'); %>
+          </div>
+        </div>
+        <div class="row column col-12">
+          <%- include('../footer'); %>
+        </div>
+      </div>
+
+    </div>
+  </body>
+
+</html>

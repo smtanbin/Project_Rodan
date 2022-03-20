@@ -3,11 +3,11 @@
         <a href="/" class="navbar-brand"><img src="/img/Standardbankltd-color.svg" class="col-10" alt=""></a>
     </section>
     <section class="navbar-center">
-        <a class=" btn btn-link" onclick="sidenavopen()" id="navbtn"></a>
+        <!-- anythin needs to be centered -->
     </section>
     <section class="navbar-section">
-        <a href="/" class="btn btn-link">Home</a>
-        <div class="dropdown dropdown-right">
+        <a href="/" class="btn btn-link"><i class="large material-icons">home</i></a>
+        <!-- <div class="dropdown dropdown-right">
             <a href="#" class=" btn btn-link dropdown-toggle" tabindex="0">
                 Apps <i class="icon icon-caret"></i>
             </a>
@@ -15,25 +15,9 @@
                 <li class="menu-item"><a href="/timeline">Timeline</a></li>
                 <li class="menu-item text-error"><a href="/report/customerInfo">Customer Info</a></li>
             </ul>
-        </div>
-        <div class="dropdown dropdown-right">
-            <a href="#" class=" btn btn-link dropdown-toggle" tabindex="0">
-                Reports <i class="icon icon-caret"></i>
-            </a>
-            <ul class="menu ">
+        </div> -->
+        <a class=" btn btn-link" onclick="sidenavopen()" id="navbtn"></a>
 
-                <!-- <li class="menu-item"><a href="/report/transactionsReport">Transactions Report</a></li> -->
-                <li class="divider" data-content="Account Data"></li>
-                <li class="menu-item"><a href="/report/accountStatment">Statment</a></li>
-                <li class="menu-item"><a href="/report/accountInfo">Account Status</a></li>
-                <li class="menu-item"><a href="/report/businessinfo">Account Info</a></li>
-                <li class="divider" data-content="Reports"></li>
-                <li class="menu-item"><a href="/report/remittanceReport">Remittance Report</a></li>
-                <li class="menu-item"><a href="/report/utilityreport">Utility Report</a></li>
-                <li class="menu-item"><a href="/report/mis">MIS</a></li>
-
-            </ul>
-        </div>
         <div class="dropdown dropdown-right">
             <a href="#" class="btn btn-link dropdown-toggle" tabindex="0">
                 <figure class="avatar avatar-sm" data-initial="<%= userid.substring(2, 0); %>"></figure>
@@ -43,8 +27,23 @@
 
                 <li id="username" class="divider" data-content=" <%= userid %>">
                 </li>
-                <!-- 
+
                 <li class="menu-item">
+
+                    <a href="#" type="button" class="btn btn-link text-ellipsis  mui-adjust">
+
+                        <i class="material-icons" style="font-size: 1 rem ">settings</i>
+
+                        <span class="text-uppercase ml-1">
+                            <%= role.substring(1, 0); %>
+                        </span>
+                        <span class="text-lowercase mr-1">
+                            <%= role.substring(55, 1); %>
+                        </span> Settings
+                    </a>
+
+                </li>
+                <!-- <li class="menu-item">
                     <label class="form-checkbox">
                         <input type="checkbox disabled">
                         <i class="form-icon"></i> Dark Mode
@@ -68,8 +67,8 @@
                 </li> -->
 
                 <li class="menu-item">
-                    <a onclick="logout()" type="button">
-                        <i class="icon icon-shutdown text-error"></i> Logout
+                    <a onclick="logout()" type="button" class="btn btn-link mui-adjust text-error">
+                        <i class="material-icons mr-1" style="font-size: 1 rem ">power_settings_new</i> Logout
                     </a>
                 </li>
             </ul>
