@@ -84,12 +84,12 @@ h3 {
 	z-index: 5;
 }
 
-.bg-frost {
+/* .bg-frost {
 	background-color: var(--frost);
 	backdrop-filter: var(--default-bg-blur);
-}
+} */
 
-.bg-frost-dark {
+.bg-frost {
 	background-color: var(--frost-dark);
 	backdrop-filter: var(--default-bg-blur);
 	color: #000;
@@ -159,7 +159,7 @@ h3 {
 	/* background-color: #c9e2fc; */
 
 	/* background-color: #eeeeee; */
-	background-color: #f8f8f8;
+	/* background-color: #f8f8f831; */
 	padding: 90px 0 0 10px;
 	/* overflow-y: scroll; */
 }
@@ -179,4 +179,7 @@ h3 {
 	justify-content: left;
 	align-items: center;
 	flex-direction: row;
+}
+.text-tiny {
+	font-size: .8em;
 }

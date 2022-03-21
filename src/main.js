@@ -42,6 +42,7 @@ const corsOptions = {
 	optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
 }
 
+
 app.use(express.static(__dirname + '/public'))
 app.set('views', path.join(__dirname, '/views'))
 // set the view engine to ejs
@@ -200,7 +201,7 @@ app.get('*', function(req, res) {
 		title: '404!'
 	}
 	res.render('pages/404')
-	res.send(404)
+	res.status('404')
 })
 const { isNullOrUndefined } = require('util')
 

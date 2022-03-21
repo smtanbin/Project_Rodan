@@ -13,7 +13,7 @@
 
     <div data-aos="zoom-out" class="hero-sm">
         <div class="hero-body">
-            <h1 class="text-primary">Timeline</h1>
+            <h1 class="text-primary text-bold">Timeline</h1>
         </div>
         <div class="w100 px-2 my-2 input-group input-inline">
             <input class="form-input" type="text" onkeyup="search()" id="search" placeholder="search">
@@ -22,7 +22,7 @@
     </div>
 
     <section style="margin-top: 50px;">
-        <div class="modal" id="modal-id">
+        <div class="modal modal-xl" id="modal-id">
             <a class="modal-overlay" aria-label="Close"></a>
             <div class="modal-container" id="output">
 
@@ -31,29 +31,52 @@
     </section>
 
     <section data-aos="fade-down" class="container p-2">
+        <ul class="pagination">
+            <li class="page-item disabled">
+                <a href="#" tabindex="-1">Previous</a>
+            </li>
+            <li class="page-item active">
+                <a href="#">1</a>
+            </li>
+            <li class="page-item">
+                <a href="#">2</a>
+            </li>
+            <li class="page-item">
+                <a href="#">3</a>
+            </li>
+            <li class="page-item">
+                <span>...</span>
+            </li>
+            <li class="page-item">
+                <a href="#">12</a>
+            </li>
+            <li class="page-item">
+                <a href="#">Next</a>
+            </li>
+        </ul>
         <!-- vertical divider element with text -->
         <div class="columns col-12">
             <div class="column col-lg-6 col-md-12">
                 <div class="card p-1">
-                    <table class="table table-striped">
+                    <table class="table table-striped table-cluster">
                         <thead>
                             <tr>
-                                <th>Time</th>
-                                <th>TR No</th>
+                                <th class="text-tiny">Time</th>
+                                <th class="text-tiny">TR No</th>
 
-                                <th>From AC</th>
-                                <th>From GL</th>
-                                <th>To AC</th>
-                                <th>To GL</th>
-                                <th>Paid</th>
+                                <th class="text-tiny">From AC</th>
+                                <th class="text-tiny text-clip mx-1">From GL</th>
+                                <th class="text-tiny">To AC</th>
+                                <th class="text-tiny text-clip mx-1">To GL</th>
+                                <th class="text-tiny">Paid</th>
 
-                                <th>Merchant</th>
-                                <th>Ref</th>
+                                <th class="text-tiny">Merchant</th>
+                                <th class="text-tiny">Ref</th>
 
-                                <th>Particular</th>
+                                <th class="text-tiny">Particular</th>
                             </tr>
                         </thead>
-                        <tbody id="timeline">
+                        <tbody id="timeline" class="container">
 
                         </tbody>
 

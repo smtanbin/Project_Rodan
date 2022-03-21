@@ -156,12 +156,13 @@ const pichat = async () => {
 		const yaxe = yValues.split(',')
 
 		new Chart('Chart', {
-			type: 'pie',
+			type: 'doughnut',
 			data: {
 				labels: xaxe,
 				datasets: [
 					{
 						backgroundColor: barColors,
+						borderWidth: 1,
 						data: yaxe,
 						radius: '50%'
 					}
@@ -210,11 +211,11 @@ const agentstatus = async () => {
 			}
 			document.getElementById('agentInfo').innerHTML += `			<tr>
 			<td class="text-tiny"><a type="button" class="btn btn-link" onclick="agentBalancePerformance('${MPHONE}')">${MPHONE}</a></td>
-			<td class="text-left text-tiny text-ellipsis">${ACCOUNT_NAME}</td>
-			<td class=" ${style} text-right ">${TODAY.toLocaleString('en-BD', {
+			<td class="text-left text-tiny text-crop">${ACCOUNT_NAME}</td>
+			<td class=" ${style} text-right text-tiny">${TODAY.toLocaleString('en-BD', {
 				maximumFractionDigits: 2
 			})}</td>
-			<td class=" text-right ">${YESTERDAY.toLocaleString('en-BD', {
+			<td class=" text-right text-tiny">${YESTERDAY.toLocaleString('en-BD', {
 				maximumFractionDigits: 2
 			})}</td>
 		  </tr>`
@@ -248,7 +249,8 @@ const agentstatus = async () => {
 					{
 						data: intlocal_yesterday,
 						label: 'Yesterday',
-						backgroundColor: '#0e3150',
+						// backgroundColor: '#0e3150',
+						backgroundColor: '#859b97',
 						fill: false
 					}
 				]
@@ -345,7 +347,7 @@ const customerstatus = async () => {
 					{
 						data: loacl_cy,
 						label: 'Yesterday',
-						backgroundColor: '#0e3150'
+						backgroundColor: '#859b97'
 					}
 				]
 			},
@@ -416,8 +418,10 @@ const balancePerformance = async () => {
 					{
 						data: yesterday,
 						label: 'Yesterday',
-						borderColor: '#0e3150',
-						backgroundColor: '#0e315040',
+						// borderColor: '#0e3150',
+						borderColor: '#859b97',
+						// backgroundColor: '#0e315040',
+						backgroundColor: '#859b9740',
 						fill: true
 					}
 				]
@@ -492,7 +496,7 @@ const agentBalancePerformance = async (mphone) => {
 					{
 						data: cr,
 						label: 'CR',
-						borderColor: '#0e3150',
+						borderColor: '#859b97',
 						fill: false
 					}
 				]

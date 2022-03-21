@@ -22,41 +22,93 @@ const timeline = async () => {
 			
 			</tr>`
 			} else {
-				payload.map((data) => {
-					const {
-						TRANS_NO,
-						TRANS_DATE,
-						TRANS_FROM,
-						TRANS_TO,
-						REF_PHONE,
-						PAY_AMT,
-						MERCHANT_SNAME,
+				payload.map(
+					(
+						{
+							TRANS_NO,
+							TRANS_DATE,
+							TRANS_FROM,
+							TRANS_TO,
+							REF_PHONE,
+							PAY_AMT,
+							MERCHANT_SNAME,
+							PARTICULAR,
+							FROM_GL,
+							TO_GL
+						},
+						index
+					) => {
+						while (index > 1000) {
+							const mytable = document.getElementById('timeline')
+							let newRow = document.createElement('tr')
+							let cell = document.createElement('td')
+							cell.classList.add('text-tiny')
+							cell.classList.add('text-clip')
+							newRow.appendChild(cell)
+							cell.innerText = moment(TRANS_DATE).startOf('minute').fromNow()
 
-						PARTICULAR,
+							cell = document.createElement('td')
+							// cell.classList.add('text-tiny')
+							let btn = document.createElement('button')
+							btn.classList.add('btn')
+							btn.classList.add('btn-link')
+							btn.classList.add('text-tiny')
+							btn.onclick = function() {
+								model(TRANS_NO)
+							}
+							btn.innerText = TRANS_NO
+							cell.appendChild(btn)
+							newRow.appendChild(cell)
+							// cell.innerText = TRANS_NO
 
-						FROM_GL,
-						TO_GL
-					} = data
+							cell = document.createElement('td')
+							cell.classList.add('text-tiny')
+							newRow.appendChild(cell)
+							cell.innerText = TRANS_FROM
 
-					document.getElementById('timeline').innerHTML += `
-			<tr>
-			<td class="text-tiny py-1 text-clip">${moment(TRANS_DATE).startOf('minute').fromNow()}</span></td>
-			<td class="text-tiny text-bold text-primary py-1"><button class="btn btn-link"onclick="model(${TRANS_NO})">${TRANS_NO} <i
-			class="material-icons">expand_more</i></button></td>
-			<td class="text-tiny" py-1>${TRANS_FROM}</td>
-			<td class="text-tiny text-clip" py-1>${FROM_GL}</td>
-			<td class="text-tiny" py-1>${TRANS_TO}</td>
-			<td class="text-tiny text-clip" py-1>${TO_GL}</td>
-			<td class="text-tiny text-success text-clip py-1 text-right">${PAY_AMT.toLocaleString('en-BD', {
-				maximumFractionDigits: 2,
-				style: 'currency',
-				currency: 'BDT'
-			})}</td>
-			<td class="text-tiny py-1">${MERCHANT_SNAME}</td>
-			<td class="text-tiny py-1">${REF_PHONE}</td>
-			<td class="text-tiny py-1">${PARTICULAR}</td>
-			</tr>`
-				})
+							cell = document.createElement('td')
+							cell.classList.add('text-tiny')
+							newRow.appendChild(cell)
+							cell.innerText = FROM_GL
+
+							cell = document.createElement('td')
+							cell.classList.add('text-tiny')
+							newRow.appendChild(cell)
+							cell.innerText = TRANS_TO
+
+							cell = document.createElement('td')
+							cell.classList.add('text-tiny')
+
+							newRow.appendChild(cell)
+							cell.innerText = TO_GL
+
+							cell = document.createElement('td')
+							cell.classList.add('text-tiny')
+							newRow.appendChild(cell)
+							cell.innerText = PAY_AMT.toLocaleString('en-BD', {
+								maximumFractionDigits: 2,
+								style: 'currency',
+								currency: 'BDT'
+							})
+
+							cell = document.createElement('td')
+							cell.classList.add('text-tiny')
+							newRow.appendChild(cell)
+							cell.innerText = MERCHANT_SNAME
+
+							cell = document.createElement('td')
+							cell.classList.add('text-tiny')
+							newRow.appendChild(cell)
+							cell.innerText = REF_PHONE
+
+							cell = document.createElement('td')
+							cell.classList.add('text-tiny')
+							newRow.appendChild(cell)
+							cell.innerText = PARTICULAR
+							mytable.appendChild(newRow)
+						}
+					}
+				)
 			}
 		})
 	} catch (e) {
