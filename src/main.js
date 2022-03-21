@@ -42,7 +42,6 @@ const corsOptions = {
 	optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
 }
 
-
 app.use(express.static(__dirname + '/public'))
 app.set('views', path.join(__dirname, '/views'))
 // set the view engine to ejs
@@ -93,7 +92,7 @@ app.post('/oauth', async (req, res) => {
 				})
 				res.setHeader('secret', token)
 				res.cookie(`auth`, token, { expire: 200 + Date.now() })
-				let auth = req.cookies.auth
+				// let auth = req.cookies.auth
 				res.send(state)
 			})
 		} else {

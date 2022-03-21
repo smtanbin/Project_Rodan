@@ -4,11 +4,17 @@
       <div class="p-centered text-center">
         <!-- <small>Standard Bank Ltd</small> <br /> -->
 
-        <img src="/img/Witctcraft-1x1.svg" style="height: 2rem;">
+        <% if (darkmode==true) { %>
+          <img src="/img/Witctcraft-1x1.svg" style="height: 2rem;">
+          <%} else { %>
+            <img src="/img/Witctcraft-1x1bright.svg" style="height: 2rem;">
+            <% } %>
 
-        <br>
-        <small>Tanbin Hassan &copy; 2022 - All Rights Reserved.</small>
-        <!-- <small>Power by Morathi Core</small> -->
+
+
+              <br>
+              <small>Tanbin Hassan &copy; 2022 - All Rights Reserved.</small>
+              <!-- <small>Power by Morathi Core</small> -->
 
       </div>
     </div>
@@ -22,6 +28,7 @@
 <script src="/JS/lib/moment.js" defer></script>
 <script src="/JS/lib/chart.js" defer></script>
 <script src="/style/style.js" defer></script>
+<script src="/JS/ui.js" defer></script>
 <script src="/JS/globalFunctions.js" async></script>
 <script>
   AOS.init();

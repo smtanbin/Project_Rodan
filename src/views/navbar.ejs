@@ -1,6 +1,16 @@
 <header data-aos="fade-down" class="navbar m-0 bg-frost p-fixed w100" id="navbar">
     <section class="navbar-section">
-        <a href="/" class="navbar-brand"><img src="/img/Standardbankltd.svg" class="col-10" alt=""></a>
+
+        <% if (darkmode==true) { %>
+            <a href="/" class="navbar-brand"><img src="/img/Standardbankltd.svg" class="col-10" alt=""></a>
+
+            <%} else { %>
+                <a href="/" class="navbar-brand"><img src="/img/Standardbankltd-color.svg" class="col-10" alt=""></a>
+
+                <% } %>
+
+
+
     </section>
     <section class="navbar-center">
         <!-- anythin needs to be centered -->
@@ -43,12 +53,12 @@
                     </a>
 
                 </li>
-                <!-- <li class="menu-item">
-                    <label class="form-checkbox">
-                        <input type="checkbox disabled">
+                <li class="menu-item">
+                    <label class="form-switch text-primary">
+                        <input type="checkbox" onclick="darkmode()" id="darkmode">
                         <i class="form-icon"></i> Dark Mode
                     </label>
-                </li> -->
+                </li>
 
                 <li class="divider"></li>
 

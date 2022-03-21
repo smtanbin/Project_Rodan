@@ -18,7 +18,7 @@ app.use((req, res, next) => {
 })
 
 const jwt_decode = require('jwt-decode')
-const darkModeCon = 'true'
+const darkModeCon = false
 const { roleCheck } = require('../apps/roles')
 // Visual Viewport Api
 /*********************************************************************************/
@@ -30,14 +30,13 @@ app.get('/', async (req, res) => {
 	// if (data != null || data != 'unfed') {
 	data.map(({ ROLE, USERNAME }) => {
 		res.locals = {
-			userid: USERNAME,
 			title: 'Home'
 		}
 
 		if (ROLE === 'ADMIN' || ROLE === 'APPROVAL') {
-			res.render('./admin/index', { role: ROLE, darkmode: darkModeCon })
+			res.render('./admin/index', { role: ROLE, userid: USERNAME, darkmode: darkModeCon })
 		} else {
-			res.render('./common/index', { role: ROLE, darkmode: darkModeCon })
+			res.render('./common/index', { role: ROLE, userid: USERNAME, darkmode: darkModeCon })
 		}
 	})
 	// } else {
@@ -59,7 +58,7 @@ app.get('/timeline', async (req, res) => {
 			userid: USERNAME,
 			title: 'Timeline'
 		}
-		res.render('./pages/timeline', { role: ROLE, darkmode: darkModeCon })
+		res.render('./pages/timeline', { role: ROLE, userid: USERNAME, darkmode: darkModeCon })
 	})
 })
 
@@ -73,7 +72,7 @@ app.get('/customerInfo', async (req, res) => {
 			userid: USERNAME,
 			title: 'Customer Info'
 		}
-		res.render('./pages/customerInfo', { role: ROLE, darkmode: darkModeCon })
+		res.render('./pages/customerInfo', { role: ROLE, userid: USERNAME, darkmode: darkModeCon })
 	})
 })
 // Report Panal
@@ -89,7 +88,7 @@ app.get('/report/accountStatment', async (req, res) => {
 			userid: req.cookies.USERNAME,
 			title: 'Account Statment'
 		}
-		res.render('./pages/statement', { role: ROLE, darkmode: darkModeCon })
+		res.render('./pages/statement', { role: ROLE, userid: USERNAME, darkmode: darkModeCon })
 	})
 })
 app.get('/report/remittanceReport', async (req, res) => {
@@ -102,7 +101,7 @@ app.get('/report/remittanceReport', async (req, res) => {
 			userid: req.cookies.USERNAME,
 			title: 'Remittance Report'
 		}
-		res.render('./pages/remittanceReport', { role: ROLE, darkmode: darkModeCon })
+		res.render('./pages/remittanceReport', { role: ROLE, userid: USERNAME, darkmode: darkModeCon })
 	})
 })
 app.get('/report/utilityreport', async (req, res) => {
@@ -115,7 +114,7 @@ app.get('/report/utilityreport', async (req, res) => {
 			userid: req.cookies.USERNAME,
 			title: 'Utility Report'
 		}
-		res.render('./pages/utilityreport', { role: ROLE, darkmode: darkModeCon })
+		res.render('./pages/utilityreport', { role: ROLE, userid: USERNAME, darkmode: darkModeCon })
 	})
 })
 
@@ -129,7 +128,7 @@ app.get('/report/transactionsReport', async (req, res) => {
 			userid: req.cookies.USERNAME,
 			title: 'Transactions Report'
 		}
-		res.render('./pages/transactionsReport', { role: ROLE, darkmode: darkModeCon })
+		res.render('./pages/transactionsReport', { role: ROLE, userid: USERNAME, darkmode: darkModeCon })
 	})
 })
 app.get('/report/accountInfo', async (req, res) => {
@@ -142,7 +141,7 @@ app.get('/report/accountInfo', async (req, res) => {
 			userid: req.cookies.USERNAME,
 			title: 'Account Information'
 		}
-		res.render('./pages/accountInfo', { role: ROLE, darkmode: darkModeCon })
+		res.render('./pages/accountInfo', { role: ROLE, userid: USERNAME, darkmode: darkModeCon })
 	})
 })
 app.get('/report/businessinfo', async (req, res) => {
@@ -155,7 +154,7 @@ app.get('/report/businessinfo', async (req, res) => {
 			userid: req.cookies.USERNAME,
 			title: 'Business Information'
 		}
-		res.render('./pages/businessinfo', { role: ROLE, darkmode: darkModeCon })
+		res.render('./pages/businessinfo', { role: ROLE, userid: USERNAME, darkmode: darkModeCon })
 	})
 })
 app.get('/report/mis', async (req, res) => {
@@ -168,7 +167,7 @@ app.get('/report/mis', async (req, res) => {
 			userid: req.cookies.USERNAME,
 			title: 'MIS'
 		}
-		res.render('./pages/mis', { role: ROLE, darkmode: darkModeCon })
+		res.render('./pages/mis', { role: ROLE, userid: USERNAME, darkmode: darkModeCon })
 	})
 })
 
