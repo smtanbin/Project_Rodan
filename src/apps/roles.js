@@ -1,6 +1,6 @@
 const qurrythis = require('./db')
 const roleCheck = async (user) => {
-	sql = `SELECT USERNAME, ROLE 
+	sql = `SELECT USERNAME, ROLE,ROOT
     FROM (
         (SELECT UPPER (USERID)     USERID,
         USERNAME,

@@ -1,5 +1,3 @@
-// const { raw } = require('express')
-
 /*api server url is in environment file*/
 const apiserver = '/api/'
 
@@ -134,12 +132,16 @@ const accountStatus = async () => {
 
 /* Pie Chart*/
 
-const pichat = async () => {
+const pichat = async (param) => {
 	/* Post request body content*/
 	const url = `${apiserver}pichart`
+	const raw = JSON.stringify({
+		param: `${param}`
+	})
 	const requestOptions = {
-		method: 'GET',
+		method: 'POST',
 		headers: myHeaders,
+		body: raw,
 		redirect: 'follow'
 	}
 	let xValues = []
@@ -179,29 +181,30 @@ const pichat = async () => {
 	})
 }
 
-const agentstatus = async () => {
+const agentstatus = async (param) => {
 	const url = `${apiserver}agentstatus`
+	const raw = JSON.stringify({
+		param: `${param}`
+	})
 	const requestOptions = {
-		method: 'GET',
+		method: 'POST',
 		headers: myHeaders,
+		body: raw,
 		redirect: 'follow'
 	}
 
-	let local_mphone = []
 	let loacl_today = []
 	let local_yesterday = []
-	let loaclTatalToday = 0
-	let loaclTatalYesterday = 0
+
 	let style = 'text-dark'
 
+	let todaysbar = '#288bfc'
+	let yesterdaybar = '#859b97'
+
 	await fetch(url, requestOptions).then((response) => response.json()).then((payload) => {
+		console.log(payload)
 		/*Contracting a string with , to separate value*/
-		payload.map(({ MPHONE, ACCOUNT_NAME, YESTERDAY, TODAY }) => {
-			local_mphone += `${MPHONE},`
-			loacl_today += `${TODAY.toFixed(2)},`
-			local_yesterday += `${YESTERDAY.toFixed(2)},`
-			loaclTatalToday += TODAY
-			loaclTatalYesterday += YESTERDAY
+		payload.map(({ YESTERDAY, TODAY }) => {
 			if (YESTERDAY > TODAY) {
 				style = 'text-error'
 			} else if (TODAY > YESTERDAY) {
@@ -209,48 +212,45 @@ const agentstatus = async () => {
 			} else {
 				style = 'text-dark'
 			}
+			if (TODAY <= 500000) {
+				todaysbar = '#ff6347'
+			}
+			if (YESTERDAY <= 500000) {
+				yesterdaybar = '#E52B50'
+			}
+			loacl_today += `${TODAY.toFixed(2)},`
+			local_yesterday += `${YESTERDAY.toFixed(2)},`
+
 			document.getElementById('agentInfo').innerHTML += `			<tr>
-			<td class="text-tiny"><a type="button" class="btn btn-link" onclick="agentBalancePerformance('${MPHONE}')">${MPHONE}</a></td>
-			<td class="text-left text-tiny text-crop">${ACCOUNT_NAME}</td>
-			<td class=" ${style} text-right text-tiny">${TODAY.toLocaleString('en-BD', {
+					
+			<td class=" ${style} text-left">${TODAY.toLocaleString('en-BD', {
 				maximumFractionDigits: 2
 			})}</td>
-			<td class=" text-right text-tiny">${YESTERDAY.toLocaleString('en-BD', {
+			<td class=" text-right ">${YESTERDAY.toLocaleString('en-BD', {
 				maximumFractionDigits: 2
 			})}</td>
 		  </tr>`
 		})
-		document.getElementById('agentInfo').innerHTML += `			<tr>
-		<td class="text-tiny text-primary text-bold" colspan="2">Total </td>
-		
-		<td class="text-tiny text-right text-primary text-bold">${loaclTatalToday.toLocaleString('en-BD', {
-			maximumFractionDigits: 2
-		})}</td>
-		<td class="text-tiny text-right text-primary text-bold">${loaclTatalYesterday.toLocaleString('en-BD', {
-			maximumFractionDigits: 2
-		})}</td>
-	  </tr>`
+
 		// turning INTO ARRAY
-		const intlocal_mphone = local_mphone.split(',')
 		const intloacl_today = loacl_today.split(',')
 		const intlocal_yesterday = local_yesterday.split(',')
 
 		new Chart('agentChart', {
 			type: 'bar',
 			data: {
-				labels: intlocal_mphone,
 				datasets: [
 					{
 						data: intloacl_today,
 						label: 'Today',
-						backgroundColor: '#288bfc',
+						backgroundColor: todaysbar,
 						fill: false
 					},
 					{
 						data: intlocal_yesterday,
 						label: 'Yesterday',
-						// backgroundColor: '#0e3150',
-						backgroundColor: '#859b97',
+
+						backgroundColor: yesterdaybar,
 						fill: false
 					}
 				]
@@ -261,6 +261,16 @@ const agentstatus = async () => {
 					display: false,
 					position: 'top',
 					text: 'Agent Balance'
+				},
+				scales: {
+					yAxes: [
+						{
+							ticks: {
+								suggestedMin: 0,
+								suggestedMax: 500000
+							}
+						}
+					]
 				}
 			}
 		})
@@ -274,16 +284,20 @@ const agentstatus = async () => {
 
 
 */
-const customerstatus = async () => {
+const customerstatus = async (param) => {
 	let local_mphone = []
 	let loacl_cc = []
 	let loacl_cy = []
 	/* Post request body content*/
 
 	const url = `${apiserver}customerstatus`
+	const raw = JSON.stringify({
+		param: `${param}`
+	})
 	const requestOptions = {
-		method: 'GET',
+		method: 'POST',
 		headers: myHeaders,
+		body: raw,
 		redirect: 'follow'
 	}
 	await fetch(url, requestOptions).then((response) => response.json()).then((payload) => {
@@ -291,10 +305,10 @@ const customerstatus = async () => {
 		let localCustomerToday = 0
 		let localCustomerYday = 0
 		let style = 'text-dark'
-		payload.map(({ MPHONE, ACCOUNT_NAME, CUSTOMER_CURRENT, CUSTOMER_YESTERDAY }) => {
-			local_mphone += `${MPHONE},`
-			loacl_cc += `${(CUSTOMER_CURRENT / 100000).toFixed(2)},`
-			loacl_cy += `${(CUSTOMER_YESTERDAY / 100000).toFixed(2)},`
+		payload.map(({ AC_TYPE_CODE, CUSTOMER_CURRENT, CUSTOMER_YESTERDAY }) => {
+			local_mphone += `${AC_TYPE_CODE},`
+			loacl_cc += `${CUSTOMER_CURRENT.toFixed(2)},`
+			loacl_cy += `${CUSTOMER_YESTERDAY.toFixed(2)},`
 			localCustomerToday += CUSTOMER_CURRENT
 			localCustomerYday += CUSTOMER_YESTERDAY
 
@@ -307,8 +321,8 @@ const customerstatus = async () => {
 			}
 
 			document.getElementById('customerInfo').innerHTML += `<tr>
-			<td class="text-tiny">${MPHONE}</td>
-			<td class="text-tiny text-ellipsis">${ACCOUNT_NAME}</td>
+			<td class="text-tiny w100">${AC_TYPE_CODE}</td>
+
 			<td class="text-tiny ${style} text-right">${CUSTOMER_CURRENT.toLocaleString('en-BD', {
 				maximumFractionDigits: 2
 			})}</td>
@@ -318,7 +332,7 @@ const customerstatus = async () => {
 		  </tr>`
 		})
 		document.getElementById('customerInfo').innerHTML += `<tr>
-		<td class="text-tiny text-primary text-bold" colspan="2">Total </td>
+		<td class="text-tiny text-primary text-bold" colspan="1">Total </td>
 
 		<td class="text-tiny text-right text-primary text-bold">${localCustomerToday.toLocaleString('en-BD', {
 			maximumFractionDigits: 2
@@ -363,7 +377,7 @@ const customerstatus = async () => {
 			}
 		})
 	})
-	document.getElementById('loading').remove()
+	// document.getElementById('loading').remove()
 }
 /*
 
@@ -534,11 +548,14 @@ const timer = () => {
 		document.getElementById('remainer').setAttribute('value', remaintime)
 		document.getElementById('remainer-text').classList.remove('text-primary')
 		document.getElementById('remainer-body').classList.add('bg-warning')
+		document.getElementById('remainer-text').textContent = 'Transaction time over'
 	}
-	if (remaintime > 1020 - 540) {
+	// if (remaintime > 1020 - 540) {
+	if (remaintime > 990 - 540) {
 		document.getElementById('remainer').setAttribute('value', remaintime)
 		document.getElementById('remainer-text').classList.remove('text-primary')
 		document.getElementById('remainer-body').classList.add('bg-error')
+		document.getElementById('remainer-text').textContent = 'System Ready to Day Close'
 	} else {
 		document.getElementById('remainer').setAttribute('value', remaintime)
 	}
@@ -551,23 +568,24 @@ const timer = () => {
 *
 */
 
+const owner = document.currentScript.getAttribute('param')
 /* Timeer Function*/
 timer()
 /* Timeer Function*/
-pichat()
+pichat(owner)
 /* Function replaced*/
 // dailydrcr()
 /* Agent Status Function*/
-agentstatus()
+agentstatus(owner)
 /* Account Status Function*/
 accountStatus()
 /* Balance Comparidun Function*/
 balancePerformance()
 /* 
-	Customer calling
-	! Always buttom
+Customer calling
+! Always buttom
 */
-customerstatus()
+customerstatus(owner)
 setInterval(function() {
 	location.reload()
 }, 780000)

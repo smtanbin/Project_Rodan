@@ -17,6 +17,7 @@
 		"ejs": "^3.1.6",
 		"express": "^4.17.3",
 		"holidayapi": "^5.1.0",
+		"js-cookie": "^3.0.1",
 		"jsonwebtoken": "^8.5.1",
 		"jwt-decode": "^3.1.2",
 		"oracledb": "^5.3.0"

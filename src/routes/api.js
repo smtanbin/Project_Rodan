@@ -1,6 +1,6 @@
 const { Router } = require('express')
 const { doexist, holyday } = require('../api/api.js')
-const { customerinfo } = require('../api/api_customerinfo')
+
 const { pbslist, utilityinfohead, utilityinfodtl, utilityinfosummary } = require('../api/api_utilitybill.js')
 const { remittancehouselist, remittance, remittancesummary, remittanceRequest } = require('../api/api_remittance')
 const { transactionsreport } = require('../api/api_transactionsreport')
@@ -78,7 +78,14 @@ app.get('/dpsMaturity', async (req, res) => {
 app.get('/pichart', async (req, res) => {
 	try {
 		const data = await pichart()
-
+		res.send(data)
+	} catch (e) {
+		return e
+	}
+})
+app.post('/pichart', async (req, res) => {
+	try {
+		const data = await pichart(req.body.param)
 		res.send(data)
 	} catch (e) {
 		return e
@@ -104,10 +111,27 @@ app.get('/agentstatus', async (req, res) => {
 		return e
 	}
 })
+app.post('/agentstatus', async (req, res) => {
+	try {
+		const data = await agentstatus(req.body.param)
+		res.send(data)
+	} catch (e) {
+		return e
+	}
+})
 
 app.get('/customerstatus', async (req, res) => {
 	try {
 		const data = await customerstatus()
+
+		res.send(data)
+	} catch (e) {
+		return e
+	}
+})
+app.post('/customerstatus', async (req, res) => {
+	try {
+		const data = await customerstatus(req.body.param)
 
 		res.send(data)
 	} catch (e) {
@@ -315,11 +339,27 @@ app.post('/transactionsreport', async (req, res) => {
 		res.send('Stop by error! Check if its help:' + e)
 	}
 })
+/* ***************************************************************
+
+						Customer Information 
+
+******************************************************************/
+
+const { customerinfo, customerallac, customernom } = require('../api/api_customerinfo')
 
 app.post('/customerinfo', async (req, res) => {
 	const data = await customerinfo(req.body.id)
 	res.send(data)
 })
+app.post('/customeracinfo', async (req, res) => {
+	const data = await customerallac(req.body.id)
+	res.send(data)
+})
+app.post('/customernom', async (req, res) => {
+	const data = await customernom(req.body.id)
+	res.send(data)
+})
+
 app.post('/monthlyActivity', async (req, res) => {
 	const data = await monthlyActivity(req.body.key)
 	res.send(data)

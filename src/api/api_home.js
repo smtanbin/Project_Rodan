@@ -1,17 +1,27 @@
 const qurrythis = require('../apps/db')
 
-const pichart = async () => {
-	try {
+const pichart = async (param) => {
+	let sql = ''
+	if (param === undefined || param === '') {
 		sql = `select round(sum(r.BALANCE_M),2) balance, (select p.ACC_TYPE_SHORT_NAME from AGENT_BANKING.PRODUCT_SETUP p where p.ACC_TYPE_CODE = r.AC_TYPE_CODE) TYPE from agent_banking.reginfo r group by AC_TYPE_CODE`
-
+	} else {
+		sql = `SELECT ROUND (SUM (r.BALANCE_M), 2)                 balance,
+		(SELECT p.ACC_TYPE_SHORT_NAME
+		   FROM AGENT_BANKING.PRODUCT_SETUP p
+		  WHERE p.ACC_TYPE_CODE = r.AC_TYPE_CODE)    TYPE
+   FROM agent_banking.reginfo r where pmphone = ${param}
+GROUP BY AC_TYPE_CODE`
+	}
+	try {
 		return await qurrythis(sql)
 	} catch (e) {
 		console.log(e)
 		return e
 	}
 }
-const agentstatus = async () => {
-	try {
+const agentstatus = async (param) => {
+	let sql = ''
+	if (param === undefined || param === '') {
 		sql = `/* Formatted on 2/20/2022 10:27:22 AM (QP5 v5.374) */
 		SELECT MPHONE,
 			   r.ACCOUNT_NAME,
@@ -25,15 +35,31 @@ const agentstatus = async () => {
 		  FROM AGENT_BANKING.REGINFO r
 		 WHERE r.CAT_ID = 'D' AND r.STATUS != 'C'
 	  ORDER BY TODAY`
+	} else {
+		sql = `/* Formatted on 2/20/2022 10:27:22 AM (QP5 v5.374) */
+		SELECT 
+			   BALANCE_M
+				   TODAY,
+			   TANBIN.GETBALANCE (
+				   MPHONE,
+				   (SELECT TO_DATE (CURRENT_DATE - 1) AS yesterday_date FROM DUAL))
+				   YESTERDAY
+		  FROM AGENT_BANKING.REGINFO r
+		 WHERE r.CAT_ID = 'D' AND r.STATUS != 'C' AND MPHONE = ${param}
+	  ORDER BY TODAY
+`
+	}
 
+	try {
 		return await qurrythis(sql)
 	} catch (e) {
 		console.log(e)
 		return e
 	}
 }
-const customerstatus = async () => {
-	try {
+const customerstatus = async (param) => {
+	let sql = ''
+	if (param === undefined || param === '') {
 		sql = `/* Formatted on 2/20/2022 10:27:22 AM (QP5 v5.374) */
 		SELECT MPHONE,
 			   r.ACCOUNT_NAME,
@@ -55,10 +81,26 @@ const customerstatus = async () => {
 				   CUSTOMER_YESTERDAY
 		  FROM AGENT_BANKING.REGINFO r
 		 WHERE r.CAT_ID = 'D' AND r.STATUS != 'C'
-		 ORDER BY MPHONE
-		
-	  `
+		 ORDER BY MPHONE`
+	} else {
+		sql = `/* Formatted on 3/22/2022 12:54:51 PM (QP5 v5.381) */
+		SELECT (SELECT p.ACC_TYPE_SHORT_NAME
+				  FROM AGENT_BANKING.PRODUCT_SETUP p
+				 WHERE p.ACC_TYPE_CODE = R.AC_TYPE_CODE)    AC_TYPE_CODE,
+			   round(SUM (BALANCE_M),2)                              CUSTOMER_CURRENT,
+			   round(SUM (
+				   (SELECT DB.BALANCE
+					  FROM AGENT_BANKING.DAILY_BALANCE_BAPPY_NEW DB
+					 WHERE     DB.MPHONE = R.MPHONE
+						   AND TRUNC (DB.BALANCE_DATE) =
+							   (SELECT TO_DATE (CURRENT_DATE - 1)    AS YESTERDAY_DATE
+								  FROM DUAL))),2)              CUSTOMER_YESTERDAY
+		  FROM AGENT_BANKING.REGINFO R
+		 WHERE R.STATUS != 'C' AND PMPHONE = ${param}
+	  GROUP BY AC_TYPE_CODE`
+	}
 
+	try {
 		return await qurrythis(sql)
 	} catch (e) {
 		console.log(e)

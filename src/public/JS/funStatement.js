@@ -63,7 +63,6 @@ const getstatement = async (key) => {
 
 	try {
 		await fetch(urlhead, headrequestOptions).then((response) => response.json()).then((payload) => {
-	
 			payload.map(
 				(
 					{
@@ -165,31 +164,63 @@ const getstatement = async (key) => {
 						<td class="text-tiny text-break" colspan="7"></td>
 						</tr>`
 		} else {
-			document.getElementById('output2').innerHTML = payload
-				.map(({ TRANS_NO, TRANS_DATE, DR_AMT, CR_AMT, PARTICULAR }, index) => {
-					/* Calculatation*/
-					oprningbalance += CR_AMT
-					oprningbalance -= DR_AMT
-					total_dr += DR_AMT
-					total_cr += CR_AMT
+			payload.map(({ TRANS_NO, TRANS_DATE, DR_AMT, CR_AMT, PARTICULAR }, index) => {
+				/* Calculatation*/
+				oprningbalance += CR_AMT
+				oprningbalance -= DR_AMT
+				total_dr += DR_AMT
+				total_cr += CR_AMT
 
-					return `<tr>
-						<td>${index + 1}</td>
-						<td class="text-tiny text-break">${moment(TRANS_DATE).format('lll')}</td>
-						<td class="text-tiny text-clip">${TRANS_NO}</td>
-						<td class="text-tiny">${DR_AMT.toLocaleString('en-BD', {
-							maximumFractionDigits: 2
-						})}</td>
-						<td class="text-tiny">${CR_AMT.toLocaleString('en-BD', {
-							maximumFractionDigits: 2
-						})}</td>
-						<td class="text-tiny ">${oprningbalance.toLocaleString('en-BD', {
-							maximumFractionDigits: 2
-						})}</td>
-						<td class="text-tiny text-break">${PARTICULAR}</td>
-						</tr>`
+				const mytable = document.getElementById('output2')
+				let newRow = document.createElement('tr')
+				//Index
+				let cell = document.createElement('td')
+				cell.classList.add('text-tiny')
+				cell.classList.add('text-break')
+				newRow.appendChild(cell)
+				cell.innerText = index + 1
+				//DATE
+				cell = document.createElement('td')
+				cell.classList.add('text-tiny')
+				cell.classList.add('text-break')
+				newRow.appendChild(cell)
+				cell.innerText = moment(TRANS_DATE).format('lll')
+
+				cell = document.createElement('td')
+				cell.classList.add('text-tiny')
+				cell.classList.add('text-clip')
+				newRow.appendChild(cell)
+				cell.innerText = TRANS_NO
+
+				cell = document.createElement('td')
+				cell.classList.add('text-tiny')
+				newRow.appendChild(cell)
+				cell.innerText = DR_AMT.toLocaleString('en-BD', {
+					maximumFractionDigits: 2
 				})
-				.join('')
+
+				cell = document.createElement('td')
+				cell.classList.add('text-tiny')
+				newRow.appendChild(cell)
+				cell.innerText = CR_AMT.toLocaleString('en-BD', {
+					maximumFractionDigits: 2
+				})
+
+				cell = document.createElement('td')
+				cell.classList.add('text-tiny')
+				newRow.appendChild(cell)
+				cell.innerText = oprningbalance.toLocaleString('en-BD', {
+					maximumFractionDigits: 2
+				})
+
+				cell = document.createElement('td')
+				cell.classList.add('text-tiny')
+				cell.classList.add('text-break')
+				newRow.appendChild(cell)
+				cell.innerText = PARTICULAR
+				mytable.appendChild(newRow)
+			})
+
 			/* for table footer*/
 			document.getElementById('output2').innerHTML += `<td class="text-bold" colspan="3">Total</td>
 					<td class="text-bold text-tiny">${total_dr.toLocaleString('en-BD', {
