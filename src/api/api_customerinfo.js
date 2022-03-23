@@ -2,8 +2,6 @@ const qurrythis = require('../apps/db')
 
 const customerinfo = async (key) => {
 	try {
-		let output
-
 		let sql = `/* Formatted on 2/17/2022 10:33:25 AM (QP5 v5.374) */
 		SELECT /* --------------  CUSTID FINDER --------------- */
 		
@@ -133,6 +131,18 @@ const customerinfo = async (key) => {
 		return e
 	}
 }
+
+const getimage = async (param) => {
+	sql = `SELECT DATA FROM AGENT_BANKING.IMAGE_DATA WHERE AC_NO = ${param} AND SL_NO = 1`
+	try {
+		const data = await qurrythis(sql)
+		return data
+	} catch (e) {
+		console.log('Error in function customerinfo ' + e)
+		return e
+	}
+}
+
 const customerallac = async (key) => {
 	try {
 		let output
@@ -200,13 +210,17 @@ const customerallac = async (key) => {
 
 		const custid = await qurrythis(sql)
 
-		sql = `/* Formatted on 3/22/2022 5:48:58 PM (QP5 v5.381) */
+		if (custid !== '' || custid !== null) {
+			sql = `/* Formatted on 3/22/2022 5:48:58 PM (QP5 v5.381) */
 SELECT MPHONE,
 			   REG_DATE,
 			   (select NAME FROM AGENT_BANKING.AC_STATUS WHERE S_NAME = r.STATUS)STATUS,
 			   BALANCE_M,
 			   LIEN_M,
-			   AC_TYPE_CODE,
+			   (SELECT p.ACC_TYPE_NAME
+				FROM AGENT_BANKING.PRODUCT_SETUP p
+			   WHERE p.ACC_TYPE_CODE = r.AC_TYPE_CODE)    AC_TYPE_CODE,
+			
 			   PMPHONE,
 			   FORM_SERIAL,
 			   DR_LINK_ACC,
@@ -216,11 +230,11 @@ SELECT MPHONE,
 			   AUTHO_DATE
 			   FROM agent_banking.reginfo r
 			   WHERE CUST_ID = ${custid[0].CUST_ID}`
-		// const customerInfo = await qurrythis(sql)
-		// const returner = output.concat(customerInfo)
-		// return returner
-		const data = await qurrythis(sql)
-		return data
+			const data = await qurrythis(sql)
+			return data
+		} else {
+			return null
+		}
 	} catch (e) {
 		console.log('Error in function customerinfo ' + e)
 		return e
@@ -229,7 +243,7 @@ SELECT MPHONE,
 const customernom = async (param) => {
 	try {
 		let sql = `SELECT * FROM AGENT_BANKING.NOMINEE_INFO where AC_NO = '${param}'`
-		console.log(sql)
+
 		const data = await qurrythis(sql)
 		return data
 	} catch (e) {
@@ -237,4 +251,4 @@ const customernom = async (param) => {
 		return e
 	}
 }
-module.exports = { customerinfo, customerallac, customernom }
+module.exports = { customerinfo, getimage, customerallac, customernom }

@@ -345,7 +345,7 @@ app.post('/transactionsreport', async (req, res) => {
 
 ******************************************************************/
 
-const { customerinfo, customerallac, customernom } = require('../api/api_customerinfo')
+const { customerinfo, customerallac, customernom, getimage } = require('../api/api_customerinfo')
 
 app.post('/customerinfo', async (req, res) => {
 	const data = await customerinfo(req.body.id)
@@ -357,6 +357,10 @@ app.post('/customeracinfo', async (req, res) => {
 })
 app.post('/customernom', async (req, res) => {
 	const data = await customernom(req.body.id)
+	res.send(data)
+})
+app.post('/getimage', async (req, res) => {
+	const data = await getimage(req.body.id)
 	res.send(data)
 })
 

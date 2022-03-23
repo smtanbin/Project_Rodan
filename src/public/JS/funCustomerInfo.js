@@ -50,6 +50,29 @@ const getNomi = async (param) => {
 		console.log(error)
 	}
 }
+const getimage = async (param) => {
+	const raw = JSON.stringify({
+		id: `${param}`
+	})
+	const requestOptions = {
+		method: 'POST',
+		headers: myHeaders,
+		body: raw,
+		redirect: 'follow'
+	}
+
+	try {
+		await fetch(`${apiserver}/getimage`, requestOptions).then((response) => response.blob()).then((payload) => {
+			console.log(payload)
+			const img = document.createElement('img')
+			const objectURL = URL.createObjectURL(payload)
+			img.src = objectURL
+			document.getElementById('img').appendChild(img)
+		})
+	} catch (error) {
+		console.log(error)
+	}
+}
 
 const custsearch = async () => {
 	document.getElementById('btn-loading').classList.add('loading')
@@ -64,7 +87,7 @@ const custsearch = async () => {
 	  </div>
 	  <div class="column col-4 card noboder bg-gray p-2 w100">
 		<h5 class="h5 text-primary text-clip">Image</h5>
-		<div class="loading"></div>
+		<div id="img"></div>
 	  </div>
 	</div>
 	<div class="columns">
@@ -155,9 +178,9 @@ const custsearch = async () => {
 		body: raw,
 		redirect: 'follow'
 	}
+	await getimage(id)
 	try {
 		await fetch(`${apiserver}/customerinfo`, requestOptions).then((response) => response.json()).then((payload) => {
-			console.log(payload)
 			payload.map((data) => {
 				const {
 					CUSTOMER_NAME,
@@ -187,7 +210,7 @@ const custsearch = async () => {
 			Mother Name: ${MOTHER_NAME}<br/>
 			Spouse Name: ${SPOUSE_NAME}<br/>
 			NID: ${NID_NO}<br/>
-			Birthday: ${DOB}<br/>
+			Birthday: ${moment(DOB).format('ll')}<br/>
 			</p>
 			<h6 class="h6 text-primary">Additional Information<h5/>
 			<p class=" text-tiny">
