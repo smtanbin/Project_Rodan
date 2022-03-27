@@ -1,5 +1,5 @@
 const { Router } = require('express')
-const { doexist, holyday } = require('../api/api.js')
+const { doexist, holyday, agentlist } = require('../api/api.js')
 
 const { pbslist, utilityinfohead, utilityinfodtl, utilityinfosummary } = require('../api/api_utilitybill.js')
 const { remittancehouselist, remittance, remittancesummary, remittanceRequest } = require('../api/api_remittance')
@@ -42,6 +42,10 @@ app.use((req, res, next) => {
 
 app.get('/holyday', async (req, res) => {
 	const data = await holyday()
+	res.send(data)
+})
+app.get('/agentlist', async (req, res) => {
+	const data = await agentlist()
 	res.send(data)
 })
 

@@ -17,7 +17,7 @@ const businessinfo = async (fromm, tom) => {
 	}
 
 	/*api server url is in environment file*/
-	const apiserver = '/api/'
+	const apiserver = ':3000/api/'
 
 	/* Requesting part start here. */
 	const myHeaders = new Headers()
@@ -160,7 +160,7 @@ const businessinfoheader = async () => {
 	// console.log(month)
 
 	/*api server url is in environment file*/
-	const apiserver = '/api/'
+	const apiserver = ':3000/api/'
 
 	/* Requesting part start here. */
 	const myHeaders = new Headers()

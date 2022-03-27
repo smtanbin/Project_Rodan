@@ -1,5 +1,6 @@
 /*api server url is in environment file*/
-const apiserver = '/api/'
+// const apiserver = '/api/'
+
 /* Requesting part start here. */
 const myHeaders = new Headers()
 myHeaders.append('Content-Type', 'application/json')

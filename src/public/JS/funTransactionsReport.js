@@ -1,15 +1,13 @@
 /*api server url is in environment file*/
-const apiserver = '/api/'
+//const apiserver = '/api/'
 
 /* Requesting part start here. */
 const myHeaders = new Headers()
 myHeaders.append('Content-Type', 'application/json')
 myHeaders.append('Access-Control-Allow-Origin', '*')
 
-
 const init = async () => {
-
-    const url = `${apiserver}/transactionsreport`
+	const url = `${apiserver}/transactionsreport`
 	const rawhead = JSON.stringify({
 		key: `${key}`,
 		date: `${fromdate}`
@@ -22,7 +20,5 @@ const init = async () => {
 		redirect: 'follow'
 	}
 
-    await fetch(urlbody, bodyrequestOptions).then((response) => response.json()).then((payload) => {
-
-    })
+	await fetch(urlbody, bodyrequestOptions).then((response) => response.json()).then((payload) => {})
 }

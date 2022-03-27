@@ -213,4 +213,4 @@ const { isNullOrUndefined } = require('util')
 const port = process.env.PORT || 3000
 /* Express Init*/
 app.listen(port)
-console.log('Starting Morathi Server is listening on port ' + port)
+console.log('Server is listening on port: ' + port)

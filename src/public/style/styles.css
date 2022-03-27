@@ -69,8 +69,9 @@ h3 {
 
 :root {
 	/* --frost: rgba(255, 255, 255, 0.555); */
-	--frost: rgba(255, 255, 255, 0.404);
-	--default-bg-blur: blur(9px);
+	--frost-bright: rgba(255, 255, 255, 0.5);
+	--frost-dark: rgba(31, 31, 31, 0.5);
+	--default-bg-blur: blur(10px);
 }
 
 #navbar {
@@ -90,13 +91,29 @@ h3 {
 } */
 
 .bg-frost {
-	background-color: var(--frost-dark);
+	background-color: var(--frost-bright);
 	backdrop-filter: var(--default-bg-blur);
+	-webkit-backdrop-filter: var(--default-bg-blur);
+	color: #000;
+}
+.bg-frost-dark {
+	background-color: var(--frost-dark) !important;
+	backdrop-filter: var(--default-bg-blur);
+	-webkit-backdrop-filter: var(--default-bg-blur);
+	/* color: rgb(255, 255, 255); */
+}
+
+.bg-frost-grto {
+	background-color: var(--frost-bright);
+	color: #000;
+}
+.bg-frost-grto {
+	background-color: var(--frost-dark);
 	color: #000;
 }
 
 .bg-black {
-	background-color: black !important;
+	background-color: var(--frost-dark) !important;
 }
 
 .bg-none {

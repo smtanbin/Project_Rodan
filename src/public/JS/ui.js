@@ -1,22 +1,5 @@
-// function getCookie(name) {
-// 	var dc = document.cookie
-// 	var prefix = name + '='
-// 	var begin = dc.indexOf('; ' + prefix)
-// 	if (begin == -1) {
-// 		begin = dc.indexOf(prefix)
-// 		if (begin != 0) return null
-// 	} else {
-// 		begin += 2
-// 		var end = document.cookie.indexOf(';', begin)
-// 		if (end == -1) {
-// 			end = dc.length
-// 		}
-// 	}
-// 	// because unescape has been deprecated, replaced with decodeURI
-// 	//return unescape(dc.substring(begin + prefix.length, end));
-// 	return decodeURI(dc.substring(begin + prefix.length, end))
-// }
-
+/* #######################  Dark Mode ############################# */
+/*Dark Mode Tigger Switch */
 const darkmode = () => {
 	let myCookie = Cookies.get('darkmode')
 	console.log(myCookie)
@@ -32,12 +15,15 @@ const darkmode = () => {
 	}
 }
 
+/*Dark Mode Check & update tigger */
 const appinit = () => {
 	let darkmodeCookie = Cookies.get('darkmode')
 	if (darkmodeCookie != undefined || darkmodeCookie != null) {
 		document.getElementById('darkmode').setAttribute('checked', 'YES')
+		document.getElementById('navbar').classList.add('bg-frost-dark')
 	} else {
 		document.getElementById('darkmode').removeAttribute('checked')
+		document.getElementById('navbar').classList.remove('bg-frost-dark')
 	}
 }
 

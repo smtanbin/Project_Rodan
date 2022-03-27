@@ -18,16 +18,43 @@
   <div class="container">
     <!-- normal input group with button -->
     <div style="display: flex; justify-content: center; align-items: center; flex-direction: column;">
-      <div class="input-group">
 
+      <!-- dropdown button group -->
+      <div class="dropdown">
+        <div class="btn-group">
+          <a href="#" class="btn dropdown-toggle" tabindex="0">
+            Agent List
+            <i class="icon icon-caret"></i>
+          </a>
+
+          <!-- menu component -->
+          <ul class="menu" id="agentList"></ul>
+          <button class="btn btn-primary input-group-btn disabled" style="margin-left: auto;" id="btnprint"
+            onclick="printArea()">Print
+          </button>
+        </div>
+      </div>
+
+
+      <!-- <div class="input-group">
+                <button class="btn btn-primary-link input-group-btn" id="btn-csv" onclick="getCSV()">Remittance
+                    Report CSV
+                </button>
+                <button class="btn btn-secondary-link input-group-btn" id="btn-loading-1"
+                    onclick="remittancesummary()">Remittance Summary Report
+                </button>
+                <button class="btn btn-primary input-group-btn disabled" style="margin-left: auto;" id="btn-print"
+                    onclick="printArea()">Print
+                </button>
         <input type="text" id="key" class="form-input" placeholder="Type Agent Account Number">
         <button class="btn btn-primary input-group-btn" id="btn-loading" onclick="getAccountinfo()"> Search</button>
         <button class="btn btn-primary input-group-btn disabled" onclick="printArea()" id="btnprint">Print</button>
-      </div>
+      </div> -->
     </div>
     <div class="container">
       <br>
       <div class="columns" id="output">
+
 
 
       </div>

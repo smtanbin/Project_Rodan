@@ -109,40 +109,46 @@ const showmore = (id) => {
 // 	document.getElementById(id).classList.remove('displaynull')
 // }
 
-const bellIcon = (notificationcount) => {
-	// notificationcount += notificationcount
-	// if (notificationcount === 0 || notificationcount === null) {
+// const bellIcon = (notificationcount) => {
+// 	// notificationcount += notificationcount
+// 	// if (notificationcount === 0 || notificationcount === null) {
 
-	if (notificationcount === 0 || notificationcount === undefined) {
-		document.getElementById(
-			'navbtn'
-		).innerHTML = `<div class="chip text-dark p-1"><i class="material-icons ">notifications_none</i></div>`
-	} else {
-		document.getElementById(
-			'navbtn'
-		).innerHTML = `<div class="chip text-error p-1"><i class="material-icons ">notifications_active</i> New Notification</div>`
-	}
-	// } else {
-	// 	document.getElementById('navbtn').innerHTML = ` <span class="badge" data-badge="${notificationcount}">
-	//     <i class="material-icons">notifications_active</i>
-	//     </span>`
-	// }
-}
-bellIcon()
+// 	if (notificationcount === 0 || notificationcount === undefined) {
+// 		document.getElementById(
+// 			'navbtn'
+// 		).innerHTML = `<div class="chip text-dark p-1"><i class="material-icons ">notifications_none</i></div>`
+// 	} else {
+// 		document.getElementById(
+// 			'navbtn'
+// 		).innerHTML = `<div class="chip text-error p-1"><i class="material-icons ">notifications_active</i> New Notification</div>`
+// 	}
+// 	// } else {
+// 	// 	document.getElementById('navbtn').innerHTML = ` <span class="badge" data-badge="${notificationcount}">
+// 	//     <i class="material-icons">notifications_active</i>
+// 	//     </span>`
+// 	// }
+// }
+// bellIcon()
 
 const logout = () => {
 	document.cookie = 'auth' + '=; Max-Age=-99999999;'
 	window.location.href = '/'
 }
 
+/*
+Browser compatibility Issue  bug 1578503
+https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter
+
+	"backdrop-filter" not working
+
+	To solve it bg-frost replaced with bg-gray
+*/
+
 const isFirefox = navigator.userAgent.toLowerCase().indexOf('firefox') > -1
 if (navigator.userAgent.toLowerCase().indexOf('firefox') > -1) {
 	// window.alert('Firefox not supported')
-	document.getElementById('dispasmsg').innerHTML = `
-
-	Due to Gecko rendering engine use by Mozilla some function might not work.
-	We advice you to use and Chromium based browser such as Google Chorme, Edge, Brave .
-`
+	document.getElementById('navbar').classList.remove('bg-frost')
+	document.getElementById('navbar').classList.add('bg-gray')
 }
 
 const sendNotification = (titel, subtitel, time, body, action) => {

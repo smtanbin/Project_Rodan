@@ -69,27 +69,27 @@
 
             <li class="nav-item "><a href="/report/accountStatment">Statment</a></li>
 
+
+            <li class="nav-item"><a href="/report/accountInfo">Term Account Status</a></li>
+
             <% if(role==='ADMIN' || role==='APPROVAL' ){ %>
-                <li class="nav-item"><a href="/report/accountInfo">Account Status</a></li>
+                <li class="nav-item"><a href="/report/businessinfo">Account Info</a></li>
+
                 <% } %>
                     <% if(role==='ADMIN' || role==='APPROVAL' ){ %>
-                        <li class="nav-item"><a href="/report/businessinfo">Account Info</a></li>
+                        <li class="nav-item"><a href="/report/remittanceReport">Remittance Report</a>
+                        </li>
 
                         <% } %>
+
+                            <li class="nav-item"><a href="/report/utilityreport">Utility Report</a>
+                            </li>
+
+
                             <% if(role==='ADMIN' || role==='APPROVAL' ){ %>
-                                <li class="nav-item"><a href="/report/remittanceReport">Remittance Report</a>
-                                </li>
+                                <li class="nav-item"><a href="/report/mis">MIS</a></li>
 
                                 <% } %>
-
-                                    <li class="nav-item"><a href="/report/utilityreport">Utility Report</a>
-                                    </li>
-
-
-                                    <% if(role==='ADMIN' || role==='APPROVAL' ){ %>
-                                        <li class="nav-item"><a href="/report/mis">MIS</a></li>
-
-                                        <% } %>
 
 
         </ul>

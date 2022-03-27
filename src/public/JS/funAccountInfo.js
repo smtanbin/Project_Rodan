@@ -1,6 +1,6 @@
 // accountInfo
 /*api server url is in environment file*/
-const apiserver = '/api/'
+//const apiserver = '/api/'
 
 /* Requesting part start here. */
 const myHeaders = new Headers()
@@ -12,9 +12,28 @@ It connect via url which request recived by routes/index as rest Get request
 Then it call apistatement.js from apps folder.
 */
 
-const getAccountinfo = async () => {
-	document.getElementById('btn-loading').classList.add('loading')
-	const value = document.getElementById('key').value
+const agentList = async () => {
+	/* Post request body content*/
+	const url = `${apiserver}agentlist`
+
+	const requestOptions = {
+		method: 'GET',
+		headers: myHeaders,
+		redirect: 'follow'
+	}
+	// agentlist
+
+	await fetch(url, requestOptions).then((response) => response.json()).then((payload) => {
+		payload.map(({ MPHONE, NAME }) => {
+			document.getElementById(
+				'agentList'
+			).innerHTML += `<li class="menu-item text-tiny w100"><a onclick="getAccountinfo('${MPHONE}','${NAME}')">${NAME}</a></li>`
+		})
+	})
+}
+agentList()
+
+const getAccountinfo = async (value, titel) => {
 	/* Post request body content*/
 	const url = `${apiserver}accountInfo`
 	const rawhead = JSON.stringify({
@@ -30,9 +49,10 @@ const getAccountinfo = async () => {
 
 	document.getElementById('output').innerHTML = `<div class="col-12 container m-2 p-2">
     <div class="px-2 container">
-       <div class="card w100 columns col-12 p-1 bg-gray">
-          <h6 class="p-centered text-tiny text-bold my-2">Account Information</h6>
-          <div class="text-tiny">Agent : ${value}</div>
+       <div class="card w100 columns col-12 p-2  bg-gray">
+          <h5 class="p-centered text-tiny text-bold my-2 h5">Term Account Information</h5>
+          <div class="text-tiny"><b>Titel:</b> ${titel} <br/>
+          <b>Agent:</b> ${value}</div>
        </div>
        <div class="columns col-12 card p-1">
           <table class="table table-striped table-cluster">
@@ -84,15 +104,15 @@ const getAccountinfo = async () => {
 					) => {
 						return `<tr>
                     <td class="text-tiny">${SLNO}</td>
-                    <td class="text-tiny">${moment(OPENINGDATE).format('lll')}</td>
+                    <td class="text-tiny">${moment(OPENINGDATE).format('ll')}</td>
                     <td class="text-tiny">${MPHONE}</td>
                     <td class="text-tiny">${NAME}</td>
                     <td class="text-tiny">${CUSTOMERID}</td>
                     <td class="text-tiny">+88${CONTACT}</td>
                     <td class="text-tiny">${ACSTATUS}</td>
                     <td class="text-tiny">${REGSTATUS}</td>
-                    <td class="text-tiny">${moment(MATURITYDATE).format('lll')}</td>
-                    <td class="text-tiny">${moment(RENEWDATE).format('lll')}</td>
+                    <td class="text-tiny">${moment(MATURITYDATE).format('ll')}</td>
+                    <td class="text-tiny">${moment(RENEWDATE).format('ll')}</td>
                     <td class="text-tiny">${INSTALLMENTAMOUNT}</td>
                     <td class="text-tiny">${DUE}</td>
                     <td class="text-tiny">${PAYABLE}</td>
@@ -102,7 +122,6 @@ const getAccountinfo = async () => {
 				.join('')
 		})
 
-		document.getElementById('btn-loading').classList.remove('loading')
 		document.getElementById('btnprint').classList.remove('disabled')
 	} catch (e) {
 		document.getElementById('output').innerHTML = `<div class="empty col-12 w100">
@@ -113,6 +132,5 @@ const getAccountinfo = async () => {
 
 			</div>`
 		console.error(e)
-		document.getElementById('btn-loading').classList.remove('loading')
 	}
 }

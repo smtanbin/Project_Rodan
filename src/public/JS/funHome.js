@@ -1,7 +1,7 @@
 // const { raw } = require('express')
 
 /*api server url is in environment file*/
-const apiserver = '/api/'
+//const apiserver = '/api/'
 
 /* Requesting part start here. */
 const myHeaders = new Headers()
@@ -293,8 +293,8 @@ const customerstatus = async () => {
 		let style = 'text-dark'
 		payload.map(({ MPHONE, ACCOUNT_NAME, CUSTOMER_CURRENT, CUSTOMER_YESTERDAY }) => {
 			local_mphone += `${MPHONE},`
-			loacl_cc += `${(CUSTOMER_CURRENT / 100000).toFixed(2)},`
-			loacl_cy += `${(CUSTOMER_YESTERDAY / 100000).toFixed(2)},`
+			loacl_cc += `${CUSTOMER_CURRENT.toFixed(2)},`
+			loacl_cy += `${CUSTOMER_YESTERDAY.toFixed(2)},`
 			localCustomerToday += CUSTOMER_CURRENT
 			localCustomerYday += CUSTOMER_YESTERDAY
 
@@ -363,7 +363,6 @@ const customerstatus = async () => {
 			}
 		})
 	})
-	document.getElementById('loading').remove()
 }
 /*
 
@@ -544,13 +543,16 @@ const timer = () => {
 	}
 }
 
+const removeLoading = () => {
+	document.getElementById('loading').remove()
+}
+
 /******************************************************************************************
 *							
 *
 									Function Init
 *
 */
-
 /* Timeer Function*/
 timer()
 /* Timeer Function*/
@@ -564,10 +566,22 @@ accountStatus()
 /* Balance Comparidun Function*/
 balancePerformance()
 /* 
-	Customer calling
-	! Always buttom
+Customer calling
 */
 customerstatus()
-setInterval(function() {
-	location.reload()
-}, 780000)
+removeLoading()
+
+setInterval(() => {
+	/* Timeer Function*/
+	timer()
+	pichat()
+	/* Agent Status Function*/
+	agentstatus()
+	/* Account Status Function*/
+	accountStatus()
+	/* Balance Comparidun Function*/
+	balancePerformance()
+	/*  Customer calling */
+	customerstatus()
+}, 240000)
+// location.reload()
