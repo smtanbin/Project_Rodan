@@ -78,6 +78,20 @@ app.get('/customerInfo', async (req, res) => {
 		res.render('./pages/customerInfo', { role: ROLE, userid: USERNAME, owner: ROOT, darkmode: darkModeCon })
 	})
 })
+app.get('/kycupdate', async (req, res) => {
+	const token = req.cookies.auth
+	const { user } = jwt_decode(token)
+	const data = await roleCheck(user)
+
+	data.map(({ ROLE, USERNAME, ROOT }) => {
+		res.locals = {
+			userid: USERNAME,
+			title: 'Customer Info'
+		}
+		const darkModeCon = req.cookies.darkmode
+		res.render('./pages/kycupdate', { role: ROLE, userid: USERNAME, owner: ROOT, darkmode: darkModeCon })
+	})
+})
 // Report Panal
 /********************************************************************************
  */

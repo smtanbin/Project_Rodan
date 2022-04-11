@@ -5,33 +5,106 @@ const printArea = async () => {
 	const printday = Date()
 	const username = document.getElementById('username').getAttribute('data-content')
 
-	const head = `<head>
+	const head = `
+	
+	<head>
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>
-	  download
+	  Download ${printday}
 	</title>
-
 	<link rel="stylesheet" href="/style/styles.css">
 	<link rel="stylesheet" href="/style/spectre/spectre.css">
 	<link rel="stylesheet" href="/style/spectre/spectre-icons.css">
 	<link rel="stylesheet" href="/style/spectre/spectre-exp.css">
 
-  </head>
-  <body class="m-2">
-  
-  `
 
-	const header = `<div class="columns">
-  <div class="column col-9">
-  <img src="/img/Standardbankltd-color.svg" style="hight:" 25px";" class="img-responsive py-2 column col-5">
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"
+	integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg=="
+	crossorigin="anonymous" referrerpolicy="no-referrer" defar></script>
+
+
+  </head>
+  <body class="m-2" id="renderthis">
+  <div class="columns">
+  <div class="column col-8">
+<img src="/img/Standardbankltd.png" style="hight:" 35px";" class="img-responsive py-2 column col-8">
   </div>
-  <div class="column col-3"><div class="column" style="roght=0"><h5 class="text-clip h5">Agent Banking</h5></div></div>
+  <div class="column col-4"><div class="column" style="roght=0"><div class="text-tiny"><b>Agent Banking Division</b><br/>
+  <small>Standard Bank Ltd, Head Office<br/> Islam Chamber Building (8th Floor) 125/A Motijheel C/A, Dhaka-1000, Bangladesh <br/>Tel:+8802-9578385, 9612316428 +8801709654772-3 <br/>Email:agentbanking@standardbankbd.com <br/> www.standardbankbd.com</small>
+  </div>
+  </div></div>
 </div>`
 
 	const footer = `<div class="col-12 w100  p-2 mt-2 text-tiny">
-	
+	<b>Genarated by Id:</b> ${username}
+	<b>Print Date:</b> ${printday}
+	<p class="p-centered text-small">This is an electronically generated report, hence does not require a signature.</p>
+	</div>
+	<div class="text-center p-centered">
+	<h6 class="text-bold h6">Thanks for banking with us.</h6>
+	<p class="text-tiny text-left text-break">The Customer should examine promptly the statement received and notify the bank in writing within 15 calendar days after the statement is mailed,
+   transmitted, or otherwise made available to customer of any errors, discrepancies or irregularities detected, failing which the statement will deem to
+   be correct.This is an electronically generated report, hence does not require a signature.
+   </p>
+   <div class="card bg-gray w100">
+   <br/><a href="https://www.standardbankbd.com" class="text-gray text-tiny">Copyright © 2022 Standard Bank Ltd</a>
+   </div>
+   </div>
+ <script> 
+	const load = () => {
+		focus()
+		print() 
+		} 
+	window.onload = load; 
+ </script>
+</body>`
+	const printContent = document.getElementById('output')
+	const WinPrint = window.open('', '', 'width=2480px,height=3508px')
+	WinPrint.document.write(head + printContent.innerHTML + footer)
+	WinPrint.document.close()
+	WinPrint.focus()
+
+	//Bring out the print popup
+}
+const pdfdl = async () => {
+	const printday = Date()
+	const username = document.getElementById('username').getAttribute('data-content')
+
+	const head = `
+	<print id="print'>
+	<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>
+	  Download ${printday}
+	</title>
+	<link rel="stylesheet" href="/style/styles.css">
+	<link rel="stylesheet" href="/style/spectre/spectre.css">
+	<link rel="stylesheet" href="/style/spectre/spectre-icons.css">
+	<link rel="stylesheet" href="/style/spectre/spectre-exp.css">
+
+
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"
+	integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg=="
+	crossorigin="anonymous" referrerpolicy="no-referrer" defar></script>
+
+
+  </head>
+  <body class="m-2" id="renderthis">
+  <div class="columns">
+  <div class="column col-8">
+<img src="/img/Standardbankltd.png" style="hight:" 35px";" class="img-responsive py-2 column col-8">
+  </div>
+  <div class="column col-4"><div class="column" style="roght=0"><div class="text-tiny"><b>Agent Banking Division</b><br/>
+  <small>Standard Bank Ltd, Head Office<br/> Islam Chamber Building (8th Floor) 125/A Motijheel C/A, Dhaka-1000, Bangladesh <br/>Tel:+8802-9578385, 9612316428 +8801709654772-3 <br/>Email:agentbanking@standardbankbd.com <br/> www.standardbankbd.com</small>
+  </div>
+  </div></div>
+</div>`
+
+	const footer = `<div class="col-12 w100  p-2 mt-2 text-tiny">
 	<b>Genarated by Id:</b> ${username}
 	<b>Print Date:</b> ${printday}
 	<p class="p-centered text-small">This is an electronically generated report, hence does not require a signature.
@@ -44,28 +117,29 @@ const printArea = async () => {
 	   be correct.This is an electronically generated report, hence does not require a signature. 
 	</p>
 	<div class="card bg-gray w100">
-	   <span class="text-tiny">
-	   Agent Banking Division <br/>
-	   Standard Bank Ltd. Head Office, Metropolitan Chamber Building (3rd Floor) 122-124 Motijheel C/A, Dhaka-1000, Bangladesh <br/>Tel:+8802-9578385 +8802 9612-316428 +8801 709-654772 +8801 709-654773 Email: agentbanking@standardbankbd.com
-	   </span>
 	   <br/><a href="https://www.standardbankbd.com" class="text-gray text-tiny">Copyright © 2022 Standard Bank Ltd</a>
 	</div>
  </div>
+
  <script> 
-	const load = () => {
-		focus()
-		print() 
-		} 
-	window.onload = load; 
+		let element = document.getElementById('renderthis');
+		html2pdf(element, {
+		  margin:       10,
+		  filename:     'Download ${printday}.pdf',
+		  image:        { type: 'png', quality: 1 },
+		  html2canvas:  { scale: 2, logging: true, dpi: 192 },
+		  jsPDF:        { unit: 'mm', format: 'A4', orientation: 'portrait' }
+		}).set({
+			pagebreak: { mode: 'avoid-all',before: 'tr' }
+		  });
  </script>
 </body>
-
+</print>
 `
 	const printContent = document.getElementById('output')
 	const WinPrint = window.open('', '', 'width=2480px,height=3508px')
-	WinPrint.document.write(head + header + printContent.innerHTML + footer)
+	WinPrint.document.write(head + printContent.innerHTML + footer)
 	WinPrint.document.close()
-	// WinPrint.focus()
 
 	//Bring out the print popup
 }

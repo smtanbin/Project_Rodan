@@ -1,6 +1,3 @@
-/*api server url is in environment file*/
-const apiserver = ':3000/api/'
-
 /* Requesting part start here. */
 const myHeaders = new Headers()
 myHeaders.append('Content-Type', 'application/json')
@@ -14,121 +11,6 @@ const redAlart = (input) => {
 
 /* This is a color chart for pie chat*/
 const barColors = [ '#F50F0F', '#2285F5', '#9064F5', '#24F490', '#F5BC58', '#F59FD7', '#AA9FF5', '#2596be', '#A9016E' ]
-
-/* Account Status give a graf with table data*/
-const accountStatus = async () => {
-	/* Post request body content*/
-	const url = `${apiserver}accountStatus`
-	const requestOptions = {
-		method: 'GET',
-		headers: myHeaders,
-		redirect: 'follow'
-	}
-
-	// Init array for creating array
-	let calMphone = 0
-	let calOpenToday = 0
-	let calOpenYesterday = 0
-	let calCloseToday = 0
-	let calCloseYesterday = 0
-	let totalOpenToday = 0
-	let totalOpenYesterday = 0
-	let totalCloseToday = 0
-	let totalCloseYesterday = 0
-	let totalAllAccount = 0
-
-	await fetch(url, requestOptions).then((response) => response.json()).then((payload) => {
-		payload.map(({ OPENYESTERDAY, OPENTODAY, ALLACCOUNT, PMPHONE, CLOSETODAY, CLOSEYESTERDAY }) => {
-			calMphone += `${PMPHONE},`
-			calOpenToday += `${OPENTODAY},`
-			calCloseYesterday = `${CLOSEYESTERDAY},`
-			calOpenYesterday += `${OPENYESTERDAY},`
-			calCloseToday += `${CLOSETODAY},`
-			totalOpenToday += OPENTODAY
-			totalOpenYesterday += OPENYESTERDAY
-			totalCloseToday += CLOSETODAY
-			totalCloseYesterday += CLOSEYESTERDAY
-			totalAllAccount += ALLACCOUNT
-
-			document.getElementById('accountStatusTable').innerHTML += `<tr>
-		<td class="text-tiny">${PMPHONE}</td>
-		<td class="text-tiny">${OPENTODAY}</td>
-		<td class="text-tiny">${CLOSETODAY}</td>
-		<td class="text-tiny">${OPENYESTERDAY}</td>
-		<td class="text-tiny">${CLOSEYESTERDAY}</td>
-		<td class="text-tiny">${ALLACCOUNT}</td>
-	  </tr>`
-		})
-		document.getElementById('accountStatusTable').innerHTML += `<tr>
-		<td class="text-tiny text-bold text-primary">Total</td>
-		<td class="text-tiny text-bold text-primary">${totalOpenToday}</td>
-		<td class="text-tiny text-bold text-primary">${totalCloseToday}</td>
-		<td class="text-tiny text-bold text-primary">${totalOpenYesterday}</td>
-		<td class="text-tiny text-bold text-primary">${totalCloseYesterday}</td>
-		<td class="text-tiny text-bold text-primary">${totalAllAccount}</td>
-	  </tr>`
-
-		let arrMphone = calMphone.split(',')
-		let arrOpenToday = calOpenToday.split(',')
-		let arrOpenYesterday = calOpenYesterday.split(',')
-		let arrCloseToday = calCloseToday.split(',')
-		let arrCloseYesterday = calCloseYesterday.split(',')
-
-		new Chart('accountStatus', {
-			type: 'line',
-			data: {
-				labels: arrMphone,
-				datasets: [
-					{
-						label: 'New Account Today',
-						data: arrOpenToday,
-						borderColor: '#00C746',
-						// backgroundColor: '#00C746',
-						tension: 0,
-						fill: true
-					},
-					{
-						data: arrOpenYesterday,
-						label: 'New Account Yesterday',
-						borderColor: '#2596be',
-						// backgroundColor: '#2596be',
-						tension: 0,
-						fill: true
-					},
-					{
-						data: arrCloseToday,
-						label: 'Close Account Today',
-						borderColor: '#C72302',
-						// backgroundColor: '#C72302',
-						tension: 0,
-						fill: true
-					}
-				]
-			},
-			options: {
-				layout: {
-					padding: 5
-				},
-				legend: { display: true, text: 'Today' },
-				title: {
-					display: false,
-					position: 'top',
-					text: 'Agent Account Status'
-				},
-				scales: {
-					yAxes: [
-						{
-							ticks: {
-								suggestedMin: 0,
-								suggestedMax: 5
-							}
-						}
-					]
-				}
-			}
-		})
-	})
-}
 
 /* Pie Chart*/
 
@@ -577,8 +459,7 @@ pichat(owner)
 // dailydrcr()
 /* Agent Status Function*/
 agentstatus(owner)
-/* Account Status Function*/
-accountStatus()
+
 /* Balance Comparidun Function*/
 balancePerformance()
 /* 

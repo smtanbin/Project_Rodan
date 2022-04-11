@@ -26,14 +26,40 @@
                 <input type="number" id="key" class="form-input" placeholder="Type Account Number">
                 <button class="btn btn-primary input-group-btn" onclick="statement()" id="btn-loading">Search
                 </button>
-                <button class="btn btn-primary input-group-btn disabled" onclick="printArea()" id="btnprint">Print
+                <button class="btn btn-secondary input-group-btn d-none" onclick="printArea()" id="btnprint">Print
+                </button>
+                <button class="btn btn-secondary input-group-btn d-none" style="margin-left: auto;" id="btndownload"
+                    onclick="pdfdl()">Download
                 </button>
             </div>
         </div>
 
     </div>
 
+    <style>
+        .empty-header,
+        .empty-footer {
+            height: 100px
+        }
+
+        .header,
+        .footer {
+            position: fixed;
+            height: 100px;
+            top: 0;
+        }
+
+        .footer {
+            bottom: 0
+        }
+    </style>
+
+
+
     <div data-aos="zoom-in" class="container">
+
+
+
 
         <div class="columns" id="output">
 

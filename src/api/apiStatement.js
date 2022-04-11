@@ -75,6 +75,15 @@ const statementBody = async (fromdate, todate, key) => {
 						   FROM AGENT_BANKING.ABS_RTGS_TRANSACTION_DST C
 						  WHERE C.ST_DOCNUM = P.TRANS_NO),
 						'RTGS Recived From a Unknown Bank')
+
+						WHEN CODE = 'DS'
+						THEN
+							NVL (
+								(SELECT 'Refund to Bank. Remarks: "' || REMARKS ||'"' FROM AGENT_BANKING.TBL_BD_STATUS TBL
+								  WHERE TBL.TRANNO = P.TRANS_NO)
+								  ,'Refund to Bank')
+
+
 				WHEN CODE = 'EFTC'
 				THEN
 					NVL ((SELECT 'Eft Recived From Bank ' || ORBANKRT

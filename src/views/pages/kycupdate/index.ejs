@@ -1,0 +1,37 @@
+<main class="content m-2">
+
+
+  <ul class="breadcrumb">
+    <li class="breadcrumb-item">
+      <a href="/">Home</a>
+    </li>
+    <li class="breadcrumb-item">
+      <a href="/kycupdate">Sector Code Update</a>
+    </li>
+
+  </ul>
+  <div class="hero ">
+    <div class="hero-body">
+      <h1 class="text-primary">Sector Code Update</h1>
+    </div>
+  </div>
+  <div class="container">
+    <!-- normal input group with button -->
+    <div style="display: flex; justify-content: center; align-items: center; flex-direction: column;">
+      <div class="input-group">
+
+        <input type="number" maxlength="11" id="acno" class="form-input" placeholder="Type Account Number">
+        <button class="btn btn-primary input-group-btn" id="btn-loading" onclick="getkyc()"> Search</button>
+        <a class="btn input-group-btn" id="btn-loading" href="/kycupdate">Refrash</a>
+      </div>
+    </div>
+    <div class="container">
+
+
+      <br>
+      <div class="columns" id="output">
+      </div>
+
+
+      <script src="/js/funkycupdate.js"></script>
+</main>

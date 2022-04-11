@@ -22,16 +22,29 @@
       <!-- dropdown button group -->
       <div class="dropdown">
         <div class="btn-group">
-          <a href="#" class="btn dropdown-toggle" tabindex="0">
-            Agent List
-            <i class="icon icon-caret"></i>
-          </a>
+          <% if(role==='ADMIN' || role==='APPROVAL' ){ %>
+            <a href="#" class="btn dropdown-toggle" tabindex="0">
+              Agent List
+              <i class="icon icon-caret"></i>
+            </a>
+            <!-- menu component -->
+            <ul class="menu" id="agentList"></ul>
+            <% } %>
+              <% if(role==="USER" || role==="AGENT" ){ %>
 
-          <!-- menu component -->
-          <ul class="menu" id="agentList"></ul>
-          <button class="btn btn-primary input-group-btn disabled" style="margin-left: auto;" id="btnprint"
-            onclick="printArea()">Print
-          </button>
+
+                <button class="btn btn-primary input-group-btn" style="margin-left: auto;"
+                  onclick="getAccountinfo('<%= owner %>','<%= owner %>')">
+                  Show Status
+                </button>
+
+                <% } %>
+
+
+                  <button class="btn btn-primary input-group-btn disabled" style="margin-left: auto;" id="btnprint"
+                    onclick="printArea()">Print
+                  </button>
+
         </div>
       </div>
 
@@ -64,4 +77,9 @@
   </div>
   </div>
   <script src="/js/funAccountInfo.js"></script>
+  <% if(role==='ADMIN' || role==='APPROVAL' ){ %>
+    <script>
+      agentList()
+    </script>
+    <% } %>
 </main>

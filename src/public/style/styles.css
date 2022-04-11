@@ -26,7 +26,9 @@
 	src: local('Material Icons'), local('MaterialIcons-Regular'),
 		url(./material/font/MaterialIcons-Regular.ttf) format('truetype');
 }
-
+html {
+	scroll-behavior: smooth;
+}
 .material-icons {
 	font-family: 'Material Icons';
 	font-weight: normal;
@@ -141,9 +143,6 @@ h3 {
 	box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
 }
 
-.card {
-	/* box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px; */
-}
 .noboder {
 	border: none !important;
 }
@@ -178,7 +177,7 @@ h3 {
 	/* background-color: #eeeeee; */
 	/* background-color: #f8f8f831; */
 	padding: 90px 0 0 10px;
-	/* overflow-y: scroll; */
+	overflow-y: scroll;
 }
 #sidenav span {
 	transition: ease-in-out;
@@ -197,6 +196,9 @@ h3 {
 	align-items: center;
 	flex-direction: row;
 }
-.text-tiny {
+/* .text-tiny {
 	font-size: .8em;
+} */
+.text-micro {
+	font-size: .5rem !important;
 }

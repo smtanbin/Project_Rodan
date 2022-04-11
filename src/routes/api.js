@@ -151,6 +151,39 @@ app.post('/agentBalancePerformance', async (req, res) => {
 	console.log(data)
 })
 
+/* KYC */
+
+const { sectorCodeList, getkyc, addEcoSectorCode } = require('../api/api_kyc')
+app.get('/sectorcodelist', async (req, res) => {
+	try {
+		const data = await sectorCodeList()
+		res.send(data)
+	} catch (e) {
+		return e
+	}
+})
+app.post('/getkyc', async (req, res) => {
+	try {
+		const data = await getkyc(req.body.param)
+		res.send(data)
+	} catch (e) {
+		return e
+	}
+})
+app.post('/addkyc', async (req, res) => {
+	try {
+		const resp = await addEcoSectorCode(req.body.acno, req.body.code)
+
+		if (resp === 302) {
+			res.sendStatus(302)
+		} else {
+			res.sendStatus(201)
+		}
+	} catch (e) {
+		return e
+	}
+})
+
 /************************************** End ******************************************/
 
 /* timeline Api*/

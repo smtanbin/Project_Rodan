@@ -31,7 +31,6 @@ const agentList = async () => {
 		})
 	})
 }
-agentList()
 
 const getAccountinfo = async (value, titel) => {
 	/* Post request body content*/
@@ -51,7 +50,7 @@ const getAccountinfo = async (value, titel) => {
     <div class="px-2 container">
        <div class="card w100 columns col-12 p-2  bg-gray">
           <h5 class="p-centered text-tiny text-bold my-2 h5">Term Account Information</h5>
-          <div class="text-tiny"><b>Titel:</b> ${titel} <br/>
+          <div class="text-tiny">
           <b>Agent:</b> ${value}</div>
        </div>
        <div class="columns col-12 card p-1">
@@ -113,9 +112,17 @@ const getAccountinfo = async (value, titel) => {
                     <td class="text-tiny">${REGSTATUS}</td>
                     <td class="text-tiny">${moment(MATURITYDATE).format('ll')}</td>
                     <td class="text-tiny">${moment(RENEWDATE).format('ll')}</td>
-                    <td class="text-tiny">${INSTALLMENTAMOUNT}</td>
+                    <td class="text-tiny">${INSTALLMENTAMOUNT.toLocaleString('en-BD', {
+						maximumFractionDigits: 2,
+						style: 'currency',
+						currency: 'BDT'
+					})}</td>
                     <td class="text-tiny">${DUE}</td>
-                    <td class="text-tiny">${PAYABLE}</td>
+                    <td class="text-tiny">${PAYABLE.toLocaleString('en-BD', {
+						maximumFractionDigits: 2,
+						style: 'currency',
+						currency: 'BDT'
+					})}</td>
                     </tr>`
 					}
 				)

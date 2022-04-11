@@ -10,7 +10,6 @@
     </div>
     <li class="divider bg-primary"></li>
     <li class="nav-item">
-        <!-- <span class="text-primary h5">app <i class="icon icon-more-horiz" style="font-size:small"></i></span> -->
         <samp class="text-primary h5">Apps</samp>
         <ul class="nav" id="app">
             <% if(role==='ADMIN' || role==='APPROVAL' ){ %>
@@ -33,6 +32,7 @@
                                     <li class="nav-item"><a href="/report/accountInfo">Add Account</a></li>
                                 </ul>
                                 <% } %>
+                                    <li class="nav-item"><a href="/kycupdate">Sector Code Update</a></li>
 
                                     <% if(role==="USER" || role==="AGENT" ){ %>
                                         <li class="divider" data-content="Transaction"></li>
@@ -45,32 +45,15 @@
                                         <% } %>
         </ul>
     </li>
-    <!-- 
-        <li class="nav-item">
-         test with dropdown
-        <div class="dropdown">
-            <div class="btn-group">
 
-                <a href="#" class="btn dropdown-toggle btn-link" tabindex="0">
-                    Teller<i class="icon icon-caret"></i>
-                </a>
-
-               
-                <ul class="menu">
-
-                    <li class="nav-item"><a href="/report/accountInfo">Utility</a></li>
-                </ul>
-            </div>
-        </div>
-    </li> -->
     <li class="nav-item">
         <samp class="text-primary h5">Reports</samp>
         <ul class="nav" id="app">
-
+            <li class="divider bg-primary" data-content="Account Information"></li>
             <li class="nav-item "><a href="/report/accountStatment">Statment</a></li>
 
 
-            <li class="nav-item"><a href="/report/accountInfo">Term Account Status</a></li>
+            <li class="nav-item"><a href="/report/accountInfo" class="text-ellipsis">Term Account Status</a></li>
 
             <% if(role==='ADMIN' || role==='APPROVAL' ){ %>
                 <li class="nav-item"><a href="/report/businessinfo">Account Info</a></li>
@@ -81,7 +64,7 @@
                         </li>
 
                         <% } %>
-
+                            <li class="divider bg-primary" data-content="Marchent Information"></li>
                             <li class="nav-item"><a href="/report/utilityreport">Utility Report</a>
                             </li>
 

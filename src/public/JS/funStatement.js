@@ -173,6 +173,7 @@ const getstatement = async (key) => {
 
 				const mytable = document.getElementById('output2')
 				let newRow = document.createElement('tr')
+
 				//Index
 				let cell = document.createElement('td')
 				cell.classList.add('text-tiny')
@@ -242,7 +243,8 @@ const getstatement = async (key) => {
 		}
 
 		document.getElementById('btn-loading').classList.remove('loading')
-		document.getElementById('btnprint').classList.remove('disabled')
+		document.getElementById('btnprint').classList.remove('d-none')
+		document.getElementById('btndownload').classList.remove('d-none')
 	})
 	// } catch (e) {
 	// 	document.getElementById("btn").classList.remove("loading");
