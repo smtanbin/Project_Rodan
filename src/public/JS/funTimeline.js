@@ -6,7 +6,7 @@ myHeaders.append('Content-Type', 'application/json')
 myHeaders.append('Access-Control-Allow-Origin', '*')
 
 const timeline = async () => {
-	const url = `${apiserver}/timeline`
+	const url = `${apiserver}//timeline`
 
 	const requestOptions = {
 		method: 'GET',
@@ -124,7 +124,7 @@ const timeline = async () => {
 timeline()
 
 const model = async (trno) => {
-	const url = `${apiserver}trsearch`
+	const url = `${apiserver}/trsearch`
 	const raw = JSON.stringify({
 		key: `${trno}`
 	})

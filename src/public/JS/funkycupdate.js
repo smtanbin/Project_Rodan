@@ -19,7 +19,7 @@ const getkyc = async () => {
 	let param = document.getElementById('acno').value
 
 	/* Post request body content*/
-	const url = `${apiserver}/getkyc`
+	const url = `${apiserver}//getkyc`
 	const raw = JSON.stringify({
 		param: `${param}`
 	})
@@ -147,7 +147,7 @@ const sectorCodeList = async () => {
 		redirect: 'follow'
 	}
 	try {
-		await fetch(`${apiserver}/sectorcodelist`, requestOptions)
+		await fetch(`${apiserver}//sectorcodelist`, requestOptions)
 			.then((response) => response.json())
 			.then(async (payload) => {
 				payload.map(({ CODE, DESCRIPTION }) => {
@@ -174,7 +174,7 @@ const addCode = async (param) => {
 	let code = document.getElementById('sbscode').value
 
 	/* Post request body content*/
-	const url = `${apiserver}/addkyc`
+	const url = `${apiserver}//addkyc`
 	const raw = JSON.stringify({
 		acno: `${param}`,
 		code: `${code}`

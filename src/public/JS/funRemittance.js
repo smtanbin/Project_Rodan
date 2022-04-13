@@ -15,7 +15,7 @@ It connect via url which request recived by routes/index as rest Get request
 Then it call api_utilitybill from apps folder.
 */
 const remittancehouselist = async () => {
-	const url = `${apiserver}/remittancehouselist`
+	const url = `${apiserver}//remittancehouselist`
 
 	const requestOptions = {
 		method: 'GET',
@@ -62,7 +62,7 @@ const remittance = async () => {
 	myHeaders.append('Content-Type', 'application/json')
 
 	/* Post request body content*/
-	const url = `${apiserver}/remittance`
+	const url = `${apiserver}//remittance`
 	const raw = JSON.stringify({
 		key: `${key}`,
 		fromdate: `${fromdate}`,
@@ -91,13 +91,13 @@ const remittance = async () => {
                                 <th class="text-tiny">Ref.No./TT NO</th>
                                 <th class="text-tiny">Date of Orginating Remittance</th>
                                 <th class="text-tiny">Name</th>
-                                <th class="text-tiny">Document Type</th>
-                                <th class="text-tiny">NID/PASSPORT NO.</th>
+                                <th class="text-tiny">Doc Type</th>
+                                <th class="text-tiny">Photo ID No</th>
                                 <th class="text-tiny">Sender Name</th>
                                 <th class="text-tiny">Source Country</th>
-                                <th class="text-tiny text-right">Amount Remitted</th>
+                                <th class="text-tiny text-right">Amount </th>
+                                <th class="text-tiny text-center">Date of Payment of Incentive</th>
                                 <th class="text-tiny text-right">Amount of Incentive</th>
-                                <th class="text-tiny">Date of Payment of Incentive</th>
                             </tr>
                         </thead>
                         <tbody class="" id="output2"></tbody>
@@ -133,29 +133,31 @@ const remittance = async () => {
 						/* Calculatation*/
 						AMOUNT_REMITTED_BDT_TOTAL += AMOUNT_REMITTED_BDT
 						AMOUNT_OF_INCENTIVE_BDT_TOTAL += AMOUNT_OF_INCENTIVE_BDT
+						if (AMOUNT_OF_INCENTIVE_BDT === 0) {
+							AMOUNT_OF_INCENTIVE_BDT = ' '
+							DATE_OF_PAYMENT_OF_INCENTIVE = ' '
+						} else {
+							DATE_OF_PAYMENT_OF_INCENTIVE = moment(DATE_OF_PAYMENT_OF_INCENTIVE).format('ll')
+						}
 
 						return `<tr>
 						<td>${index + 1}</td>
 						<td class="text-tiny text-break">${NAME_OF_EXCHANGE_HOUSE}</td>
 						<td class="text-tiny text-break">${RefNo_TT_NO}</td>
 						
-						<td class="text-tiny text-break">${moment(DATE_OF_ORGINATING_REMITTANCE).format('LLL')}</td>
+						<td class="text-tiny text-break">${moment(DATE_OF_ORGINATING_REMITTANCE).format('ll')}</td>
 						<td class="text-tiny">${NAME}</td>
 						<td class="text-tiny">${DOCUMENT_TYPE}</td>
 						<td class="text-tiny">${NID_NO_PASSPORT_NO}</td>
 						<td class="text-tiny">${SENDER_NAME}</td>
 						<td class="text-tiny">${SOURCE_COUNTRY}</td>
 						<td class="text-tiny text-right">${AMOUNT_REMITTED_BDT.toLocaleString('en-BD', {
-							maximumFractionDigits: 2,
-							style: 'currency',
-							currency: 'BDT'
+							maximumFractionDigits: 2
 						})}</td>
+						<td class="text-tiny text-center">${DATE_OF_PAYMENT_OF_INCENTIVE}</td>
 						<td class="text-tiny text-right">${AMOUNT_OF_INCENTIVE_BDT.toLocaleString('en-BD', {
-							maximumFractionDigits: 2,
-							style: 'currency',
-							currency: 'BDT'
+							maximumFractionDigits: 2
 						})}</td>
-						<td class="text-tiny">${moment(DATE_OF_PAYMENT_OF_INCENTIVE).format('LLL')}</td>
 						
 					 </tr>`
 					}
@@ -167,17 +169,18 @@ const remittance = async () => {
 	document.getElementById('output2').innerHTML += `
 		<tr class="active text-bold" id="output3">
 		<td class="text-bold" colspan="9">Total</td>
-		<td class="text-bold text-right">${AMOUNT_REMITTED_BDT_TOTAL.toLocaleString('en-BD', {
+		<td class="text-bold text-tiny text-right">${AMOUNT_REMITTED_BDT_TOTAL.toLocaleString('en-BD', {
 			maximumFractionDigits: 2,
 			style: 'currency',
 			currency: 'BDT'
 		})}</td>
-		<td class="text-bold text-right">${AMOUNT_OF_INCENTIVE_BDT_TOTAL.toLocaleString('en-BD', {
+		<td class="text-bold" colspan="1"></td>
+		<td class="text-bold text-tiny text-right">${AMOUNT_OF_INCENTIVE_BDT_TOTAL.toLocaleString('en-BD', {
 			maximumFractionDigits: 2,
 			style: 'currency',
 			currency: 'BDT'
 		})}</td>
-		<td class="text-bold" colspan="2"></td>
+		
 		</tr>`
 
 	// printArea()
@@ -219,7 +222,7 @@ const remittancesummary = async () => {
 	myHeaders.append('Content-Type', 'application/json')
 
 	/* Post request body content*/
-	const url = `${apiserver}/remittancesummary`
+	const url = `${apiserver}//remittancesummary`
 	const raw = JSON.stringify({
 		fromdate: `${fromdate}`,
 		todate: `${todate}`
@@ -342,7 +345,7 @@ const getCSV = async () => {
 		myHeaders.append('Content-Type', 'application/json')
 
 		/* Post request body content*/
-		const url = `${apiserver}/remittance`
+		const url = `${apiserver}//remittance`
 		const raw = JSON.stringify({
 			key: `${key}`,
 			fromdate: `${fromdate}`,

@@ -14,7 +14,7 @@ Then it call apistatement.js from apps folder.
 
 const agentList = async () => {
 	/* Post request body content*/
-	const url = `${apiserver}agentlist`
+	const url = `${apiserver}/agentlist`
 
 	const requestOptions = {
 		method: 'GET',
@@ -34,7 +34,7 @@ const agentList = async () => {
 
 const getAccountinfo = async (value, titel) => {
 	/* Post request body content*/
-	const url = `${apiserver}accountInfo`
+	const url = `${apiserver}//accountInfo`
 	const rawhead = JSON.stringify({
 		key: `${value}`
 	})
@@ -138,6 +138,6 @@ const getAccountinfo = async (value, titel) => {
 				<p class="empty-subtitle">${e}</p>
 
 			</div>`
-		console.error(e)
+		console.log(e)
 	}
 }

@@ -25,7 +25,7 @@ const businessinfo = async (fromm, tom) => {
 	myHeaders.append('Access-Control-Allow-Origin', '*')
 
 	/* Post request body content*/
-	const url = `${apiserver}/businessinfo`
+	const url = `${apiserver}///businessinfo`
 	// previousmonth = moment(previousmonth).format('MMMM Do YYYY, h:mm:ss a')
 	// console.log(previousmonth)
 	// console.log(month)
@@ -168,7 +168,7 @@ const businessinfoheader = async () => {
 	myHeaders.append('Access-Control-Allow-Origin', '*')
 
 	/* Post request body content*/
-	const url = `${apiserver}/businessinfoheader`
+	const url = `${apiserver}///businessinfoheader`
 	// previousmonth = moment(previousmonth).format('MMMM Do YYYY, h:mm:ss a')
 	// console.log(previousmonth)
 	// console.log(month)

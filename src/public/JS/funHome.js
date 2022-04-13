@@ -20,7 +20,7 @@ const barColors = [ '#F50F0F', '#2285F5', '#9064F5', '#24F490', '#F5BC58', '#F59
 /* Account Status give a graf with table data*/
 const accountStatus = async () => {
 	/* Post request body content*/
-	const url = `${apiserver}accountStatus`
+	const url = `${apiserver}//accountStatus`
 	const requestOptions = {
 		method: 'GET',
 		headers: myHeaders,
@@ -136,7 +136,7 @@ const accountStatus = async () => {
 
 const pichat = async () => {
 	/* Post request body content*/
-	const url = `${apiserver}pichart`
+	const url = `${apiserver}//pichart`
 	const requestOptions = {
 		method: 'GET',
 		headers: myHeaders,
@@ -180,7 +180,7 @@ const pichat = async () => {
 }
 
 const agentstatus = async () => {
-	const url = `${apiserver}agentstatus`
+	const url = `${apiserver}//agentstatus`
 	const requestOptions = {
 		method: 'GET',
 		headers: myHeaders,
@@ -280,7 +280,7 @@ const customerstatus = async () => {
 	let loacl_cy = []
 	/* Post request body content*/
 
-	const url = `${apiserver}customerstatus`
+	const url = `${apiserver}//customerstatus`
 	const requestOptions = {
 		method: 'GET',
 		headers: myHeaders,
@@ -377,7 +377,7 @@ const balancePerformance = async () => {
 	let yesterday = []
 
 	/* Post request body content*/
-	const url = `${apiserver}balancePerformance`
+	const url = `${apiserver}//balancePerformance`
 	const requestOptions = {
 		method: 'GET',
 		headers: myHeaders,
@@ -460,7 +460,7 @@ const agentBalancePerformance = async (mphone) => {
 	let loacl_DR = []
 	let loacl_CR = []
 	/* Post request body content*/
-	const url = `${apiserver}agentBalancePerformance`
+	const url = `${apiserver}//agentBalancePerformance`
 	const raw = JSON.stringify({ key: `${mphone}` })
 	const requestOptions = {
 		method: 'POST',

@@ -26,6 +26,28 @@
 	src: local('Material Icons'), local('MaterialIcons-Regular'),
 		url(./material/font/MaterialIcons-Regular.ttf) format('truetype');
 }
+
+/* width */
+::-webkit-scrollbar {
+	width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+	background: #8d8d8d00;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+	background: rgba(141, 141, 141, 0.144);
+	border-radius: 25px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+	background: rgb(150, 150, 150);
+}
+
 html {
 	scroll-behavior: smooth;
 }
@@ -59,8 +81,13 @@ html {
 	font-family: 'Roboto', sens-serif;
 }
 
-td {
-	font-family: 'RobotoSlab', serif;
+/* td,
+th {
+	font-family: 'RobotoSlab', 'Times New Roman', Times, serif;
+} */
+#output *,
+#renderthis * {
+	font-family: 'RobotoSlab', 'Times New Roman', Times, serif;
 }
 
 h1,
@@ -102,7 +129,6 @@ h3 {
 	background-color: var(--frost-dark) !important;
 	backdrop-filter: var(--default-bg-blur);
 	-webkit-backdrop-filter: var(--default-bg-blur);
-	/* color: rgb(255, 255, 255); */
 }
 
 .bg-frost-grto {
@@ -153,9 +179,9 @@ h3 {
 	height: 100%;
 	max-width: 30vw;
 	/* bottom: 0; */
-	width: 40px;
+
 	/* right: 0; */
-	left: 0;
+	right: 0;
 	z-index: 999;
 	overflow: scroll;
 	opacity: 0;
@@ -163,6 +189,8 @@ h3 {
 	pointer-events: none;
 	user-select: none;
 	transition: ease-in .3s;
+	overflow-y: scroll;
+	overflow-x: hidden;
 }
 #sidenav {
 	position: fixed;
@@ -175,10 +203,12 @@ h3 {
 	/* background-color: #c9e2fc; */
 
 	/* background-color: #eeeeee; */
-	/* background-color: #f8f8f831; */
+	background-color: #f8f8f831;
 	padding: 90px 0 0 10px;
 	overflow-y: scroll;
+	overflow-x: hidden;
 }
+
 #sidenav span {
 	transition: ease-in-out;
 }

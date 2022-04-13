@@ -7,7 +7,7 @@ myHeaders.append('Content-Type', 'application/json')
 myHeaders.append('Access-Control-Allow-Origin', '*')
 
 const init = async () => {
-	const url = `${apiserver}/transactionsreport`
+	const url = `${apiserver}//transactionsreport`
 	const rawhead = JSON.stringify({
 		key: `${key}`,
 		date: `${fromdate}`

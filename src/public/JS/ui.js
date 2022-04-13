@@ -28,3 +28,32 @@ const appinit = () => {
 }
 
 appinit()
+
+const sidenav = document.getElementById('sidenav')
+
+const sidenavopen = () => {
+	sidenav.style.opacity = '100'
+	sidenav.style.visibility = 'visible'
+	sidenav.style.pointerEvents = 'auto'
+	sidenav.style.userSelect = 'auto'
+}
+const sidenavclose = () => {
+	sidenav.style.opacity = '0'
+	sidenav.style.visibility = 'hidden'
+	sidenav.style.pointerEvents = 'none'
+	sidenav.style.userSelect = 'none'
+}
+const notification = document.getElementById('notification')
+
+const notificationopen = () => {
+	notification.style.opacity = '100'
+	notification.style.visibility = 'visible'
+	notification.style.pointerEvents = 'auto'
+	notification.style.userSelect = 'auto'
+}
+const notificationclose = () => {
+	notification.style.opacity = '0'
+	notification.style.visibility = 'hidden'
+	notification.style.pointerEvents = 'none'
+	notification.style.userSelect = 'none'
+}

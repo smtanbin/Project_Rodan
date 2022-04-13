@@ -12,7 +12,7 @@ It connect via url which request recived by routes/index as rest Get request
 Then it call api_utilitybill from apps folder.
 */
 const getuvanls = async () => {
-	const url = `${apiserver}/utilityreportpbslist`
+	const url = `${apiserver}//utilityreportpbslist`
 
 	const requestOptions = {
 		method: 'GET',
@@ -55,7 +55,7 @@ const utilityinfo = async () => {
 	}
 
 	/* Post request body content*/
-	const urlhead = `${apiserver}/utilityinfohead`
+	const urlhead = `${apiserver}//utilityinfohead`
 	const rawhead = JSON.stringify({
 		key: `${key}`,
 		date: `${fromdate}`
@@ -68,7 +68,7 @@ const utilityinfo = async () => {
 		redirect: 'follow'
 	}
 	/* Post request body content*/
-	const urlbody = `${apiserver}/utilityinfodtl`
+	const urlbody = `${apiserver}//utilityinfodtl`
 	const rawbody = JSON.stringify({
 		key: `${key}`,
 		fromdate: `${fromdate}`,
@@ -296,7 +296,7 @@ const utilitySummary = async () => {
 	}
 
 	/* Post request body content*/
-	const url = `${apiserver}/utilityinfosummary`
+	const url = `${apiserver}//utilityinfosummary`
 	const raw = JSON.stringify({
 		todate: `${todate}`,
 		fromdate: `${fromdate}`

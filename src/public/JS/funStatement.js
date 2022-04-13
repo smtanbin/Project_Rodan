@@ -30,7 +30,7 @@ const getstatement = async (key) => {
 	}
 
 	/* Post request body content*/
-	const urlhead = `${apiserver}/statementhead`
+	const urlhead = `${apiserver}//statementhead`
 	const rawhead = JSON.stringify({
 		key: `${key}`,
 		date: `${fromdate}`
@@ -44,7 +44,7 @@ const getstatement = async (key) => {
 	}
 
 	/* Post request body content*/
-	const urlbody = `${apiserver}/statementbody`
+	const urlbody = `${apiserver}//statementbody`
 	const rawbody = JSON.stringify({ key: `${key}`, fromdate: `${fromdate}`, todate: `${todate}` })
 	const bodyrequestOptions = {
 		method: 'POST',
@@ -245,6 +245,8 @@ const getstatement = async (key) => {
 		document.getElementById('btn-loading').classList.remove('loading')
 		document.getElementById('btnprint').classList.remove('d-none')
 		document.getElementById('btndownload').classList.remove('d-none')
+		document.getElementById('btndownload').classList.add('disabled')
+		document.getElementById('btndownload').classList.add('btn-error')
 	})
 	// } catch (e) {
 	// 	document.getElementById("btn").classList.remove("loading");
@@ -266,7 +268,7 @@ const statement = async () => {
 	document.getElementById('btn-loading').classList.add('loading')
 	const keyvalue = document.getElementById('key').value
 	/* Post request body content*/
-	const initurl = `${apiserver}/doexist`
+	const initurl = `${apiserver}//doexist`
 
 	const inithead = JSON.stringify({
 		key: `${keyvalue}`

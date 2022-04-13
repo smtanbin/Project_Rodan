@@ -17,6 +17,7 @@
     </section>
     <section class="navbar-section">
         <a href="/" class="btn btn-link"><i class="large material-icons">home</i></a>
+        <a onclick="notificationopen()" id="navbtn" class="btn btn-link"></a>
         <!-- <div class="dropdown dropdown-right">
             <a href="#" class=" btn btn-link dropdown-toggle" tabindex="0">
                 Apps <i class="icon icon-caret"></i>
@@ -91,4 +92,45 @@
         </div>
     </section>
 </header>
+<section>
+
+    <!-- <div class="columns" id="notification"> -->
+
+    <div class="panel column col-6
+        <% if (darkmode==='true' ) { %>
+            bg-frost-dark 
+            <%} else { %>
+                bg-frost
+                <% } %>
+        p-fixed col-4 " id="notification" style="position: absolute; height:100vh; right: 0; top: 0; z-index: 90;">
+        <div class="panel-header">
+
+
+
+            <div class="panel-title  text-primary py-1 d-flex" style="justify-content: space-between;">
+                <h1 class="h1">
+                    Notification
+                </h1>
+                <button class="btn btn-link  text-error" onclick="notificationclose()"><i
+                        class="material-icons ">close</i></button>
+            </div>
+            <!-- <div class="input-group">
+                    <input class="form-input" type="text" placeholder="Search">
+                </div>  -->
+        </div>
+        <!-- <ul class="tab tab-block">
+                <li class="tab-item active">
+                    <a href="#">Resent</a>
+                </li>
+                <li class="tab-item">
+                    <a href="#">Previous</a>
+                </li>
+            </ul> -->
+        <div class="panel-body" id="panel-body">
+            <div class="panel-footer">
+            </div>
+        </div>
+    </div>
+
+</section>
 <div style="margin-bottom:80px ;"></div>

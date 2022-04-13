@@ -17,7 +17,7 @@ const getNomi = async (param) => {
 	}
 
 	try {
-		await fetch(`${apiserver}/customernom`, requestOptions).then((response) => response.json()).then((payload) => {
+		await fetch(`${apiserver}//customernom`, requestOptions).then((response) => response.json()).then((payload) => {
 			payload.map((data) => {
 				const {
 					AC_NO,
@@ -62,7 +62,7 @@ const getimage = async (param) => {
 	}
 
 	try {
-		await fetch(`${apiserver}/getimage`, requestOptions).then((response) => response.blob()).then((payload) => {
+		await fetch(`${apiserver}//getimage`, requestOptions).then((response) => response.blob()).then((payload) => {
 			console.log(payload)
 			const img = document.createElement('img')
 			const objectURL = URL.createObjectURL(payload)
@@ -180,29 +180,31 @@ const custsearch = async () => {
 	}
 	await getimage(id)
 	try {
-		await fetch(`${apiserver}/customerinfo`, requestOptions).then((response) => response.json()).then((payload) => {
-			payload.map((data) => {
-				const {
-					CUSTOMER_NAME,
-					FATHER_NAME,
-					MOTHER_NAME,
-					SPOUSE_NAME,
-					NID_NO,
-					DOB,
-					RELIGION,
-					BLOOD_GROUP,
-					OCCUPATION,
-					TIN_NO,
-					CON_MOB,
-					PASSPORT_NO,
-					PASSPORT_NO_VALIDITY,
-					DRIVING_NO,
-					ADDR,
-					EMAIL,
-					MARITAL_STATUS
-				} = data
+		await fetch(`${apiserver}//customerinfo`, requestOptions)
+			.then((response) => response.json())
+			.then((payload) => {
+				payload.map((data) => {
+					const {
+						CUSTOMER_NAME,
+						FATHER_NAME,
+						MOTHER_NAME,
+						SPOUSE_NAME,
+						NID_NO,
+						DOB,
+						RELIGION,
+						BLOOD_GROUP,
+						OCCUPATION,
+						TIN_NO,
+						CON_MOB,
+						PASSPORT_NO,
+						PASSPORT_NO_VALIDITY,
+						DRIVING_NO,
+						ADDR,
+						EMAIL,
+						MARITAL_STATUS
+					} = data
 
-				document.getElementById('custinfo').innerHTML = `
+					document.getElementById('custinfo').innerHTML = `
 			<h6 class="h6 text-primary">Genaral Information<h5/>
 			<p class="text-tiny">
 			Customer Name: ${CUSTOMER_NAME}<br/>
@@ -229,14 +231,14 @@ const custsearch = async () => {
 			Address: ${ADDR}<br/>
 			</p><br/>
 			`
+				})
 			})
-		})
 	} catch (error) {
 		console.log(error)
 	}
-	// url = `${apiserver}/customeracinfo`
+	// url = `${apiserver}//customeracinfo`
 	try {
-		await fetch(`${apiserver}/customeracinfo`, requestOptions)
+		await fetch(`${apiserver}//customeracinfo`, requestOptions)
 			.then((response) => response.json())
 			.then((payload) => {
 				payload.map((data) => {

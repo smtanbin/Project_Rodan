@@ -1,8 +1,12 @@
 /* Printing Dialog and window genarated by this function. 
 Remember: #output must be loaded
 */
-const printArea = async () => {
+const printArea = async (titel) => {
 	const printday = Date()
+	if (titel === null) {
+		titel = `Download ${printday}`
+	}
+
 	const username = document.getElementById('username').getAttribute('data-content')
 
 	const head = `
@@ -12,7 +16,7 @@ const printArea = async () => {
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>
-	  Download ${printday}
+	  ${titel}
 	</title>
 	<link rel="stylesheet" href="/style/styles.css">
 	<link rel="stylesheet" href="/style/spectre/spectre.css">
@@ -43,15 +47,15 @@ const printArea = async () => {
 	<p class="p-centered text-small">This is an electronically generated report, hence does not require a signature.</p>
 	</div>
 	<div class="text-center p-centered">
+	
 	<h6 class="text-bold h6">Thanks for banking with us.</h6>
-	<p class="text-tiny text-left text-break">The Customer should examine promptly the statement received and notify the bank in writing within 15 calendar days after the statement is mailed,
+	<p class="text-tiny p-2 text-left text-break">The Customer should examine promptly the statement received and notify the bank in writing within 15 calendar days after the statement is mailed,
    transmitted, or otherwise made available to customer of any errors, discrepancies or irregularities detected, failing which the statement will deem to
    be correct.This is an electronically generated report, hence does not require a signature.
    </p>
-   <div class="card bg-gray w100">
    <br/><a href="https://www.standardbankbd.com" class="text-gray text-tiny">Copyright © 2022 Standard Bank Ltd</a>
    </div>
-   </div>
+  
  <script> 
 	const load = () => {
 		focus()
@@ -183,26 +187,22 @@ const showmore = (id) => {
 // 	document.getElementById(id).classList.remove('displaynull')
 // }
 
-// const bellIcon = (notificationcount) => {
-// 	// notificationcount += notificationcount
-// 	// if (notificationcount === 0 || notificationcount === null) {
+const bellIcon = (notificationcount) => {
+	// notificationcount += notificationcount
+	// if (notificationcount === 0 || notificationcount === null) {
 
-// 	if (notificationcount === 0 || notificationcount === undefined) {
-// 		document.getElementById(
-// 			'navbtn'
-// 		).innerHTML = `<div class="chip text-dark p-1"><i class="material-icons ">notifications_none</i></div>`
-// 	} else {
-// 		document.getElementById(
-// 			'navbtn'
-// 		).innerHTML = `<div class="chip text-error p-1"><i class="material-icons ">notifications_active</i> New Notification</div>`
-// 	}
-// 	// } else {
-// 	// 	document.getElementById('navbtn').innerHTML = ` <span class="badge" data-badge="${notificationcount}">
-// 	//     <i class="material-icons">notifications_active</i>
-// 	//     </span>`
-// 	// }
-// }
-// bellIcon()
+	if (notificationcount === 0 || notificationcount === undefined) {
+		document.getElementById('navbtn').innerHTML = `<i class="material-icons">notifications_none</i>`
+	} else {
+		document.getElementById('navbtn').innerHTML = `<i class="material-icons">notifications_active</i>`
+	}
+	// } else {
+	// 	document.getElementById('navbtn').innerHTML = ` <span class="badge" data-badge="${notificationcount}">
+	//     <i class="material-icons">notifications_active</i>
+	//     </span>`
+	// }
+}
+bellIcon()
 
 const logout = () => {
 	document.cookie = 'auth' + '=; Max-Age=-99999999;'

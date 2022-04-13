@@ -16,7 +16,7 @@ const barColors = [ '#F50F0F', '#2285F5', '#9064F5', '#24F490', '#F5BC58', '#F59
 
 const pichat = async (param) => {
 	/* Post request body content*/
-	const url = `${apiserver}pichart`
+	const url = `${apiserver}/pichart`
 	const raw = JSON.stringify({
 		param: `${param}`
 	})
@@ -64,7 +64,7 @@ const pichat = async (param) => {
 }
 
 const agentstatus = async (param) => {
-	const url = `${apiserver}agentstatus`
+	const url = `${apiserver}/agentstatus`
 	const raw = JSON.stringify({
 		param: `${param}`
 	})
@@ -84,7 +84,6 @@ const agentstatus = async (param) => {
 	let yesterdaybar = '#859b97'
 
 	await fetch(url, requestOptions).then((response) => response.json()).then((payload) => {
-		console.log(payload)
 		/*Contracting a string with , to separate value*/
 		payload.map(({ YESTERDAY, TODAY }) => {
 			if (YESTERDAY > TODAY) {
@@ -172,7 +171,7 @@ const customerstatus = async (param) => {
 	let loacl_cy = []
 	/* Post request body content*/
 
-	const url = `${apiserver}customerstatus`
+	const url = `${apiserver}/customerstatus`
 	const raw = JSON.stringify({
 		param: `${param}`
 	})
@@ -274,7 +273,7 @@ const balancePerformance = async () => {
 	let yesterday = []
 
 	/* Post request body content*/
-	const url = `${apiserver}balancePerformance`
+	const url = `${apiserver}/balancePerformance`
 	const requestOptions = {
 		method: 'GET',
 		headers: myHeaders,
@@ -357,7 +356,7 @@ const agentBalancePerformance = async (mphone) => {
 	let loacl_DR = []
 	let loacl_CR = []
 	/* Post request body content*/
-	const url = `${apiserver}agentBalancePerformance`
+	const url = `${apiserver}/agentBalancePerformance`
 	const raw = JSON.stringify({ key: `${mphone}` })
 	const requestOptions = {
 		method: 'POST',
