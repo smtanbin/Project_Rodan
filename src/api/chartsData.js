@@ -2,23 +2,44 @@ const qurrythis = require('../apps/db')
 
 const balancePerformance = async () => {
 	try {
-		const sql = `/* Formatted on 3/2/2022 2:41:49 PM (QP5 v5.374) */
-		SELECT NVL(TIME,PTIME) PTIME,NVL(CDAY,0) CDAY,NVL(YDAY,0) YDAY
+		const sql = `/* Formatted on 4/17/2022 1:55:40 PM (QP5 v5.381) */
+		SELECT NVL (TIME, PTIME)            PTIME,
+			   ROUND (NVL (CDAY, 0), 2)     CDAY,
+			   ROUND (NVL (YDAY, 0), 2)     YDAY
 		  FROM (  SELECT TIME, NVL (SUM (BALANCE), 0) CDAY
-					FROM (SELECT TO_CHAR (TRANS_DATE, 'HH24')     TIME,
-								 PAY_AMT                                   AS BALANCE
+					FROM (SELECT TO_CHAR (TRANS_DATE, 'HH24') TIME, PAY_AMT AS BALANCE
 							FROM (AGENT_BANKING.GL_TRANS_MST))
 				GROUP BY TIME) C
 			   FULL JOIN
-			   (  SELECT TIME PTIME, SUM (BALANCE) YDAY
-					FROM (SELECT TO_CHAR (TRANS_DATE, 'HH24')    TIME,
-								 PAY_AMT                                   AS BALANCE
+			   (  SELECT TIME PTIME, NVL (SUM (BALANCE), 0) YDAY
+					FROM (SELECT TO_CHAR (TRANS_DATE, 'HH24') TIME, PAY_AMT AS BALANCE
 							FROM AGENT_BANKING.GL_TRANS_MST_OLD
 						   WHERE TRUNC (TRANS_DATE) =
-								 (SELECT TRUNC (SYSDATE - 1) FROM DUAL))
+								 (SELECT *
+									FROM (  SELECT (TO_CHAR (TRANS_DATE, 'DD-Mon-YYYY'))
+											  FROM AGENT_BANKING.GL_TRANS_MST_OLD
+										  ORDER BY TRANS_DATE DESC)
+								   WHERE ROWNUM = 1))
 				GROUP BY TIME) Y
 				   ON Y.PTIME = C.TIME
-				   order by PTIME`
+	  ORDER BY PTIME`
+		// const sql = `/* Formatted on 3/2/2022 2:41:49 PM (QP5 v5.374) */
+		// SELECT NVL(TIME,PTIME) PTIME,NVL(CDAY,0) CDAY,NVL(YDAY,0) YDAY
+		//   FROM (  SELECT TIME, NVL (SUM (BALANCE), 0) CDAY
+		// 			FROM (SELECT TO_CHAR (TRANS_DATE, 'HH24')     TIME,
+		// 						 PAY_AMT                                   AS BALANCE
+		// 					FROM (AGENT_BANKING.GL_TRANS_MST))
+		// 		GROUP BY TIME) C
+		// 	   FULL JOIN
+		// 	   (  SELECT TIME PTIME, SUM (BALANCE) YDAY
+		// 			FROM (SELECT TO_CHAR (TRANS_DATE, 'HH24')    TIME,
+		// 						 PAY_AMT                                   AS BALANCE
+		// 					FROM AGENT_BANKING.GL_TRANS_MST_OLD
+		// 				   WHERE TRUNC (TRANS_DATE) =
+		// 						 (SELECT TRUNC (SYSDATE - 1) FROM DUAL))
+		// 		GROUP BY TIME) Y
+		// 		   ON Y.PTIME = C.TIME
+		// 		   order by PTIME`
 		// console.log(sql)
 		return qurrythis(sql)
 	} catch (e) {

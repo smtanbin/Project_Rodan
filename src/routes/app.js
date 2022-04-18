@@ -92,6 +92,34 @@ app.get('/kycupdate', async (req, res) => {
 		res.render('./pages/kycupdate', { role: ROLE, userid: USERNAME, owner: ROOT, darkmode: darkModeCon })
 	})
 })
+app.get('/remittanceProcessing', async (req, res) => {
+	const token = req.cookies.auth
+	const { user } = jwt_decode(token)
+	const data = await roleCheck(user)
+
+	data.map(({ ROLE, USERNAME, ROOT }) => {
+		res.locals = {
+			userid: USERNAME,
+			title: 'Remittance'
+		}
+		const darkModeCon = req.cookies.darkmode
+		res.render('./pages/remittanceProcessing', { role: ROLE, userid: USERNAME, owner: ROOT, darkmode: darkModeCon })
+	})
+})
+app.get('/requestRemittance', async (req, res) => {
+	const token = req.cookies.auth
+	const { user } = jwt_decode(token)
+	const data = await roleCheck(user)
+
+	data.map(({ ROLE, USERNAME, ROOT }) => {
+		res.locals = {
+			userid: USERNAME,
+			title: 'Remittance Request'
+		}
+		const darkModeCon = req.cookies.darkmode
+		res.render('./pages/requestRemittance', { role: ROLE, userid: USERNAME, owner: ROOT, darkmode: darkModeCon })
+	})
+})
 // Report Panal
 /********************************************************************************
  */

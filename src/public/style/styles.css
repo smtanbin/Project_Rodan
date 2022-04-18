@@ -173,6 +173,13 @@ h3 {
 	border: none !important;
 }
 
+.flexing-model {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: top;
+}
+
 #notification {
 	/* display: block; */
 	position: absolute;
@@ -207,6 +214,10 @@ h3 {
 	padding: 90px 0 0 10px;
 	overflow-y: scroll;
 	overflow-x: hidden;
+}
+
+.d-none {
+	display: none !important;
 }
 
 #sidenav span {

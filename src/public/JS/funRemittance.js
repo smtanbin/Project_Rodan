@@ -15,7 +15,7 @@ It connect via url which request recived by routes/index as rest Get request
 Then it call api_utilitybill from apps folder.
 */
 const remittancehouselist = async () => {
-	const url = `${apiserver}//remittancehouselist`
+	const url = `${apiserver}/remittancehouselist`
 
 	const requestOptions = {
 		method: 'GET',
@@ -30,8 +30,7 @@ const remittancehouselist = async () => {
 		})
 	})
 }
-//auto function calling
-remittancehouselist()
+//auto function calling can be find in esfile
 
 /* Printing Dialog and window genarated by this function. 
 Remember: #output must be loaded
@@ -57,12 +56,8 @@ const remittance = async () => {
 		todate = printday
 	}
 
-	/* Requesting part start here. */
-	const myHeaders = new Headers()
-	myHeaders.append('Content-Type', 'application/json')
-
 	/* Post request body content*/
-	const url = `${apiserver}//remittance`
+	const url = `${apiserver}/remittance`
 	const raw = JSON.stringify({
 		key: `${key}`,
 		fromdate: `${fromdate}`,
@@ -217,12 +212,8 @@ const remittancesummary = async () => {
 		todate = new Date(date.getFullYear(), date.getMonth(), 0)
 	}
 
-	/* Requesting part start here. */
-	const myHeaders = new Headers()
-	myHeaders.append('Content-Type', 'application/json')
-
 	/* Post request body content*/
-	const url = `${apiserver}//remittancesummary`
+	const url = `${apiserver}/remittancesummary`
 	const raw = JSON.stringify({
 		fromdate: `${fromdate}`,
 		todate: `${todate}`
@@ -341,11 +332,9 @@ const getCSV = async () => {
 	}
 	try {
 		/* Requesting part start here. */
-		const myHeaders = new Headers()
-		myHeaders.append('Content-Type', 'application/json')
 
 		/* Post request body content*/
-		const url = `${apiserver}//remittance`
+		const url = `${apiserver}/remittance`
 		const raw = JSON.stringify({
 			key: `${key}`,
 			fromdate: `${fromdate}`,
@@ -374,4 +363,206 @@ const getCSV = async () => {
 		</div>
 	  </div>`
 	}
+}
+
+const showRequest = async () => {
+	const url = `${apiserver}/remittanceRequest`
+
+	const requestOptions = {
+		method: 'GET',
+		headers: myHeaders,
+		redirect: 'follow'
+	}
+
+	await fetch(url, requestOptions).then((response) => response.json()).then((payload) => {
+		if (payload.length === 0) {
+			document.getElementById('output').innerHTML = `<div class="empty">
+			<div class="empty-icon">
+			  <i class="icon icon-people"></i>
+			</div>
+			<p class="empty-title h5">You have no new request</p>
+			
+			<div class="empty-action">
+		
+			</div>
+		  </div>`
+		} else {
+			payload.map(
+				(
+					{
+						REM_ID,
+						REM_TT_NO,
+						NAME_OF_MTC,
+						BEN_NAME,
+						REC_AGENT_ACC,
+						ENTRY_DATE,
+						SEN_REM_AMT,
+						STATUS,
+						COMMENTS
+					},
+					index
+				) => {
+					let styleclass = 'text-primary'
+					if (STATUS === 'P') {
+						styleclass = 'text-success'
+					}
+					document.getElementById('troutput').innerHTML += `<tr onclick="remittancedtl('${REM_ID}')">
+						<td class="text-tiny text-break">${REM_ID}</td>
+						<td class="text-tiny text-break">${moment(ENTRY_DATE).startOf('minute').fromNow()}</td>
+						<td class="text-tiny text-break">${REC_AGENT_ACC}</td>
+						<td class="text-tiny text-break">${REM_TT_NO}</td>
+						<td class="text-tiny text-break">${NAME_OF_MTC}</td>
+						<td class="text-tiny text-break">${BEN_NAME}</td>
+						<td class="text-tiny text-break">${SEN_REM_AMT.toLocaleString('en-BD', {
+							maximumFractionDigits: 2
+						})}</td>
+						<td class="text-tiny ${styleclass} text-break">${COMMENTS}</td>
+						</tr>`
+				}
+			)
+			document.getElementById('table').classList.remove('d-none')
+			document.getElementById('progress').remove()
+		}
+	})
+}
+
+const remittancedtl = async (param) => {
+	document.getElementById('modal-id').classList.add('active')
+	const url = `${apiserver}/getRequest`
+
+	const raw = JSON.stringify({
+		param: `${param}`
+	})
+
+	const requestOptions = {
+		method: 'POST',
+		headers: myHeaders,
+		body: raw,
+		redirect: 'follow'
+	}
+
+	await fetch(url, requestOptions).then((response) => response.json()).then((payload) => {
+		payload.map(
+			(
+				{
+					REM_TT_NO,
+					NAME_OF_MTC,
+					BEN_NAME,
+					ENTRY_DATE,
+					SEN_REM_AMT,
+					BEN_FATH_HB_NAME,
+					BEN_MOTHER_NAME,
+					BEN_ADDRESS,
+					BEN_ACC_NO,
+					BEN_PHOTO_ID,
+					BEN_DOB,
+					BEN_PURPOSE_TR,
+					BEN_PHONE_NO,
+					BEN_MOBILE_NO,
+					RELATION_WITH_SENDER,
+					SEN_NAME,
+					SEN_CONTACT_NO,
+					SEN_COUNTRY_ORGIN,
+					REC_AGENT_ACC,
+					REMARKS,
+					SENDER_ID,
+					SENDER_ADDRESS,
+					INCENT_PERCENT,
+					PIN_S_CODE,
+					INCEN_AMT
+				},
+				index
+			) => {
+				document.getElementById('modal-container').innerHTML = `
+				<div class="modal-header">
+				<a onclick="closeModel()" class="btn btn-clear float-right" aria-label="Close"></a>
+					
+					<div class="modal-title h3 text-bold text-primary">
+					${NAME_OF_MTC}
+					</div>
+					
+					<div class="flexing-model">
+						<div class="card-subtitle text-gray">
+						<h4 class="h4 text-dark">Secreat Pin : ${PIN_S_CODE}</h4>
+						Document No: ${REM_TT_NO}
+						</div>
+						<div class="card-subtitle text-secondary">
+						${moment(ENTRY_DATE).startOf('minute').fromNow()}
+						</div>
+					</div>
+				</div>
+
+				<div class="modal-body">
+					<div class="content flexing-model">
+						<div class="card noboder">
+							<div class="card-header">
+	  							<div class="card-title text-primary h5">Reciver Information</div>
+							</div>
+						<div class="card-body">
+	  						<b>Name :</b> ${BEN_NAME}<br/>
+	  						<b>Father Name:</b> ${BEN_FATH_HB_NAME}<br/>
+	  						<b>Mother Name:</b> ${BEN_MOTHER_NAME}<br/>
+	  						<b>Address:</b> ${BEN_ADDRESS}<br/>
+	  						<b>PhotoID No:</b> ${BEN_PHOTO_ID}<b class="ml-2">Date of Birth:</b> ${moment(BEN_DOB).format('ll')} <br/>
+	  						<b>Account No:</b> ${BEN_ACC_NO}  <b>Contact:</b> ${BEN_PHONE_NO}<br/>
+	  						<b>Purpose of Remittance:</b> ${BEN_PURPOSE_TR}<br/>
+	  						<b>Relationship:</b> ${RELATION_WITH_SENDER}<br/>
+	  						
+						</div>
+					</div>
+					<div class="card noboder">
+  						<div class="card-header">
+    						<div class="card-title text-primary h5">Sender Information</div>
+  						</div>
+  						<div class="card-body">
+  							<b>Name :</b> ${SEN_NAME}<br/>
+  							<b>PhotoID No:</b> ${SENDER_ID}<b class="ml-2">Date of Birth:</b> ${BEN_DOB} <br/>
+  							<b>Address:</b> ${SENDER_ADDRESS}<br/>
+  							<b>Account No:</b> ${BEN_ACC_NO}  <b>Contact:</b> ${SEN_CONTACT_NO}<br/>
+  							<b>Origin Country:</b> ${SEN_COUNTRY_ORGIN}<br/>
+						</div>
+					</div>
+				</div>
+				<div class="card noboder">
+				<div class="card-header">
+				  <div class="card-title text-primary h5">Payment Info</div>
+				</div>
+				<div class="card-body">
+				<div class="input-group">
+				<span class="input-group-addon addon-lg">Amount</span>
+				<input type="text" class="form-input input-lg" placeholder="${SEN_REM_AMT.toLocaleString('en-BD', {
+					maximumFractionDigits: 2,
+					style: 'currency',
+					currency: 'BDT'
+				})}">
+				<div class="input-group">
+				<span class="input-group-addon addon-lg">Bonus ${INCENT_PERCENT}% </span>
+				<input type="text" class="form-input input-lg" placeholder="${INCEN_AMT.toLocaleString('en-BD', {
+					maximumFractionDigits: 2,
+					style: 'currency',
+					currency: 'BDT'
+				})}">
+				</div>
+				</div><br/>
+				<b>OTP No:</b> ${BEN_MOBILE_NO}<br/>
+				<b>Agent:</b> ${REC_AGENT_ACC}<br/>
+				<b>Remarks:</b> ${REMARKS}<br/>
+
+					
+			
+		  </div>
+			
+			<div class="modal-footer col-6">
+				<div class="btn-group btn-group-block">
+  					<button class="btn btn-success">Approved</button>
+  					<button class="btn">Back to Sender</button>
+  					<button class="btn btn-error">Reject</button>
+				</div> 
+			</div>`
+			}
+		)
+	})
+}
+const closeModel = () => {
+	document.getElementById('modal-id').classList.remove('active')
 }

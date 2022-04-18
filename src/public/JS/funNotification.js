@@ -82,7 +82,7 @@ const cashnotification = async () => {
 }
 
 const reminotification = async () => {
-	const url = `${apiserveralt}remittanceRequest`
+	const url = `${apiserveralt}/remittanceRequest`
 	await fetch(url, requestOptions).then((response) => response.json()).then((payload) => {
 		if (payload != null) {
 			payload.map(({ NAME_OF_MTC, BEN_NAME, STATUS, SEN_REM_AMT, REC_AGENT_ACC, ENTRY_DATE }, index) => {

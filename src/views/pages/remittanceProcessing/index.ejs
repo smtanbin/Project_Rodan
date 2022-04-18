@@ -1,0 +1,54 @@
+<main class="content m-2">
+
+
+    <ul class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a href="/">Home</a>
+        </li>
+        <li class="breadcrumb-item">
+            <a href="/remittanceProcessing">Remittance</a>
+        </li>
+
+    </ul>
+    <div data-aos="zoom-out" class="hero-sm">
+        <div class="hero-body">
+            <h1 class="text-primary">Remittance</h1>
+        </div>
+    </div>
+
+    <div class="modal modal-xl" id="modal-id">
+        <a href="#close" class="modal-overlay" aria-label="Close"></a>
+        <div class="modal-container" id="modal-container">
+
+        </div>
+    </div>
+    <div class="container" id="output">
+        <progress class="progress" id="progress"></progress>
+
+        <table class="table d-none" id="table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Time Stamp</th>
+                    <th>Requested By</th>
+                    <th>TT No</th>
+                    <th>Exchange House</th>
+                    <th>Beneficiary Name</th>
+                    <th>Amount</th>
+                    <th colspan="2">Status</th>
+                    <!-- <th><button>Check</button></th> -->
+                </tr>
+            </thead>
+            <tbody id="troutput">
+
+            </tbody>
+        </table>
+
+
+    </div>
+    <script src="/js/funRemittance.js"></script>
+    <script defer>
+        showRequest()
+    </script>
+
+</main>

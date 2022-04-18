@@ -2,7 +2,6 @@ const { Router } = require('express')
 const { doexist, holyday, agentlist } = require('../api/api.js')
 
 const { pbslist, utilityinfohead, utilityinfodtl, utilityinfosummary } = require('../api/api_utilitybill.js')
-const { remittancehouselist, remittance, remittancesummary, remittanceRequest } = require('../api/api_remittance')
 const { transactionsreport } = require('../api/api_transactionsreport')
 const { statementHead, statementBody } = require('../api/apiStatement')
 const { accountInfo } = require('../api/api_accountInfo')
@@ -311,8 +310,15 @@ app.post('/utilityinfosummary', async (req, res) => {
 })
 
 /*Remittance*/
+const {
+	remittancehouselist,
+	remittance,
+	remittancesummary,
+	remittanceRequestList,
+	getSingleeRequest
+} = require('../api/api_remittance')
 app.get('/remittanceRequest', async (req, res) => {
-	const data = await remittanceRequest()
+	const data = await remittanceRequestList()
 	res.send(data)
 })
 app.get('/remittancehouselist', async (req, res) => {
@@ -325,6 +331,12 @@ app.post('/remittance', async (req, res) => {
 	const todate = req.body.todate
 	const key = req.body.key
 	const data = await remittance(fromdate, todate, key)
+	res.send(data)
+})
+
+app.post('/getRequest', async (req, res) => {
+	const param = req.body.param
+	const data = await getSingleeRequest(param)
 	res.send(data)
 })
 app.post('/remittancesummary', async (req, res) => {

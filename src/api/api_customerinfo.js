@@ -64,7 +64,7 @@ const customerinfo = async (key) => {
 		 WHERE MPHONE = ${key}`
 
 		const custid = await qurrythis(sql)
-		console.log(custid)
+
 		sql = `/* Formatted on 2/17/2022 10:36:26 AM (QP5 v5.374) */
 		SELECT ca.REG_DATE,
 		ca.CUST_ID,

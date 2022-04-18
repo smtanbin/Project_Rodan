@@ -33,16 +33,29 @@
                                 </ul>
                                 <% } %>
                                     <li class="nav-item"><a href="/kycupdate">Eco Code Update</a></li>
-
-                                    <% if(role==="USER" || role==="AGENT" ){ %>
-                                        <li class="divider" data-content="Transaction"></li>
-                                        <li class="nav-item"><a href="/report/accountInfo">Teller Operation</a></li>
+                                    <% if(role!="USER" || role!="AGENT" ){ %>
                                         <ul class="nav" id="app">
                                             <li class="divider" data-content="Payment"></li>
-                                            <li class="nav-item"><a href="/report/accountInfo">Remittance</a></li>
-                                            <li class="nav-item"><a href="/report/accountInfo">Utility</a></li>
+                                            <li class="nav-item"><a href="/remittanceProcessing">Remittance</a>
+                                            </li>
+                                            <li class="nav-item"><a href="/requestRemittance">Request Remittance</a>
+                                            </li>
                                         </ul>
+
                                         <% } %>
+                                            <% if(role==="USER" || role==="AGENT" ){ %>
+                                                <li class="divider" data-content="Transaction"></li>
+                                                <li class="nav-item"><a href="/report/accountInfo">Teller Operation</a>
+                                                    <ul class="nav" id="app">
+                                                        <li class="divider" data-content="Payment"></li>
+                                                        <li class="nav-item"><a
+                                                                href="/remittanceProcessing">Remittance</a>
+                                                        </li>
+                                                        <li class="nav-item"><a href="/report/accountInfo">Utility</a>
+                                                        </li>
+                                                    </ul>
+                                                </li>
+                                                <% } %>
         </ul>
     </li>
 

@@ -86,24 +86,37 @@ const remittancesummary = async (fromdate, todate) => {
 	}
 }
 
-const remittanceRequest = async () => {
+const remittanceRequestList = async () => {
 	try {
-		sql = `/* Formatted on 3/3/2022 2:24:33 PM (QP5 v5.374) */
+		sql = `/* Formatted on 4/17/2022 3:24:02 PM (QP5 v5.381) */
+	
 		SELECT rim.NAME_OF_MTC,
+			   rim.REM_TT_NO,
+			   rim.REM_ID,
 			   BEN_NAME,
 			   ENTRY_DATE,
 			   SEN_REM_AMT,
 			   (CASE
 					WHEN STATUS = 'P' THEN 'Ready for payment'
 					WHEN STATUS = 'M' THEN 'Waiting fot correction'
-				END)                              "STATUS",
+					WHEN STATUS IS NULL THEN 'Pending Request'
+				END)                              COMMENTS,
 			   AUTHO_DATE,
 			   (SELECT name
 				  FROM agent_banking.reginfo
 				 WHERE mphone = REC_AGENT_ACC)    REC_AGENT_ACC,
 			   STATUS
 		  FROM AGENT_BANKING.REMITTANCE_INFO rim
-		 WHERE STATUS NOT IN ('R', 'A')`
+		 WHERE STATUS IS NULL or STATUS in ('P')`
+		return await qurrythis(sql)
+	} catch (e) {
+		console.log(e)
+		return 404
+	}
+}
+const getSingleeRequest = async (param) => {
+	try {
+		sql = `SELECT * FROM AGENT_BANKING.REMITTANCE_INFO rim WHERE REM_ID = ${param}`
 		return await qurrythis(sql)
 	} catch (e) {
 		console.log(e)
@@ -111,4 +124,4 @@ const remittanceRequest = async () => {
 	}
 }
 
-module.exports = { remittancehouselist, remittance, remittancesummary, remittanceRequest }
+module.exports = { remittancehouselist, remittance, remittancesummary, remittanceRequestList, getSingleeRequest }

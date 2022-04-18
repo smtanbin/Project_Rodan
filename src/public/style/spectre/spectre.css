@@ -2787,6 +2787,16 @@ summary.accordion-header::-webkit-details-marker {
   max-width: 960px;
 }
 
+.modal.modal-xl .modal-overlay {
+  background: #fff;
+}
+
+.modal.modal-xl .modal-container {
+  -webkit-box-shadow: none;
+          box-shadow: none;
+  max-width: 1280px;
+}
+
 .modal-container {
   -webkit-box-shadow: 0 0.2rem 0.5rem rgba(71, 75, 73, 0.3);
           box-shadow: 0 0.2rem 0.5rem rgba(71, 75, 73, 0.3);

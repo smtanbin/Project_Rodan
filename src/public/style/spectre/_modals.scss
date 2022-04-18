@@ -52,6 +52,17 @@
       max-width: $control-width-lg;
     }
   }
+
+  &.modal-xl {
+    .modal-overlay {
+      background: $bg-color-light;
+    }
+
+    .modal-container {
+      box-shadow: none;
+      max-width: $control-width-xl;
+    }
+  }
 }
 
 .modal-container {

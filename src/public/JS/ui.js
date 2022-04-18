@@ -57,3 +57,17 @@ const notificationclose = () => {
 	notification.style.pointerEvents = 'none'
 	notification.style.userSelect = 'none'
 }
+
+const showRequestPanal = () => {
+	document.getElementById('mkrequest').classList.add('d-none')
+	document.getElementById('progressline').classList.remove('d-none')
+	document.getElementById('progresslinetab').classList.add('active')
+	document.getElementById('mkrequesttab').classList.remove('active')
+}
+
+const mkrequest = () => {
+	document.getElementById('progressline').classList.add('d-none')
+	document.getElementById('mkrequest').classList.remove('d-none')
+	document.getElementById('mkrequesttab').classList.add('active')
+	document.getElementById('progresslinetab').classList.remove('active')
+}
