@@ -276,14 +276,14 @@ const agentstatus = async () => {
 const mstEventOutput = async () => {
 
 	document.getElementById('mstblock').innerHTML = `<div class="card-header">
-	<div data-aos="fade-up" class="card-title text-primary h5">Events</div>
+	<div class="card-title text-primary h5">Events</div>
   </div>
-  <table class="table p-2 table-cluster">
+  <table class="table p-2">
 	<thead>
 	  <tr>
-		<th class="text-tiny">Event</th>
-		<th class="text-tiny text-center">No</th>
-		<th class="text-tiny">Status</th>
+		<th class="text-tiny text-primary">Event</th>
+
+		<th class="text-tiny text-primary text-left">Status</th>
 
 	  </tr>
 	</thead>
@@ -312,8 +312,10 @@ const mstEventOutput = async () => {
 				document.getElementById('mstEventOutput').innerHTML +=
 					`${opt}
 					<td class="text-tiny">${AC}</td>
-					<td class="text-tiny text-center">${TOTAL}</td>
-				<td class="text-tiny">${REG_STATUS}</td>
+				<td class="text-tiny">
+				<span class="label label-rounded label-secondary">${TOTAL}</span>
+				${REG_STATUS}
+				</td>
 
 				</tr>`
 
@@ -322,18 +324,22 @@ const mstEventOutput = async () => {
 
 	})
 }
+/*
+
+
+
+*/
 const tEventOutput = async () => {
 
 	document.getElementById('trevblock').innerHTML = `<div class="card-header">
-	<div data-aos="fade-up" class="card-title text-primary h5">Transaction Event</div>
+	<div class="card-title text-primary h5">Transaction Event</div>
   </div>
-  <table class="table p-2 table-cluster">
+  <table class="table p-2">
 	<thead>
 	  <tr>
-		<th class="text-tiny text-left">Event</th>
-		<th class="text-tiny text-center">No</th>
-		<th class="text-tiny text-left">Status</th>
-		<th class="text-tiny text-right">Amount</th>
+		<th class="text-tiny text-primary text-left">Event</th>
+		<th class="text-tiny text-primary text-left">Status</th>
+		<th class="text-tiny text-primary text-right">Amount</th>
 	  </tr>
 	</thead>
 	<tbody id="tEventOutput">
@@ -361,19 +367,19 @@ const tEventOutput = async () => {
 
 				if (SRC === 'REMITTANCE_INFO') {
 					document.getElementById('tEventOutput').innerHTML +=
-						`<tr onclick="window.location='/remittanceProcessing';">
+						`<tr onclick="window.location='/remittanceProcessing';" class="active">
 				<td class="text-tiny">${E}</td>
-				<td class="text-tiny text-center">${TOTAL}</td>
-				<td class="text-tiny">${STATUS}</td>
+
+				<td class="text-tiny"><span class="label label-rounded label-secondary">${TOTAL}</span> ${STATUS}</td>
 				<td class="text-tiny text-right">${AMT.toLocaleString('en-BD', {
 							maximumFractionDigits: 2
 						})}</td>
+
 				</tr>`} else {
 					document.getElementById('tEventOutput').innerHTML +=
 						`<tr>
 				<td class="text-tiny">${E}</td>
-				<td class="text-tiny text-center">${TOTAL}</td>
-				<td class="text-tiny">${STATUS}</td>
+		<td class="text-tiny"><span class="label label-rounded label-secondary">${TOTAL}</span> ${STATUS}</td>
 				<td class="text-tiny text-right">${AMT.toLocaleString('en-BD', {
 							maximumFractionDigits: 2
 						})}</td>
