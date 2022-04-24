@@ -313,7 +313,7 @@ const mstEventOutput = async () => {
 					`${opt}
 					<td class="text-tiny">${AC}</td>
 				<td class="text-tiny">
-				<span class="label label-rounded label-secondary">${TOTAL}</span>
+				<span class="label label-rounded">${TOTAL}</span>
 				${REG_STATUS}
 				</td>
 
@@ -370,7 +370,7 @@ const tEventOutput = async () => {
 						`<tr onclick="window.location='/remittanceProcessing';" class="active">
 				<td class="text-tiny">${E}</td>
 
-				<td class="text-tiny"><span class="label label-rounded label-secondary">${TOTAL}</span> ${STATUS}</td>
+				<td class="text-tiny"><span class="label label-rounded">${TOTAL}</span> ${STATUS}</td>
 				<td class="text-tiny text-right">${AMT.toLocaleString('en-BD', {
 							maximumFractionDigits: 2
 						})}</td>
@@ -379,7 +379,7 @@ const tEventOutput = async () => {
 					document.getElementById('tEventOutput').innerHTML +=
 						`<tr>
 				<td class="text-tiny">${E}</td>
-		<td class="text-tiny"><span class="label label-rounded label-secondary">${TOTAL}</span> ${STATUS}</td>
+		<td class="text-tiny"><span class="label label-rounded">${TOTAL}</span> ${STATUS}</td>
 				<td class="text-tiny text-right">${AMT.toLocaleString('en-BD', {
 							maximumFractionDigits: 2
 						})}</td>
