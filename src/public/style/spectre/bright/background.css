@@ -1,0 +1,8 @@
+.bg-opt{
+    
+        background-color: rgba(247,248,249,.65);
+        backdrop-filter: blur(5px);
+        -webkit-backdrop-filter: blur(5px);
+    
+    
+}

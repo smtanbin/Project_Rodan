@@ -31,7 +31,7 @@ app.use(bodyParser.json())
 app.use((req, res, next) => {
 	res.header('Access-Control-Allow-Origin', '*')
 	res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accepcact')
-	res.header('Access-Control-Allow-Methods', [ 'GET', 'POST', 'PATCH', 'DELETE' ])
+	res.header('Access-Control-Allow-Methods', ['GET', 'POST', 'PATCH', 'DELETE'])
 	next()
 })
 
@@ -54,7 +54,7 @@ app.get('/agentlist', async (req, res) => {
 /**************************************** Start ****************************************
  Importing
  */
-const { dailydrcr, drcragent, balancePerformance } = require('../api/chartsData')
+const { dailydrcr, drcragent, balancePerformance, teventoutput, mseventoutput } = require('../api/chartsData')
 
 /* 	Get Requests
 */
@@ -78,6 +78,24 @@ app.get('/dpsMaturity', async (req, res) => {
 	}
 })
 
+
+
+app.get('/teventoutput', async (req, res) => {
+	try {
+		const data = await teventoutput()
+		res.send(data)
+	} catch (e) {
+		return e
+	}
+})
+app.get('/mseventoutput', async (req, res) => {
+	try {
+		const data = await mseventoutput()
+		res.send(data)
+	} catch (e) {
+		return e
+	}
+})
 app.get('/pichart', async (req, res) => {
 	try {
 		const data = await pichart()

@@ -1,3 +1,14 @@
+:root {
+	/* --frost: rgba(255, 255, 255, 0.555); */
+	--frost-bright: rgba(255, 255, 255, 0.5);
+	--frost-dark: rgba(31, 31, 31, 0.5);
+	--default-bg-blur: blur(10px);
+	--navbar-z-index: 5;
+}
+
+
+
+
 @font-face {
 	font-family: 'RobotoSlab';
 	src: url('./font/RobotoSlab-Regular.ttf');
@@ -96,23 +107,7 @@ h3 {
 	font-family: 'Roboto-Thin', sens-serif;
 }
 
-:root {
-	/* --frost: rgba(255, 255, 255, 0.555); */
-	--frost-bright: rgba(255, 255, 255, 0.5);
-	--frost-dark: rgba(31, 31, 31, 0.5);
-	--default-bg-blur: blur(10px);
-}
 
-#navbar {
-	height: 70px;
-	padding: 5px 5px;
-	width: 100%;
-	/* bottom: 0; */
-	top: 0;
-	right: 0;
-	left: 0;
-	z-index: 5;
-}
 
 /* .bg-frost {
 	background-color: var(--frost);
@@ -199,21 +194,29 @@ h3 {
 	overflow-y: scroll;
 	overflow-x: hidden;
 }
-#sidenav {
+
+#navbar {
+	height: 70px;
+	padding: 5px 5px;
+	width: 100%;
+	/* bottom: 0; */
+	top: 0;
+	right: 0;
+	left: 0;
+	z-index: calc(var(--navbar-z-index) + 1);
+}
+#sidebar {
 	position: fixed;
 	left: 0;
 	top: 0;
-	z-index: 1;
+	z-index: var(-navbar-z-index);
 	width: 100%;
 	max-width: 200px;
 	height: 100%;
-	/* background-color: #c9e2fc; */
-
-	/* background-color: #eeeeee; */
-	background-color: #f8f8f831;
 	padding: 90px 0 0 10px;
 	overflow-y: scroll;
 	overflow-x: hidden;
+	
 }
 
 .d-none {
@@ -223,6 +226,7 @@ h3 {
 #sidenav span {
 	transition: ease-in-out;
 }
+
 
 .font-roboto {
 	font-family: Roboto, Arial, Helvetica, sans-serif !important;
@@ -242,4 +246,9 @@ h3 {
 } */
 .text-micro {
 	font-size: .5rem !important;
+}
+
+
+.progress *{
+	z-index: 1;
 }

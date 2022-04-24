@@ -15,19 +15,23 @@
           <%- include('../navbar'); %>
         </div>
         <div class="columns col-12 row">
-          <div class="column col-2 hide-md">
+
+          <div class="column col-md-2 col-2" id="sidebarhead">
             <%- include('../sidenav'); %>
           </div>
-          <div class="column col-10">
+
+          <div class="column col-10 col-md-12" id="contenthead">
             <%- include('body'); %>
           </div>
         </div>
-        <div class="row column col-12">
-          <%- include('../footer'); %>
-        </div>
       </div>
+      <div class="row column col-12">
+        <%- include('../footer'); %>
+      </div>
+    </div>
 
     </div>
+
   </body>
 
 </html>

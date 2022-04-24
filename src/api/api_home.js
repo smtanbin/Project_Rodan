@@ -1,4 +1,4 @@
-const qurrythis = require('../apps/db')
+const qurrythis = require('../core/db')
 
 const pichart = async (param) => {
 	let sql = ''

@@ -1,4 +1,4 @@
-const qurrythis = require('../apps/db')
+const qurrythis = require('../core/db')
 
 const accountInfo = async (key) => {
 	try {

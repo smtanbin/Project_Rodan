@@ -1,4 +1,4 @@
-const qurrythis = require('../apps/db')
+const qurrythis = require('../core/db')
 
 const timeline = async () => {
 	try {
@@ -29,7 +29,8 @@ const timeline = async () => {
 	FROM
 		AGENT_BANKING.GL_TRANS_MST m
 	ORDER BY
-		TRANS_NO DESC`
+		TRANS_NO DESC
+		FETCH NEXT 100 ROWS ONLY`
 		// console.log(sql)
 		return qurrythis(sql)
 	} catch (e) {

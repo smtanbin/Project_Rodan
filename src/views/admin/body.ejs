@@ -8,6 +8,8 @@
   </div>
 </section>
 
+
+
 <div class="container">
   <div class="columns">
 
@@ -21,12 +23,22 @@
       <div class="container">
         <div class="columns">
 
-          <div class="column col-5">
+          <div class="column col-7 col-md-12">
 
-            <section data-aos="fade-up" class="column p-2 " id="remainer-body">
-              <h5 class="h5 text-primary text-center text-bold" id="remainer-text">Today Time Remaining</h5>
+            <!-- <section data-aos="fade-up" class="column p-2 mt-1 " id="remainer-body">
+              <div data-aos="fade-right" class="card-title text-primary h3 py-2" id="remainer-text">Today Time Remaining
+              </div>
               <progress class="progress" id="remainer" value="0" max="540"></progress>
+            </section> -->
+
+            <!-- For Moblie view perpossed -->
+            <section data-aos="fade-right" class="card noboder p-2 m-1" id="trevblock">
+              <div class="loading loading-lg" id="trevblockloading"></div>
             </section>
+            <section data-aos="fade-right" class="card noboder p-2 m-1" id="mstblock">
+              <div class="loading loading-lg" id="trevblockloading"></div>
+            </section>
+
 
             <section data-aos="fade-right" class="card noboder p-1 m-1">
               <div class="card-header">
@@ -34,39 +46,6 @@
               </div>
               <canvas data-aos="fade-up" id="dailydrcr"></canvas>
             </section>
-
-            <section class="card noboder p-1 m-1">
-              <div class="card-header">
-                <div data-aos="fade-right" class="card-title text-primary h3 py-2">Balance</div>
-              </div>
-              <canvas data-aos="fade-up" id="Chart" style="width:100%;max-width:600px"></canvas>
-            </section>
-
-            <section data-aos="fade-left" class="card noboder my-2 p-1">
-              <div class="card-title text-primary h5">Account Status</div>
-              <canvas data-aos="fade-left" id="accountStatus"></canvas>
-              <button class="btn btn-link " onclick="showmore('Status')"><i
-                  class="icon icon-2x icon-more-horiz"></i></button>
-              <table data-aos="fade-left" id="Status" class="table table-striped table-cluster " style="display: none;">
-                <thead>
-                  <tr>
-                    <th class="text-tiny text-bold ">Agent</th>
-                    <th class="text-tiny text-bold ">Today Open</th>
-                    <th class="text-tiny text-bold ">Today Close</th>
-                    <th class="text-tiny text-bold ">Yesterday Open</th>
-                    <th class="text-tiny text-bold ">Yesterday Close</th>
-                    <th class="text-tiny text-bold ">Total</th>
-                  </tr>
-                </thead>
-                <tbody id="accountStatusTable">
-                </tbody>
-              </table>
-            </section>
-
-          </div>
-          <!-- Right Side -->
-          <div class="column col-7 my-1 ">
-
 
 
 
@@ -118,11 +97,47 @@
                 </table>
               </div>
             </section>
-            <section class="card noboder my-2">
+
+          </div>
+          <!-- Right Side -->
+          <div class="column col-5 my-1 col-md-12">
+
+
+            <section class="card noboder p-1 m-1">
+              <div class="card-header">
+                <div data-aos="fade-right" class="card-title text-primary h3 py-2">Balance</div>
+              </div>
+              <canvas data-aos="fade-up" id="Chart" style="width:100%;max-width:600px"></canvas>
+            </section>
+
+
+            <section data-aos="fade-left" class="card noboder my-2 p-1">
+              <div class="card-title text-primary h5">Account Status</div>
+              <canvas data-aos="fade-left" id="accountStatus"></canvas>
+              <button class="btn btn-link " onclick="showmore('Status')"><i
+                  class="icon icon-2x icon-more-horiz"></i></button>
+              <table data-aos="fade-left" id="Status" class="table table-striped table-cluster " style="display: none;">
+                <thead>
+                  <tr>
+                    <th class="text-tiny text-bold ">Agent</th>
+                    <th class="text-tiny text-bold ">Today Open</th>
+                    <th class="text-tiny text-bold ">Today Close</th>
+                    <th class="text-tiny text-bold ">Yesterday Open</th>
+                    <th class="text-tiny text-bold ">Yesterday Close</th>
+                    <th class="text-tiny text-bold ">Total</th>
+                  </tr>
+                </thead>
+                <tbody id="accountStatusTable">
+                </tbody>
+              </table>
+            </section>
+
+
+            <!-- <section class="card noboder my-2">
               <h2 class="text-primary p-2 h2 ">Place Holder</h2>
               <div class="ot">
               </div>
-            </section>
+            </section> -->
 
           </div>
         </div>
@@ -142,7 +157,6 @@
 
 
 
-<script src="/JS/funNotification.js" defer></script>
 
-<script src="/JS/funHome.js" defer></script>
+<script src="/JS/dashboard/index.js" defer></script>
 <script src="/JS/loading.js" defer></script>

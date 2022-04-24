@@ -237,4 +237,5 @@ const monthlyActivity = async (mphone) => {
 	}
 }
 
+
 module.exports = { pichart, agentstatus, customerstatus, accountOpenCloseStatus, monthlyActivity }

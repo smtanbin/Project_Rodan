@@ -42,7 +42,8 @@ const corsOptions = {
 	optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
 }
 
-app.use(express.static(__dirname + '/public'))
+app.use(express.static(__dirname + '/Public'))
+app.use('/JS', express.static(__dirname + '/Apps'))
 app.set('views', path.join(__dirname, '/views'))
 // set the view engine to ejs
 app.set('view engine', 'ejs')
@@ -52,7 +53,7 @@ app.use(express.json())
 // Middelwears
 app.use(cors(corsOptions))
 
-app.get('/login', function(req, res) {
+app.get('/login', function (req, res) {
 	res.locals = {
 		title: 'Login'
 	}
@@ -70,7 +71,7 @@ app.get('/login', function(req, res) {
 const cookieParser = require('cookie-parser')
 app.use(cookieParser())
 
-const { verification } = require('./apps/api_login')
+const { verification } = require('./Api/api_login')
 
 app.post('/oauth', async (req, res) => {
 	const userid = req.body.user
@@ -189,13 +190,13 @@ app.get('/*', (req, res, next) => {
  * 
  * ******************************************************************/
 /*Every Application page path location in */
-const apppath = require('./routes/app')
+const apppath = require('./Routes/app')
 app.use('/', apppath)
 /*And Every apis path here*/
-const apipath = require('./routes/api')
+const apipath = require('./Routes/api')
 app.use('/api', apipath)
 /*If Page not found (404) this path handels it*/
-app.get('*', function(req, res) {
+app.get('*', function (req, res) {
 	res.locals = {
 		title: '404!'
 	}

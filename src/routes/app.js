@@ -19,7 +19,7 @@ app.use((req, res, next) => {
 })
 
 const jwt_decode = require('jwt-decode')
-const { roleCheck } = require('../apps/roles')
+const { roleCheck } = require('../core/roles')
 
 // Visual Viewport Api
 /*********************************************************************************/

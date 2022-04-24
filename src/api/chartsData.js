@@ -1,4 +1,4 @@
-const qurrythis = require('../apps/db')
+const qurrythis = require('../core/db')
 
 const balancePerformance = async () => {
 	try {
@@ -113,5 +113,24 @@ const drcragent = async (key) => {
 		return e
 	}
 }
+const teventoutput = async () => {
+	try {
+		sql = `SELECT * FROM AGENT_BANKING.D_TRANSACTIONINFO`
 
-module.exports = { dailydrcr, drcragent, balancePerformance, previousdrcr }
+		return await qurrythis(sql)
+	} catch (e) {
+		console.log('api function cashEntry' + e)
+		return e
+	}
+}
+const mseventoutput = async () => {
+	try {
+		sql = `select * from agent_banking.D_REG_MASTERINFO`
+
+		return await qurrythis(sql)
+	} catch (e) {
+		console.log('api function cashEntry' + e)
+		return e
+	}
+}
+module.exports = { dailydrcr, drcragent, balancePerformance, previousdrcr, teventoutput, mseventoutput }

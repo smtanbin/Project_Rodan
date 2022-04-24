@@ -1,102 +1,107 @@
-<ul data-aos="fade-right" class="nav m-0" id="sidenav">
-    <div class="w100 ">
+<div id="sidebar" class="hide-md bg-opt">
 
-        <!-- <li class="nav-item"><a href="/">
-                <figure class="avatar avatar-sm" data-initial="<%= //userid.substring(2, 0); %>">
-                </figure>
-                <%= userid %>
-            </a></li> -->
-
-    </div>
-    <li class="divider bg-primary"></li>
-    <li class="nav-item">
-        <samp class="text-primary h5">Apps</samp>
-        <ul class="nav" id="app">
-            <% if(role==='ADMIN' || role==='APPROVAL' ){ %>
-
-                <li class="nav-item">
-                    <a href="/timeline">Timeline</a>
-                </li>
-                <% } %>
-                    <% if(role==='ADMIN' || role==='APPROVAL' ){ %>
-
-                        <li class="nav-item">
-                            <a href="/customerInfo">Customer Info</a>
-                        </li>
-                        <% } %>
-                            <% if(role==="USER" || role==="AGENT" ){ %>
-                                <li class="divider bg-primary" data-content="Registration"></li>
-                                <ul class="nav" id="app">
-                                    <li class="nav-item"><a href="/report/accountInfo">Add Customer</a></li>
-                                    <li class="divider" data-content="Link up"></li>
-                                    <li class="nav-item"><a href="/report/accountInfo">Add Account</a></li>
-                                </ul>
-                                <% } %>
-                                    <li class="nav-item"><a href="/kycupdate">Eco Code Update</a></li>
-                                    <% if(role!="USER" || role!="AGENT" ){ %>
-                                        <ul class="nav" id="app">
-                                            <li class="divider" data-content="Payment"></li>
-                                            <li class="nav-item"><a href="/remittanceProcessing">Remittance</a>
-                                            </li>
-                                            <li class="nav-item"><a href="/requestRemittance">Request Remittance</a>
-                                            </li>
-                                        </ul>
-
-                                        <% } %>
-                                            <% if(role==="USER" || role==="AGENT" ){ %>
-                                                <li class="divider" data-content="Transaction"></li>
-                                                <li class="nav-item"><a href="/report/accountInfo">Teller Operation</a>
-                                                    <ul class="nav" id="app">
-                                                        <li class="divider" data-content="Payment"></li>
-                                                        <li class="nav-item"><a
-                                                                href="/remittanceProcessing">Remittance</a>
-                                                        </li>
-                                                        <li class="nav-item"><a href="/report/accountInfo">Utility</a>
-                                                        </li>
-                                                    </ul>
-                                                </li>
-                                                <% } %>
-        </ul>
-    </li>
-
-    <li class="nav-item">
-        <samp class="text-primary h5">Reports</samp>
-        <ul class="nav" id="app">
-            <li class="divider bg-primary" data-content="Account Information"></li>
-            <li class="nav-item "><a href="/report/accountStatment">Statment</a></li>
-
-
-            <li class="nav-item"><a href="/report/accountInfo" class="text-ellipsis">Term Account Status</a></li>
-
-            <% if(role==='ADMIN' || role==='APPROVAL' ){ %>
-                <li class="nav-item"><a href="/report/businessinfo">Account Info</a></li>
-
-                <% } %>
-                    <% if(role==='ADMIN' || role==='APPROVAL' ){ %>
-                        <li class="nav-item"><a href="/report/remittanceReport">Remittance Report</a>
-                        </li>
-
-                        <% } %>
-                            <li class="divider bg-primary" data-content="Marchent Information"></li>
-                            <li class="nav-item"><a href="/report/utilityreport">Utility Report</a>
+    <div class="docs-nav">
+        <div class="accordion-container">
+            <div class="accordion">
+                <input id="accordion-getting-started" type="checkbox" name="docs-accordion-checkbox" hidden="">
+                <label class="accordion-header text-primary " for="accordion-getting-started">Apps</label>
+                <div class="accordion-body">
+                    <ul class="menu menu-nav">
+                        <% if(role==='ADMIN' || role==='APPROVAL' ){ %>
+                            <li class="menu-item">
+                                <a href="/timeline">Timeline</a>
                             </li>
+                            <% } %>
+                                <% if(role==='ADMIN' || role==='APPROVAL' ){ %>
+                                    <li class=" menu-item">
+                                        <a href="/customerInfo">Customer Info</a>
+                                    </li>
+                                    <% } %>
+                    </ul>
+
+                </div>
+            </div>
+            <div class="accordion">
+                <input id="accordion-elements" type="checkbox" name="docs-accordion-checkbox" hidden="">
+                <label class="accordion-header text-primary" for="accordion-elements">Customer Master</label>
+                <div class="accordion-body">
+                    <ul class="menu menu-nav">
+
+                        <% if(role==="USER" || role==="AGENT" ){ %>
+                            <li class="menu-item"><a href="/report/accountInfo">Add Customer</a></li>
+                            <li class="menu-item"><a href="/report/accountInfo">Add Account</a></li>
+                            <% } %>
+                                <li class="menu-item"><a href="/kycupdate">Eco Code Update</a></li>
+
+                    </ul>
+                </div>
+            </div>
+            <div class="accordion">
+                <input id="accordion-layout" type="checkbox" name="docs-accordion-checkbox" hidden="">
+                <label class="accordion-header text-primary" for="accordion-layout">Transaction</label>
+                <div class="accordion-body">
+                    <ul class="menu menu-nav">
 
 
-                            <% if(role==='ADMIN' || role==='APPROVAL' ){ %>
-                                <li class="nav-item"><a href="/report/mis">MIS</a></li>
 
-                                <% } %>
+                        <% if(role!="USER" || role!="AGENT" ){ %>
+                            <li class="menu-item"><a href="/remittanceProcessing">Remittance</a></li>
+                            <% } %>
+                                <% if(role==="USER" || role==="AGENT" ){ %>
+                                    <li class="menu-item"><a href="/requestRemittance">Request Remittance</a></li>
+                                    <% } %>
+                                        <% if(role==="USER" || role==="AGENT" ){ %>
+
+                                            <li class="menu-item"><a href="/report/accountInfo">Teller Operation</a>
+
+                                            <li class="divider" data-content="Payment"></li>
+                                            <li class="menu-item"><a href="/remittanceProcessing">Remittance</a>
+                                            </li>
+                                            <li class="menu-item"><a href="/report/accountInfo">Utility</a>
+                                            </li>
+
+                                            </li>
+                                            <% } %>
+                    </ul>
+                </div>
+            </div>
+            <div class="accordion">
+                <input id="accordion-components" type="checkbox" name="docs-accordion-checkbox" hidden="">
+                <label class="accordion-header  text-primary" for="accordion-components">Reports</label>
+                <div class="accordion-body">
+                    <ul class="menu menu-nav">
+
+                        <li class="menu-item "><a href="/report/accountStatment">Statment</a></li>
 
 
-        </ul>
-    </li>
-    <!-- <li class="nav-item">
-        <samp class="text-primary h5">Setting</samp>
-        <ul class="nav" id="app">
+                        <li class="menu-item"><a href="/report/accountInfo" class="text-ellipsis">Term Account
+                                Status</a>
+                        </li>
 
-            <li class="nav-item">
-                <a onclick="logout()" class="text-error text-bold">Logout</a>
-            </li>
-        </ul>
-    </li> -->
-</ul>
+                        <% if(role==='ADMIN' || role==='APPROVAL' ){ %>
+                            <li class="menu-item"><a href="/report/businessinfo">Account Info</a></li>
+
+                            <% } %>
+                                <% if(role==='ADMIN' || role==='APPROVAL' ){ %>
+                                    <li class="menu-item"><a href="/report/remittanceReport">Remittance Report</a>
+                                    </li>
+
+                                    <% } %>
+
+                                        <li class="menu-item"><a href="/report/utilityreport">Utility Report</a>
+                                        </li>
+
+
+                                        <% if(role==='ADMIN' || role==='APPROVAL' ){ %>
+                                            <li class="menu-item"><a href="/report/mis">MIS</a></li>
+
+                                            <% } %>
+
+                    </ul>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+</div>

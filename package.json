@@ -1,12 +1,12 @@
 {
-	"name": "project_volka",
-	"version": "0.8.1",
-	"description": "A simple webside for ISP",
+	"name": "rodan",
+	"version": "1.10.0",
 	"main": "src/main.js",
 	"scripts": {
-		"build": "webpack --config build/webpack.prod.conf.js",
-		"dev": "webpack --config build/webpack.dev.conf.js",
-		"start": "nodemon src/main.js"
+		"production": "webpack --config build/webpack.prod.conf.js",
+		"build": "webpack --config build/webpack.dev.conf.js",
+		"dev": "nodemon src/main.js",
+		"start": "node src/main.js"
 	},
 	"author": "Tanbin hassan bappi",
 	"license": "MIT",

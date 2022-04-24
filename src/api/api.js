@@ -1,5 +1,5 @@
-const qurrythis = require('../apps/db')
-const { oracleDate } = require('../apps/FunCore')
+const qurrythis = require('../core/db')
+const { oracleDate } = require('../core/FunCore')
 
 async function reginfo() {
 	const sql = `SELECT MPHONE "ACNO",NVL(PMPHONE,MPHONE) "AGENT",REG_STATUS,STATUS,BALANCE_M FROM AGENT_BANKING.reginfo`

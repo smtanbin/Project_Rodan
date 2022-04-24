@@ -1,5 +1,5 @@
-const qurrythis = require('../apps/db')
-const { oracleDate } = require('../apps/FunCore')
+const qurrythis = require('../core/db')
+const { oracleDate } = require('../core/FunCore')
 
 const pbslist = async () => {
 	try {
