@@ -90,6 +90,7 @@ html {
 
 * {
 	font-family: 'Roboto', sens-serif;
+	border: 0 !important;
 }
 
 /* td,
@@ -251,4 +252,8 @@ h3 {
 
 .progress *{
 	z-index: 1;
+}
+
+#trevblock > td,#mstblock > td{
+ border: 0 !important;
 }

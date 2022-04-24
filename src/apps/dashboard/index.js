@@ -278,7 +278,7 @@ const mstEventOutput = async () => {
 	document.getElementById('mstblock').innerHTML = `<div class="card-header">
 	<div class="card-title text-primary h5">Events</div>
   </div>
-  <table class="table p-2">
+  <table class="table p-2 table-hover">
 	<thead>
 	  <tr>
 		<th class="text-tiny text-primary">Event</th>
@@ -334,7 +334,7 @@ const tEventOutput = async () => {
 	document.getElementById('trevblock').innerHTML = `<div class="card-header">
 	<div class="card-title text-primary h5">Transaction Event</div>
   </div>
-  <table class="table p-2">
+  <table class="table p-2 table-hover">
 	<thead>
 	  <tr>
 		<th class="text-tiny text-primary text-left">Event</th>
@@ -370,7 +370,7 @@ const tEventOutput = async () => {
 						`<tr onclick="window.location='/remittanceProcessing';" class="active">
 				<td class="text-tiny">${E}</td>
 
-				<td class="text-tiny"><span class="label label-rounded">${TOTAL}</span> ${STATUS}</td>
+				<td class="text-tiny"><span class="label label-rounded label-primary">${TOTAL}</span> ${STATUS}</td>
 				<td class="text-tiny text-right">${AMT.toLocaleString('en-BD', {
 							maximumFractionDigits: 2
 						})}</td>

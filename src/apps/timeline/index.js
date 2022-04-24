@@ -170,8 +170,8 @@ const model = async (trno) => {
 				} = data
 
 				return `<div class="modal-header">
-				<a onclick="closeModel()" class="btn btn-link float-right" aria-label="Close"><i class="material-icons">close</i></a>
-				<a onclick="printArea()" class="btn btn-link float-right"><i class="material-icons">print</i></a>
+				<a onclick="closeModel()" class="btn btn-link float-right text-error" aria-label="Close"><i class="icon icon-cross"></i> Close</a>
+				<a onclick="printArea()" class="btn btn-link float-right"><i class="icon icon-download"></i> Download</a>
 	<div id="modal-title" class="modal-title text-primary h5">${TRANS_NO}</div>
 	</div>
 	<div class="modal-body">
