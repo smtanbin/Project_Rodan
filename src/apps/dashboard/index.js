@@ -278,7 +278,7 @@ const mstEventOutput = async () => {
 	document.getElementById('mstblock').innerHTML = `<div class="card-header">
 	<div class="card-title text-primary h5">Events</div>
   </div>
-  <table class="table p-2 table-hover">
+  <table class="table p-2 table-hover table-cluster">
 	<thead>
 	  <tr>
 		<th class="text-tiny text-primary">Event</th>
@@ -301,10 +301,20 @@ const mstEventOutput = async () => {
 	await fetch(url, requestOptions).then((response) => response.json()).then((payload) => {
 
 		if (payload.length === 0) {
-			document.getElementById('mstEventOutput').innerHTML +=
-				`<tr>
-				<td class="text-tiny" colspan="4">No Pending More Event</td>
-				</tr>`
+			document.getElementById('trevblock').innerHTML =
+				`
+				<div class="card-header">
+				<div class="card-title text-primary h5">
+				Transaction Event
+				</div>
+				</div>
+				<div class="empty bg-none">
+				<div class="empty-icon">
+				  <i class="icon icon-2x icon-flag text-primary"></i>
+				</div>
+				<p class="empty-title text-primary h5">No Event Found</p>
+				
+			  </div>`
 		} else {
 			payload.map(({ AC, TOTAL, REG_STATUS, SRC }) => {
 				let opt = '<tr>'
@@ -334,7 +344,7 @@ const tEventOutput = async () => {
 	document.getElementById('trevblock').innerHTML = `<div class="card-header">
 	<div class="card-title text-primary h5">Transaction Event</div>
   </div>
-  <table class="table p-2 table-hover">
+  <table class="table p-2 table-hover table-cluster">
 	<thead>
 	  <tr>
 		<th class="text-tiny text-primary text-left">Event</th>
@@ -357,10 +367,18 @@ const tEventOutput = async () => {
 	await fetch(url, requestOptions).then((response) => response.json()).then((payload) => {
 
 		if (payload.length === 0) {
-			document.getElementById('tEventOutput').innerHTML =
-				`<tr>
-				<td class="text-tiny" colspan="4">No More Event</td>
-				</tr>`
+			document.getElementById('trevblock').innerHTML =
+				`
+				<div class="card-header">
+	<div class="card-title text-primary h5">Transaction Event</div>
+  </div>
+				<div class="empty bg-none">
+				<div class="empty-icon">
+				  <i class="icon icon-2x icon-flag text-primary"></i>
+				</div>
+				<p class="empty-title text-primary h5">No Event Found</p>
+				
+			  </div>`
 		} else {
 			payload.map(({ AMT, E, STATUS, SRC, TOTAL }) => {
 
