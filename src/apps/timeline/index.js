@@ -69,6 +69,7 @@ const timeline = async () => {
 
 						cell = document.createElement('td')
 						cell.classList.add('text-tiny')
+						cell.classList.add('text-clip')
 						newRow.appendChild(cell)
 						cell.innerText = FROM_GL
 
@@ -79,7 +80,7 @@ const timeline = async () => {
 
 						cell = document.createElement('td')
 						cell.classList.add('text-tiny')
-
+cell.classList.add('text-clip')
 						newRow.appendChild(cell)
 						cell.innerText = TO_GL
 
@@ -116,7 +117,7 @@ const timeline = async () => {
 		document.getElementById('timeline').innerHTML = `
 	<tr>
 	<td colspan="14"> Error! <br/> Massage: ${e}</td>
-	
+
 	</tr>`
 	}
 	document.getElementById('loading').remove()

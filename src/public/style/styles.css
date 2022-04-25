@@ -90,7 +90,7 @@ html {
 
 * {
 	font-family: 'Roboto', sens-serif;
-	border: 0 !important;
+
 }
 
 /* td,
@@ -217,7 +217,7 @@ h3 {
 	padding: 90px 0 0 10px;
 	overflow-y: scroll;
 	overflow-x: hidden;
-	
+
 }
 
 .d-none {
@@ -254,6 +254,7 @@ h3 {
 	z-index: 1;
 }
 
-#trevblock > td,#mstblock > td{
+#trevblock *,
+#mstblock *{
  border: 0 !important;
 }
