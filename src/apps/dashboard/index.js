@@ -222,7 +222,7 @@ const agentstatus = async () => {
 		})
 		document.getElementById('agentInfo').innerHTML += `			<tr>
 		<td class="text-tiny text-primary text-bold" colspan="2">Total </td>
-		
+
 		<td class="text-tiny text-right text-primary text-bold">${loaclTatalToday.toLocaleString('en-BD', {
 			maximumFractionDigits: 2
 		})}</td>
@@ -267,10 +267,10 @@ const agentstatus = async () => {
 	})
 }
 /************************************************
- * 
+ *
  * 				Dashboard tEventOutput
- * 
- * 
+ *
+ *
 *************************************************/
 
 const mstEventOutput = async () => {
@@ -313,7 +313,7 @@ const mstEventOutput = async () => {
 				  <i class="icon icon-2x icon-flag text-primary"></i>
 				</div>
 				<p class="empty-title text-primary h5">No Event Found</p>
-				
+
 			  </div>`
 		} else {
 			payload.map(({ AC, TOTAL, REG_STATUS, SRC }) => {
@@ -377,7 +377,7 @@ const tEventOutput = async () => {
 				  <i class="icon icon-2x icon-flag text-primary"></i>
 				</div>
 				<p class="empty-title text-primary h5">No Event Found</p>
-				
+
 			  </div>`
 		} else {
 			payload.map(({ AMT, E, STATUS, SRC, TOTAL }) => {
@@ -388,7 +388,7 @@ const tEventOutput = async () => {
 						`<tr onclick="window.location='/remittanceProcessing';" class="active">
 				<td class="text-tiny">${E}</td>
 
-				<td class="text-tiny"><span class="label label-rounded label-primary">${TOTAL}</span> ${STATUS}</td>
+				<td class="text-tiny text-clip"><span class="label label-rounded label-primary">${TOTAL}</span> ${STATUS}</td>
 				<td class="text-tiny text-right">${AMT.toLocaleString('en-BD', {
 							maximumFractionDigits: 2
 						})}</td>
@@ -397,7 +397,7 @@ const tEventOutput = async () => {
 					document.getElementById('tEventOutput').innerHTML +=
 						`<tr>
 				<td class="text-tiny">${E}</td>
-		<td class="text-tiny"><span class="label label-rounded">${TOTAL}</span> ${STATUS}</td>
+		<td class="text-tiny text-clip"><span class="label  label-rounded">${TOTAL}</span> ${STATUS}</td>
 				<td class="text-tiny text-right">${AMT.toLocaleString('en-BD', {
 							maximumFractionDigits: 2
 						})}</td>
@@ -593,7 +593,7 @@ const closeModel = () => {
 }
 
 /******************************************************************************************
-*							
+*
 *
 									Indiviual Agent balance chart
 *
@@ -661,9 +661,9 @@ const agentBalancePerformance = async (mphone) => {
 }
 
 /******************************************************************************************
-*							
 *
-									Timer Widget code 
+*
+									Timer Widget code
 *
 *
 *******************************************************************************************/
@@ -694,7 +694,7 @@ const removeLoading = () => {
 }
 
 /******************************************************************************************
-*							
+*
 *
 									Function Init
 *
@@ -711,7 +711,7 @@ agentstatus()
 accountStatus()
 /* Balance Comparidun Function*/
 balancePerformance()
-/* 
+/*
 Customer calling
 */
 customerstatus()
