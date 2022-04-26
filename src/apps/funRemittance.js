@@ -374,6 +374,7 @@ const showRequest = async () => {
 	}
 
 	await fetch(url, requestOptions).then((response) => response.json()).then((payload) => {
+
 		if (payload.length === 0) {
 			document.getElementById('output').innerHTML = `<div class="empty">
 			<div class="empty-icon">
@@ -386,26 +387,27 @@ const showRequest = async () => {
 			</div>
 		  </div>`
 		} else {
-			payload.map(
-				(
-					{
-						REM_ID,
-						REM_TT_NO,
-						NAME_OF_MTC,
-						BEN_NAME,
-						REC_AGENT_ACC,
-						ENTRY_DATE,
-						SEN_REM_AMT,
-						STATUS,
-						COMMENTS
-					},
-					index
-				) => {
-					let styleclass = 'text-primary'
-					if (STATUS === 'P') {
-						styleclass = 'text-success'
-					}
-					document.getElementById('troutput').innerHTML += `<tr onclick="remittancedtl('${REM_ID}')">
+			document.getElementById('troutput').innerHTML =
+				payload.map(
+					(
+						{
+							REM_ID,
+							REM_TT_NO,
+							NAME_OF_MTC,
+							BEN_NAME,
+							REC_AGENT_ACC,
+							ENTRY_DATE,
+							SEN_REM_AMT,
+							STATUS,
+							COMMENTS
+						},
+						index
+					) => {
+						let styleclass = 'text-primary'
+						if (STATUS === 'P') {
+							styleclass = 'text-success'
+						}
+						return `<tr onclick="remittancedtl('${REM_ID}')">
 						<td class="text-tiny text-break">${REM_ID}</td>
 						<td class="text-tiny text-break">${moment(ENTRY_DATE).startOf('minute').fromNow()}</td>
 						<td class="text-tiny text-break">${REC_AGENT_ACC}</td>
@@ -413,12 +415,12 @@ const showRequest = async () => {
 						<td class="text-tiny text-break">${NAME_OF_MTC}</td>
 						<td class="text-tiny text-break">${BEN_NAME}</td>
 						<td class="text-tiny text-break">${SEN_REM_AMT.toLocaleString('en-BD', {
-						maximumFractionDigits: 2
-					})}</td>
+							maximumFractionDigits: 2
+						})}</td>
 						<td class="text-tiny ${styleclass} text-break">${COMMENTS}</td>
 						</tr>`
-				}
-			)
+					}
+				)
 			document.getElementById('table').classList.remove('d-none')
 			document.getElementById('progress').remove()
 		}
