@@ -14,7 +14,7 @@ app.use(bodyParser.json())
 app.use((req, res, next) => {
 	res.header('Access-Control-Allow-Origin', '*')
 	res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accepcact')
-	res.header('Access-Control-Allow-Methods', [ 'GET', 'POST', 'PATCH', 'DELETE' ])
+	res.header('Access-Control-Allow-Methods', ['GET', 'POST', 'PATCH', 'DELETE'])
 	next()
 })
 
@@ -120,6 +120,23 @@ app.get('/requestRemittance', async (req, res) => {
 		res.render('./pages/requestRemittance', { role: ROLE, userid: USERNAME, owner: ROOT, darkmode: darkModeCon })
 	})
 })
+app.get('/reconciliation', async (req, res) => {
+	const token = req.cookies.auth
+	const { user } = jwt_decode(token)
+	const data = await roleCheck(user)
+
+	data.map(({ ROLE, USERNAME, ROOT }) => {
+		res.locals = {
+			userid: req.cookies.USERNAME,
+			title: 'Reconciliation'
+		}
+		const darkModeCon = req.cookies.darkmode
+		res.render('./pages/reconciliation', { role: ROLE, userid: USERNAME, owner: ROOT, darkmode: darkModeCon })
+	})
+})
+
+
+
 // Report Panal
 /********************************************************************************
  */
@@ -222,5 +239,6 @@ app.get('/report/mis', async (req, res) => {
 		res.render('./pages/mis', { role: ROLE, userid: USERNAME, owner: ROOT, darkmode: darkModeCon })
 	})
 })
+
 
 module.exports = app

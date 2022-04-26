@@ -71,32 +71,46 @@
                 <div class="accordion-body">
                     <ul class="menu menu-nav">
 
-                        <li class="menu-item "><a href="/report/accountStatment">Statment</a></li>
 
 
-                        <li class="menu-item"><a href="/report/accountInfo" class="text-ellipsis">Term Account
-                                Status</a>
-                        </li>
 
-                        <% if(role==='ADMIN' || role==='APPROVAL' ){ %>
-                            <li class="menu-item"><a href="/report/businessinfo">Account Info</a></li>
+                        <div class="accordion">
+                            <input type="checkbox" id="accordion-1" name="accordion-checkbox" hidden>
+                            <label class="accordion-header text-primary" for="accordion-1">
 
-                            <% } %>
+                                Account Information
+                            </label>
+                            <div class="accordion-body" style="margin-left: 1rem;">
+                                <li class="menu-item "><a href="/report/accountStatment">Statment</a></li>
+                                <li class="menu-item"><a href="/report/accountInfo" class="text-ellipsis">Term Account
+                                        Status</a>
+                                </li>
                                 <% if(role==='ADMIN' || role==='APPROVAL' ){ %>
-                                    <li class="menu-item"><a href="/report/remittanceReport">Remittance Report</a>
-                                    </li>
+                                    <li class="menu-item"><a href="/report/businessinfo">Account Info</a></li>
 
                                     <% } %>
+                            </div>
+                        </div>
+                        <div class="accordion">
+                            <input type="checkbox" id="accordion-2" name="accordion-checkbox" hidden>
+                            <label class="accordion-header text-primary" for="accordion-2">
 
-                                        <li class="menu-item"><a href="/report/utilityreport">Utility Report</a>
-                                        </li>
+                                Admin
+                            </label>
+                            <div class="accordion-body" style="margin-left: 1rem;">
+                                <% if(role==='ADMIN' || role==='APPROVAL' ){ %>
+                                    <li class="menu-item"><a href="/report/mis">MIS</a></li>
+                                    <li class="menu-item "><a href="/reconciliation">Reconciliation</a></li>
+                                    <% } %>
+                            </div>
+                        </div>
 
-
-                                        <% if(role==='ADMIN' || role==='APPROVAL' ){ %>
-                                            <li class="menu-item"><a href="/report/mis">MIS</a></li>
-
-                                            <% } %>
-
+                        <% if(role==='ADMIN' || role==='APPROVAL' ){ %>
+                            <li class="menu-item"><a href="/report/remittanceReport">Remittance Report</a>
+                            </li>
+                            <% } %>
+                                <li class="menu-item"><a href="/report/utilityreport">Utility Report</a>
+                                </li>
                     </ul>
                 </div>
             </div>

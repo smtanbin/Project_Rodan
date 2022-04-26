@@ -445,6 +445,18 @@ app.get('/accountStatus', async (req, res) => {
 	}
 })
 
+
+const { recon } = require('../api/api_Reconciliation')
+app.get('/recon', async (req, res) => {
+	try {
+		const data = await recon()
+		res.send(data)
+	} catch (e) {
+		console.log(e)
+		res.send(e)
+	}
+})
+
 /* APi server Status*/
 // const { cpu } = require('../api/app')
 // app.get('/cpu', async (req, res) => {
