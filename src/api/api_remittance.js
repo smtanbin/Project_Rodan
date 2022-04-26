@@ -107,7 +107,7 @@ const remittanceRequestList = async () => {
 				 WHERE mphone = REC_AGENT_ACC)    REC_AGENT_ACC,
 			   STATUS
 		  FROM AGENT_BANKING.REMITTANCE_INFO rim
-		 WHERE STATUS IS NULL or STATUS in ('P')`
+		 WHERE STATUS IS NULL or STATUS in ('P','M')`
 		return await qurrythis(sql)
 	} catch (e) {
 		console.log(e)
