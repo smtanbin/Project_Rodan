@@ -5,15 +5,7 @@ const { pbslist, utilityinfohead, utilityinfodtl, utilityinfosummary } = require
 const { transactionsreport } = require('../api/api_transactionsreport')
 const { statementHead, statementBody } = require('../api/apiStatement')
 const { accountInfo } = require('../api/api_accountInfo')
-const {
-	pichart,
-	agentstatus,
-	cashEntry,
-	customerstatus,
-	accountStatus,
-	monthlyActivity,
-	dpsMaturity
-} = require('../api/api_home')
+
 const bodyParser = require('body-parser')
 const cors = require('cors')
 const app = Router()
@@ -54,7 +46,7 @@ app.get('/agentlist', async (req, res) => {
 /**************************************** Start ****************************************
  Importing
  */
-const { dailydrcr, drcragent, balancePerformance, teventoutput, mseventoutput } = require('../api/chartsData')
+const { cashEntry, dpsMaturity, accountStatus, pichart, agentstatus, customerstatus, peventoutput, monthlyActivity, dailydrcr, drcragent, balancePerformance, teventoutput, mseventoutput } = require('../api/chartsData')
 
 /* 	Get Requests
 */
@@ -83,6 +75,14 @@ app.get('/dpsMaturity', async (req, res) => {
 app.get('/teventoutput', async (req, res) => {
 	try {
 		const data = await teventoutput()
+		res.send(data)
+	} catch (e) {
+		return e
+	}
+})
+app.get('/peventoutput', async (req, res) => {
+	try {
+		const data = await peventoutput()
 		res.send(data)
 	} catch (e) {
 		return e

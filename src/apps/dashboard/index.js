@@ -275,8 +275,8 @@ const agentstatus = async () => {
 
 const mstEventOutput = async () => {
 
-	document.getElementById('mstblock').innerHTML = `<div class="card-header">
-	<div class="card-title text-primary h5">Events</div>
+	document.getElementById('masterblock').innerHTML = `<div class="card-header">
+	<div class="card-title text-primary h5">Global Events</div>
   </div>
   <table class="table p-2 table-hover table-cluster">
 	<thead>
@@ -287,7 +287,7 @@ const mstEventOutput = async () => {
 
 	  </tr>
 	</thead>
-	<tbody id="mstEventOutput">
+	<tbody id="masterblockOutput">
 
 	</tbody>
   </table>`
@@ -301,7 +301,7 @@ const mstEventOutput = async () => {
 	await fetch(url, requestOptions).then((response) => response.json()).then((payload) => {
 
 		if (payload.length === 0) {
-			document.getElementById('trevblock').innerHTML =
+			document.getElementById('masterblock').innerHTML =
 				`
 				<div class="card-header">
 				<div class="card-title text-primary h5">
@@ -319,7 +319,7 @@ const mstEventOutput = async () => {
 			payload.map(({ AC, TOTAL, REG_STATUS, SRC }) => {
 				let opt = '<tr>'
 
-				document.getElementById('mstEventOutput').innerHTML +=
+				document.getElementById('masterblockOutput').innerHTML +=
 					`${opt}
 					<td class="text-tiny">${AC}</td>
 				<td class="text-tiny">
@@ -341,8 +341,8 @@ const mstEventOutput = async () => {
 */
 const tEventOutput = async () => {
 
-	document.getElementById('trevblock').innerHTML = `<div class="card-header">
-	<div class="card-title text-primary h5">Transaction Event</div>
+	document.getElementById('pendingEventBlock').innerHTML = `<div class="card-header">
+	<div class="card-title text-primary h5">Pending Event</div>
   </div>
   <table class="table p-2 table-hover table-cluster">
 	<thead>
@@ -352,12 +352,12 @@ const tEventOutput = async () => {
 		<th class="text-tiny text-primary text-right">Amount</th>
 	  </tr>
 	</thead>
-	<tbody id="tEventOutput">
+	<tbody id="pendingEventBlockOutput">
 
 	</tbody>
   </table>`
 
-	const url = `${apiserver}/teventoutput`
+	let url = `${apiserver}/peventoutput`
 
 	const requestOptions = {
 		method: 'GET',
@@ -367,34 +367,28 @@ const tEventOutput = async () => {
 	await fetch(url, requestOptions).then((response) => response.json()).then((payload) => {
 
 		if (payload.length === 0) {
-			document.getElementById('trevblock').innerHTML =
-				`
-				<div class="card-header">
-	<div class="card-title text-primary h5">Transaction Event</div>
-  </div>
-				<div class="empty bg-none">
-				<div class="empty-icon">
-				  <i class="icon icon-2x icon-flag text-primary"></i>
-				</div>
-				<p class="empty-title text-primary h5">No Event Found</p>
-
-			  </div>`
+			document.getElementById('pendingEventBlock').innerHTML =
+				`<div class="card-header">
+					<div class="card-title text-primary h5">Transaction Event</div>
+					</div>
+					<div class="empty bg-none">
+						<div class="empty-icon">
+						<i class="icon icon-2x icon-flag text-primary"></i>
+						</div>
+						<p class="empty-title text-primary h5">No Event Found</p>
+					</div>
+				</div>`
 		} else {
 			payload.map(({ AMT, E, STATUS, SRC, TOTAL }) => {
-
-
 				if (SRC === 'REMITTANCE_INFO') {
-					document.getElementById('tEventOutput').innerHTML +=
+					document.getElementById('pendingEventBlockOutput').innerHTML +=
 						`<tr onclick="window.location='/remittanceProcessing';" class="active">
-				<td class="text-tiny">${E}</td>
-
-				<td class="text-tiny text-clip"><span class="label label-rounded label-primary">${TOTAL}</span> ${STATUS}</td>
-				<td class="text-tiny text-right">${AMT.toLocaleString('en-BD', {
-							maximumFractionDigits: 2
-						})}</td>
+						<td class="text-tiny">${E}</td>
+						<td class="text-tiny text-clip"><span class="label label-rounded label-primary">${TOTAL}</span> ${STATUS}</td>
+						<td class="text-tiny text-right">${AMT.toLocaleString('en-BD', { maximumFractionDigits: 2 })}</td>
 
 				</tr>`} else {
-					document.getElementById('tEventOutput').innerHTML +=
+					document.getElementById('pendingEventBlockOutput').innerHTML +=
 						`<tr>
 				<td class="text-tiny">${E}</td>
 		<td class="text-tiny text-clip"><span class="label  label-rounded">${TOTAL}</span> ${STATUS}</td>
@@ -403,6 +397,60 @@ const tEventOutput = async () => {
 						})}</td>
 				</a></tr>`
 				}
+
+			})
+		}
+
+	})
+
+	url = `${apiserver}/teventoutput`
+	document.getElementById('todaysEventBlock').innerHTML = `<div class="card-header">
+	<div class="card-title text-primary h5">Todays Transaction Event</div>
+  </div>
+  <table class="table p-2 table-hover table-cluster">
+	<thead>
+	  <tr>
+		<th class="text-tiny text-primary">Event</th>
+		<th class="text-tiny text-primary">No of Event</th>
+		<th class="text-tiny text-primary">Amount</th>
+	  </tr>
+	</thead>
+	<tbody id="todaysEventBlockOutput">
+
+	</tbody>
+  </table>`
+
+	await fetch(url, requestOptions).then((response) => response.json()).then((payload) => {
+
+		if (payload.length === 0) {
+			document.getElementById('todaysEventBlock').innerHTML =
+				`
+			<div class="card-header">
+<div class="card-title text-primary h5">Transaction Event</div>
+</div>
+			<div class="empty bg-none">
+			<div class="empty-icon">
+			  <i class="icon icon-2x icon-flag text-primary"></i>
+			</div>
+			<p class="empty-title text-primary h5">No Event Found</p>
+
+		  </div>`
+		} else {
+			payload.map(({ PARTICULAR, NO, AMT }) => {
+
+				document.getElementById('todaysEventBlockOutput').innerHTML +=
+					`<tr>
+		
+						<td class="text-tiny text-clip text-capitalize">
+						${PARTICULAR}
+						</td>
+						<td class="text-tiny text-clip">
+						${NO}
+						</td>
+						<td class="text-tiny text-right">${AMT.toLocaleString('en-BD', { maximumFractionDigits: 2 })}
+						</td>
+					</tr>`
+
 
 			})
 		}
@@ -606,7 +654,7 @@ const agentBalancePerformance = async (mphone) => {
 	let loacl_DR = []
 	let loacl_CR = []
 	/* Post request body content*/
-	const url = `${apiserver}//agentBalancePerformance`
+	const url = `${apiserver}/agentBalancePerformance`
 	const raw = JSON.stringify({ key: `${mphone}` })
 	const requestOptions = {
 		method: 'POST',
