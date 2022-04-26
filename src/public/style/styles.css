@@ -3,10 +3,14 @@
 	--frost-bright: rgba(255, 255, 255, 0.5);
 	--frost-dark: rgba(31, 31, 31, 0.5);
 	--default-bg-blur: blur(10px);
-	--navbar-z-index: 5;
+	--navbar-z-index: 9;
 }
 
+/*
+		Font Section
+		All use font can be found at https://fonts.google.com
 
+*/
 
 
 @font-face {
@@ -38,30 +42,7 @@
 		url(./material/font/MaterialIcons-Regular.ttf) format('truetype');
 }
 
-/* width */
-::-webkit-scrollbar {
-	width: 10px;
-}
 
-/* Track */
-::-webkit-scrollbar-track {
-	background: #8d8d8d00;
-}
-
-/* Handle */
-::-webkit-scrollbar-thumb {
-	background: rgba(141, 141, 141, 0.144);
-	border-radius: 25px;
-}
-
-/* Handle on hover */
-::-webkit-scrollbar-thumb:hover {
-	background: rgb(150, 150, 150);
-}
-
-html {
-	scroll-behavior: smooth;
-}
 .material-icons {
 	font-family: 'Material Icons';
 	font-weight: normal;
@@ -75,15 +56,12 @@ html {
 	word-wrap: normal;
 	white-space: nowrap;
 	direction: ltr;
-
 	/* Support for all WebKit browsers. */
 	-webkit-font-smoothing: antialiased;
 	/* Support for Safari and Chrome. */
 	text-rendering: optimizeLegibility;
-
 	/* Support for Firefox. */
 	-moz-osx-font-smoothing: grayscale;
-
 	/* Support for IE. */
 	font-feature-settings: 'liga';
 }
@@ -93,7 +71,7 @@ html {
 
 }
 
-/* td,
+td,
 th {
 	font-family: 'RobotoSlab', 'Times New Roman', Times, serif;
 } */
@@ -109,6 +87,32 @@ h3 {
 }
 
 
+/*
+Scrolling rail
+*/
+
+/* width */
+::-webkit-scrollbar {
+	width: 10px;
+}
+/* Track */
+::-webkit-scrollbar-track {
+	background: #8d8d8d00;
+}
+/* Handle */
+::-webkit-scrollbar-thumb {
+	background: rgba(141, 141, 141, 0.144);
+	border-radius: 25px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+	background: rgb(150, 150, 150);
+}
+
+/*
+Background Color
+*/
 
 /* .bg-frost {
 	background-color: var(--frost);
@@ -145,6 +149,11 @@ h3 {
 	background-color: rgba(255, 255, 255, 0) !important;
 }
 
+/*
+Ui possition
+*/
+
+
 .w100 {
 	width: 100%;
 }
@@ -176,6 +185,40 @@ h3 {
 	align-items: top;
 }
 
+.d-none {
+	display: none !important;
+}
+
+
+
+
+.font-roboto {
+	font-family: Roboto, Arial, Helvetica, sans-serif !important;
+}
+
+
+.mui-adjust {
+	display: flex !important;
+	justify-content: left;
+	align-items: center;
+	flex-direction: row;
+}
+/* .text-tiny {
+	font-size: .8em;
+} */
+.text-micro {
+	font-size: .5rem !important;
+}
+
+
+.progress *{
+	z-index: 1;
+}
+/*
+Custom parts
+*/
+
+
 #notification {
 	/* display: block; */
 	position: absolute;
@@ -204,55 +247,30 @@ h3 {
 	top: 0;
 	right: 0;
 	left: 0;
-	z-index: calc(var(--navbar-z-index) + 1);
+	z-index: 10;
+	/* z-index: calc(var(--navbar-z-index) + 1); */
 }
+
+
 #sidebar {
 	position: fixed;
 	left: 0;
 	top: 0;
-	z-index: var(-navbar-z-index);
+	/* z-index: var(-navbar-z-index); */
+	z-index: 9;
 	width: 100%;
 	max-width: 200px;
 	height: 100%;
 	padding: 90px 0 0 10px;
 	overflow-y: scroll;
 	overflow-x: hidden;
+	transition: ease-in-out;
 
 }
-
-.d-none {
-	display: none !important;
-}
-
 #sidenav span {
 	transition: ease-in-out;
 }
 
-
-.font-roboto {
-	font-family: Roboto, Arial, Helvetica, sans-serif !important;
-}
-
-.displaynull {
-	display: none;
-}
-.mui-adjust {
-	display: flex !important;
-	justify-content: left;
-	align-items: center;
-	flex-direction: row;
-}
-/* .text-tiny {
-	font-size: .8em;
-} */
-.text-micro {
-	font-size: .5rem !important;
-}
-
-
-.progress *{
-	z-index: 1;
-}
 
 #trevblock *,
 #mstblock *{

@@ -43,41 +43,7 @@ const sidenavclose = () => {
 	sidenav.style.pointerEvents = 'none'
 	sidenav.style.userSelect = 'none'
 }
-const notification = document.getElementById('notification')
 
-
-const sidebar = () => {
-	const element = document.getElementById('sidebar')
-
-	if (element.classList.contains("hide-md") === true) {
-		element.classList.remove('hide-md');
-		document.getElementById('sidebarhead').classList.remove('col-2')
-		document.getElementById('contenthead').classList.remove('col-12')
-		document.getElementById('contenthead').classList.add('col-10')
-	} else {
-		element.classList.add('hide-md');
-		document.getElementById('sidebarhead').classList.add('col-2')
-		document.getElementById('contenthead').classList.remove('col-10')
-		document.getElementById('contenthead').classList.add('col-12')
-	}
-	// sidebar.classList.remove('hide-md');
-}
-
-
-
-
-const notificationopen = () => {
-	notification.style.opacity = '100'
-	notification.style.visibility = 'visible'
-	notification.style.pointerEvents = 'auto'
-	notification.style.userSelect = 'auto'
-}
-const notificationclose = () => {
-	notification.style.opacity = '0'
-	notification.style.visibility = 'hidden'
-	notification.style.pointerEvents = 'none'
-	notification.style.userSelect = 'none'
-}
 
 const showRequestPanal = () => {
 	document.getElementById('mkrequest').classList.add('d-none')

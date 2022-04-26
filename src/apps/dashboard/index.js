@@ -689,9 +689,6 @@ const timer = () => {
 	}
 }
 
-const removeLoading = () => {
-	document.getElementById('loading').remove()
-}
 
 /******************************************************************************************
 *
@@ -715,7 +712,7 @@ balancePerformance()
 Customer calling
 */
 customerstatus()
-removeLoading()
+
 tEventOutput()
 mstEventOutput()
 setInterval(() => {
