@@ -238,3 +238,5 @@ const notificationFun = () => {
 		console.log('Error in notification function init ' + e)
 	}
 }
+
+
