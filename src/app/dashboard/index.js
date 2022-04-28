@@ -19,6 +19,28 @@ const barColors = ['#F50F0F', '#2285F5', '#9064F5', '#24F490', '#F5BC58', '#F59F
 
 /* Account Status give a graf with table data*/
 const accountStatus = async () => {
+
+	document.getElementById("accountStatusBlock").innerHTML=`<div class="card-title text-primary h5">Account Status</div>
+	<canvas data-aos="fade-left" id="accountStatus"></canvas>
+	<button class="btn btn-link " onclick="showmore('Status')"><i
+		class="icon icon-2x icon-more-horiz"></i></button>
+	<table data-aos="fade-left" id="Status" class="table table-striped table-cluster " style="display: none;">
+	  <thead>
+		<tr>
+		  <th class="text-tiny text-bold ">Agent</th>
+		  <th class="text-tiny text-bold ">Today Open</th>
+		  <th class="text-tiny text-bold ">Today Close</th>
+		  <th class="text-tiny text-bold ">Yesterday Open</th>
+		  <th class="text-tiny text-bold ">Yesterday Close</th>
+		  <th class="text-tiny text-bold ">Total</th>
+		</tr>
+	  </thead>
+	  <tbody id="accountStatusTable">
+	  </tbody>
+	</table>`
+
+
+
 	/* Post request body content*/
 	const url = `${apiserver}/accountStatus`
 	const requestOptions = {
@@ -180,6 +202,30 @@ const pichat = async () => {
 }
 
 const agentstatus = async () => {
+	document.getElementById("agent_banlance").innerHTML=`<div class="card noboder p-2 m-1">
+	<div class="card-header">
+	  <div class="card-title text-primary h5">Agent Balance</div>
+
+	</div>
+	<canvas data-aos="fade-right" id="agentChart" style="width:100%;max-width:800px"></canvas>
+	<button class="btn btn-link" onclick="showmore('agent')"><i class="icon icon-more-horiz"></i></button>
+
+	<table data-aos="fade-right" id="agent" class="table table-striped table-cluster p-1"
+	  style="display: none;">
+	  <thead>
+		<tr>
+		  <th class="text-tiny text-bold ">AC</th>
+		  <th class="text-tiny text-bold text-ellipsis w100">Name</th>
+		  <th class="text-tiny text-bold ">Today</th>
+		  <th class="text-tiny text-bold ">Yesterday</th>
+		</tr>
+	  </thead>
+	  <tbody id="agentInfo">
+
+	  </tbody>
+	</table>
+  </div>`
+
 	const url = `${apiserver}/agentstatus`
 	const requestOptions = {
 		method: 'GET',
@@ -469,6 +515,25 @@ const tEventOutput = async () => {
 
 */
 const customerstatus = async () => {
+	document.getElementById("customer_banlance").innerHTML=`              <div class="card-header">
+	<div data-aos="fade-up" class="card-title text-primary h5">Customer Balance</div>
+  </div>
+  <canvas data-aos="fade-right" id="customerChart" style="width:100%;max-width:800px"></canvas>
+
+  <button class="btn btn-link" onclick="showmore('customer')"><i class="icon icon-more-horiz"></i></button>
+  <table data-aos="fade-right" id="customer" class="table table-striped table-cluster p-1"
+	style="display: none;">
+	<thead>
+	  <tr>
+		<th class="text-tiny text-bold ">Agent</th>
+		<th class="text-tiny text-bold text-ellipsis w100">Name</th>
+		<th class="text-tiny text-bold ">Today</th>
+		<th class="text-tiny text-bold ">Yesterday</th>
+	  </tr>
+	</thead>
+	<tbody id="customerInfo">
+	</tbody>
+  </table>`
 	let local_mphone = []
 	let loacl_cc = []
 	let loacl_cy = []

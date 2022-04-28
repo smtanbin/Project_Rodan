@@ -64,6 +64,32 @@ const pichat = async (param) => {
 }
 
 const agentstatus = async (param) => {
+
+	document.getElementById("agent_banlance").innerHTML=`<div class="card noboder p-2 m-1">
+	<div class="card-header">
+	  <div class="card-title text-primary h5">Agent Balance</div>
+
+	</div>
+	<canvas data-aos="fade-right" id="agentChart" style="width:100%;max-width:800px"></canvas>
+	<button class="btn btn-link" onclick="showmore('agent')"><i class="icon icon-more-horiz"></i></button>
+
+	<table data-aos="fade-right" id="agent" class="table table-striped table-cluster p-1"
+	  style="display: none;">
+	  <thead>
+		<tr>
+		  <th class="text-tiny text-bold ">AC</th>
+		  <th class="text-tiny text-bold text-ellipsis w100">Name</th>
+		  <th class="text-tiny text-bold ">Today</th>
+		  <th class="text-tiny text-bold ">Yesterday</th>
+		</tr>
+	  </thead>
+	  <tbody id="agentInfo">
+
+	  </tbody>
+	</table>
+  </div>`
+
+
 	const url = `${apiserver}/agentstatus`
 	const raw = JSON.stringify({
 		param: `${param}`
@@ -166,6 +192,29 @@ const agentstatus = async (param) => {
 
 */
 const customerstatus = async (param) => {
+
+	document.getElementById("customer_banlance").innerHTML=`              <div class="card-header">
+	<div data-aos="fade-up" class="card-title text-primary h5">Customer Balance</div>
+  </div>
+  <canvas data-aos="fade-right" id="customerChart" style="width:100%;max-width:800px"></canvas>
+
+  <button class="btn btn-link" onclick="showmore('customer')"><i class="icon icon-more-horiz"></i></button>
+  <table data-aos="fade-right" id="customer" class="table table-striped table-cluster p-1"
+	style="display: none;">
+	<thead>
+	  <tr>
+		<th class="text-tiny text-bold ">Agent</th>
+		<th class="text-tiny text-bold text-ellipsis w100">Name</th>
+		<th class="text-tiny text-bold ">Today</th>
+		<th class="text-tiny text-bold ">Yesterday</th>
+	  </tr>
+	</thead>
+	<tbody id="customerInfo">
+	</tbody>
+  </table>`
+
+
+
 	let local_mphone = []
 	let loacl_cc = []
 	let loacl_cy = []
