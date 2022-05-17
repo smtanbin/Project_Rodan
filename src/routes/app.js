@@ -92,6 +92,20 @@ app.get('/kycupdate', async (req, res) => {
 		res.render('./pages/kycupdate', { role: ROLE, userid: USERNAME, owner: ROOT, darkmode: darkModeCon })
 	})
 })
+app.get('/sms', async (req, res) => {
+	const token = req.cookies.auth
+	const { user } = jwt_decode(token)
+	const data = await roleCheck(user)
+
+	data.map(({ ROLE, USERNAME, ROOT }) => {
+		res.locals = {
+			userid: USERNAME,
+			title: 'Customer Info'
+		}
+		const darkModeCon = req.cookies.darkmode
+		res.render('./pages/sms', { role: ROLE, userid: USERNAME, owner: ROOT, darkmode: darkModeCon })
+	})
+})
 app.get('/remittanceProcessing', async (req, res) => {
 	const token = req.cookies.auth
 	const { user } = jwt_decode(token)

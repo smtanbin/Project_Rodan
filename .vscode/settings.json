@@ -1,0 +1,8 @@
+{
+    "editor.formatOnSave": true,
+    "files.autoSave": "onFocusChange",
+    "prettier.vueIndentScriptAndStyle": true,
+    "editor.codeActionsOnSave": {
+    
+    }
+}

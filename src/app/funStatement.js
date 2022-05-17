@@ -30,7 +30,7 @@ const getstatement = async (key) => {
 	}
 
 	/* Post request body content*/
-	const urlhead = `${apiserver}//statementhead`
+	const urlhead = `${apiserver}/statementhead`
 	const rawhead = JSON.stringify({
 		key: `${key}`,
 		date: `${fromdate}`
@@ -44,7 +44,7 @@ const getstatement = async (key) => {
 	}
 
 	/* Post request body content*/
-	const urlbody = `${apiserver}//statementbody`
+	const urlbody = `${apiserver}/statementbody`
 	const rawbody = JSON.stringify({ key: `${key}`, fromdate: `${fromdate}`, todate: `${todate}` })
 	const bodyrequestOptions = {
 		method: 'POST',

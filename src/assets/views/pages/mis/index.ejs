@@ -17,12 +17,10 @@
     </div>
     <div data-aos="zoom-out" class="container mb-2">
         <!-- normal input group with button -->
-        <div class="input-group">
+        <div class="input-group col-4">
 
-            <input type="date" id="fromdate" class="form-input" placeholder="Type Account Number">
-            <input type="date" id="todate" class="form-input" placeholder="Type Account Number">
-            <input type="number" id="key" class="form-input" placeholder="Type Account Number">
-            <button class="btn btn-primary input-group-btn" onclick="statement()" id="btn-loading">Search
+            <input type="month" id="param" class="form-input" placeholder="Type Account Number">
+            <button class="btn btn-primary input-group-btn" onclick="mis_part1()" id="btn-loading">Search
             </button>
             <button class="btn btn-primary input-group-btn disabled" onclick="printArea()" id="btnprint">Print
             </button>
@@ -36,7 +34,7 @@
         <div class="columns" id="output">
             <!-- cut -->
 
-            <div class="card p-2 ">
+            <!-- <div class="card p-2 ">
                 <div class="hero hero-sm">
                     <div class="hero-body">
                         <h5 class="h5 text-primary text-center">Agent Wise Comparative Business Performance as on</h5>
@@ -151,14 +149,15 @@
                         </div>
                         <div class="column col-6 w100">
                             <!-- column content -->
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <!-- </div> -->
+            <!-- </div> -->
+            <!-- </div> -->
+            <!-- </div> -->
             <!-- end -->
         </div>
     </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
 
-    <script src="/js/funStatement.js"></script>
+    <script src="/js/mis/mis.js"></script>
 
 </main>

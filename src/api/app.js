@@ -28,4 +28,16 @@ const cpu = () => {
 	}
 }
 
-module.exports = { cpu }
+const qurrythis = require("../core/db")
+	
+const callback = (sql)=> {
+try {
+return await qurrythis(sql)
+	} catch (e) {
+		console.log('Error in callback function ' + e)
+		return e
+	}
+}
+
+
+module.exports = { cpu,callback}

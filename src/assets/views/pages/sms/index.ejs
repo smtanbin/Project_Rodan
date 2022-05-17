@@ -1,0 +1,61 @@
+<ul class="breadcrumb">
+    <li class="breadcrumb-item">
+        <a href="/">Home</a>
+    </li>
+    <li class="breadcrumb-item">
+        <a>Massage</a>
+    </li>
+
+</ul>
+<div data-aos="zoom-out" class="hero-sm bg-white">
+    <div class="hero-body">
+        <h1 class="text-primary">Massage</h1>
+    </div>
+</div>
+<div class="container">
+
+    <div id="toast_rail"
+        style="display: flex;flex-direction: column; position:absolute; right: 0; bottom: 0; z-index: 99;">
+    </div>
+
+
+    <div class="columns">
+        <div class="column col-4 col-md-12 p-2">
+            <!-- form input control -->
+            <div class="form-group">
+                <label class="form-label" for="sms_to">To</label>
+                <input class="form-input" type="text" id="sms_to" placeholder="+8801*****">
+                <!-- <div class="col-12">
+                    <span class="chip">
+                        Biography
+                        <a href="#" class="btn btn-clear" aria-label="Close" role="button"></a>
+                    </span>
+                </div> -->
+
+                <label class="form-label" for="sms_body">Message</label>
+                <textarea class="form-input" id="sms_body" placeholder="Massage Body" rows="5"></textarea>
+            </div>
+            <!-- <button class="btn ">Clear</button> -->
+            <button class="btn btn-error" onclick="sentsms('<%= userid %>')">Sent</button>
+
+        </div>
+        <div class="column col-8 col-md-12 p-2">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>To</th>
+                        <th>Body</th>
+                        <th>Time</th>
+                    </tr>
+                </thead>
+                <tbody id="tbody_output">
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+</div>
+<script src="/js/sms/funSMS.js"></script>
+<script>
+    smslog()
+</script>
