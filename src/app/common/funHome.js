@@ -422,9 +422,9 @@ const balancePerformance = async (param) => {
             display: true,
           },
           title: {
-            display: true,
+            display: false,
             position: "top",
-            text: "Customer Balance",
+            text: "Today's Transaction",
           },
         },
       })

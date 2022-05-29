@@ -4,25 +4,27 @@
         <div class="accordion-container">
             <div class="accordion">
                 <input id="accordion-getting-started" type="checkbox" name="docs-accordion-checkbox" hidden="">
-                <label class="accordion-header text-primary " for="accordion-getting-started">Apps</label>
-                <div class="accordion-body">
-                    <ul class="menu menu-nav">
-                        <% if(role==='ADMIN' || role==='APPROVAL' ){ %>
-                            <li class="menu-item">
-                                <a href="/timeline">Timeline</a>
-                            </li>
-                            <li class="menu-item">
-                                <a href="/sms">Massage</a>
-                            </li>
-                            <% } %>
+                <% if(role==='ADMIN' || role==='APPROVAL' ){ %>
+                    <label class="accordion-header text-primary " for="accordion-getting-started">Apps</label>
+                    <% } %>
+                        <div class="accordion-body">
+                            <ul class="menu menu-nav">
                                 <% if(role==='ADMIN' || role==='APPROVAL' ){ %>
-                                    <li class=" menu-item">
-                                        <a href="/customerInfo">Customer Info</a>
+                                    <li class="menu-item">
+                                        <a href="/timeline">Timeline</a>
+                                    </li>
+                                    <li class="menu-item">
+                                        <a href="/sms">Massage</a>
                                     </li>
                                     <% } %>
-                    </ul>
+                                        <% if(role==='ADMIN' || role==='APPROVAL' ){ %>
+                                            <li class=" menu-item">
+                                                <a href="/customerInfo">Customer Info</a>
+                                            </li>
+                                            <% } %>
+                            </ul>
 
-                </div>
+                        </div>
             </div>
             <div class="accordion">
                 <input id="accordion-elements" type="checkbox" name="docs-accordion-checkbox" hidden="">
@@ -51,18 +53,17 @@
                             <li class="menu-item"><a href="/remittanceProcessing">Remittance</a></li>
                             <% } %>
                                 <% if(role==="USER" || role==="AGENT" ){ %>
-                                    <li class="menu-item"><a href="/requestRemittance">Request Remittance</a></li>
+                                    <!-- <li class="menu-item"><a href="/requestRemittance">Request Remittance</a></li> -->
                                     <% } %>
                                         <% if(role==="USER" || role==="AGENT" ){ %>
 
-                                            <li class="menu-item"><a href="/report/accountInfo">Teller Operation</a>
+                                            <!-- <li class="menu-item"><a href="/report/accountInfo">Teller Operation</a> -->
 
                                             <li class="divider" data-content="Payment"></li>
                                             <li class="menu-item"><a href="/remittanceProcessing">Remittance</a>
                                             </li>
                                             <li class="menu-item"><a href="/report/accountInfo">Utility</a>
                                             </li>
-
                                             </li>
                                             <% } %>
                     </ul>
@@ -95,17 +96,19 @@
                             </div>
                         </div>
                         <div class="accordion">
-                            <input type="checkbox" id="accordion-2" name="accordion-checkbox" hidden>
-                            <label class="accordion-header text-primary" for="accordion-2">
+                            <% if(role==='ADMIN' || role==='APPROVAL' ){ %>
+                                <input type="checkbox" id="accordion-2" name="accordion-checkbox" hidden>
+                                <label class="accordion-header text-primary" for="accordion-2">
 
-                                Admin
-                            </label>
-                            <div class="accordion-body" style="margin-left: 1rem;">
-                                <% if(role==='ADMIN' || role==='APPROVAL' ){ %>
-                                    <li class="menu-item"><a href="/report/mis">MIS</a></li>
-                                    <li class="menu-item "><a href="/reconciliation">Reconciliation</a></li>
-                                    <% } %>
-                            </div>
+                                    Admin
+                                </label>
+                                <% } %>
+                                    <div class="accordion-body" style="margin-left: 1rem;">
+                                        <% if(role==='ADMIN' || role==='APPROVAL' ){ %>
+                                            <li class="menu-item"><a href="/report/mis">MIS</a></li>
+                                            <li class="menu-item "><a href="/reconciliation">Reconciliation</a></li>
+                                            <% } %>
+                                    </div>
                         </div>
 
                         <% if(role==='ADMIN' || role==='APPROVAL' ){ %>

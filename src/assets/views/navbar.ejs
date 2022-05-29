@@ -42,7 +42,10 @@
 
             <ul class="menu">
 
-                <li id="username" class="divider" data-content=" <%= userid %>">
+                <p id="username" class="p-2" data-content="<%= userid.substring(15, 0); %>">
+                    <%= userid.substring(18, 0); %>
+                </p>
+                <li id="username" class="divider">
                 </li>
 
                 <li class="menu-item">

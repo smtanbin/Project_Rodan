@@ -173,18 +173,16 @@ const agentstatus = async (param) => {
 		 WHERE r.CAT_ID = 'D' AND r.STATUS != 'C'
 	  ORDER BY TODAY`
   } else {
-    sql = `/* Formatted on 2/20/2022 10:27:22 AM (QP5 v5.374) */
-		SELECT 
-			   BALANCE_M
-				   TODAY,
-			   TANBIN.GETBALANCE (
-				   MPHONE,
-				   (SELECT TO_DATE (CURRENT_DATE - 1) AS yesterday_date FROM DUAL))
-				   YESTERDAY
-		  FROM AGENT_BANKING.REGINFO r
-		 WHERE r.CAT_ID = 'D' AND r.STATUS != 'C' AND MPHONE = ${param}
-	  ORDER BY TODAY
-`
+    sql = `/* Formatted on 5/29/2022 4:54:14 PM (QP5 v5.381) */
+  SELECT ROUND (BALANCE_M, 2)    TODAY,
+         ROUND (
+             TANBIN.GETBALANCE (
+                 MPHONE,
+                 (SELECT TO_DATE (CURRENT_DATE - 1) AS yesterday_date FROM DUAL)),
+             2)                  YESTERDAY
+    FROM AGENT_BANKING.REGINFO r
+   WHERE r.CAT_ID = 'D' AND r.STATUS != 'C' AND MPHONE = ${param}
+ORDER BY TODAY`
   }
 
   try {

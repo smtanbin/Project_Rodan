@@ -2,34 +2,57 @@
 Remember: #output must be loaded
 */
 const printArea = async (titel) => {
-	const printday = Date()
-	if (titel === null) {
-		titel = `Download ${printday}`
-	}
+  const printday = Date()
+  if (titel === null) {
+    titel = `Download ${printday}`
+  }
 
-	const username = document.getElementById('username').getAttribute('data-content')
+  const username = document
+    .getElementById("username")
+    .getAttribute("data-content")
 
-	const head = `
-	
-	<head>
-	<meta charset="UTF-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>
-	  ${titel}
-	</title>
-	<link rel="stylesheet" href="/style/styles.css">
-	<link rel="stylesheet" href="/style/spectre/spectre.css">
-	<link rel="stylesheet" href="/style/spectre/spectre-icons.css">
-	<link rel="stylesheet" href="/style/spectre/spectre-exp.css">
+  const head = `<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>
+    ${titel}
+  </title>
+  <link rel="apple-touch-icon" sizes="57x57" href="/img/favicon/apple-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="/img/favicon/apple-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="/img/favicon/apple-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon/apple-icon-76x76.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="/img/favicon/apple-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="/img/favicon/apple-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="/img/favicon/apple-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="/img/favicon/apple-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/img/favicon/apple-icon-180x180.png">
+  <link rel="icon" type="image/png" sizes="144x144" href="/img/favicon/android-icon-144x144.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="/img/favicon/android-icon-192x192.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="/img/favicon/favicon-96x96.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon/favicon-16x16.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon/favicon-16x16.png">
+  <link rel="manifest" href="/img/favicon/manifest.json">
+  <meta name="msapplication-TileImage" content="/img/favicon/ms-icon-144x144.png">
 
+  <link rel="stylesheet" href="/style/styles.css">
+  
+      <link rel="stylesheet" href="/style/spectre/bright/spectre.css">
+      <link rel="stylesheet" href="/style/spectre/bright/spectre-icons.css">
+      <link rel="stylesheet" href="/style/spectre/bright/spectre-exp.css">
+      <link rel="stylesheet" href="/style/spectre/bright/background.css">
 
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"
+	  	<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"
 	integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg=="
 	crossorigin="anonymous" referrerpolicy="no-referrer" defar></script>
 
+</head>
 
-  </head>
+
+
+
+
   <body class="m-2" id="renderthis">
   <div class="columns">
   <div class="column col-8">
@@ -41,7 +64,7 @@ const printArea = async (titel) => {
   </div></div>
 </div>`
 
-	const footer = `<div class="col-12 w100  p-2 mt-2 text-tiny">
+  const footer = `<div class="col-12 w100  p-2 mt-2 text-tiny">
 	<b>Genarated by Id:</b> ${username}
 	<b>Print Date:</b> ${printday}
 	<p class="p-centered text-small">This is an electronically generated report, hence does not require a signature.</p>
@@ -64,19 +87,21 @@ const printArea = async (titel) => {
 	window.onload = load; 
  </script>
 </body>`
-	const printContent = document.getElementById('output')
-	const WinPrint = window.open('', '', 'width=2480px,height=3508px')
-	WinPrint.document.write(head + printContent.innerHTML + footer)
-	WinPrint.document.close()
-	WinPrint.focus()
+  const printContent = document.getElementById("output")
+  const WinPrint = window.open("", "", "width=2480px,height=3508px")
+  WinPrint.document.write(head + printContent.innerHTML + footer)
+  WinPrint.document.close()
+  WinPrint.focus()
 
-	//Bring out the print popup
+  //Bring out the print popup
 }
 const pdfdl = async () => {
-	const printday = Date()
-	const username = document.getElementById('username').getAttribute('data-content')
+  const printday = Date()
+  const username = document
+    .getElementById("username")
+    .getAttribute("data-content")
 
-	const head = `
+  const head = `
 	<print id="print'>
 	<head>
 	<meta charset="UTF-8">
@@ -108,7 +133,7 @@ const pdfdl = async () => {
   </div></div>
 </div>`
 
-	const footer = `<div class="col-12 w100  p-2 mt-2 text-tiny">
+  const footer = `<div class="col-12 w100  p-2 mt-2 text-tiny">
 	<b>Genarated by Id:</b> ${username}
 	<b>Print Date:</b> ${printday}
 	<p class="p-centered text-small">This is an electronically generated report, hence does not require a signature.
@@ -140,41 +165,44 @@ const pdfdl = async () => {
 </body>
 </print>
 `
-	const printContent = document.getElementById('output')
-	const WinPrint = window.open('', '', 'width=2480px,height=3508px')
-	WinPrint.document.write(head + printContent.innerHTML + footer)
-	WinPrint.document.close()
+  const printContent = document.getElementById("output")
+  const WinPrint = window.open("", "", "width=2480px,height=3508px")
+  WinPrint.document.write(head + printContent.innerHTML + footer)
+  WinPrint.document.close()
 
-	//Bring out the print popup
+  //Bring out the print popup
 }
 
 const showmore = (id) => {
-	if (document.getElementById(id).style.display === 'none') {
-		document.getElementById(id).style.display = 'block'
-	} else {
-		document.getElementById(id).style.display = 'none'
-	}
+  if (document.getElementById(id).style.display === "none") {
+    document.getElementById(id).style.display = "block"
+  } else {
+    document.getElementById(id).style.display = "none"
+  }
 }
 // const showless = (id) => {
 // 	document.getElementById(id).classList.remove('displaynull')
 // }
 
 const bellIcon = (notificationcount) => {
-	// notificationcount += notificationcount
-	// if (notificationcount === 0 || notificationcount === null) {
+  // notificationcount += notificationcount
+  // if (notificationcount === 0 || notificationcount === null) {
 
-	if (notificationcount === 0 || notificationcount === undefined) {
-		document.getElementById('navbtn').innerHTML = `<i class="material-icons">notifications_none</i>`
-	} else {
-		document.getElementById('navbtn').innerHTML = `<i class="material-icons">notifications_active</i>`
-	}
-
+  if (notificationcount === 0 || notificationcount === undefined) {
+    document.getElementById(
+      "navbtn"
+    ).innerHTML = `<i class="material-icons">notifications_none</i>`
+  } else {
+    document.getElementById(
+      "navbtn"
+    ).innerHTML = `<i class="material-icons">notifications_active</i>`
+  }
 }
 bellIcon()
 
 const logout = () => {
-	document.cookie = 'auth' + '=; Max-Age=-99999999;'
-	window.location.href = '/'
+  document.cookie = "auth" + "=; Max-Age=-99999999;"
+  window.location.href = "/"
 }
 
 /*
@@ -186,18 +214,18 @@ https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter
 	To solve it bg-frost replaced with bg-gray
 */
 
-const isFirefox = navigator.userAgent.toLowerCase().indexOf('firefox') > -1
-if (navigator.userAgent.toLowerCase().indexOf('firefox') > -1) {
-	// window.alert('Firefox not supported')
-	document.getElementById('navbar').classList.remove('bg-frost')
-	document.getElementById('navbar').classList.add('bg-gray')
+const isFirefox = navigator.userAgent.toLowerCase().indexOf("firefox") > -1
+if (navigator.userAgent.toLowerCase().indexOf("firefox") > -1) {
+  // window.alert('Firefox not supported')
+  document.getElementById("navbar").classList.remove("bg-frost")
+  document.getElementById("navbar").classList.add("bg-gray")
 }
 
 const sendNotification = (titel, subtitel, time, body, action) => {
-	if (titel === null || titel === body) {
-		document.getElementById('panel-body').innerHTML = ` `
-	} else if (action === null) {
-		document.getElementById('panel-body').innerHTML += `<div class="tile">
+  if (titel === null || titel === body) {
+    document.getElementById("panel-body").innerHTML = ` `
+  } else if (action === null) {
+    document.getElementById("panel-body").innerHTML += `<div class="tile">
 		<div class="tile-icon">
 		<!-- <figure class="avatar avatar-lg"><img src="../img/avatar-3.png" alt="Avatar"></figure> -->
 		</div>
@@ -210,8 +238,8 @@ const sendNotification = (titel, subtitel, time, body, action) => {
 		  </div>
 		</div>
 	  </div>`
-	} else {
-		document.getElementById('panel-body').innerHTML += `<div class="tile">
+  } else {
+    document.getElementById("panel-body").innerHTML += `<div class="tile">
 		<div class="tile-icon">
 		<!-- <figure class="avatar avatar-lg"><img src="../img/avatar-3.png" alt="Avatar"></figure> -->
 		</div>
@@ -225,18 +253,16 @@ const sendNotification = (titel, subtitel, time, body, action) => {
 		  </div>
 		</div>
 	  </div>`
-	}
+  }
 }
 
 const notificationFun = () => {
-	try {
-		dpsMaturity()
-		cashnotification()
-		reminotification()
-		notificationFun()
-	} catch (e) {
-		console.log('Error in notification function init ' + e)
-	}
+  try {
+    dpsMaturity()
+    cashnotification()
+    reminotification()
+    notificationFun()
+  } catch (e) {
+    console.log("Error in notification function init " + e)
+  }
 }
-
-

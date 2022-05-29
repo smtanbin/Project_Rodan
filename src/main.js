@@ -71,5 +71,5 @@ app.use("/api", apipath),
   app.get("*", function (a, b) {
     ;(b.locals = { title: "404!" }), b.render("pages/404"), b.status("404")
   })
-const port = process.env.PORT || 3e3
+const port = process.env.PORT || 80
 app.listen(port), console.log("Server is listening on port: " + port)
