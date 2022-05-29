@@ -12,20 +12,11 @@
   <div class="columns">
 
 
-
-
-
-
-
-    <section data-aos="fade-up" class="column p-2 " id="remainer-body">
-      <h5 class="h5 text-primary text-center text-bold" id="remainer-text">Today Time Remaining</h5>
-      <progress class="progress" id="remainer" value="0" max="540"></progress>
-    </section>
     <section class="card noboder w100 column col-12">
       <div class="container">
         <div class="columns">
 
-          <section data-aos="fade-right" class="card noboder col-6">
+          <section data-aos="fade-right" class="card noboder col-6 skeleton-loading" id="today_trans">
             <div class="card-header">
               <div data-aos="fade-right" class="card-title text-primary h5 py-2">Today's Transaction</div>
             </div>
@@ -33,27 +24,11 @@
           </section>
 
 
-          <section data-aos="fade-right" class="card noboder col-6">
+          <section data-aos="fade-right" class="card noboder skeleton-loading col-6" id="agent_balance">
             <div class="card noboder p-2 m-1">
               <div class="card-header">
                 <div class="card-title text-primary h5">Agent Balance</div>
-
               </div>
-              <canvas data-aos="fade-right" id="agentChart" style="width:100%"></canvas>
-              <button class="btn btn-link" onclick="showmore('agent')"><i class="icon icon-more-horiz"></i></button>
-              <span style="display: none;" id="agent">
-                <table data-aos="fade-right" class="table table-striped p-1 ">
-                  <thead>
-                    <tr>
-                      <th class=" text-bold text-left">Today</th>
-                      <th class=" text-bold text-right">Yesterday</th>
-                    </tr>
-                  </thead>
-                  <tbody id="agentInfo">
-
-                  </tbody>
-                </table>
-              </span>
             </div>
           </section>
 
@@ -63,49 +38,19 @@
         <div class="columns">
 
           <div class="column col-5">
-            <section class="card noboder p-1 m-1">
+
+            <section class="card noboder p-1 m-1 skeleton-loading" id="balance_pie">
               <div class="card-header">
                 <div data-aos="fade-right" class="card-title text-primary h3 py-2">Balance</div>
               </div>
-              <canvas data-aos="fade-up" id="Chart" style="width:100%;max-width:600px"></canvas>
             </section>
-
-
-
 
 
           </div>
           <!-- Right Side -->
           <div class="column col-7 my-1 ">
-
-
-
-
-            <section data-aos="fade-right" class="card noboder p-2 m-1">
-              <div class="card-header">
-                <div data-aos="fade-up" class="card-title text-primary h5">Customer Balance</div>
-              </div>
-              <canvas data-aos="fade-right" id="customerChart" style="width:100%;max-width:800px"></canvas>
-
-              <button class="btn btn-link" onclick="showmore('customer')"><i class="icon icon-more-horiz"></i></button>
-              <table data-aos="fade-right" id="customer" class="table table-striped table-cluster p-1 col-12 w100"
-                style="display: none;">
-                <thead>
-                  <tr>
-                    <th class="text-tiny text-bold ">Agent</th>
-                    <th class="text-tiny text-bold ">Today</th>
-                    <th class="text-tiny text-bold ">Yesterday</th>
-                  </tr>
-                </thead>
-                <tbody id="customerInfo">
-                </tbody>
-              </table>
-
+            <section data-aos="fade-right" class="card noboder skeleton-loading p-2 m-1" id="customer_banlance">
             </section>
-
-
-
-
           </div>
         </div>
       </div>
@@ -125,4 +70,6 @@
 
 
 
-<script src="/JS/common/funHome.js" param="<%=owner %>" defer></script>
+<script src="/JS/common/funHome.js" param="<%=owner %>">
+
+</script>

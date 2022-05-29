@@ -78,7 +78,11 @@ app.get("/dailydrcr", async (req, res) => {
 })
 
 app.get("/balancePerformance", async (req, res) => {
-  const data = await balancePerformance()
+  const data = await balancePerformance("null")
+  res.send(data)
+})
+app.post("/balancePerformance", async (req, res) => {
+  const data = await balancePerformance(req.body.param)
   res.send(data)
 })
 

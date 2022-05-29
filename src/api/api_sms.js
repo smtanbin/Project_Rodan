@@ -5,21 +5,21 @@ const request = require("request")
 const sendsms = async (to, body, autho) => {
   /* This request use nodejs request*/
 
-  const enl = `http://192.168.200.40/SBL_SMS/sendsms.php?u_name=standardbankagent&pass=std@123&msisdn=`
-  const url = encodeURI(enl)
+  const url = `http://192.168.200.40/SBL_SMS/sendsms.php?u_name=standardbankagent&pass=std@123&msisdn=`
+  // const url = encodeURI(enl)
   const sha256 = CryptoJS.HmacSHA256(JSON.stringify(body), to)
   const sl = CryptoJS.enc.Base64.stringify(sha256)
 
-  console.log(url)
-  //   const options = {
-  //     method: "GET",
-  //     url: `${url}${to}&msg_body=${enq}&msg_in_id=${sl}`,
-  //     headers: {
-  //       "User-Agent": "request",
-  //       "Access-Control-Allow-Origin": "*",
-  //     },
-  //   }
-  //   console.log(options);
+  const options = {
+    method: "GET",
+    url: `${url}${to}&msg_body=${body}&msg_in_id=${sl}`,
+    headers: {
+      "User-Agent": "request",
+      "Access-Control-Allow-Origin": "*",
+    },
+  }
+  // console.log(url)
+  // console.log(options)
   await request(options, async (error, response) => {
     if (error) throw new Error(error)
 
