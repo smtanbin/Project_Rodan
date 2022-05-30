@@ -2,7 +2,7 @@ const qurrythis = require("../core/db")
 
 const balancePerformance = async (param) => {
   let sql = ""
-  if (param === null || param === undefined) {
+  if (param === 0) {
     sql = `/* Formatted on 4/17/2022 1:55:40 PM (QP5 v5.381) */
 	SELECT NVL (TIME, PTIME)            PTIME,
 			   ROUND (NVL (CDAY, 0), 2)     CDAY,
@@ -63,7 +63,7 @@ ORDER BY PTIME`
   }
 
   try {
-    return qurrythis(sql)
+    return await qurrythis(sql)
   } catch (e) {
     console.log(e)
     return e

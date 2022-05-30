@@ -3,20 +3,11 @@
   <%- include('../head'); %>
 
     <body>
-      <section id="loadingAnim"
+      <section id="loading"
         style="z-index: 999; position: absolute; width: 100vw; height: 100vh; display: flex;align-items: center; justify-content: center; background-color: #ffffff;">
-        <img src="/img/boot_anime.webp" alt="loading" width="100" height="100">
-        <!-- <div class="loading loading-lg"></div> -->
+        <img src="/img/loading/boot_anime.webp" width="100" height="100">
       </section>
-      <!-- <section id="loadingAnim"
-      style="z-index: 999; position: absolute; width: 100vw; height: 100vh; display: flex;align-items: center; justify-content: center; background-color: #ffffff;">
-      <img src="/img/loading.svg" alt="Loading" width="100" height="100">
-      <!-- <div class="loading loading-lg"></div> -->
-      </section> -->
-
-
-      <!-- <div class="container" id="loader"> -->
-      <div class="container d-none" id="loaderAnim">
+      <div class="container" id="loader" style="display: '';">
         <div class="columns">
           <div class="row column col-12">
             <%- include('../navbar'); %>

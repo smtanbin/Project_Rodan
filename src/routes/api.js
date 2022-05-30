@@ -1,6 +1,6 @@
 const { Router } = require("express")
 const { doexist, holyday, agentlist } = require("../api/api.js")
-
+const { logger } = require("../api/api_log")
 const {
   pbslist,
   utilityinfohead,
@@ -78,7 +78,7 @@ app.get("/dailydrcr", async (req, res) => {
 })
 
 app.get("/balancePerformance", async (req, res) => {
-  const data = await balancePerformance("null")
+  const data = await balancePerformance(0)
   res.send(data)
 })
 app.post("/balancePerformance", async (req, res) => {
@@ -573,10 +573,32 @@ app.post("/monthly_data", async (req, res) => {
   }
 })
 app.get("/smslog", async (req, res) => {
+  const token = req.cookies.auth
+  const { user } = jwt_decode(token)
+  const data = await roleCheck(user)
+  // await logger(user, req.hostname + req.originalUrl, "SMS Api callled")
+
   try {
     const data = await smslog()
     res.send(data)
   } catch (e) {
+    res.status(404)
+  }
+})
+app.post("/addlog", async (req, res) => {
+  try {
+    const data = await logger(req.body.user, req.body.location, req.body.info)
+
+    if (data === 1) {
+      res.status(201)
+      res.send("Success")
+    } else {
+      res.send("Failed")
+      res.status(404)
+    }
+  } catch (e) {
+    res.send(data)
+    console.log("Unable to log data. Error => " + e)
     res.status(404)
   }
 })

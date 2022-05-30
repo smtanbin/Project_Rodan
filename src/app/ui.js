@@ -68,6 +68,8 @@ const removeLoading = () => {
 
 const wait = (delay = 0) => new Promise((resolve) => setTimeout(resolve, delay))
 
+// const logaccess =
+
 const init = () => {
   document.addEventListener("DOMContentLoaded", () =>
     wait(3000).then(() => {
