@@ -1,6 +1,6 @@
 {
 	"name": "rodan",
-	"version": "1.15.0",
+	"version": "1.16.0",
 	"main": "src/main.js",
 	"scripts": {
 		"production": "webpack --config build/webpack.prod.conf.js",
