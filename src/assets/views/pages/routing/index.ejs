@@ -1,0 +1,66 @@
+<main class="content m-2">
+    <ul class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a href="/">Home</a>
+        </li>
+        <li class="breadcrumb-item">
+            <a href="/admin/routing">Routing</a>
+        </li>
+
+    </ul>
+
+    <div data-aos="zoom-out" class="hero-sm">
+        <div class="hero-body">
+            <h1 class="text-primary text-bold">Routing</h1>
+        </div>
+        <div class="w100 px-2 my-2 input-group input-inline">
+            <input class="form-input" type="text" onkeyup="search()" id="search" placeholder="search">
+
+        </div>
+    </div>
+
+    <section data-aos="fade-down" class="container p-2">
+        <div class="columns col-12">
+            <div class="column col-lg-6 col-md-12">
+                <div class="card p-1">
+
+                    <table class="table table-striped">
+
+                        <thead>
+                            <tr>
+                                <th class="">SL</th>
+                                <th class="">Routing</th>
+                                <th class="">Bank</th>
+                                <th class="">Branch</th>
+                                <th class="">Updated</th>
+
+                            </tr>
+                        </thead>
+                        <tbody id="routinglist" class="container">
+
+                        </tbody>
+
+                        </tbody>
+                    </table>
+                    <progress class="progress d-none" max="100" id="progress"></progress>
+
+
+                    <ul class="pagination w100 float-right">
+                        <li class="page-item">
+                            <div class="btn-group btn-group-block">
+                                <a onclick="location.reload();" class="btn text-dark  d-flex"><i
+                                        class="icon icon-refresh mx-1"></i>Reload</a>
+                                <a onclick="nextopt()" class="btn btn-primary  d-flex">Next <i
+                                        class="icon icon-arrow-right mx-1"></i></a>
+                            </div>
+                        </li>
+
+                    </ul>
+
+
+                </div>
+            </div>
+        </div>
+    </section>
+    <script src="/JS/routing/index.js"></script>
+</main>

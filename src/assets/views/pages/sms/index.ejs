@@ -1,18 +1,106 @@
+<style>
+    svg {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        max-width: 128px;
+        max-height: 128px;
+    }
+
+    .magnify {
+        fill: dodgerblue;
+        animation: search 1s infinite ease;
+    }
+
+    .doc {
+        fill: cornflowerblue;
+        animation: flyby 1s infinite ease;
+    }
+
+
+    @keyframes search {
+        0% {
+            transform: translate(40px, 40px) scale(.6);
+        }
+
+        50% {
+            transform: translate(20px, 20px) scale(.6);
+        }
+
+        100% {
+            transform: translate(40px, 40px) scale(.6);
+        }
+    }
+
+    @keyframes flyby {
+        0% {
+            transform: translate(-20px, 20px) scale(.2);
+            opacity: 0
+        }
+
+        50% {
+            transform: translate(30px, 20px) scale(.5);
+            opacity: 1
+        }
+
+        100% {
+            transform: translate(100px, 20px) scale(.2);
+            opacity: 0
+        }
+    }
+</style>
+
 <ul class="breadcrumb">
     <li class="breadcrumb-item">
         <a href="/">Home</a>
     </li>
     <li class="breadcrumb-item">
-        <a>Massage</a>
+        <a href="/sms">Massage</a>
     </li>
 
 </ul>
-<div data-aos="zoom-out" class="hero-sm bg-white">
-    <div class="hero-body">
-        <h1 class="text-primary">Massage</h1>
+<div class="columns col-gapless col-12">
+    <div class="column col-10">
+        <div data-aos="zoom-out" class="col-12">
+
+            <h3 class="text-primary"><i class="Large material-icons">inbox</i> Massage</h3>
+
+        </div>
+    </div>
+    <div class="column col-2">
+        <a href="#" class="btn btn-primary btn-lg" onclick="openModel()"><i class="icon icon-message"></i> Send
+            Massage</a>
     </div>
 </div>
+
 <div class="container">
+
+    <div class="modal" id="modal-id">
+        <!-- <a href="#close" class="modal-overlay" aria-label="Close"></a> -->
+        <div class="modal-container">
+            <div class="modal-header">
+                <a href="#close" onclick="closeModel()" class="btn btn-clear text-error float-right"
+                    aria-label="Close"></a>
+                <div class="modal-title text-primary h5">Send Massage</div>
+            </div>
+            <div class="modal-body">
+                <div class="column">
+                    <!-- form input control -->
+                    <div class="form-group">
+                        <label class="form-label" for="sms_to">To</label>
+                        <input class="form-input" type="text" id="sms_to" placeholder="01*****">
+                        <label class="form-label" for="sms_body">Message</label>
+                        <textarea class="form-input" id="sms_body" placeholder="Massage Body" rows="5"></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer float-right">
+                    <button class="btn btn-error d-flex" onclick="initsms('<%= userid %>')">
+                        Sent <i class="material-icons px-1">send</i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <div id="toast_rail"
         style="display: flex;flex-direction: column; position:absolute; right: 0; bottom: 0; z-index: 99;">
@@ -20,42 +108,67 @@
 
 
     <div class="columns">
-        <div class="column col-4 col-md-12 p-2">
-            <!-- form input control -->
-            <div class="form-group">
-                <label class="form-label" for="sms_to">To</label>
-                <input class="form-input" type="text" id="sms_to" placeholder="+8801*****">
-                <!-- <div class="col-12">
-                    <span class="chip">
-                        Biography
-                        <a href="#" class="btn btn-clear" aria-label="Close" role="button"></a>
-                    </span>
-                </div> -->
 
-                <label class="form-label" for="sms_body">Message</label>
-                <textarea class="form-input" id="sms_body" placeholder="Massage Body" rows="5"></textarea>
+
+        <section class="col-12">
+            <ul class="tab tab-block w100 col-12">
+                <li class="tab-item tab-action col-6">
+                    <div class="input-group input-inline">
+                        <input type="text" class="form-input input-sm" placeholder="Contact No or Account No"
+                            id="result_table_view_value">
+                        <button onclick="findsms()" class="btn btn-secondary input-group-btn btn-sm"
+                            id="result_table_view_loading">
+                            Search
+                        </button>
+                    </div>
+                </li>
+                <li class="tab-item active col-3" id="msgsearchtab">
+                    <a onclick="tab_3('msgsearch','sysmsglog','msglog')">
+                        <i class="icon icon-1x icon-search"></i>
+                        Search</a>
+                </li>
+                <li class="tab-item col-3" id="msglogtab">
+                    <a onclick="tab_3('msglog','sysmsglog','msgsearch');history()"><i
+                            class="icon icon-1x icon-time"></i>
+                        History</a>
+                </li>
+                <li class="tab-item col-3" id="sysmsglogtab">
+                    <a class="w100" onclick="tab_3('sysmsglog','msgsearch','msglog');syssmslog()"><i
+                            class="icon icon-1x icon-mail"></i>
+                        System History</a>
+                </li>
+            </ul>
+        </section>
+
+
+
+        <section id="msgsearch" class="w100">
+            <div id="output">
+                <div class="empty bg-none">
+                    <svg viewbox="0 0 128 128" width="100%" height="100%">
+                        <path class="doc"
+                            d="M0-0.00002,0,3.6768,0,124.32,0,128h4.129,119.74,4.129v-3.6769-120.65-3.6768h-4.129-119.74zm8.2581,7.3537,111.48,0,0,113.29-111.48,0zm13.626,25.048,0,7.3537,57.806,0,0-7.3537zm0,19.12,0,7.3537,84.232,0,0-7.3537zm0,17.649,0,7.3537,84.232,0,0-7.3537zm0,19.12,0,7.3537,84.232,0,0-7.3537z7z" />
+                        <path class="magnify"
+                            d="M38.948,10.429c-18.254,10.539-24.468,33.953-14.057,51.986,9.229,15.984,28.649,22.764,45.654,16.763-0.84868,2.6797-0.61612,5.6834,0.90656,8.3207l17.309,29.98c2.8768,4.9827,9.204,6.6781,14.187,3.8013,4.9827-2.8768,6.6781-9.204,3.8013-14.187l-17.31-29.977c-1.523-2.637-4.008-4.34-6.753-4.945,13.7-11.727,17.543-31.935,8.31-47.919-10.411-18.034-33.796-24.359-52.049-13.82zm6.902,11.955c11.489-6.633,26.133-2.7688,32.893,8.9404,6.7603,11.709,2.7847,26.324-8.704,32.957-11.489,6.632-26.133,2.768-32.893-8.941-6.761-11.709-2.785-26.324,8.704-32.957z" />
+                    </svg>
+
+                </div>
+        </section>
+
+        <section id="msglog" class="d-none w100">
+            <div id="output-history">
+
             </div>
-            <!-- <button class="btn ">Clear</button> -->
-            <button class="btn btn-error" onclick="sentsms('<%= userid %>')">Sent</button>
+        </section>
 
-        </div>
-        <div class="column col-8 col-md-12 p-2">
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>To</th>
-                        <th>Body</th>
-                        <th>Time</th>
-                    </tr>
-                </thead>
-                <tbody id="tbody_output">
-                </tbody>
-            </table>
-        </div>
+        <section id="sysmsglog" class="d-none w100">
+            <div id="output-sysmsglog">
+
+            </div>
+        </section>
+
+
 
     </div>
 </div>
 <script src="/js/sms/funSMS.js"></script>
-<script>
-    smslog()
-</script>

@@ -747,12 +747,12 @@ const balancePerformance = async () => {
     })
 }
 
-const openModel = () => {
-  document.getElementById("homeModel").classList.add("active")
-}
-const closeModel = () => {
-  document.getElementById("homeModel").classList.remove("active")
-}
+// const openModel = () => {
+//   document.getElementById("homeModel").classList.add("active")
+// }
+// const closeModel = () => {
+//   document.getElementById("homeModel").classList.remove("active")
+// }
 
 /******************************************************************************************
 *

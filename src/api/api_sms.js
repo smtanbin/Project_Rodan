@@ -33,26 +33,7 @@ const sendsms = async (to, body, autho) => {
 }
 
 const addsmslog = async (to, body, sucessid, hash, autho) => {
-  const sql = `
-    /* Formatted on 5/8/2022 4:13:43 PM (QP5 v5.381) */
- BEGIN
-     INSERT INTO TANBIN.CUSTOM_OUTBOX (MPHONE,
-                                   OUT_TIME,
-                                   OUT_MSG,
-                                   SSL_REF_NUM,
-                                   STATUS,
-                                   HASH,
-                                   PRIORITY,AUTHO)
-          VALUES (${to},
-                  (SELECT SYSDATE FROM DUAL),
-                  '${body}',
-                  '${sucessid}',
-                  'Y',
-                  '${hash}',
-                  '0','${autho}');
- 
-     COMMIT;
- END;`
+  sql = `begin TANBIN.p_sms_log(${to},'${body}','${sucessid}','Y','${hash}', '0','${autho}'); end;`
 
   try {
     await qurrythis(sql)
@@ -64,8 +45,8 @@ const addsmslog = async (to, body, sucessid, hash, autho) => {
 }
 
 const smslog = async () => {
-  const sql = `SELECT MPHONE,OUT_MSG BODY,OUT_TIME TIME FROM TANBIN.CUSTOM_OUTBOX WHERE STATUS = 'Y'
-ORDER BY OUT_TIME`
+  const sql = `SELECT MPHONE,OUT_MSG BODY,OUT_TIME TIME FROM TANBIN.TANBIN_OUTBOX WHERE STATUS = 'Y'
+ORDER BY OUT_TIME DESC`
   try {
     return await qurrythis(sql)
   } catch (e) {
@@ -73,5 +54,39 @@ ORDER BY OUT_TIME`
     return null
   }
 }
+const syssmslog = async () => {
+  const sql = `SELECT *
+  FROM (  SELECT MPHONE,
+                 IN_TIME,
+                 OUT_MSG,
+                 SSL_REF_NUM
+            FROM AGENT_BANKING.OUTBOX
+           WHERE STATUS = 'Y'
+        ORDER BY IN_TIME DESC)
+ WHERE ROWNUM <= 25`
+  try {
+    return await qurrythis(sql)
+  } catch (e) {
+    console.log("Error in syssmslog" + e)
+    return null
+  }
+}
+const findsms = async (param) => {
+  const sql = `SELECT *
+  FROM (SELECT MPHONE,
+                 IN_TIME,
+                 OUT_MSG,
+                 SSL_REF_NUM
+            FROM AGENT_BANKING.OUTBOX
+           WHERE STATUS = 'Y' and MPHONE = '${param}'
+        ORDER BY IN_TIME DESC)
+ WHERE ROWNUM <= 100`
+  try {
+    return await qurrythis(sql)
+  } catch (e) {
+    console.log("Error in syssmslog" + e)
+    return null
+  }
+}
 
-module.exports = { sendsms, smslog }
+module.exports = { sendsms, smslog, syssmslog, findsms }

@@ -29,6 +29,15 @@ const appinit = () => {
 
 appinit()
 
+const closeModel = () => {
+  document.getElementById("modal-id").classList.remove("active")
+  // location.reload()
+}
+const openModel = () => {
+  document.getElementById("modal-id").classList.add("active")
+  // location.reload()
+}
+
 const sidenav = document.getElementById("sidenav")
 
 const sidenavopen = () => {

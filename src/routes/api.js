@@ -10,7 +10,8 @@ const {
 const { transactionsreport } = require("../api/api_transactionsreport")
 const { statementHead, statementBody } = require("../api/apiStatement")
 const { accountInfo } = require("../api/api_accountInfo")
-
+const jwt_decode = require("jwt-decode")
+const { roleCheck } = require("../core/roles")
 const bodyParser = require("body-parser")
 const cors = require("cors")
 const app = Router()
@@ -496,13 +497,24 @@ app.get("/recon", async (req, res) => {
     res.send(e)
   }
 })
-const { sendsms, smslog } = require("../api/api_sms")
+
+const { monthly_data } = require("../api/api_mis")
+
+app.post("/monthly_data", async (req, res) => {
+  try {
+    const data = await monthly_data(req.body.date)
+    res.send(data)
+  } catch (e) {
+    res.status(404)
+  }
+})
+const { sendsms, smslog, syssmslog, findsms } = require("../api/api_sms")
 
 function numDigits(x) {
   return Math.max(Math.floor(Math.log10(Math.abs(x))), 0) + 1
 }
 
-app.post("/sentsms", async (req, res) => {
+app.post("/sms/sentsms", async (req, res) => {
   console.log("Api" + req.body)
 
   /* Checking empty string*/
@@ -562,24 +574,38 @@ app.post("/sentsms", async (req, res) => {
     // } else { res.sendStatus(400)}
   }
 })
-const { monthly_data } = require("../api/api_mis")
 
-app.post("/monthly_data", async (req, res) => {
+app.get("/sms/smslog", async (req, res) => {
+  const token = req.cookies.auth
+  const { user } = jwt_decode(token)
+  await logger(user, req.hostname + req.originalUrl, "smslog Api callled")
+
   try {
-    const data = await monthly_data(req.body.date)
+    const data = await smslog()
     res.send(data)
   } catch (e) {
     res.status(404)
   }
 })
-app.get("/smslog", async (req, res) => {
+app.post("/sms/findsms", async (req, res) => {
   const token = req.cookies.auth
   const { user } = jwt_decode(token)
-  const data = await roleCheck(user)
-  // await logger(user, req.hostname + req.originalUrl, "SMS Api callled")
+  await logger(user, req.hostname + req.originalUrl, "syssmslog Api callled")
 
   try {
-    const data = await smslog()
+    const data = await findsms(req.body.param)
+    res.send(data)
+  } catch (e) {
+    res.status(404)
+  }
+})
+app.get("/sms/syssmslog", async (req, res) => {
+  const token = req.cookies.auth
+  const { user } = jwt_decode(token)
+  await logger(user, req.hostname + req.originalUrl, "syssmslog Api callled")
+
+  try {
+    const data = await syssmslog()
     res.send(data)
   } catch (e) {
     res.status(404)
@@ -596,6 +622,69 @@ app.post("/addlog", async (req, res) => {
       res.send("Failed")
       res.status(404)
     }
+  } catch (e) {
+    res.send(data)
+    console.log("Unable to log data. Error => " + e)
+    res.status(404)
+  }
+})
+
+/* Admin Routing Api*/
+const {
+  routelist,
+  updateroutelist,
+  routelistSearch,
+  getlimited,
+} = require("../api/api_routing")
+app.get("/routing/get", async (req, res) => {
+  const token = req.cookies.auth
+  const { user } = jwt_decode(token)
+  await logger(user, req.hostname + req.originalUrl, "routing/get Api callled")
+
+  try {
+    const data = await routelist()
+    res.send(data)
+  } catch (e) {
+    res.status(404)
+  }
+})
+app.post("/routing/getlimited", async (req, res) => {
+  const token = req.cookies.auth
+  const { user } = jwt_decode(token)
+  await logger(user, req.hostname + req.originalUrl, "routing/get Api callled")
+
+  try {
+    const data = await getlimited(req.body.indexfrom, req.body.indexto)
+    res.send(data)
+  } catch (e) {
+    res.status(404)
+  }
+})
+app.get("/routing/refresh", async (req, res) => {
+  const token = req.cookies.auth
+  const { user } = jwt_decode(token)
+  await logger(
+    user,
+    req.hostname + req.originalUrl,
+    "/routing/refresh Api callled"
+  )
+
+  try {
+    const data = await updateroutelist()
+    res.send(data)
+  } catch (e) {
+    res.status(404)
+  }
+})
+app.post("/routing/search", async (req, res) => {
+  try {
+    await logger(
+      user,
+      req.hostname + req.originalUrl,
+      "/routing/search Api callled"
+    )
+    const data = await routelistSearch(req.body.param)
+    res.send(data)
   } catch (e) {
     res.send(data)
     console.log("Unable to log data. Error => " + e)

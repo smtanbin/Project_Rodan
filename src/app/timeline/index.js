@@ -15,7 +15,7 @@ const timeline = async () => {
 	}
 	try {
 		await fetch(url, requestOptions).then((response) => response.json()).then((payload) => {
-			console.log(payload)
+
 			if (payload.length === 0) {
 				document.getElementById('timeline').innerHTML = `
 			<tr>

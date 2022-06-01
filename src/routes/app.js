@@ -209,6 +209,28 @@ app.get("/reconciliation", async (req, res) => {
   })
 })
 
+/* Admin Panal*/
+
+app.get("/admin/routing", async (req, res) => {
+  const token = req.cookies.auth
+  const { user } = jwt_decode(token)
+  const data = await roleCheck(user)
+  await logger(user, req.hostname + req.originalUrl, "Visited")
+
+  data.map(({ ROLE, USERNAME, ROOT }) => {
+    res.locals = {
+      userid: req.cookies.USERNAME,
+      title: "Account Statment",
+    }
+    const darkModeCon = req.cookies.darkmode
+    res.render("./pages/routing", {
+      role: ROLE,
+      userid: USERNAME,
+      owner: ROOT,
+      darkmode: darkModeCon,
+    })
+  })
+})
 // Report Panal
 /********************************************************************************
  */

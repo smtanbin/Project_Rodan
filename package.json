@@ -1,12 +1,12 @@
 {
 	"name": "rodan",
-	"version": "1.10.0",
+	"version": "1.15.0",
 	"main": "src/main.js",
 	"scripts": {
 		"production": "webpack --config build/webpack.prod.conf.js",
 		"build": "webpack --config build/webpack.dev.conf.js",
 		"dev": "webpack --config=config/webpack.dev.js",
-		"start": "nodemon src/main.js"
+		"start": "nodemon src/main.min.js"
 	},
 	"author": "Tanbin hassan bappi",
 	"license": "MIT",
