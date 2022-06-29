@@ -1,17 +1,17 @@
 const request = require('request');
-
+require("dotenv").config()
 
 const getSectionKey = (user, passswd) => {
     return new Promise((resolve, reject) => {
         const options = {
             'method': 'POST',
-            'url': 'https://agentbanking.standardbankbd.com/agentbank_v2/includes/login_check.php',
+            'url': `${process.env.SEMICONAPI}/includes/login_check.php`,
             formData: {
                 'userid': `${user}`,
                 'password': `${passswd}`
             }
         };
-
+        console.log(options);
         request(options, function (error, response) {
             if (error) {
                 reject(error);
@@ -30,13 +30,14 @@ const getSectionKey = (user, passswd) => {
 }
 const chq_request = (sectionid, pmphone, mphone, page, actitel, WFPIN_NO) => {
     return new Promise((resolve, reject) => {
-        var request = require('request');
-        var options = {
+        const request = require('request');
+        const options = {
             'method': 'POST',
-            'url': 'https://agentbanking.standardbankbd.com/agentbank_v2/includes/curl_chq_request.php',
+            'url': `${process.env.SEMICONAPI}/includes/curl_chq_request.php`,
             'headers': {
                 'Cookie': `PHPSESSID=${sectionid}`
             },
+
             formData: {
                 'cbs': '0',
                 'accno': mphone,
