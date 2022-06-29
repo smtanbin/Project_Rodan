@@ -33,6 +33,7 @@ oracledb.outFormat = oracledb.OUT_FORMAT_OBJECT
 
 let connection
 // const oracleClient = require('./dep/oracle/client/instantclient')
+// const oracleClient = require('./lib/instantclient_21_6')
 //connectString
 /* Qurry Function */
 async function qurrythis(sqlqurry) {

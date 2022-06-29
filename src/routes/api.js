@@ -445,7 +445,7 @@ app.post("/transactionsreport", async (req, res) => {
 })
 /* ***************************************************************
 
-						Customer Information 
+            Customer Information 
 
 ******************************************************************/
 
@@ -689,6 +689,25 @@ app.post("/routing/search", async (req, res) => {
     res.send(data)
     console.log("Unable to log data. Error => " + e)
     res.status(404)
+  }
+})
+
+// chaque
+
+const { genarateRequest } = require('../api/api_genCheReq')
+app.post("/chaque/add", async (req, res) => {
+  try {
+    // await logger(
+    //   user,
+    //   req.hostname + req.originalUrl,
+    //   "/chaque/add Api callled"
+    // )
+    const data = await genarateRequest(req.body.mphone)
+    res.send(data)
+  } catch (e) {
+
+    console.log("Unable to log data. Error => " + e)
+    res.status(404).json(e)
   }
 })
 
