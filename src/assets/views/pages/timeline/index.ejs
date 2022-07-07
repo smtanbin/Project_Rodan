@@ -13,9 +13,14 @@
         <div class="hero-body">
             <h1 class="text-primary text-bold">Timeline</h1>
         </div>
-        <div class="w100 px-2 my-2 input-group input-inline">
-            <input class="form-input" type="text" onkeyup="search()" id="search" placeholder="search">
 
+        <div class="column col-6 col-xs-12">
+            <div class="input-group">
+                <input class="form-input w100 input-lg col-8" type="text" id="search" placeholder="Search.....">
+                <span class="input-group-addon addon-lg bg-gray">Optation</span>
+                <select class="form-select select-lg col-2 " id="map_output"></select>
+                <button class="btn btn-primary input-group-btn btn-lg" onclick="searchtr()">Submit</button>
+            </div>
         </div>
     </div>
 
@@ -23,36 +28,11 @@
         <div class="modal modal-xl" id="modal-id">
             <a class="modal-overlay" aria-label="Close"></a>
             <div class="modal-container" id="output">
-
             </div>
         </div>
     </section>
 
     <section data-aos="fade-down" class="container p-2">
-        <!-- <ul class="pagination">
-            <li class="page-item disabled">
-                <a href="#" tabindex="-1">Previous</a>
-            </li>
-            <li class="page-item active">
-                <a href="#">1</a>
-            </li>
-            <li class="page-item">
-                <a href="#">2</a>
-            </li>
-            <li class="page-item">
-                <a href="#">3</a>
-            </li>
-            <li class="page-item">
-                <span>...</span>
-            </li>
-            <li class="page-item">
-                <a href="#">12</a>
-            </li>
-            <li class="page-item">
-                <a href="#">Next</a>
-            </li>
-        </ul> -->
-        <!-- vertical divider element with text -->
         <div class="columns col-12">
             <div class="column col-lg-6 col-md-12">
                 <div class="card p-1">
@@ -66,7 +46,7 @@
                                 <th class="text-tiny text-clip mx-1">From GL</th>
                                 <th class="text-tiny">To AC</th>
                                 <th class="text-tiny text-clip mx-1">To GL</th>
-                                <th class="text-tiny">Paid</th>
+                                <th class="text-tiny">Amount</th>
 
                                 <th class="text-tiny">Merchant</th>
                                 <th class="text-tiny">Ref</th>
@@ -80,11 +60,11 @@
 
                         </tbody>
                     </table>
-                    <span class="loading loading-lg" id="loading"></span>
+                    <span class="loading loading-lg" id="timeline-loading"></span>
 
                 </div>
             </div>
         </div>
     </section>
-    <script src="/JS/timeline/index.min.js"></script>
+    <script src="/JS/timeline/index.js"></script>
 </main>

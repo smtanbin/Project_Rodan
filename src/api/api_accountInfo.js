@@ -1,8 +1,8 @@
-const qurrythis = require('../core/db')
+const qurrythis = require("./db/db")
 
 const accountInfo = async (key) => {
-	try {
-		let sql = `/* Formatted on 2/28/2022 7:49:59 PM (QP5 v5.374) */
+  try {
+    let sql = `/* Formatted on 2/28/2022 7:49:59 PM (QP5 v5.374) */
 		SELECT r.MPHONE                      MPHONE,
 			   r.ACCOUNT_NAME                NAME,
 			   r.CUST_ID                     CUSTOMERID,
@@ -29,11 +29,11 @@ const accountInfo = async (key) => {
 		  FROM AGENT_BANKING.REGINFO r
 		 WHERE PMPHONE = ${key} AND R.REG_STATUS NOT IN ('R') AND R.STATUS NOT IN ('C') AND AC_TYPE_CODE IN ('3','8','4')
 	  ORDER BY FORM_SERIAL DESC`
-		// console.log(sql)
-		return await qurrythis(sql)
-	} catch (e) {
-		console.log('Error in function accountInfo ' + e)
-		return e
-	}
+    // console.log(sql)
+    return await qurrythis(sql)
+  } catch (e) {
+    console.log("Error in function accountInfo " + e)
+    return e
+  }
 }
 module.exports = { accountInfo }

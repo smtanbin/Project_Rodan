@@ -3453,6 +3453,9 @@ a.text-light:visited {
 .text-dark {
   color: #535856 !important;
 }
+.text-black {
+  color: #000000 !important;
+}
 
 a.text-dark:focus, a.text-dark:hover {
   color: #474b49;
@@ -3513,7 +3516,7 @@ a.text-error:visited {
 }
 
 .bg-gray {
-  background: white !important;
+  background: #f0f0f0c9 !important;
 }
 
 .bg-success {

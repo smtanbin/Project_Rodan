@@ -1,95 +1,98 @@
 <!DOCTYPE html>
 <html lang="en">
 
-    <head>
-        <meta charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>
-            Login
-        </title>
-        <link href="/style/aos/aos.css" rel="stylesheet">
-        <link rel="apple-touch-icon" sizes="57x57" href="/img/favicon/apple-icon-57x57.png">
-        <link rel="apple-touch-icon" sizes="60x60" href="/img/favicon/apple-icon-60x60.png">
-        <link rel="apple-touch-icon" sizes="72x72" href="/img/favicon/apple-icon-72x72.png">
-        <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon/apple-icon-76x76.png">
+<head>
 
-        <link rel="apple-touch-icon" sizes="114x114" href="/img/favicon/apple-icon-114x114.png">
-        <link rel="apple-touch-icon" sizes="120x120" href="/img/favicon/apple-icon-120x120.png">
-        <link rel="apple-touch-icon" sizes="144x144" href="/img/favicon/apple-icon-144x144.png">
-        <link rel="apple-touch-icon" sizes="152x152" href="/img/favicon/apple-icon-152x152.png">
-        <link rel="apple-touch-icon" sizes="180x180" href="/img/favicon/apple-icon-180x180.png">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        Login
+    </title>
+    <link href="/style/aos/aos.css" rel="stylesheet">
+    <link rel="apple-touch-icon" sizes="57x57" href="/img/favicon/apple-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/img/favicon/apple-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/img/favicon/apple-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon/apple-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/img/favicon/apple-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/img/favicon/apple-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/img/favicon/apple-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/img/favicon/apple-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/img/favicon/apple-icon-180x180.png">
+    <link rel="icon" type="image/png" sizes="144x144" href="/img/favicon/android-icon-144x144.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/img/favicon/android-icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="/img/favicon/favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon/favicon-16x16.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon/favicon-16x16.png">
+    <link rel="manifest" href="/img/favicon/manifest.json">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-TileImage" content="/img/favicon/ms-icon-144x144.png">
+    <meta name="theme-color" content="#ffffff">
+    <link rel="stylesheet" href="/style/styles.css">
+    <link rel="stylesheet" href="/style/spectre/bright/spectre.css">
+    <link rel="stylesheet" href="/style/spectre/bright/spectre-icons.css">
+    <link rel="stylesheet" href="/style/spectre/bright/spectre-exp.css">
+</head>
 
-        <link rel="icon" type="image/png" sizes="144x144" href="/img/favicon/android-icon-144x144.png">
-        <link rel="icon" type="image/png" sizes="192x192" href="/img/favicon/android-icon-192x192.png">
+<body class="container columns"
+    style="width: 100vw;height: 100vh;; display: flex; justify-content: center; align-items: center;">
+    <div data-aos="zoom-in" class="card card-shadow col-8" style="background-color: #fce69a;">
 
-        <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon/favicon-32x32.png">
-        <link rel="icon" type="image/png" sizes="96x96" href="/img/favicon/favicon-96x96.png">
-        <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon/favicon-16x16.png">
-        <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon/favicon-16x16.png">
-        <link rel="manifest" href="/img/favicon/manifest.json">
-        <meta name="msapplication-TileColor" content="#ffffff">
-        <meta name="msapplication-TileImage" content="/img/favicon/ms-icon-144x144.png">
-        <meta name="theme-color" content="#ffffff">
-        <link rel="stylesheet" href="/style/styles.css">
-        <link rel="stylesheet" href="/style/spectre/bright/spectre.css">
-        <link rel="stylesheet" href="/style/spectre/bright/spectre-icons.css">
-        <link rel="stylesheet" href="/style/spectre/bright/spectre-exp.css">
-    </head>
+        <div class="card-body">
 
-    <body class="container columns"
-        style="width: 100vw;height: 100vh;; display: flex; justify-content: center; align-items: center;">
-        <div data-aos="zoom-in" class="card card-shadow col-8" style="background-color: #fce69a;">
-
-            <div class="card-body">
-
-                <div class="columns">
-                    <div class="column">
-                        <img src="/img/login.gif" class="col-12">
-                    </div>
-                    <div class="column col-4 p-2">
-                        <h3 class="h3 text-center text-dark text-bold">Login</h3>
-                        <div class="form-group" id="error-input">
-                            <label class="form-label text-tiny text-center w100">Use your agentbanking ID &
-                                password</label>
-                            <input onfocus="removeError()" class="form-input input-lg has-error" type="text" id="user"
-                                placeholder="User ID">
-                            <input onfocus="removeError()" class="form-input my-2 input-lg " type="password" id="passwd"
-                                placeholder="Password">
-                            <p id="error" style="opacity:0;" class="form-input-hint">Invalid Login Information</p>
-                            <button id="submit" id="error-btn" class="btn btn-primary w100"
-                                onclick="authorized()">Login</button>
-                        </div>
-                    </div>
+            <div class="columns">
+                <div class="column">
+                    <img src="/img/login.gif" class="col-12">
                 </div>
-                <img src="/img/Witctcraft-1x1bright.svg" style="height: 1.5rem;">
-
-                <small>Tanbin Hassan &copy; 2022 - All Rights Reserved.</small>
-                <!-- <small>Copyright © 2022 Standard Bank Ltd. </small> -->
+                <div class="column col-4 p-2">
+                    <h3 class="h3 text-center text-dark text-bold">Login</h3>
+                    <div class="form-group" id="error-input">
+                        <label class="form-label text-tiny text-center w100">Use your agentbanking ID &
+                            password</label>
+                        <input onfocus="removeError()" class="form-input input-lg has-error" type="text" id="user"
+                            placeholder="User ID">
+                        <input onfocus="removeError()" class="form-input my-2 input-lg " type="password" id="passwd"
+                            placeholder="Password">
+                        <p id="error" style="opacity:0;" class="form-input-hint">Invalid Login Information</p>
+                        <button id="submit" id="error-btn" class="btn btn-primary w100"
+                            onclick="authorized()">Login</button>
+                        <button id="submit" id="error-btn my-2" class="btn btn-link text-dark disabled w100"
+                            onclick="authorized()">Forget
+                            Password</button>
+                    </div>
+                    <!-- <button id="submit" id="error-btn my-2" class="btn btn-secondary w100" onclick="guestlogin()">Login
+                        as Anonymous</button> -->
+                </div>
             </div>
+            <img src="/img/Witctcraft-1x1bright.svg" style="height: 1.5rem;">
+
+            <small>Tanbin Hassan &copy; 2022 - All Rights Reserved.</small>
+            <!-- <small>Copyright © 2022 Standard Bank Ltd. </small> -->
         </div>
+    </div>
 
 
-        <script>
+    <script>
 
-            if (navigator.userAgent.indexOf('MSIE') !== -1
-                || navigator.appVersion.indexOf('Trident/') > -1) {
-                /* Microsoft Internet Explorer detected in. */
-                window.alert('Microsoft Internet Explorer detected. This browser older then you so stop using it')
-                // document.getElementById('error-input').innerHTML = `Microsoft Internet Explorer detected. This browser older then me so stop using it.`
-            }
-            if (navigator.userAgent.indexOf('OPR/33.0.1990.115') > -1) {
-                window.alert('Opera 33.0.1990.115 detected. This is a old version os app only for java applet. Please switch to new browser.')
+        if (navigator.userAgent.indexOf('MSIE') !== -1
+            || navigator.appVersion.indexOf('Trident/') > -1) {
+            /* Microsoft Internet Explorer detected in. */
+            window.alert('Microsoft Internet Explorer detected. This browser older then you so stop using it')
+            // document.getElementById('error-input').innerHTML = `Microsoft Internet Explorer detected. This browser older then me so stop using it.`
+        }
+        if (navigator.userAgent.indexOf('OPR/33.0.1990.115') > -1) {
+            window.alert('Opera 33.0.1990.115 detected. This is a old version os app only for java applet. Please switch to new browser.')
 
-            }
-        </script>
+        }
+    </script>
 
-        <script src="/style/aos/aos.js"></script>
-        <script src="/JS/login/login.min.js"></script>
-        <script>
-            AOS.init();
-        </script>
+    <script src="/style/aos/aos.js"></script>
+    <script src="/JS/login/login.js"></script>
+    <script>
+        AOS.init();
+    </script>
 
-    </body>
+</body>
 
 </html>

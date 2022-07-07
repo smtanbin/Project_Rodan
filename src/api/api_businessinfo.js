@@ -1,12 +1,12 @@
-const qurrythis = require('../core/db')
-const { oracleDate } = require('../core/FunCore')
+const qurrythis = require("./db/db")
+const { oracleDate } = require("./db/db_apps")
 
 const businessinfo = async (frommonth, tomonth) => {
-	tomonth = oracleDate(tomonth)
-	let sql = ''
-	if (frommonth === 'false') {
-		/* If there no start date spicify*/
-		sql = ` SELECT
+  tomonth = oracleDate(tomonth)
+  let sql = ""
+  if (frommonth === "false") {
+    /* If there no start date spicify*/
+    sql = ` SELECT
 				PMPHONE,
 				NAME,
 				DOB,
@@ -62,10 +62,10 @@ const businessinfo = async (frommonth, tomonth) => {
 							WHERE
 								STATUS = 'S'
 								AND TRUNC (CREATE_DATE) <= '${tomonth}')) R`
-	} else {
-		/*Start mont spify but not agent*/
-		frommonth = oracleDate(frommonth)
-		sql = `/* Formatted on 3/14/2022 3:17:22 PM (QP5 v5.374) */
+  } else {
+    /*Start mont spify but not agent*/
+    frommonth = oracleDate(frommonth)
+    sql = `/* Formatted on 3/14/2022 3:17:22 PM (QP5 v5.374) */
 			SELECT PMPHONE,
 				   NAME,
 				   DOB,
@@ -115,22 +115,22 @@ const businessinfo = async (frommonth, tomonth) => {
 									  WHERE     STATUS = 'S'
 											AND TRUNC (CREATE_DATE) BETWEEN '${frommonth}'
 																		AND '${tomonth}')))R`
-	}
-	try {
-		// console.log(sql)
-		return await qurrythis(sql)
-	} catch (e) {
-		console.log(e)
-		return e
-	}
+  }
+  try {
+    // console.log(sql)
+    return await qurrythis(sql)
+  } catch (e) {
+    console.log(e)
+    return e
+  }
 }
 
 const businessinfoheader = async (frommonth, tomonth) => {
-	tomonth = oracleDate(tomonth)
+  tomonth = oracleDate(tomonth)
 
-	let sql = ''
-	if (frommonth === 'false') {
-		sql = `/* Formatted on 3/14/2022 3:30:06 PM (QP5 v5.374) */
+  let sql = ""
+  if (frommonth === "false") {
+    sql = `/* Formatted on 3/14/2022 3:30:06 PM (QP5 v5.374) */
 	SELECT COUNT (MPHONE)    MPHONE,
 		   SIM_NO,
 		   SUM (
@@ -176,9 +176,9 @@ const businessinfoheader = async (frommonth, tomonth) => {
 									AND TRUNC (CREATE_DATE) <= '${tomonth}')))
 		   R
   GROUP BY SIM_NO`
-	} else {
-		frommonth = oracleDate(frommonth)
-		sql = `/* Formatted on 3/14/2022 3:30:06 PM (QP5 v5.374) */
+  } else {
+    frommonth = oracleDate(frommonth)
+    sql = `/* Formatted on 3/14/2022 3:30:06 PM (QP5 v5.374) */
 	SELECT COUNT (MPHONE)    MPHONE,
 		   SIM_NO,
 		   SUM (
@@ -228,13 +228,13 @@ const businessinfoheader = async (frommonth, tomonth) => {
 																AND '${tomonth}')))
 		   R
   GROUP BY SIM_NO`
-	}
+  }
 
-	try {
-		return await qurrythis(sql)
-	} catch (error) {
-		console.log(error)
-	}
+  try {
+    return await qurrythis(sql)
+  } catch (error) {
+    console.log(error)
+  }
 }
 
 module.exports = { businessinfo, businessinfoheader }

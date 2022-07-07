@@ -1,8 +1,8 @@
-const qurrythis = require('../core/db')
+const qurrythis = require("./db/db")
 
 const recon = async () => {
-    try {
-        const sql = `/* Formatted on 4/26/2022 12:15:01 PM (QP5 v5.381) */
+  try {
+    const sql = `/* Formatted on 4/26/2022 12:15:01 PM (QP5 v5.381) */
         SELECT *
           FROM (  SELECT ACCTCODE,
             COA_DESC,
@@ -22,11 +22,11 @@ const recon = async () => {
                    WHERE COA_CODE IS NOT NULL AND ACCTCODE IS NOT NULL
                 ORDER BY ACCTCODE)
          WHERE DIF != 0`
-        return await qurrythis(sql)
-    } catch (e) {
-        console.log(e)
-        return e
-    }
+    return await qurrythis(sql)
+  } catch (e) {
+    console.log(e)
+    return e
+  }
 }
 
 module.exports = { recon }

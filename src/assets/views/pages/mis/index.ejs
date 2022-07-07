@@ -10,6 +10,33 @@
         </li>
 
     </ul>
+
+    <div class="modal modal-sm bg-frost" id="modal-id">
+        <a href="#close" class="modal-overlay" aria-label="Close"></a>
+        <div class="modal-container">
+            <div class="modal-header">
+                <a href="#close" class="btn btn-clear float-right" onclick="modelexit()" aria-label="Close"></a>
+                <div class="modal-title text-primary h5">Generate Data</div>
+            </div>
+
+
+            <div class="modal-body" id="modal_body_output">
+                <div class="content">
+                    <p>Input the last day of report month.</p>
+                    <div class="input-group">
+                        <span class="input-group-addon">Month</span>
+                        <input type="date" class="form-input" id="gen_date" placeholder="Input Last Day of month">
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" id="btn_loading" onclick="gendata()">Generate</button>
+            </div>
+
+        </div>
+    </div>
+
+
     <div data-aos="zoom-out" class="hero-sm">
         <div class="hero-body">
             <h1 class="text-primary">Management Information System</h1>
@@ -22,142 +49,24 @@
             <input type="month" id="param" class="form-input" placeholder="Type Account Number">
             <button class="btn btn-primary input-group-btn" onclick="mis_part1()" id="btn-loading">Search
             </button>
-            <button class="btn btn-primary input-group-btn disabled" onclick="printArea()" id="btnprint">Print
+            <button class="btn btn-secendery  input-group-btn" onclick="modeladd()">Generate Data
+            </button>
+            <button class="btn btn-primary input-group-btn disabled" onclick="printAreaSys()" id="btnprint">Print
             </button>
 
         </div>
 
     </div>
 
-    <div data-aos="zoom-in" class="container">
+    <div class="container">
 
-        <div class="columns" id="output">
-            <!-- cut -->
+        <progress class="progress d-hide" id="progress" max="100"></progress>
 
-            <!-- <div class="card p-2 ">
-                <div class="hero hero-sm">
-                    <div class="hero-body">
-                        <h5 class="h5 text-primary text-center">Agent Wise Comparative Business Performance as on</h5>
-                    </div>
-                </div>
-                <p class="text-rignt text-tiny">(Figure In Lac)</p>
-                <table class="table table-claster text-tiny">
-                    <thead class="active">
-                        <tr>
-                            <th>Name of Agent</th>
-                            <th>Location fo Agent Outlet</th>
-                            <th>Date of Opening</th>
-                            <th>No. of Account</th>
-                            <th>No. of Account</th>
-                            <th>No. of Account</th>
-                            <th>Deposit as on </th>
-                            <th>Deposit as on </th>
-                            <th>Deposit as on </th>
-                            <th>F. Remittance</th>
-                            <th>F. Remittance</th>
-                            <th>F. Remittance</th>
-                            <th>Utility Bill Collection</th>
-                            <th>Utility Bill Collection</th>
-                            <th>Utility Bill Collection</th>
-                            <th>Commission paid to Agent</th>
-                            <th>Commission paid to Agent</th>
-                            <th>Commission paid to Agent</th>
-                            <th>Remarks</th>
-                        </tr>
-                    </thead>
-                </table>
+        <div class="columns d-hide" style="overflow-y: scroll;" id="output">
 
-                <div class="columns">
-                    <h5 class="m-2 p-1">Summary</h5>
-                    <div class="column w100 col-12">
-                        <div class="column col-6 w100">
-
-                            <table class="table table-striped text-tiny table-cluster">
-                                <thead>
-                                    <tr>
-                                        <th class="text-small">Income / Expenses</th>
-                                        <th class="text-small">last month</th>
-                                        <th class="text-small">Current Month</th>
-                                        <th class="text-small">Possition</th>
-                                        <th class="text-small">Remarks</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td class="text-tiny active">INCOME</td>
-                                        <td colspan="5"></td>
-                                    </tr>
-                                    <tr>
-                                        <td class="text-tiny">Profit Received from SBL Gen A/c & Commission Earned</td>
-                                        <td>x</td>
-                                        <td>x</td>
-
-                                        <td>x</td>
-                                        <td colspan="1"></td>
-                                    </tr>
-                                    <tr>
-                                        <td class="text-tiny">Account Maintenance charges</td>
-                                        <td>x</td>
-                                        <td>x</td>
-                                        <td>x</td>
-
-                                        <td colspan="1"></td>
-                                    </tr>
-                                    <tr>
-                                        <td class="text-tiny">Total Income</td>
-                                        <td>x</td>
-                                        <td>x</td>
-                                        <td>x</td>
-                                        <td colspan="1"></td>
-                                    </tr>
-                                    <tr>
-                                        <td class="text-tiny active">EXPENSES</td>
-                                        <td colspan="5"></td>
-                                    </tr>
-                                    <tr>
-                                        <td class="text-tiny">Profit Paid to Depositors & other exp</td>
-                                        <td>x</td>
-                                        <td>x</td>
-                                        <td>x</td>
-                                        <td colspan="1"></td>
-                                    </tr>
-                                    <tr>
-                                        <td class="text-tiny">Agent Commission Paid </td>
-                                        <td>x</td>
-                                        <td>x</td>
-                                        <td>x</td>
-                                        <td colspan="1"></td>
-                                    </tr>
-                                    <tr>
-                                        <td class="text-tiny">Total Expenses</td>
-                                        <td>x</td>
-                                        <td>x</td>
-                                        <td>x</td>
-                                        <td colspan="1"></td>
-                                    </tr>
-                                    <tr>
-                                        <td class="text-tiny active">Operating Profit</td>
-                                        <td>x</td>
-                                        <td>x</td>
-                                        <td>x</td>
-                                        <td colspan="1"></td>
-                                    </tr>
-
-
-                                </tbody>
-                            </table>
-                        </div>
-                        <div class="column col-6 w100">
-                            <!-- column content -->
-            <!-- </div> -->
-            <!-- </div> -->
-            <!-- </div> -->
-            <!-- </div> -->
-            <!-- end -->
         </div>
-    </div>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
 
-    <script src="/js/mis/mis.js"></script>
+        <script src="/js/mis/mis.js"></script>
 
 </main>

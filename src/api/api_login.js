@@ -13,76 +13,78 @@ const jwt = require("jsonwebtoken")
 */
 const jwt_decode = require("jwt-decode")
 
-const qurrythis = require("../core/db")
+const qurrythis = require("./db/db")
+const { oradb } = require("../api/db/oradb")
 
 const verification = async (user, passwd) => {
-  sql = `SELECT USERNAME, ROLE
-	FROM (SELECT UPPER (USERID)     USERID,
-							 USERNAME,
-							 UPASS,
-							 UPPER (ROLEID)     ROLE
-						FROM AGENT_BANKING.USER_INFO
-						UNION
-						SELECT UPPER (MPHONE)     USERID,
-						NAME               USERNAME,
-						R.PIN_NO           UPASS,
-						'AGENT'
-						FROM AGENT_BANKING.REGINFO R
-						WHERE R.CAT_ID = 'D')
-						WHERE USERID = UPPER ('${user}') AND TANBIN.FUNC_GET_PIN (UPASS) = '${passwd}'`
-
-  try {
-    const data = await qurrythis(sql)
+  return new Promise(async (resolve, reject) => {
+    sql = `SELECT USERNAME, ROLE FROM (SELECT UPPER (USERID) USERID,
+                 USERNAME, UPASS, UPPER (ROLEID)     ROLE
+              FROM AGENT_BANKING.USER_INFO
+              UNION
+              SELECT UPPER (MPHONE)     USERID,
+              NAME               USERNAME,
+              R.PIN_NO           UPASS,
+              'AGENT'
+              FROM AGENT_BANKING.REGINFO R
+              WHERE R.CAT_ID = 'D')
+              WHERE USERID = UPPER ('${user}') AND TANBIN.FUNC_GET_PIN (UPASS) = '${passwd}'`
+    const data = await oradb(sql)
     if (data.length === 0) {
-      return false
+      reject('404')
     } else {
-      return data
+      resolve(data)
     }
-  } catch (e) {
-    console.log(e)
-    return e
-  }
-}
-/* Creating JWT token for ------------------------------------------------------
- */
-const createToken = async (userid, roll) => {
-  // Creating Refrash Token
-  const rtoken = jwt.sign({ user: userid }, process.env.JWTREFRASHKEY)
-  // Creating Cluster
-  const inputs = { user: userid, role: roll, refrashtoken: rtoken }
-  // Keeping token to Database
-  const token = jwt.sign(inputs, process.env.JWTAUTHOKEY, {
-    expiresIn: "5s", // expires in 1 hours
-  })
-  return token
-}
-//-----------------------------------End-------------------------------------------
-
-const createRefrashToken = (userid, roll, refrashtoken) => {
-  jwt.verify(token, process.env.JWTREFRASHKEY, async (err) => {
-    if (!err) {
-      // Creating SQL
-      const checking = await qurrythis(
-        `SELECT count(TOKEN) FROM TANBIN.JWT WHERE TOKEN = ${refrashtoken}`
-      )
-      /*Checking If recort found?
-       */
-      if (checking !== 0) {
-        const inputs = { user: userid, role: roll, refrashtoken: refrashtoken }
-        const token = jwt.sign(inputs, process.env.JWTREFRASHKEY, {
-          expiresIn: "5s", // expires in 1 hours
-        })
-
-        await qurrythis(
-          /* Keeping token to Database*/
-          `INSERT INTO TANBIN.JWT (USERID, TOKEN,ORGDATE) VALUES ('${userid}', '${token}', (SELECT CURRENT_TIMESTAMP FROM dual)); commit`
-        )
-        return token
-      } else {
-        return "Invalid"
-      }
-    } else console.log("Verification " + err)
   })
 }
 
-module.exports = { verification, createToken, createRefrashToken }
+
+/* Creating JWT token for ---------------------------------------------------*/
+const find_token = ({ token, user }) => {
+  return new Promise((resolve, reject) => {
+    const sql = `SELECT TOKEN FROM TANBIN.JWT_TOKEN where STATUS = 1 and TOKEN = '${token}' and USER = ${user}`
+    try {
+      resolve(qurrythis(sql))
+    } catch (e) {
+      reject(e)
+    }
+  })
+}
+
+const insert_token = ({ token, user, }) => {
+  return new Promise((resolve, reject) => {
+    const sql = `INSERT
+	INTO
+	TANBIN.JWT_TOKEN (
+	TOKEN,
+	"USER",
+	STATUS,
+	GEN_DATE)
+VALUES(
+'${token}',
+'${user}',
+1 ,
+SYSDATE)`
+    try {
+      resolve(qurrythis(sql))
+    } catch (e) {
+      reject(e)
+    }
+  })
+}
+
+const status_update = ({ token, }) => {
+  return new Promise((resolve, reject) => {
+    const sql = `UPDATE 
+        TANBIN.JWT_TOKEN SET STATUS=0, EXP_DATE=sysdate
+        WHERE USER = ${token}`
+    try {
+      resolve(qurrythis(sql))
+    } catch (e) {
+      reject(e)
+    }
+  })
+}
+
+
+module.exports = { verification, find_token, status_update, insert_token }

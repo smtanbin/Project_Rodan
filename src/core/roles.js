@@ -1,6 +1,6 @@
-const qurrythis = require('./db')
+const qurrythis = require("../api/db/db")
 const roleCheck = async (user) => {
-	sql = `SELECT USERNAME, ROLE,ROOT
+  sql = `SELECT USERNAME, ROLE,ROOT
     FROM (
         (SELECT UPPER (USERID)     USERID,
         USERNAME,
@@ -30,11 +30,11 @@ const roleCheck = async (user) => {
              )
              WHERE USERID = UPPER ('${user}')
              ORDER BY ROLE DESC `
-	try {
-		return await qurrythis(sql)
-	} catch (e) {
-		console.log(e)
-		return e
-	}
+  try {
+    return await qurrythis(sql)
+  } catch (e) {
+    console.log(e)
+    return e
+  }
 }
 module.exports = { roleCheck }

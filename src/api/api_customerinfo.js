@@ -1,8 +1,8 @@
-const qurrythis = require('../core/db')
+const qurrythis = require("./db/db")
 
 const customerinfo = async (key) => {
-	try {
-		let sql = `/* Formatted on 2/17/2022 10:33:25 AM (QP5 v5.374) */
+  try {
+    let sql = `/* Formatted on 2/17/2022 10:33:25 AM (QP5 v5.374) */
 		SELECT /* --------------  CUSTID FINDER --------------- */
 		
 			   NVL (
@@ -63,9 +63,9 @@ const customerinfo = async (key) => {
 		  FROM AGENT_BANKING.REGINFO R
 		 WHERE MPHONE = ${key}`
 
-		const custid = await qurrythis(sql)
+    const custid = await qurrythis(sql)
 
-		sql = `/* Formatted on 2/17/2022 10:36:26 AM (QP5 v5.374) */
+    sql = `/* Formatted on 2/17/2022 10:36:26 AM (QP5 v5.374) */
 		SELECT ca.REG_DATE,
 		ca.CUST_ID,
 			   ca.NAME    "CUSTOMER_NAME",
@@ -124,30 +124,30 @@ const customerinfo = async (key) => {
 		  FROM AGENT_BANKING.CUSTIDINFO ca
 		 WHERE CUST_ID = ${custid[0].CUST_ID}`
 
-		const data = await qurrythis(sql)
-		return data
-	} catch (e) {
-		console.log('Error in function customerinfo ' + e)
-		return e
-	}
+    const data = await qurrythis(sql)
+    return data
+  } catch (e) {
+    console.log("Error in function customerinfo " + e)
+    return e
+  }
 }
 
 const getimage = async (param) => {
-	sql = `SELECT DATA FROM AGENT_BANKING.IMAGE_DATA WHERE AC_NO = ${param} AND SL_NO = 1`
-	try {
-		const data = await qurrythis(sql)
-		return data
-	} catch (e) {
-		console.log('Error in function customerinfo ' + e)
-		return e
-	}
+  sql = `SELECT DATA FROM AGENT_BANKING.IMAGE_DATA WHERE AC_NO = ${param} AND SL_NO = 1`
+  try {
+    const data = await qurrythis(sql)
+    return data
+  } catch (e) {
+    console.log("Error in function customerinfo " + e)
+    return e
+  }
 }
 
 const customerallac = async (key) => {
-	try {
-		let output
+  try {
+    let output
 
-		let sql = `/* Formatted on 2/17/2022 10:33:25 AM (QP5 v5.374) */
+    let sql = `/* Formatted on 2/17/2022 10:33:25 AM (QP5 v5.374) */
 		SELECT /* --------------  CUSTID FINDER --------------- */
 		
 			   NVL (
@@ -208,10 +208,10 @@ const customerallac = async (key) => {
 		  FROM AGENT_BANKING.REGINFO R
 		 WHERE MPHONE = ${key}`
 
-		const custid = await qurrythis(sql)
+    const custid = await qurrythis(sql)
 
-		if (custid !== '' || custid !== null) {
-			sql = `/* Formatted on 3/22/2022 5:48:58 PM (QP5 v5.381) */
+    if (custid !== "" || custid !== null) {
+      sql = `/* Formatted on 3/22/2022 5:48:58 PM (QP5 v5.381) */
 SELECT MPHONE,
 			   REG_DATE,
 			   (select NAME FROM AGENT_BANKING.AC_STATUS WHERE S_NAME = r.STATUS)STATUS,
@@ -230,25 +230,25 @@ SELECT MPHONE,
 			   AUTHO_DATE
 			   FROM agent_banking.reginfo r
 			   WHERE CUST_ID = ${custid[0].CUST_ID}`
-			const data = await qurrythis(sql)
-			return data
-		} else {
-			return null
-		}
-	} catch (e) {
-		console.log('Error in function customerinfo ' + e)
-		return e
-	}
+      const data = await qurrythis(sql)
+      return data
+    } else {
+      return null
+    }
+  } catch (e) {
+    console.log("Error in function customerinfo " + e)
+    return e
+  }
 }
 const customernom = async (param) => {
-	try {
-		let sql = `SELECT * FROM AGENT_BANKING.NOMINEE_INFO where AC_NO = '${param}'`
+  try {
+    let sql = `SELECT * FROM AGENT_BANKING.NOMINEE_INFO where AC_NO = '${param}'`
 
-		const data = await qurrythis(sql)
-		return data
-	} catch (e) {
-		console.log('Error in function customernom ' + e)
-		return e
-	}
+    const data = await qurrythis(sql)
+    return data
+  } catch (e) {
+    console.log("Error in function customernom " + e)
+    return e
+  }
 }
 module.exports = { customerinfo, getimage, customerallac, customernom }

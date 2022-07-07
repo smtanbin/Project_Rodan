@@ -1,11 +1,13 @@
-const qurrythis = require('../core/db')
+const { oradb } = require("./db/oradb")
 
-const timeline = async () => {
-	try {
-		const sql = `SELECT
-		TRANS_NO,
-		TRANS_DATE,
-		TRANS_FROM,
+const timeline = async (what, which) => {
+	let sql = `
+	select * 
+	from (	
+		SELECT
+		TRANS_NO TRANS_NO,
+		TRANS_DATE Time,
+		TRANS_FROM From_Account,
 		(
 		SELECT
 			gc.COA_CODE
@@ -20,27 +22,68 @@ const timeline = async () => {
 			AGENT_BANKING.GL_COA gc
 		WHERE
 			gc.SYS_COA_CODE = m.TO_SYS_COA_CODE) TO_GL ,
-		TRANS_TO,
-		REF_PHONE,
-		PAY_AMT,
-		MERCHANT_SNAME,
+		TRANS_TO To_Account,
+		REF_PHONE ACCOUNT,
+		PAY_AMT AMOUNT,
+		MERCHANT_SNAME Merchant,
 		PARTICULAR
 
 	FROM
 		AGENT_BANKING.GL_TRANS_MST m
-	ORDER BY
-		TRANS_NO DESC
-		FETCH NEXT 100 ROWS ONLY`
-		// console.log(sql)
-		return qurrythis(sql)
-	} catch (e) {
-		console.log(e)
-		return e
+		ORDER BY
+			TRANS_NO DESC
+			FETCH NEXT 100 ROWS ONLY
+		)
+	WHERE 
+		${what} like '%${which}%' or ${what} = '${which}'
+		`
+
+	if (what === undefined || which === undefined) {
+		sql = `
+	select * 
+	from (	
+		SELECT
+		TRANS_NO TRANS_NO,
+		TRANS_DATE Time,
+		TRANS_FROM From_Account,
+		(
+		SELECT
+			gc.COA_CODE
+		FROM
+			AGENT_BANKING.GL_COA gc
+		WHERE
+			gc.SYS_COA_CODE = m.FROM_SYS_COA_CODE) FROM_GL,
+		(
+		SELECT
+			gc.COA_CODE
+		FROM
+			AGENT_BANKING.GL_COA gc
+		WHERE
+			gc.SYS_COA_CODE = m.TO_SYS_COA_CODE) TO_GL ,
+		TRANS_TO To_Account,
+		REF_PHONE ACCOUNT,
+		PAY_AMT AMOUNT,
+		MERCHANT_SNAME Merchant,
+		PARTICULAR
+
+	FROM
+		AGENT_BANKING.GL_TRANS_MST m
+		ORDER BY
+			TRANS_NO DESC
+			FETCH NEXT 100 ROWS ONLY
+		)
+		`
 	}
+	return new Promise(async (resolve, reject) => {
+		await oradb(sql).then((payload) => {
+			resolve(payload)
+		}).catch((e) => { reject(e) })
+
+	})
+
 }
 const trSearch = async (key) => {
-	try {
-		const sql = `SELECT
+	const sql = `SELECT
 		gtm.TRANS_NO,
 		gtm.TRANS_DATE,
 		gtm.TRANS_FROM,
@@ -117,12 +160,12 @@ const trSearch = async (key) => {
 			AGENT_BANKING.GL_TRANS_MST) gtm
 	WHERE
 		TRANS_NO = ${key}`
-		// console.log(sql)
-		return qurrythis(sql)
-	} catch (e) {
-		console.log(e)
-		return e
-	}
+	return new Promise(async (resolve, reject) => {
+		await oradb(sql).then((payload) => {
+			resolve(payload)
+		}).catch((e) => { reject(e) })
+
+	})
 }
 
 module.exports = { timeline, trSearch }

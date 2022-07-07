@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include('../head'); %>
+
+    <body>
+      <div class="container" id="loader" style="display: '';">
+        <div class="columns">
+          <div class="row column col-12">
+            <%- include('../navbar'); %>
+          </div>
+          <div class="columns col-12 row">
+            <div class="column col-2 hide-sm">
+              <%- include('../sidenav'); %>
+            </div>
+            <div class="column col-10">
+              <%- include('body'); %>
+            </div>
+          </div>
+          <div class="row column col-12">
+            <%- include('../footer'); %>
+          </div>
+        </div>
+
+      </div>
+    </body>
+
+</html>

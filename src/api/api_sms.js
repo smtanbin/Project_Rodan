@@ -1,4 +1,4 @@
-const qurrythis = require("../core/db")
+const qurrythis = require("./db/db")
 const CryptoJS = require("crypto-js")
 const request = require("request")
 

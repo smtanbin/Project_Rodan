@@ -1,25 +1,25 @@
-const qurrythis = require('../core/db')
-const { oracleDate } = require('../core/FunCore')
+const qurrythis = require("./db/db")
+const { oracleDate } = require("./db/db_apps")
 
 const pbslist = async () => {
-	try {
-		const sql = `SELECT TRANS_SNAME
+  try {
+    const sql = `SELECT TRANS_SNAME
 	FROM AGENT_BANKING.UTILITY_PAYMENT_INFO u
 	where status = 'S'
 	GROUP BY TRANS_SNAME
 	ORDER BY TRANS_SNAME ASC`
-		return await qurrythis(sql)
-	} catch (e) {
-		console.log(e)
-		return e
-	}
+    return await qurrythis(sql)
+  } catch (e) {
+    console.log(e)
+    return e
+  }
 }
 
 const utilityinfohead = async (date, key) => {
-	try {
-		date = oracleDate(date)
+  try {
+    date = oracleDate(date)
 
-		const sql = `/* Formatted on 2/3/2022 1:50:51 PM (QP5 v5.374) */
+    const sql = `/* Formatted on 2/3/2022 1:50:51 PM (QP5 v5.374) */
 		SELECT (SELECT NAME
 			FROM AGENT_BANKING.REGINFO
 			WHERE MPHONE = C.MPHONE)                                 "TITEL",
@@ -34,17 +34,17 @@ const utilityinfohead = async (date, key) => {
 			FROM AGENT_BANKING.MERCHANT_CONFIG C
 			WHERE SNAME = '${key}'`
 
-		return await qurrythis(sql)
-	} catch (e) {
-		console.log(e)
-		return 'Stop code: Qurry miss'
-	}
+    return await qurrythis(sql)
+  } catch (e) {
+    console.log(e)
+    return "Stop code: Qurry miss"
+  }
 }
 const utilityinfodtl = async (fromdate, todate, key) => {
-	fromdate = oracleDate(fromdate)
-	todate = oracleDate(todate)
-	if (key == 'ALL') {
-		const sql = `/* Formatted on 2/1/2022 3:19:21 PM (QP5 v5.374) */
+  fromdate = oracleDate(fromdate)
+  todate = oracleDate(todate)
+  if (key == "ALL") {
+    const sql = `/* Formatted on 2/1/2022 3:19:21 PM (QP5 v5.374) */
 	SELECT u.ENTRY_DATE,
 		   u.TRANS_NO,
 		   ROUND (u.TRANS_AMT, 2) TRANS_AMT,
@@ -56,9 +56,9 @@ const utilityinfodtl = async (fromdate, todate, key) => {
 	  FROM AGENT_BANKING.UTILITY_PAYMENT_INFO u
 	  where status = 'S' and trunc(entry_date) between '${fromdate}' and '${todate}'
 	  and TRANS_SNAME = '${key}' order by ENTRY_DATE`
-		return await qurrythis(sql)
-	} else {
-		const sql = `/* Formatted on 2/1/2022 3:19:21 PM (QP5 v5.374) */
+    return await qurrythis(sql)
+  } else {
+    const sql = `/* Formatted on 2/1/2022 3:19:21 PM (QP5 v5.374) */
 	SELECT u.ENTRY_DATE,
 		   u.TRANS_NO,
 		   ROUND (u.TRANS_AMT, 2) TRANS_AMT,
@@ -70,14 +70,14 @@ const utilityinfodtl = async (fromdate, todate, key) => {
 	  FROM AGENT_BANKING.UTILITY_PAYMENT_INFO u
 	  where status = 'S' and trunc(entry_date) between '${fromdate}' and '${todate}'
 	  order by ENTRY_DATE`
-		return await qurrythis(sql)
-	}
+    return await qurrythis(sql)
+  }
 }
 
 const utilityinfosummary = async (fromdate, todate) => {
-	fromdate = oracleDate(fromdate)
-	todate = oracleDate(todate)
-	const sql = `/* Formatted on 2/2/2021 4:45:50 PM (QP5 v5.326) */
+  fromdate = oracleDate(fromdate)
+  todate = oracleDate(todate)
+  const sql = `/* Formatted on 2/2/2021 4:45:50 PM (QP5 v5.326) */
 	SELECT
 	  ENTRY_BY PMPHONE,
 	  (
@@ -109,6 +109,11 @@ const utilityinfosummary = async (fromdate, todate) => {
   ORDER BY
 	  ENTRY_BY
   `
-	return await qurrythis(sql)
+  return await qurrythis(sql)
 }
-module.exports = { pbslist, utilityinfohead, utilityinfodtl, utilityinfosummary }
+module.exports = {
+  pbslist,
+  utilityinfohead,
+  utilityinfodtl,
+  utilityinfosummary,
+}

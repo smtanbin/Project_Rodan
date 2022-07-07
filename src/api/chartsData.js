@@ -1,9 +1,10 @@
-const qurrythis = require("../core/db")
+const qurrythis = require("./db/db")
+const { oradb } = require("./db/oradb")
 
 const balancePerformance = async (param) => {
-  let sql = ""
-  if (param === 0) {
-    sql = `/* Formatted on 4/17/2022 1:55:40 PM (QP5 v5.381) */
+	let sql = ""
+	if (param === 0) {
+		sql = `/* Formatted on 4/17/2022 1:55:40 PM (QP5 v5.381) */
 	SELECT NVL (TIME, PTIME)            PTIME,
 			   ROUND (NVL (CDAY, 0), 2)     CDAY,
 			   ROUND (NVL (YDAY, 0), 2)     YDAY
@@ -24,8 +25,8 @@ const balancePerformance = async (param) => {
 				GROUP BY TIME) Y
 				ON Y.PTIME = C.TIME
 				ORDER BY PTIME`
-  } else {
-    sql = `/* Formatted on 5/29/2022 3:55:41 PM (QP5 v5.381) */
+	} else {
+		sql = `/* Formatted on 5/29/2022 3:55:41 PM (QP5 v5.381) */
   SELECT NVL (TIME, PTIME)            PTIME,
          ROUND (NVL (CDAY, 0), 2)     CDAY,
          ROUND (NVL (YDAY, 0), 2)     YDAY
@@ -60,18 +61,18 @@ const balancePerformance = async (param) => {
           GROUP BY TIME) Y
              ON Y.PTIME = C.TIME
 ORDER BY PTIME`
-  }
+	}
 
-  try {
-    return await qurrythis(sql)
-  } catch (e) {
-    console.log(e)
-    return e
-  }
+	try {
+		return await oradb(sql)
+	} catch (e) {
+		console.log(e)
+		return e
+	}
 }
 const dailydrcr = async () => {
-  try {
-    const sql = `/* Formatted on 3/1/2022 3:28:05 PM (QP5 v5.374) */
+	try {
+		const sql = `/* Formatted on 3/1/2022 3:28:05 PM (QP5 v5.374) */
 		SELECT CURRENT_HOUR HOUR, SUM (DR_AMT) DR, SUM (CR_AMT) CR
 		  FROM (SELECT BALANCE_MPHONE,
 					   CR_AMT,
@@ -81,16 +82,16 @@ const dailydrcr = async () => {
 				 WHERE BALANCE_MPHONE IS NOT NULL)
 	  GROUP BY CURRENT_HOUR
 	  ORDER BY CURRENT_HOUR`
-    // console.log(sql)
-    return qurrythis(sql)
-  } catch (e) {
-    console.log(e)
-    return e
-  }
+		// console.log(sql)
+		return oradb(sql)
+	} catch (e) {
+		console.log(e)
+		return e
+	}
 }
 const previousdrcr = async () => {
-  try {
-    const sql = `/* Formatted on 3/1/2022 3:28:05 PM (QP5 v5.374) */
+	try {
+		const sql = `/* Formatted on 3/1/2022 3:28:05 PM (QP5 v5.374) */
 		SELECT CURRENT_HOUR HOUR, SUM (DR_AMT) DR, SUM (CR_AMT) CR
 		  FROM (SELECT BALANCE_MPHONE,
 					   CR_AMT,
@@ -100,16 +101,16 @@ const previousdrcr = async () => {
 				 WHERE BALANCE_MPHONE IS NOT NULL AND TRUNC (TRANS_DATE) = (SELECT SYSDATE-1 FROM DUAL))
 	  GROUP BY CURRENT_HOUR
 	  ORDER BY CURRENT_HOUR`
-    // console.log(sql)
-    return qurrythis(sql)
-  } catch (e) {
-    console.log(e)
-    return e
-  }
+		// console.log(sql)
+		return oradb(sql)
+	} catch (e) {
+		console.log(e)
+		return e
+	}
 }
 const drcragent = async (key) => {
-  try {
-    const sql = `/* Formatted on 3/1/2022 3:40:28 PM (QP5 v5.374) */
+	try {
+		const sql = `/* Formatted on 3/1/2022 3:40:28 PM (QP5 v5.374) */
 		SELECT CURRENT_HOUR "DAY", SUM (DR_AMT) DR, SUM (CR_AMT) CR
 		  FROM (SELECT BALANCE_MPHONE,
 					   ROUND (CR_AMT, 2)                         CR_AMT,
@@ -128,38 +129,38 @@ const drcragent = async (key) => {
 												  AND (SELECT SYSDATE FROM DUAL))
 	  GROUP BY CURRENT_HOUR
 	  ORDER BY CURRENT_HOUR`
-    // console.log(sql)
-    return qurrythis(sql)
-  } catch (e) {
-    console.log(e)
-    return e
-  }
+		// console.log(sql)
+		return oradb(sql)
+	} catch (e) {
+		console.log(e)
+		return e
+	}
 }
 
 const pichart = async (param) => {
-  let sql = ""
-  if (param === undefined || param === "") {
-    sql = `select round(sum(r.BALANCE_M),2) balance, (select p.ACC_TYPE_SHORT_NAME from AGENT_BANKING.PRODUCT_SETUP p where p.ACC_TYPE_CODE = r.AC_TYPE_CODE) TYPE from agent_banking.reginfo r group by AC_TYPE_CODE`
-  } else {
-    sql = `SELECT ROUND (SUM (r.BALANCE_M), 2)                 balance,
+	let sql = ""
+	if (param === undefined || param === "") {
+		sql = `select round(sum(r.BALANCE_M),2) balance, (select p.ACC_TYPE_SHORT_NAME from AGENT_BANKING.PRODUCT_SETUP p where p.ACC_TYPE_CODE = r.AC_TYPE_CODE) TYPE from agent_banking.reginfo r group by AC_TYPE_CODE`
+	} else {
+		sql = `SELECT ROUND (SUM (r.BALANCE_M), 2)                 balance,
 		(SELECT p.ACC_TYPE_SHORT_NAME
 		   FROM AGENT_BANKING.PRODUCT_SETUP p
 		  WHERE p.ACC_TYPE_CODE = r.AC_TYPE_CODE)    TYPE
    FROM agent_banking.reginfo r where pmphone = ${param}
 GROUP BY AC_TYPE_CODE`
-  }
-  try {
-    return await qurrythis(sql)
-  } catch (e) {
-    console.log(e)
-    return e
-  }
+	}
+	try {
+		return await oradb(sql)
+	} catch (e) {
+		console.log(e)
+		return e
+	}
 }
 
 const agentstatus = async (param) => {
-  let sql = ""
-  if (param === undefined || param === "") {
-    sql = `/* Formatted on 2/20/2022 10:27:22 AM (QP5 v5.374) */
+	let sql = ""
+	if (param === undefined || param === "") {
+		sql = `/* Formatted on 2/20/2022 10:27:22 AM (QP5 v5.374) */
 		SELECT MPHONE,
 			   r.ACCOUNT_NAME,
 			   BALANCE_M
@@ -172,8 +173,8 @@ const agentstatus = async (param) => {
 		  FROM AGENT_BANKING.REGINFO r
 		 WHERE r.CAT_ID = 'D' AND r.STATUS != 'C'
 	  ORDER BY TODAY`
-  } else {
-    sql = `/* Formatted on 5/29/2022 4:54:14 PM (QP5 v5.381) */
+	} else {
+		sql = `/* Formatted on 5/29/2022 4:54:14 PM (QP5 v5.381) */
   SELECT ROUND (BALANCE_M, 2)    TODAY,
          ROUND (
              TANBIN.GETBALANCE (
@@ -183,20 +184,20 @@ const agentstatus = async (param) => {
     FROM AGENT_BANKING.REGINFO r
    WHERE r.CAT_ID = 'D' AND r.STATUS != 'C' AND MPHONE = ${param}
 ORDER BY TODAY`
-  }
+	}
 
-  try {
-    return await qurrythis(sql)
-  } catch (e) {
-    console.log(e)
-    return e
-  }
+	try {
+		return await oradb(sql)
+	} catch (e) {
+		console.log(e)
+		return e
+	}
 }
 
 const customerstatus = async (param) => {
-  let sql = ""
-  if (param === undefined || param === "") {
-    sql = `/* Formatted on 2/20/2022 10:27:22 AM (QP5 v5.374) */
+	let sql = ""
+	if (param === undefined || param === "") {
+		sql = `/* Formatted on 2/20/2022 10:27:22 AM (QP5 v5.374) */
 		SELECT MPHONE,
 			   r.ACCOUNT_NAME,
 
@@ -218,8 +219,8 @@ const customerstatus = async (param) => {
 		  FROM AGENT_BANKING.REGINFO r
 		 WHERE r.CAT_ID = 'D' AND r.STATUS != 'C'
 		 ORDER BY MPHONE`
-  } else {
-    sql = `/* Formatted on 3/22/2022 12:54:51 PM (QP5 v5.381) */
+	} else {
+		sql = `/* Formatted on 3/22/2022 12:54:51 PM (QP5 v5.381) */
 		SELECT (SELECT p.ACC_TYPE_SHORT_NAME
 				  FROM AGENT_BANKING.PRODUCT_SETUP p
 				 WHERE p.ACC_TYPE_CODE = R.AC_TYPE_CODE)    AC_TYPE_CODE,
@@ -234,19 +235,19 @@ const customerstatus = async (param) => {
 		  FROM AGENT_BANKING.REGINFO R
 		 WHERE R.STATUS != 'C' AND PMPHONE = ${param}
 	  GROUP BY AC_TYPE_CODE`
-  }
+	}
 
-  try {
-    return await qurrythis(sql)
-  } catch (e) {
-    console.log(e)
-    return e
-  }
+	try {
+		return await oradb(sql)
+	} catch (e) {
+		console.log(e)
+		return e
+	}
 }
 
 const accountOpenCloseStatus = async () => {
-  try {
-    sql = `/* Formatted on 2/23/2022 4:38:56 PM (QP5 v5.374) */
+	try {
+		sql = `/* Formatted on 2/23/2022 4:38:56 PM (QP5 v5.374) */
 		SELECT PMPHONE,
 			   NVL (SUM (ALLAC), 0)          ALLACCOUNT,
 			   NVL (SUM (TODAY), 0)          OPENTODAY,
@@ -338,16 +339,16 @@ const accountOpenCloseStatus = async () => {
 	  GROUP BY PMPHONE
 	  ORDER BY PMPHONE`
 
-    return await qurrythis(sql)
-  } catch (e) {
-    console.log(e)
-    return e
-  }
+		return await oradb(sql)
+	} catch (e) {
+		console.log(e)
+		return e
+	}
 }
 
 const accountStatus = async () => {
-  try {
-    sql = `/* Formatted on 2/23/2022 4:38:56 PM (QP5 v5.374) */
+	try {
+		sql = `/* Formatted on 2/23/2022 4:38:56 PM (QP5 v5.374) */
 		SELECT PMPHONE,
 			   NVL (SUM (ALLAC), 0)          ALLACCOUNT,
 			   NVL (SUM (TODAY), 0)          OPENTODAY,
@@ -439,16 +440,16 @@ const accountStatus = async () => {
 	  GROUP BY PMPHONE
 	  ORDER BY PMPHONE`
 
-    return await qurrythis(sql)
-  } catch (e) {
-    console.log(e)
-    return e
-  }
+		return await oradb(sql)
+	} catch (e) {
+		console.log(e)
+		return e
+	}
 }
 
 const cashEntry = async () => {
-  try {
-    sql = `/* Formatted on 2/20/2022 4:28:54 PM (QP5 v5.374) */
+	try {
+		sql = `/* Formatted on 2/20/2022 4:28:54 PM (QP5 v5.374) */
 	SELECT TRANS_NO,
 		   AC_NO,
 		   TRACER_NO,
@@ -468,15 +469,15 @@ const cashEntry = async () => {
 	  FROM agent_banking.TBL_CASH_ENTRY
 	 WHERE STATUS = 'A'`
 
-    return await qurrythis(sql)
-  } catch (e) {
-    console.log("api function cashEntry" + e)
-    return e
-  }
+		return await oradb(sql)
+	} catch (e) {
+		console.log("api function cashEntry" + e)
+		return e
+	}
 }
 const monthlyActivity = async (mphone) => {
-  try {
-    sql = `SELECT
+	try {
+		sql = `SELECT
 		TRANS_DATE,DR_AMT,CR_AMT,BALANCE_MPHONE MPHONE
 	FROM
 		( /* Core Qurry*/
@@ -493,15 +494,15 @@ const monthlyActivity = async (mphone) => {
 			BALANCE_MPHONE = ${mphone} )
 			WHERE trunc(TRANS_DATE) BETWEEN (select trunc(last_day(sysdate)-1, 'mm') from dual) AND (select sysdate from dual) `
 
-    return await qurrythis(sql)
-  } catch (e) {
-    console.log("api function cashEntry" + e)
-    return e
-  }
+		return await oradb(sql)
+	} catch (e) {
+		console.log("api function cashEntry" + e)
+		return e
+	}
 }
 const dpsMaturity = async () => {
-  try {
-    sql = `/* Formatted on 2/28/2022 1:06:07 PM (QP5 v5.374) */
+	try {
+		sql = `/* Formatted on 2/28/2022 1:06:07 PM (QP5 v5.374) */
 		SELECT MPHONE,
 			   MATURITY_DATE,
 			   R.BALANCE_M,
@@ -514,25 +515,25 @@ const dpsMaturity = async () => {
 			   AND R.STATUS = 'M'
 			   AND R.REG_STATUS != 'R'`
 
-    return await qurrythis(sql)
-  } catch (e) {
-    console.log("api function dpsMaturity" + e)
-    return e
-  }
+		return await oradb(sql)
+	} catch (e) {
+		console.log("api function dpsMaturity" + e)
+		return e
+	}
 }
 const peventoutput = async () => {
-  try {
-    sql = `SELECT * FROM AGENT_BANKING.D_TRANSACTIONINFO`
+	try {
+		sql = `SELECT * FROM AGENT_BANKING.D_TRANSACTIONINFO`
 
-    return await qurrythis(sql)
-  } catch (e) {
-    console.log("api function cashEntry" + e)
-    return e
-  }
+		return await oradb(sql)
+	} catch (e) {
+		console.log("api function cashEntry" + e)
+		return e
+	}
 }
 const teventoutput = async () => {
-  try {
-    sql = `/* Formatted on 4/26/2022 2:51:27 PM (QP5 v5.381) */
+	try {
+		sql = `/* Formatted on 4/26/2022 2:51:27 PM (QP5 v5.381) */
 		(  SELECT PARTICULAR, COUNT (TRANS_NO) NO, SUM (M.PAY_AMT) AMT
 			 FROM AGENT_BANKING.GL_TRANS_MST M
 			WHERE PARTICULAR IN ('Cash Withdrawal',
@@ -555,38 +556,38 @@ const teventoutput = async () => {
 		  WHERE     TRUNC (R.AUTHO_DATE) = (SELECT TRUNC (SYSDATE) FROM DUAL)
 				AND STATUS != 'R')`
 
-    return await qurrythis(sql)
-  } catch (e) {
-    console.log("api function cashEntry" + e)
-    return e
-  }
+		return await oradb(sql)
+	} catch (e) {
+		console.log("api function cashEntry" + e)
+		return e
+	}
 }
 const mseventoutput = async () => {
-  try {
-    sql = `select * from agent_banking.D_REG_MASTERINFO`
+	try {
+		sql = `select * from agent_banking.D_REG_MASTERINFO`
 
-    return await qurrythis(sql)
-  } catch (e) {
-    console.log("api function cashEntry" + e)
-    return e
-  }
+		return await oradb(sql)
+	} catch (e) {
+		console.log("api function cashEntry" + e)
+		return e
+	}
 }
 
 module.exports = {
-  cashEntry,
-  dpsMaturity,
-  customerstatus,
-  accountStatus,
-  pichart,
-  agentstatus,
-  customerstatus,
-  accountOpenCloseStatus,
-  monthlyActivity,
-  peventoutput,
-  dailydrcr,
-  drcragent,
-  balancePerformance,
-  previousdrcr,
-  teventoutput,
-  mseventoutput,
+	cashEntry,
+	dpsMaturity,
+	customerstatus,
+	accountStatus,
+	pichart,
+	agentstatus,
+	customerstatus,
+	accountOpenCloseStatus,
+	monthlyActivity,
+	peventoutput,
+	dailydrcr,
+	drcragent,
+	balancePerformance,
+	previousdrcr,
+	teventoutput,
+	mseventoutput,
 }
