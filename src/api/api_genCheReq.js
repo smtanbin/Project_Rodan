@@ -14,51 +14,62 @@ const genarateRequest = (mphone) => {
  WHERE mphone = ${mphone}`
 
     // return new Promise(async (resolve, reject) => {
-    let data = ""
-    try {
-      data = await qurrythis(sql)
-    } catch (e) {
-      reject(e)
-    }
-    // console.log(data);
-    data.map(async ({ PMPHONE, MPHONE, NAME, PIN, AC_TYPE, WFPIN_NO }) => {
-      NAME = NAME.toString()
-      const sectionid = await getSectionKey(PMPHONE, PIN)
-      let page = 10
-      if (AC_TYPE === "CD") {
-        page = 25
-      } else {
-        page = 10
-      }
-      // console.log("Section ID" + sectionid);
-      const returnCall = await chq_request(
-        sectionid,
-        PMPHONE,
-        MPHONE,
-        page,
-        NAME,
-        WFPIN_NO
-      )
-      resolve(returnCall)
-    })
+    const data = await qurrythis(sql)
+      .then((data) => {
+        return data
+      })
+      .then((data) => {
+        data.map(async ({ PMPHONE, MPHONE, NAME, PIN, AC_TYPE, WFPIN_NO }) => {
+          NAME = NAME.toString()
+          const sectionid = await getSectionKey(PMPHONE, PIN)
+            .then(async (data) => {
+              let page = 10
+              if (AC_TYPE === "CD") {
+                page = 25
+              } else {
+                page = 10
+              }
+              await chq_request(
+                sectionid,
+                PMPHONE,
+                MPHONE,
+                page,
+                NAME,
+                WFPIN_NO
+              )
+                .then((data) => {
+                  return data
+                })
+                .catch((err) => {
+                  reject(err)
+                })
+            })
+            .catch((err) => {
+              reject(err)
+            })
+        })
+      })
+    resolve(data)
   })
 }
 
 const callBack = (column_name, table_name, condition) => {
-  let sectionid = ''
+  let sectionid = ""
   const call_list = require("../api/api_call_list")
   return new Promise(async (resolve, reject) => {
     try {
-      sectionid = await getSectionKey('10833000003', '3142')
+      sectionid = await getSectionKey("10833000003", "3142")
     } catch (e) {
       reject(e)
     }
     const returnCall = await call_list(
-      column_name, table_name, condition,
-      sectionid)
+      column_name,
+      table_name,
+      condition,
+      sectionid
+    )
     resolve(returnCall)
   })
-
 }
 
 module.exports = { genarateRequest, callBack }

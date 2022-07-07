@@ -19,8 +19,8 @@ const api = Router()
 
 // Cors Config
 const corsOptions = {
-    origin: "*",
-    optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
+  origin: "*",
+  optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
 }
 
 // Middlewares
@@ -28,81 +28,94 @@ api.use(cors(corsOptions))
 api.use(bodyParser.json())
 
 api.use((req, res, next) => {
-    res.header("Access-Control-Allow-Origin", "*")
-    res.header(
-        "Access-Control-Allow-Headers",
-        "Origin, X-Requested-With, Content-Type, Accepcact"
-    )
-    res.header("Access-Control-Allow-Methods", ["GET", "POST", "PATCH", "DELETE"])
-    next()
+  res.header("Access-Control-Allow-Origin", "*")
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accepcact"
+  )
+  res.header("Access-Control-Allow-Methods", ["GET", "POST", "PATCH", "DELETE"])
+  next()
 })
-
-
-
 
 // Visual Viewport Api
 /**************************************** Start ****************************************
  */
 
-
 /*
-*
-*   Authorization Panal
-*
-*/
+ *
+ *   Authorization Panal
+ *
+ */
 // All needed function are in api_login
 const { make_token, gen_login } = require("../../../core/login_master")
 
 // Api function Start
-api.post("/make_token", async (req, res /* res will send user & password */) => {
+api.post(
+  "/make_token",
+  async (req, res /* res will send user & password */) => {
     const { user, passwd } = req.body
     const reply = await gen_login(user, passwd)
-    console.log(reply);
-    if (reply === '403' || reply === '500') {
-        res.status(reply)
+    console.log(reply)
+    if (reply === "403" || reply === "500") {
+      res.status(reply)
     } else {
-        res.status(reply)
+      res.status(reply)
     }
-
-})
+  }
+)
 
 api.post("/refrash_token", (req, res) => {
-    res.send(new Promise(async (resolve, reject) => {
-        const { token, user } = req.body
-        let state = await token_verification(token, user)
-        if (state === '403') {
-            reject(state)
+  res.send(
+    new Promise(async (resolve, reject) => {
+      const { token, user } = req.body
+      let state = await token_verification(token, user)
+      if (state === "403") {
+        reject(state)
+      } else {
+        const token = make_token(user)
+        if (token === 500) {
+          reject(500)
         } else {
-            const token = make_token(user)
-            if (token === 500) {
-                reject(500)
-            } else {
-                state.map(async ({ USERNAME }) => {
-                    await logger(USERNAME, req.hostname + req.originalUrl, `Login Sucessfull`)
-                })
-                resolve(token)
-            }
+          state.map(async ({ USERNAME }) => {
+            await logger(
+              USERNAME,
+              req.hostname + req.originalUrl,
+              `Login Sucessfull`
+            )
+          })
+          resolve(token)
         }
+      }
     })
-    )
+  )
 })
 
 api.post("/make_guest_token", (req, res) => {
-    res.send(new Promise(async (resolve, reject) => {
-        const { user } = req.body
-        if (state === '403') {
-            reject(state)
+  res.send(
+    new Promise(async (resolve, reject) => {
+      const { user } = req.body
+      if (state === "403") {
+        reject(state)
+      } else {
+        const token = make_token(user)
+        if (token === 500) {
+          reject(500)
         } else {
-            const token = make_token(user)
-            if (token === 500) {
-                reject(500)
-            } else {
-                await logger("Guest", req.hostname + req.originalUrl, `Guest login Sucessfull`)
-                resolve(token)
-            }
+          await logger(
+            "Guest",
+            req.hostname + req.originalUrl,
+            `Guest login Sucessfull`
+          )
+          resolve(token)
         }
+      }
     })
-    )
+  )
 })
-
+api.get("/*", async (req, res) => {
+  res.status(404).json({ Error: "Invalid Address" })
+})
+api.post("/*", async (req, res) => {
+  res.status(404).json({ Error: "Invalid Address" })
+})
 module.exports = api

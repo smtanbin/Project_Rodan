@@ -25,7 +25,7 @@ Link: https://jwt.io
 */
 const jwt_decode = require("jwt-decode")
 const bodyParser = require("body-parser")
-const cookieParser = require("cookie-parser");
+const cookieParser = require("cookie-parser")
 const cors = require("cors")
 const api = Router()
 
@@ -38,7 +38,7 @@ const corsOptions = {
 // Middlewares
 api.use(cors(corsOptions))
 api.use(bodyParser.json())
-api.use(cookieParser());
+api.use(cookieParser())
 api.use((req, res, next) => {
   res.header("Access-Control-Allow-Origin", "*")
   res.header(
@@ -49,14 +49,14 @@ api.use((req, res, next) => {
   next()
 })
 
-
 /****************** Login ****************/
 const login = require("./routes/apis/login")
 api.use("/login", login)
-/**************** Middelware **************/
 
-const { func_approve } = require('../core/login_master')
+/*
+ *************** Middelware **************/
 
+const { func_approve } = require("../core/login_master")
 
 api.get("/*", async (req, res, next) => {
   let token = req.cookies.auth
@@ -64,7 +64,7 @@ api.get("/*", async (req, res, next) => {
   user = Object.values(user)
 
   const status = await func_approve(token)
-  if (status[0] === '202') {
+  if (status[0] === "202") {
     // logger(user[0], req.path, "accessed").then(() => {
     //   next()
     // })
@@ -73,7 +73,6 @@ api.get("/*", async (req, res, next) => {
     res.status(403).json({ message: status[1] })
   }
 })
-
 
 const agent = require("./routes/apis/agent")
 api.use("/agent", agent)
@@ -85,7 +84,8 @@ const timeline = require("./routes/apis/timeline")
 api.use("/timeline", timeline)
 const sms = require("./routes/apis/sms")
 api.use("/sms", sms)
-
+const chaque = require("./routes/apis/chaque")
+api.use("/chaque", chaque)
 
 api.post("/accountInfo", async (req, res) => {
   res.status(200)
@@ -305,8 +305,6 @@ api.post("/getimage", async (req, res) => {
   res.send(data)
 })
 
-
-
 const { recon } = require("../api/api_Reconciliation")
 api.get("/recon", async (req, res) => {
   try {
@@ -354,7 +352,6 @@ const {
   getlimited,
 } = require("../api/api_routing")
 api.get("/routing/get", async (req, res) => {
-
   try {
     const data = await routelist()
     res.send(data)
@@ -415,7 +412,6 @@ api.post("/mis/getmis", async (req, res) => {
 })
 
 api.post("/mis/generatedata", async (req, res) => {
-
   try {
     await generatedata(req.body.param).then((payload) => {
       if (!payload) {
@@ -432,7 +428,6 @@ api.post("/mis/generatedata", async (req, res) => {
 })
 const { pendingEftSumm, pendingEftList } = require("../api/api_fundManagement")
 api.get("/fundmanagement/pendingEftList", async (req, res) => {
-
   try {
     const data = await pendingEftList()
     res.send(data)
@@ -441,7 +436,6 @@ api.get("/fundmanagement/pendingEftList", async (req, res) => {
   }
 })
 api.get("/fundmanagement/pendingEftSumm", async (req, res) => {
-
   try {
     const data = await pendingEftSumm()
     res.send(data)
@@ -452,18 +446,16 @@ api.get("/fundmanagement/pendingEftSumm", async (req, res) => {
 
 // chaque
 
-const { genarateRequest } = require("../api/api_genCheReq")
-api.post("/chaque/add", async (req, res) => {
-  try {
-    const data = await genarateRequest(req.body.mphone)
-    res.send(data)
-  } catch (e) {
-    console.log("Unable to log data. Error => " + e)
-    res.status(404).json(e)
-  }
-})
-
-
+// const { genarateRequest } = require("../api/api_genCheReq")
+// api.post("/chaque/add", async (req, res) => {
+//   try {
+//     const data = await genarateRequest(req.body.mphone)
+//     res.send(data)
+//   } catch (e) {
+//     console.log("Unable to log data. Error => " + e)
+//     res.status(404).json(e)
+//   }
+// })
 
 /************** Test **********************/
 const { img } = require("../api/imgtest")
@@ -478,10 +470,13 @@ api.get("/img", async (req, res) => {
   }
 })
 
-
-
 api.get("/", async (req, res) => {
   res.json("Welcome to Restful API Power by Tanbin Hassan Bappi")
 })
-
+api.get("/*", async (req, res) => {
+  res.status(404).json({ Error: "Invalid Address" })
+})
+api.post("/*", async (req, res) => {
+  res.status(404).json({ Error: "Invalid Address" })
+})
 module.exports = api
