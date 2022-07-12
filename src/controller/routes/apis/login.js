@@ -48,21 +48,38 @@ api.use((req, res, next) => {
  */
 // All needed function are in api_login
 const { make_token, gen_login } = require("../../../core/login_master")
-
-// Api function Start
-api.post(
-  "/make_token",
-  async (req, res /* res will send user & password */) => {
-    const { user, passwd } = req.body
-    const reply = await gen_login(user, passwd)
-    console.log(reply)
-    if (reply === "403" || reply === "500") {
-      res.status(reply)
+/* Working on itt*/
+api.post("/oauth", async (req, res /* res will send user & password */) => {
+  const auth = req.headers["authorization"]
+  if (!auth) {
+    // No Authorization header was passed in so it's the first time the browser hit us
+    // Sending a 401 will require authentication, we need to send the 'WWW-Authenticate' to tell them the sort of authentication to use
+    // Basic auth is quite literally the easiest and least secure, it simply gives back  base64( username + ":" + password ) from the browser
+    res.statusCode = 401
+    // res.setHeader("WWW-Authenticate", 'Basic realm="Secure Area"')
+  } else if (auth) {
+    // The Authorization was passed in so now we validate it
+    const tmp = auth.split(" ") // Split on a space, the original auth looks like  "Basic Y2hhcmxlczoxMjM0NQ==" and we need the 2nd part
+    if (tmp[1] == undefined) {
+      console.log("Autho type error")
+      res.json({ Error: "Invalid Data Please use HTML Basic Auth" })
     } else {
-      res.status(reply)
+      const plain_auth = Buffer.from(tmp[1], "base64").toString("utf8") // At this point plain_auth = "username:password"
+      const creds = plain_auth.split(":") // split on a ':'
+
+      gen_login(creds[0], creds[1], req.hostname)
+        .then((token) => {
+          // console.log("Token" + token)
+          res.cookie(`auth`, token, { expire: 200 + Date.now() })
+          res.send(token)
+        })
+        .catch((e) => {
+          console.log("Error in genrate login. Error=>" + e)
+          res.json({ Error: `${e}` })
+        })
     }
   }
-)
+})
 
 api.post("/refrash_token", (req, res) => {
   res.send(

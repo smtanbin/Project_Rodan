@@ -37,26 +37,17 @@ async function oradb(sqlqurry) {
 
   return new Promise(async (resolve, reject) => {
     try {
-      let connection
-      // oracledb.initOracleClient({ libDir: clientpath })
-      connection = await oracledb.getConnection({
+      let connection = await oracledb.getConnection({
         user: process.env.DBUSER,
         password: process.env.DBPASSWD,
         connectString: process.env.DBLINK,
       })
-      const result = await connection.execute(sqlqurry)
-      resolve(result.rows)
-      await connection.close()
+      connection
+        .execute(sqlqurry)
+        .then((result) => resolve(result.rows))
+        .finally((result) => connection.close())
     } catch (err) {
       reject("Error from Oracle ==>" + err)
-      // } finally {
-      //   if (Connection) {
-      //     try {
-      //       await connection.close()
-      //     } catch (err) {
-      //       reject("Error from Oracle ==>" + err)
-      //     }
-      //   }
     }
   })
 }

@@ -13,7 +13,6 @@ const jwt = require("jsonwebtoken")
 */
 const jwt_decode = require("jwt-decode")
 
-const qurrythis = require("./db/db")
 const { oradb } = require("../api/db/oradb")
 
 const verification = async (user, passwd) => {
@@ -29,15 +28,15 @@ const verification = async (user, passwd) => {
               FROM AGENT_BANKING.REGINFO R
               WHERE R.CAT_ID = 'D')
               WHERE USERID = UPPER ('${user}') AND TANBIN.FUNC_GET_PIN (UPASS) = '${passwd}'`
-    const data = await oradb(sql)
-    if (data.length === 0) {
-      reject('404')
-    } else {
-      resolve(data)
-    }
+    oradb(sql).then((data) => {
+      if (data.length === 0) {
+        reject("No matching User or Password found.")
+      } else {
+        resolve(data)
+      }
+    })
   })
 }
-
 
 /* Creating JWT token for ---------------------------------------------------*/
 const find_token = ({ token, user }) => {
@@ -51,10 +50,10 @@ const find_token = ({ token, user }) => {
   })
 }
 
-const insert_token = ({ token, user, }) => {
+const insert_token = (token, user) => {
   return new Promise((resolve, reject) => {
     const sql = `INSERT
-	INTO
+    INTO
 	TANBIN.JWT_TOKEN (
 	TOKEN,
 	"USER",
@@ -65,15 +64,16 @@ VALUES(
 '${user}',
 1 ,
 SYSDATE)`
-    try {
-      resolve(qurrythis(sql))
-    } catch (e) {
-      reject(e)
-    }
+
+    oradb(sql)
+      .then((data) => resolve(data))
+      .catch((e) => {
+        reject(e)
+      })
   })
 }
 
-const status_update = ({ token, }) => {
+const status_update = ({ token }) => {
   return new Promise((resolve, reject) => {
     const sql = `UPDATE 
         TANBIN.JWT_TOKEN SET STATUS=0, EXP_DATE=sysdate
@@ -85,6 +85,5 @@ const status_update = ({ token, }) => {
     }
   })
 }
-
 
 module.exports = { verification, find_token, status_update, insert_token }

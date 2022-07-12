@@ -128,9 +128,6 @@ const { logger } = require("./api/api_log")
 const apipath = require("./controller/api")
 app.use("/api", apipath)
 
-
-
-
 app.get("/login", async (req, res) => {
   await logger(
     "anonymous",
@@ -155,43 +152,6 @@ const cookieParser = require("cookie-parser")
 app.use(cookieParser())
 
 const { verification } = require("./api/api_login")
-
-app.post("/login/oauth", async (req, res) => {
-  const { user, passwd } = req.body
-
-  try {
-    let state = await verification(user, passwd)
-    if (state !== false) {
-      state.map(async ({ USERNAME }) => {
-        // const token = createToken(userid, ROLE)
-        // Creating Refrash Token
-        const rtoken = jwt.sign({ user }, process.env.JWTREFRASHKEY)
-        // Creating Cluster
-        const inputs = { user, refrashtoken: rtoken }
-        // Keeping token to Database
-        const token = jwt.sign(inputs, process.env.JWTAUTHOKEY)
-        // const token = jwt.sign(inputs, process.env.JWTAUTHOKEY, {
-        //   expiresIn: "13m", // expires in 1 hours
-        // })
-        res.setHeader("secret", token)
-        res.cookie(`auth`, token, { expire: 200 + Date.now() })
-        // let auth = req.cookies.auth
-
-        res.send(state)
-        await logger(
-          USERNAME,
-          req.hostname + req.originalUrl,
-          `Login Sucessfull`
-        )
-      })
-    } else {
-      res.send(state)
-    }
-  } catch (e) {
-    console.log("otho error " + e)
-  }
-
-})
 
 /* -----------------------------------------------------------------------
 *

@@ -1,74 +1,52 @@
+// const base64 = require("/JS/lib/base64.js")
+
 const removeError = () => {
   document.getElementById("error").style.opacity = 0
   document.getElementById("error-input").classList.remove("has-error")
 }
-
 const authorized = async () => {
-  const user = document.getElementById("user").value
-  const passwd = document.getElementById("passwd").value
+  /* Importing Username @ Password*/
+  const username = document.getElementById("user").value
+  const password = document.getElementById("passwd").value
 
-  if (!user) {
-    alert("User cannot be null")
-  } else if (!passwd) {
+  if (!username) {
+    alert("password cannot be null")
+  } else if (!password) {
     alert("You cannot have blink passsword")
   } else {
-    const myHeaders = new Headers()
-    myHeaders.append("Content-Type", "application/json")
-    myHeaders.append("Access-Control-Allow-Origin", "*")
+    const header = new Headers()
 
-    const url = `/login/oauth`
+    header.append("Content-Type", "application/json")
+    header.append("Access-Control-Allow-Origin", "*")
+    header.append(
+      "Authorization",
+      "Basic " + base64.encode(username + ":" + password)
+    )
 
-    const raw = JSON.stringify({
-      user: `${user}`,
-      passwd: `${passwd}`,
-    })
-
+    const url = `${apiserver}/login/oauth`
     const requestOptions = {
       method: "POST",
-      headers: myHeaders,
-      body: raw,
+      headers: header,
       redirect: "follow",
     }
-    try {
-      await fetch(url, requestOptions)
-        .then((response) => response.json())
-        .then((payload) => {
-          if (payload === false) {
-            document.getElementById("error").style.opacity = 100
-            document.getElementById("error-input").classList.toggle("has-error")
-          } else {
-            window.location.href = "/"
-          }
-        })
-    } catch (e) {
-      document.getElementById("error").style.opacity = 100
-      console.log("error:" + e)
-    }
-    // window.location.replace('/')
-  }
-}
-const guestlogin = async () => {
-  const myHeaders = new Headers()
-  myHeaders.append("Content-Type", "application/json")
-  myHeaders.append("Access-Control-Allow-Origin", "*")
-  const url = `/login/guest`
-  const requestOptions = {
-    method: "GET",
-    headers: myHeaders,
-    redirect: "follow",
-  }
 
-  try {
-    await fetch(url, requestOptions)
-      .then((response) => response.json())
-      .then((payload) => {
-        if (payload === 200) window.location.href = "/"
+    fetch(url, requestOptions)
+      .then((response) => {
+        const payload = response.json()
+        console.log(payload)
+        if (payload === false) {
+          document.getElementById("error").style.opacity = 100
+          document.getElementById("error-input").classList.toggle("has-error")
+        } else {
+          window.location.href = "/"
+        }
       })
-  } catch (e) {
-    document.getElementById("error").style.opacity = 100
-    console.log("error:" + e)
+      .catch((e) => {
+        document.getElementById("error").style.opacity = 100
+        document.getElementById("errorInfo").innerText = e
+        console.log("Error:" + e)
+      })
   }
-  // window.location.replace('/')
 }
 
 addEventListener("keypress", function (e) {

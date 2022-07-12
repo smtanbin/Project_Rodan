@@ -11,7 +11,7 @@ const getSectionKey = (user, passswd) => {
                 'password': `${passswd}`
             }
         };
-        console.log(options);
+        // console.log(options);
         request(options, function (error, response) {
             if (error) {
                 reject(error);
