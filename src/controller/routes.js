@@ -49,7 +49,7 @@ router.get("/", async (req, res) => {
   // } else {
   const options = {
     method: "POST",
-    url: "http://10.140.8.126:3000/api/login/role",
+    url: `${process.env.API}/login/role`,
     headers: {
       "Content-Type": "application/json",
     },
