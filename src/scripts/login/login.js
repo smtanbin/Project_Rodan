@@ -29,23 +29,20 @@ const authorized = async () => {
       headers: header,
       redirect: "follow",
     }
-
-    fetch(url, requestOptions)
-      .then((response) => {
-        const payload = response.json()
-        console.log(payload)
-        if (payload === false) {
-          document.getElementById("error").style.opacity = 100
-          document.getElementById("error-input").classList.toggle("has-error")
-        } else {
-          window.location.href = "/"
-        }
-      })
-      .catch((e) => {
+    try {
+      let response = await fetch(url, requestOptions)
+      // response = response.json()
+      if (response.status == 404) {
         document.getElementById("error").style.opacity = 100
-        document.getElementById("errorInfo").innerText = e
-        console.log("Error:" + e)
-      })
+        document.getElementById("error-input").classList.toggle("has-error")
+        // document.getElementById("errorInfo").innerText = response.statusText
+      } else {
+        window.location.href = "/"
+      }
+    } catch (e) {
+      document.getElementById("error").style.opacity = 100
+      document.getElementById("errorInfo").innerText = e
+    }
   }
 }
 

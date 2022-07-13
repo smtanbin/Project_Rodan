@@ -50,40 +50,49 @@ const find_token = ({ token, user }) => {
   })
 }
 
-const insert_token = (token, user) => {
-  return new Promise((resolve, reject) => {
-    const sql = `INSERT
-    INTO
-	TANBIN.JWT_TOKEN (
-	TOKEN,
-	"USER",
-	STATUS,
-	GEN_DATE)
-VALUES(
-'${token}',
-'${user}',
-1 ,
-SYSDATE)`
+const roleCheck = async (user) => {
+  sql = `
 
-    oradb(sql)
-      .then((data) => resolve(data))
-      .catch((e) => {
-        reject(e)
-      })
-  })
+  SELECT USERNAME, ROLE,ROOT
+    FROM (
+        (SELECT UPPER (USERID)     USERID,
+        USERNAME,
+        UPASS,
+        UPPER (ROLEID)     ROLE,
+        'null' ROOT
+        FROM AGENT_BANKING.USER_INFO)
+      
+        UNION
+      
+        (SELECT UPPER (MPHONE)     USERID,
+             NAME               USERNAME,
+             R.PIN_NO           UPASS,	
+             'AGENT' ROLE,
+             MPHONE ROOT
+             FROM AGENT_BANKING.REGINFO R)
+             
+             UNION
+             
+             (SELECT UPPER (EMPID)     USERID,
+             NAME               USERNAME,
+             E.PIN_NO         UPASS,	
+             'USER' ROLE,
+             CREATE_BY ROOT
+             FROM AGENT_BANKING.EMPINFO E
+             WHERE STATUS = 'A')
+             )
+             WHERE USERID = UPPER ('${user}')
+             ORDER BY ROLE DESC`
+  try {
+    return await oradb(sql)
+  } catch (e) {
+    console.log(e)
+    return e
+  }
 }
 
-const status_update = ({ token }) => {
-  return new Promise((resolve, reject) => {
-    const sql = `UPDATE 
-        TANBIN.JWT_TOKEN SET STATUS=0, EXP_DATE=sysdate
-        WHERE USER = ${token}`
-    try {
-      resolve(qurrythis(sql))
-    } catch (e) {
-      reject(e)
-    }
-  })
+module.exports = {
+  verification,
+  find_token,
+  roleCheck,
 }
-
-module.exports = { verification, find_token, status_update, insert_token }

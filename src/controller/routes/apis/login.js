@@ -48,6 +48,7 @@ api.use((req, res, next) => {
  */
 // All needed function are in api_login
 const { make_token, gen_login } = require("../../../core/login_master")
+const { roleCheck } = require("../../../api/api_login")
 /* Working on itt*/
 api.post("/oauth", async (req, res /* res will send user & password */) => {
   const auth = req.headers["authorization"]
@@ -74,8 +75,7 @@ api.post("/oauth", async (req, res /* res will send user & password */) => {
           res.send(token)
         })
         .catch((e) => {
-          console.log("Error in genrate login. Error=>" + e)
-          res.json({ Error: `${e}` })
+          res.status(404).json({ Error: e, status: 404 })
         })
     }
   }
@@ -128,6 +128,40 @@ api.post("/make_guest_token", (req, res) => {
       }
     })
   )
+})
+const { status_update } = require("../../../api/api_token")
+
+api.post("/logout", (req, res) => {
+  status_update(req.cookies.auth)
+    .then(() => {
+      document.cookie = "auth" + "=; Max-Age=-99999999;"
+      window.location.href = "/"
+    })
+    .then(() => {
+      res.status(200)
+    })
+    .catch((e) => {
+      res.status(405).json(e)
+    })
+})
+
+api.post("/role", async (req, res) => {
+  const load = await roleCheck(req.body.username)
+    .then(async (payload) => {
+      await logger(
+        req.body.username,
+        req.hostname + req.originalUrl,
+        `Role checked`
+      )
+      return payload
+    })
+    .catch((e) => {
+      return false
+    })
+
+  if (load != false) {
+    res.json(load).status(200)
+  } else res.status(404).json({ Error: "Not Found", status: "404" })
 })
 api.get("/*", async (req, res) => {
   res.status(404).json({ Error: "Invalid Address" })

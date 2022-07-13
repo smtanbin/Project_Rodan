@@ -3,7 +3,7 @@ const bodyParser = require("body-parser")
 const cors = require("cors")
 const router = Router()
 const { logger } = require("../api/api_log")
-
+const request = require("request")
 // Cors Config
 const corsOptions = {
   origin: "*",
@@ -24,78 +24,85 @@ router.use((req, res, next) => {
 const jwt_decode = require("jwt-decode")
 const { roleCheck } = require("../core/roles")
 
-
-
 // router.get("/*", (req, res, next) => {
 //   console.log(req.url);
 //   next()
 // })
 
-
 // Visual Viewport Api
 /*********************************************************************************/
 router.get("/", async (req, res) => {
   const token = req.cookies.auth
-  const { user } = jwt_decode(token)
-  let data
-  if (user === "guest") {
-    data = "guest"
 
-    const darkModeCon = req.cookies.darkmode
-
-    await logger(user, req.hostname + req.originalUrl, "Visited")
-
-    res.locals = {
-      title: "Home",
-    }
-    res.render("./guest/index", {
-      role: "GUEST",
-      userid: "GUEST",
-      owner: "GUEST",
-      darkmode: darkModeCon,
-    })
-  } else {
-    data = await roleCheck(user)
-    // if (data != null || data != 'unfed') {
-    data.map(async ({ ROLE, USERNAME, ROOT }) => {
-      res.locals = {
-        title: "Home",
-      }
-      const darkModeCon = req.cookies.darkmode
-
-      await logger(user, req.hostname + req.originalUrl, "Visited")
-
-      if (ROLE === "ADMIN" || ROLE === "APPROVAL") {
-        res.render("./admin/index", {
-          role: ROLE,
-          userid: USERNAME,
-          owner: ROOT,
-          darkmode: darkModeCon,
-        })
-      } else {
-        res.render("./common/index", {
-          role: ROLE,
-          userid: USERNAME,
-          owner: ROOT,
-          darkmode: darkModeCon,
-        })
-      }
-    })
+  // if (token === undefined) {
+  //   data = "guest"
+  //   const darkModeCon = req.cookies.darkmode
+  //   res.locals = {
+  //     title: "Home",
+  //   }
+  //   res.render("./guest/index", {
+  //     role: "GUEST",
+  //     userid: "GUEST",
+  //     owner: "GUEST",
+  //     darkmode: darkModeCon,
+  //   })
+  // } else {
+  const options = {
+    method: "POST",
+    url: "http://10.140.8.126:3000/api/login/role",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      username: "tanbin",
+    }),
   }
 
-  // } else {
-  // res.locals = {
-  // title: '404'
-  // }
-  // res.render('./pages/404')
+  await request(options, (err, request) => {
+    if (err) {
+      console.log("Error: " + err)
+    } else {
+      let data = request.body
+      data = JSON.parse(data)
+      data.map(({ USERNAME, ROLE, ROOT }) => {
+        const temp_userid = USERNAME
+        const temp_role = ROLE
+        const temp_owner = data.ROOT
+
+        if (request.statusCode == 404) {
+          console.log("Error: " + data.Error)
+        } else {
+          res.locals = {
+            title: "Home",
+          }
+          const darkModeCon = req.cookies.darkmode
+          if (temp_role === "ADMIN" || temp_role === "APPROVAL") {
+            res.render("./admin/index", {
+              role: temp_role,
+              userid: temp_userid,
+              owner: temp_owner,
+              darkmode: darkModeCon,
+            })
+          } else {
+            res.render("./common/index", {
+              role: temp_role,
+              userid: temp_userid,
+              owner: temp_owner,
+              darkmode: darkModeCon,
+            })
+          }
+        }
+
+        // logger(user, req.hostname + req.originalUrl, "Visited")
+      })
+    }
+  })
   // }
 })
-
 
 /************************    application  *******************************/
 const pages = require("./routes/page/index")
 router.use("/page", pages)
-
 
 router.get("/kycupdate", async (req, res) => {
   const token = req.cookies.auth

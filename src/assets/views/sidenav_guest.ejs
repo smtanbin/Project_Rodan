@@ -1,0 +1,73 @@
+<div id="sidebar" class="hide-md bg-opt">
+    <div class="hero hero-sm">
+        <div class="hero-body">
+            <a href="/">
+                <h2 class="text-primary text-center">
+
+                    Home
+                </h2>
+            </a>
+        </div>
+    </div>
+
+
+    <div class="accordion">
+        <input id="accordion-components" type="checkbox" name="docs-accordion-checkbox" hidden="">
+        <label class="accordion-header  text-primary" for="accordion-components">
+            <i class="icon icon-arrow-right"></i>
+            Reports</label>
+        <div class="accordion-body">
+            <ul class="menu menu-nav">
+
+
+
+
+                <div class="accordion">
+                    <input type="checkbox" id="accordion-1" name="accordion-checkbox" hidden>
+                    <label class="accordion-header text-primary" for="accordion-1">
+                        <i class="icon icon-arrow-right"></i>
+                        Account Information
+                    </label>
+                    <div class="accordion-body" style="margin-left: 1rem;">
+                        <li class="menu-item "><a href="/report/accountStatment">Statment</a></li>
+                        <li class="menu-item"><a href="/report/accountInfo" class="text-ellipsis">Term Account
+                                Status</a>
+                        </li>
+                        <% if(role==='ADMIN' || role==='APPROVAL' ){ %>
+                            <li class="menu-item"><a href="/report/businessinfo">Account Info</a></li>
+
+                            <% } %>
+                    </div>
+                </div>
+                <div class="accordion">
+                    <input type="checkbox" id="accordion-3" name="accordion-checkbox" hidden>
+                    <label class="accordion-header text-primary" for="accordion-3">
+                        <i class="icon icon-arrow-right"></i>
+                        Operational Information
+                    </label>
+                    <div class="accordion-body" style="margin-left: 1rem;">
+                        <% if(role==='ADMIN' || role==='APPROVAL' ){ %>
+                            <li class="menu-item"><a href="/admin/routing">Bank Routing</a></li>
+                            <li class="menu-item"><a href="/report/mis">MIS</a></li>
+                            <li class="menu-item "><a href="/reconciliation">Reconciliation</a></li>
+
+                            <% } %>
+                    </div>
+                </div>
+
+
+                <% if(role==='ADMIN' || role==='APPROVAL' ){ %>
+                    <li class="menu-item"><a href="/report/remittanceReport">Remittance Report</a>
+                    </li>
+                    <% } %>
+                        <li class="menu-item"><a href="/report/utilityreport">Utility Report</a>
+                        </li>
+
+            </ul>
+        </div>
+    </div>
+
+
+</div>
+</div>
+</div>

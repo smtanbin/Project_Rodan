@@ -8,15 +8,73 @@
   </div>
 </section>
 
-<div class="container">
-  <div class="columns">
-    <div class="hero bg-gray">
-      <div class="hero-body">
-        <h1>Agent Banking System</h1>
-        <p>This is a hero example</p>
+<section>
+  <div style=" width: 100%; height: 100%; padding: 10% 10% 0 10%; display: flex;
+  justify-content: center;
+  ">
+    <div class="column p-2 col-6">
+      <h3 class="h3 text-center text-dark text-bold">Login</h3>
+      <div class="form-group " id="error-input">
+        <label class="form-label text-tiny text-center w100">Use your agentbanking ID &
+          password</label>
+        <input onfocus="removeError()" class="form-input input-lg has-error" type="text" id="user"
+          placeholder="User ID">
+        <input onfocus="removeError()" class="form-input my-2 input-lg " type="password" id="passwd"
+          placeholder="Password">
+        <p id="error" style="opacity:0;" class="form-input-hint">Invalid Login Information</p>
+        <p id="errorInfo" class="form-input-hint"></p>
+        <button id="submit" id="error-btn" class="btn btn-primary w100" onclick="authorized()">Login</button>
+        <button id="submit" id="error-btn my-2" class="btn btn-link text-dark disabled w100"
+          onclick="authorized()">Forget
+          Password</button>
       </div>
     </div>
-
   </div>
+</section>
 
-</div>
+
+<!-- <section class=" bg-gray col-6 col-md-12 p-2 d-flex "
+  style="margin-top:50px; justify-content: center; align-items: center; ">
+  <div class="column p-2">
+    <h3 class="h3 text-center text-dark text-bold p-2">Login</h3>
+    <div class="form-group" id="error-input">
+      <label class="form-label text-tiny text-center w100">Use your agentbanking ID &
+        password</label>
+      <input onfocus="removeError()" class="form-input input-lg has-error" type="text" id="user" placeholder="User ID">
+      <input onfocus="removeError()" class="form-input my-2 input-lg " type="password" id="passwd"
+        placeholder="Password">
+      <p id="error" style="opacity:0;" class="form-input-hint">Invalid Login Information</p>
+      <p id="errorInfo" class="form-input-hint"></p>
+      <button id="submit" id="error-btn" class="btn btn-primary w100" onclick="authorized()">Login</button>
+      <button id="submit" id="error-btn my-2" class="btn btn-link text-dark disabled w100" onclick="authorized()">Forget
+        Password</button>
+    </div>
+  </div>
+</section> -->
+
+
+
+<script>
+
+  if (navigator.userAgent.indexOf('MSIE') !== -1
+    || navigator.appVersion.indexOf('Trident/') > -1) {
+    /* Microsoft Internet Explorer detected in. */
+    window.alert('Microsoft Internet Explorer detected. This browser older then you so stop using it')
+    // document.getElementById('error-input').innerHTML = `Microsoft Internet Explorer detected. This browser older then me so stop using it.`
+  }
+  if (navigator.userAgent.indexOf('OPR/33.0.1990.115') > -1) {
+    window.alert('Opera 33.0.1990.115 detected. This is a old version os app only for java applet. Please switch to new browser.')
+
+  }
+</script>
+<script src="/JS/lib/base64.js"></script>
+<script src="/style/aos/aos.js"></script>
+<script src="/JS/login/login.js"></script>
+<script src="/JS/init.js"></script>
+<script>
+  AOS.init();
+</script>
+
+</body>
+
+</html>

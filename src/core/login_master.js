@@ -12,12 +12,8 @@ const jwt = require("jsonwebtoken")
 > require('crypto').randomBytes(64).toString('hex')
 */
 const jwt_decode = require("jwt-decode")
-const {
-  verification,
-  find_token,
-  status_update,
-  insert_token,
-} = require("../api/api_login")
+const { verification, find_token } = require("../api/api_login")
+const { status_update, insert_token } = require("../api/api_token")
 
 const token_verification = (token, user) => {
   return new Promise((resolve, rejects) => {
@@ -78,7 +74,7 @@ const make_token = (user) => {
   }).catch((e) => "Error Make token. Error => " + e)
 }
 
-const { logger } = require("../api/api_log")
+const { log } = require("../api/api_log")
 
 const gen_login = (user, passwd, hostname) => {
   //Perfect 11/7/2022
@@ -97,7 +93,7 @@ const gen_login = (user, passwd, hostname) => {
         } else {
           reply.map(async ({ USERNAME }) => {
             //Log the activity
-            logger(USERNAME, hostname + "api/login", `Login Sucessfull`)
+            log(USERNAME, hostname + "api/login", `Login Sucessfull`)
               .then(() => {
                 resolve(token)
               })
