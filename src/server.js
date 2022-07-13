@@ -177,6 +177,16 @@ app.get("/*", async (req, res, next) => {
       }
       res.render("login") //Page Renderd
     } else {
+
+      // console.log(token);
+      // // const decode = jwt.verify(token, process.env.JWTAUTHOKEY);
+      // const decode = jwt.verify(token, process.env.JWTAUTHOKEY, (err, verifiedJwt) => {
+      //   if (err) { console.log(err); }
+      //   console.log(verifiedJwt);
+      // });
+
+
+
       next()
     }
   } catch (e) {

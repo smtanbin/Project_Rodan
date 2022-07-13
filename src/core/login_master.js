@@ -59,14 +59,16 @@ const gen_token = ({ user, passwd }) => {
     }
   })
 }
+
+
 const make_token = (user) => {
   return new Promise((resolve, rejects) => {
-    const rtoken = jwt.sign({ user }, process.env.JWTREFRASHKEY)
+    const rtoken = jwt.sign(user, process.env.JWTREFRASHKEY)
     const inputs = { user, refrashtoken: rtoken }
     insert_token(rtoken, user)
       .then(() => {
         const token = jwt.sign(inputs, process.env.JWTAUTHOKEY, {
-          expiresIn: "13000m",
+          expiresIn: "10000000m",
         })
         resolve(token)
       })
