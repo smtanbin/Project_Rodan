@@ -1,0 +1,32 @@
+<main class="content m-2">
+
+
+  <ul class="breadcrumb">
+    <li class="breadcrumb-item">
+      <a href="/">Home</a>
+    </li>
+    <li class="breadcrumb-item">
+      <a href="/app/pendingbeftn">Pending EFT Request</a>
+    </li>
+
+  </ul>
+  <div class="hero hero-sm">
+    <div class="hero-body">
+      <h1 class="text-primary">EFT Request</h1>
+      <div class="btn-group btn-group-block col-4">
+        <button class="btn btn-primary" onclick="printAreafundmng('EFT_List')">Print</button>
+        <button class="btn" onclick="init()">Reload</button>
+      </div>
+    </div>
+  </div>
+
+  <progress id="progress" class="progress" max="100"></progress>
+  <div class="container" id="output">
+
+
+  </div>
+
+
+
+  <script src="/js/fund_management/eft.js" async></script>
+</main>

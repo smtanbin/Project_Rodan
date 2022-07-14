@@ -6,8 +6,6 @@ const { role, logger } = require("../../../controller")
 router.get("/transfer", async (req, res) => {
     const darkModeCon = req.cookies.darkmode
 
-
-
     res.render("./pages/routing", {
         darkmode: darkModeCon,
     })

@@ -221,7 +221,7 @@ app.get("*", function (req, res) {
     title: "404!",
   }
   res.render("pages/404")
-  res.status("404")
+  res.status(404)
 })
 
 /********************************************************************

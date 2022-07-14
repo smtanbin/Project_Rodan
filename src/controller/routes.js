@@ -2,7 +2,7 @@ const { Router, application } = require("express")
 const bodyParser = require("body-parser")
 const cors = require("cors")
 const router = Router()
-const { logger } = require("../api/api_log")
+const { role, logger } = require("./controller")
 const request = require("request")
 // Cors Config
 const corsOptions = {
@@ -32,6 +32,7 @@ const { roleCheck } = require("../core/roles")
 // Visual Viewport Api
 /*********************************************************************************/
 router.get("/", async (req, res) => {
+  const darkModeCon = req.cookies.darkmode
   const token = req.cookies.auth
 
   // if (token === undefined) {
@@ -47,28 +48,16 @@ router.get("/", async (req, res) => {
   //     darkmode: darkModeCon,
   //   })
   // } else {
-  const options = {
-    method: "POST",
-    url: `${process.env.API}/login/role`,
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      username: "tanbin",
-    }),
-  }
+  const { user } = jwt_decode(token)
+  await role(user).then((data) => {
 
-  await request(options, (err, request) => {
-    if (err) {
-      console.log("Error: " + err)
+    if (data === "Not Found" || data.error) {
+      res.render("./pages/404").statusCode(404)
     } else {
-      let data = request.body
-      data = JSON.parse(data)
       data.map(({ USERNAME, ROLE, ROOT }) => {
         const temp_userid = USERNAME
         const temp_role = ROLE
-        const temp_owner = data.ROOT
-
+        const temp_owner = ROOT
         if (request.statusCode == 404) {
           console.log("Error: " + data.Error)
         } else {
@@ -92,13 +81,17 @@ router.get("/", async (req, res) => {
             })
           }
         }
-
-        // logger(user, req.hostname + req.originalUrl, "Visited")
       })
     }
+  }).catch((e) => {
+    console.log(e);
+  }).finally(() => {
+    logger(user, req.hostname + req.originalUrl, "Visited").catch((e) => {
+      console.log("Loging error " + e);
+    })
   })
-  // }
 })
+
 
 /************************    application  *******************************/
 const pages = require("./routes/page/index")
@@ -124,6 +117,8 @@ router.get("/kycupdate", async (req, res) => {
     })
   })
 })
+
+
 router.get("/sms", async (req, res) => {
   const token = req.cookies.auth
   const { user } = jwt_decode(token)
