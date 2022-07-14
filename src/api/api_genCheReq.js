@@ -1,4 +1,4 @@
-const qurrythis = require("./db/db")
+const { oradb } = require("./db/oradb")
 const { getSectionKey } = require("../core/authBypass")
 const { chq_request } = require("./lib/chaque")
 
@@ -14,7 +14,7 @@ const genarateRequest = (mphone) => {
  WHERE mphone = ${mphone}`
 
     // return new Promise(async (resolve, reject) => {
-    const data = await qurrythis(sql)
+    const data = await oradb(sql)
       .then((data) => {
         return data
       })
@@ -22,7 +22,7 @@ const genarateRequest = (mphone) => {
         data.map(async ({ PMPHONE, MPHONE, NAME, PIN, AC_TYPE, WFPIN_NO }) => {
           NAME = NAME.toString()
           const sectionid = await getSectionKey(PMPHONE, PIN)
-            .then(async (data) => {
+            .then(async () => {
               let page = 10
               if (AC_TYPE === "CD") {
                 page = 25
@@ -53,23 +53,27 @@ const genarateRequest = (mphone) => {
   })
 }
 
-const callBack = (column_name, table_name, condition) => {
-  let sectionid = ""
-  const call_list = require("../api/api_call_list")
+
+const check_req = (mphone) => {
+
   return new Promise(async (resolve, reject) => {
-    try {
-      sectionid = await getSectionKey("10833000003", "3142")
-    } catch (e) {
-      reject(e)
-    }
-    const returnCall = await call_list(
-      column_name,
-      table_name,
-      condition,
-      sectionid
-    )
-    resolve(returnCall)
+    let sql = `SELECT	TRANS_DATE FROM	(	SELECT TRANS_DATE,TRANS_FROM FROM	AGENT_BANKING.GL_TRANS_MST_OLD gtmo
+	WHERE	PARTICULAR = 'Cheque Book Fee' UNION SELECT	TRANS_DATE,	TRANS_FROM	FROM	AGENT_BANKING.GL_TRANS_MST gtmo
+	WHERE	PARTICULAR = 'Cheque Book Fee') WHERE	TRANS_FROM = ${mphone}`
+
+    oradb(sql).then((data) => {
+
+      if (data.length === 0) {
+
+        reject(404)
+      }
+      else {
+        resolve(data)
+      }
+    }).catch((err) => {
+      reject(err)
+    })
   })
 }
 
-module.exports = { genarateRequest, callBack }
+module.exports = { genarateRequest, check_req }

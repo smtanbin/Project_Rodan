@@ -371,25 +371,12 @@ router.get("/report/mis", async (req, res) => {
     })
   })
 })
-router.get("/app/pendingbeftn", async (req, res) => {
-  const token = req.cookies.auth
-  const { user } = jwt_decode(token)
-  const data = await roleCheck(user)
-  await logger(user, req.hostname + req.originalUrl, "Visited")
 
-  data.map(({ ROLE, USERNAME, ROOT }) => {
-    res.locals = {
-      userid: req.cookies.USERNAME,
-      title: "Pending EFT Request",
-    }
-    const darkModeCon = req.cookies.darkmode
-    res.render("./pages/fundmng", {
-      role: ROLE,
-      userid: USERNAME,
-      owner: ROOT,
-      darkmode: darkModeCon,
-    })
-  })
-})
+
+/*Every Application page path location in */
+const fund_mng = require("./routes/page/app/fund_manage")
+router.use("/app/fund", fund_mng)
+
+
 
 module.exports = router

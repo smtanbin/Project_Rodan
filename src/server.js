@@ -193,6 +193,11 @@ app.get("/*", async (req, res, next) => {
     console.log("error: " + e)
   }
 })
+// const { redisdb } = require("./cache/cachedb")
+// app.get("/*", async (req, res, next) => {
+//   await redisdb(() => { next() })
+
+// })
 // app.get("/*", async (req, res, next) => {
 //   const token = req.cookies.auth
 //   res.set('Token', token)

@@ -1,6 +1,6 @@
 const { Router } = require("express")
 const { doexist } = require("../api/api.js")
-const { logger } = require("../api/api_log")
+const { logger, log } = require("../api/api_log")
 const {
   pbslist,
   utilityinfohead,
@@ -50,7 +50,7 @@ api.use((req, res, next) => {
 })
 
 /****************** Login ****************/
-const login = require("./routes/apis/login")
+const login = require("./routes/api_routes/login")
 api.use("/login", login)
 
 /*
@@ -74,18 +74,38 @@ api.get("/*", async (req, res, next) => {
   }
 })
 
-const agent = require("./routes/apis/agent")
+const agent = require("./routes/api_routes/agent")
 api.use("/agent", agent)
-const charts = require("./routes/apis/charts")
+const charts = require("./routes/api_routes/charts")
 api.use("/charts", charts)
-const kyc = require("./routes/apis/kyc")
+const kyc = require("./routes/api_routes/kyc")
 api.use("/kyc", kyc)
-const timeline = require("./routes/apis/timeline")
+const timeline = require("./routes/api_routes/timeline")
 api.use("/timeline", timeline)
-const sms = require("./routes/apis/sms")
+const sms = require("./routes/api_routes/sms")
 api.use("/sms", sms)
-const chaque = require("./routes/apis/chaque")
+const chaque = require("./routes/api_routes/fund/chaque")
 api.use("/chaque", chaque)
+const loging = require("./routes/api_routes/loger")
+api.use("/log", loging)
+
+
+
+
+
+/*********************************************************************
+ * 
+ *  Old Staff
+ * 
+ * /
+
+
+
+
+
+
+
+
 
 api.post("/accountInfo", async (req, res) => {
   res.status(200)
@@ -326,23 +346,7 @@ api.post("/monthly_data", async (req, res) => {
   }
 })
 
-api.post("/addlog", async (req, res) => {
-  try {
-    const data = await logger(req.body.user, req.body.location, req.body.info)
 
-    if (data === 1) {
-      res.status(201)
-      res.send("Success")
-    } else {
-      res.send("Failed")
-      res.status(404)
-    }
-  } catch (e) {
-    res.send(data)
-    console.log("Unable to log data. Error => " + e)
-    res.status(404)
-  }
-})
 
 /* Admin Routing Api*/
 const {
