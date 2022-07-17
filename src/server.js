@@ -151,48 +151,23 @@ app.get("/login", async (req, res) => {
 const cookieParser = require("cookie-parser")
 app.use(cookieParser())
 
-const { verification } = require("./api/api_login")
-
 /* -----------------------------------------------------------------------
 *
 *						Middelware & Verification
 *
 --------------------------------------------------------------------------*/
-app.get("/*", async (req, res, next) => {
-  try {
-    // console.log(req.headers)
-    //Importing token from cookies
-    const token = req.cookies.auth
-    // console.log(token);
-    /*If there is no valid auth cookie present in browser*/
-    if (!token /*token not found*/) {
-      await logger(
-        "Anonymous",
-        req.hostname + req.originalUrl,
-        `Login Page Visited`
-      )
-      /*Init Login Page*/
-      res.locals = {
-        title: "Login",
-      }
-      res.render("login") //Page Renderd
-    } else {
+// app.get("/*", async (req, res, next) => {
+//   const token = req.cookies.auth
+//   if (!token) {
+//     res.locals = {
+//       title: "Login",
+//     }
+//     res.render("login") //Page Rend ,0p.[/-erd
+//   } else {
+//     next()
+//   }
+// })
 
-      // console.log(token);
-      // // const decode = jwt.verify(token, process.env.JWTAUTHOKEY);
-      // const decode = jwt.verify(token, process.env.JWTAUTHOKEY, (err, verifiedJwt) => {
-      //   if (err) { console.log(err); }
-      //   console.log(verifiedJwt);
-      // });
-
-
-
-      next()
-    }
-  } catch (e) {
-    console.log("error: " + e)
-  }
-})
 // const { redisdb } = require("./cache/cachedb")
 // app.get("/*", async (req, res, next) => {
 //   await redisdb(() => { next() })

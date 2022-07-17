@@ -18,8 +18,8 @@ router.get("/chaque_req", async (req, res) => {
     }
     const darkModeCon = req.cookies.darkmode
     const token = req.cookies.auth
-    const { user } = jwt_decode(token)
-    await role(user).then((data) => {
+    const { username } = jwt_decode(token)
+    await role(username).then((data) => {
         if (data === "Not Found" || data.error) {
             res.render("./pages/404").statusCode(404)
         } else {
@@ -42,7 +42,7 @@ router.get("/chaque_req", async (req, res) => {
     }).catch((e) => {
         console.log(e);
     }).finally(() => {
-        logger(user, req.hostname + req.originalUrl, "Visited").catch((e) => {
+        logger(username, req.hostname + req.originalUrl, "Visited").catch((e) => {
             console.log("Loging error " + e);
         })
     })
@@ -54,8 +54,8 @@ router.get("/pendingbeftn", async (req, res) => {
     }
     const darkModeCon = req.cookies.darkmode
     const token = req.cookies.auth
-    const { user } = jwt_decode(token)
-    await role(user).then((data) => {
+    const { username } = jwt_decode(token)
+    await role(username).then((data) => {
         if (data === "Not Found" || data.error) {
             res.render("./pages/404").statusCode(404)
         } else {
@@ -78,7 +78,7 @@ router.get("/pendingbeftn", async (req, res) => {
     }).catch((e) => {
         console.log(e);
     }).finally(() => {
-        logger(user, req.hostname + req.originalUrl, "Visited").catch((e) => {
+        logger(username, req.hostname + req.originalUrl, "Visited").catch((e) => {
             console.log("Loging error " + e);
         })
     })

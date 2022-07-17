@@ -56,24 +56,6 @@ api.use("/login", login)
 /*
  *************** Middelware **************/
 
-const { func_approve } = require("../core/login_master")
-
-api.get("/*", async (req, res, next) => {
-  let token = req.cookies.auth
-  let user = jwt_decode(token)
-  user = Object.values(user)
-
-  const status = await func_approve(token)
-  if (status[0] === "202") {
-    // logger(user[0], req.path, "accessed").then(() => {
-    //   next()
-    // })
-    next()
-  } else {
-    res.status(403).json({ message: status[1] })
-  }
-})
-
 const agent = require("./routes/api_routes/agent")
 api.use("/agent", agent)
 const charts = require("./routes/api_routes/charts")

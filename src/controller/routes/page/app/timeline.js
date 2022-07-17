@@ -30,8 +30,8 @@ router.use((req, res, next) => {
 
 router.get("/", async (req, res) => {
     const token = req.cookies.auth
-    const { user } = jwt_decode(token)
-    const data = await roleCheck(user)
+    const { username } = jwt_decode(token)
+    const data = await roleCheck(username)
     data.map(({ ROLE, USERNAME, ROOT }) => {
         res.locals = {
             userid: USERNAME,
@@ -50,9 +50,9 @@ router.get("/", async (req, res) => {
 
 router.get("/customerInfo", async (req, res) => {
     const token = req.cookies.auth
-    const { user } = jwt_decode(token)
-    const data = await roleCheck(user)
-    await logger(user, "/customerInfo", "Visited")
+    const { username } = jwt_decode(token)
+    const data = await roleCheck(username)
+    await logger(username, "/customerInfo", "Visited")
 
     data.map(({ ROLE, USERNAME, ROOT }) => {
         res.locals = {

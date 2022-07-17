@@ -7,26 +7,16 @@ const redisdb = async (callBack) => {
     const redis_url = '127.0.0.1:6379'
 
     /*Cunnection*/
-    const client = createClient();
 
+    const client = createClient({
+        url: `redis://:@${redis_url}:${redis_port}`
+    });
     client.on('error', (err) => console.log('Redis Client Error', err));
 
     await client.connect();
 
     await client.set('key', 'value');
     const value = await client.get('key');
-
-
-    // // try 2
-    // const client = redis.createClient({
-    //     host: redis_host,
-    //     port: redis_port,
-    // });
-
-    // await client.on('error', err => {
-    //     console.log('Error ' + err);
-    // });
-    // await client.set("age", 37)
 
 
     callBack()

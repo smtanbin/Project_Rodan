@@ -1,8 +1,8 @@
-const { Router, application } = require("express")
+const { Router } = require("express")
 const bodyParser = require("body-parser")
 const cors = require("cors")
 const router = Router()
-const { role, logger } = require("./controller")
+const { role, logger, refresh_call } = require("./controller")
 const request = require("request")
 // Cors Config
 const corsOptions = {
@@ -20,36 +20,70 @@ router.use((req, res, next) => {
   res.header("Access-Control-Allow-Methods", ["GET", "POST", "PATCH", "DELETE"])
   next()
 })
-
+const jwt = require("jsonwebtoken")
 const jwt_decode = require("jwt-decode")
 const { roleCheck } = require("../core/roles")
 
-// router.get("/*", (req, res, next) => {
-//   console.log(req.url);
-//   next()
-// })
+/* -----------------------------------------------------------------------
+*
+*						Middelware & Verification
+*
+--------------------------------------------------------------------------*/
+router.get("/*", async (req, res, next) => {
+  //Importing token from cookies
+  const token = req.cookies.auth
+  const rtoken = req.cookies.token
+
+
+  if (!token || !rtoken) {
+    await logger(
+      "Anonymous",
+      req.hostname + req.originalUrl,
+      `Login Page Visited`
+    )
+    /*Init Login Page*/
+    res.locals = {
+      title: "Login",
+    }
+    res.render("login") //Page Rend ,0p.[/-erd
+  } else {
+
+    try {
+      jwt.verify(token, process.env.JWTAUTHOKEY, { complete: true }, async (error, decoded) => {
+
+        if (error) {
+          console.log("exp" + error);
+          await refresh_call(rtoken)
+            .then((new_token) => {
+              console.log(new_token);
+            })
+            .catch((err) => {
+              console.log("Error during making  token" + err);
+            })
+          next()
+        } else {
+          console.log("Not exp ");
+          next()
+        }
+      })
+
+    } catch (e) {
+      console.log("Middelware Error" + e);
+      res.locals = {
+        title: "Login",
+      }
+      res.render("login")
+    }
+  }
+})
 
 // Visual Viewport Api
 /*********************************************************************************/
 router.get("/", async (req, res) => {
   const darkModeCon = req.cookies.darkmode
   const token = req.cookies.auth
-
-  // if (token === undefined) {
-  //   data = "guest"
-  //   const darkModeCon = req.cookies.darkmode
-  //   res.locals = {
-  //     title: "Home",
-  //   }
-  //   res.render("./guest/index", {
-  //     role: "GUEST",
-  //     userid: "GUEST",
-  //     owner: "GUEST",
-  //     darkmode: darkModeCon,
-  //   })
-  // } else {
-  const { user } = jwt_decode(token)
-  await role(user).then((data) => {
+  const { username } = jwt_decode(token)
+  await role(username).then((data) => {
 
     if (data === "Not Found" || data.error) {
       res.render("./pages/404").statusCode(404)
@@ -84,9 +118,9 @@ router.get("/", async (req, res) => {
       })
     }
   }).catch((e) => {
-    console.log(e);
+    console.log("Home page error: " + e);
   }).finally(() => {
-    logger(user, req.hostname + req.originalUrl, "Visited").catch((e) => {
+    logger(username, req.hostname + req.originalUrl, "Visited").catch((e) => {
       console.log("Loging error " + e);
     })
   })
@@ -99,9 +133,9 @@ router.use("/page", pages)
 
 router.get("/kycupdate", async (req, res) => {
   const token = req.cookies.auth
-  const { user } = jwt_decode(token)
-  const data = await roleCheck(user)
-  await logger(user, req.hostname + req.originalUrl, "Visited")
+  const { username } = jwt_decode(token)
+  const data = await roleCheck(username)
+  await logger(username, req.hostname + req.originalUrl, "Visited")
 
   data.map(({ ROLE, USERNAME, ROOT }) => {
     res.locals = {
@@ -121,9 +155,9 @@ router.get("/kycupdate", async (req, res) => {
 
 router.get("/sms", async (req, res) => {
   const token = req.cookies.auth
-  const { user } = jwt_decode(token)
-  const data = await roleCheck(user)
-  await logger(user, req.hostname + req.originalUrl, "Visited")
+  const { username } = jwt_decode(token)
+  const data = await roleCheck(username)
+  await logger(username, req.hostname + req.originalUrl, "Visited")
 
   data.map(({ ROLE, USERNAME, ROOT }) => {
     res.locals = {
@@ -141,9 +175,9 @@ router.get("/sms", async (req, res) => {
 })
 router.get("/remittanceProcessing", async (req, res) => {
   const token = req.cookies.auth
-  const { user } = jwt_decode(token)
-  const data = await roleCheck(user)
-  await logger(user, req.hostname + req.originalUrl, "Visited")
+  const { username } = jwt_decode(token)
+  const data = await roleCheck(username)
+  await logger(username, req.hostname + req.originalUrl, "Visited")
 
   data.map(({ ROLE, USERNAME, ROOT }) => {
     res.locals = {
@@ -161,9 +195,9 @@ router.get("/remittanceProcessing", async (req, res) => {
 })
 router.get("/requestRemittance", async (req, res) => {
   const token = req.cookies.auth
-  const { user } = jwt_decode(token)
-  const data = await roleCheck(user)
-  await logger(user, req.hostname + req.originalUrl, "Visited")
+  const { username } = jwt_decode(token)
+  const data = await roleCheck(username)
+  await logger(username, req.hostname + req.originalUrl, "Visited")
 
   data.map(({ ROLE, USERNAME, ROOT }) => {
     res.locals = {
@@ -181,9 +215,9 @@ router.get("/requestRemittance", async (req, res) => {
 })
 router.get("/reconciliation", async (req, res) => {
   const token = req.cookies.auth
-  const { user } = jwt_decode(token)
-  const data = await roleCheck(user)
-  await logger(user, req.hostname + req.originalUrl, "Visited")
+  const { username } = jwt_decode(token)
+  const data = await roleCheck(username)
+  await logger(username, req.hostname + req.originalUrl, "Visited")
 
   data.map(({ ROLE, USERNAME, ROOT }) => {
     res.locals = {
@@ -204,9 +238,9 @@ router.get("/reconciliation", async (req, res) => {
 
 router.get("/admin/routing", async (req, res) => {
   const token = req.cookies.auth
-  const { user } = jwt_decode(token)
-  const data = await roleCheck(user)
-  await logger(user, req.hostname + req.originalUrl, "Visited")
+  const { username } = jwt_decode(token)
+  const data = await roleCheck(username)
+  await logger(username, req.hostname + req.originalUrl, "Visited")
 
   data.map(({ ROLE, USERNAME, ROOT }) => {
     res.locals = {
@@ -227,9 +261,9 @@ router.get("/admin/routing", async (req, res) => {
  */
 router.get("/report/accountStatment", async (req, res) => {
   const token = req.cookies.auth
-  const { user } = jwt_decode(token)
-  const data = await roleCheck(user)
-  await logger(user, req.hostname + req.originalUrl, "Visited")
+  const { username } = jwt_decode(token)
+  const data = await roleCheck(username)
+  await logger(username, req.hostname + req.originalUrl, "Visited")
 
   data.map(({ ROLE, USERNAME, ROOT }) => {
     res.locals = {
@@ -247,9 +281,9 @@ router.get("/report/accountStatment", async (req, res) => {
 })
 router.get("/report/remittanceReport", async (req, res) => {
   const token = req.cookies.auth
-  const { user } = jwt_decode(token)
-  const data = await roleCheck(user)
-  await logger(user, req.hostname + req.originalUrl, "Visited")
+  const { username } = jwt_decode(token)
+  const data = await roleCheck(username)
+  await logger(username, req.hostname + req.originalUrl, "Visited")
 
   data.map(({ ROLE, USERNAME, ROOT }) => {
     res.locals = {
@@ -267,9 +301,9 @@ router.get("/report/remittanceReport", async (req, res) => {
 })
 router.get("/report/utilityreport", async (req, res) => {
   const token = req.cookies.auth
-  const { user } = jwt_decode(token)
-  const data = await roleCheck(user)
-  await logger(user, req.hostname + req.originalUrl, "Visited")
+  const { username } = jwt_decode(token)
+  const data = await roleCheck(username)
+  await logger(username, req.hostname + req.originalUrl, "Visited")
 
   data.map(({ ROLE, USERNAME, ROOT }) => {
     res.locals = {
@@ -288,9 +322,9 @@ router.get("/report/utilityreport", async (req, res) => {
 
 router.get("/report/transactionsReport", async (req, res) => {
   const token = req.cookies.auth
-  const { user } = jwt_decode(token)
-  const data = await roleCheck(user)
-  await logger(user, req.hostname + req.originalUrl, "Visited")
+  const { username } = jwt_decode(token)
+  const data = await roleCheck(username)
+  await logger(username, req.hostname + req.originalUrl, "Visited")
 
   data.map(({ ROLE, USERNAME, ROOT }) => {
     res.locals = {
@@ -308,9 +342,9 @@ router.get("/report/transactionsReport", async (req, res) => {
 })
 router.get("/report/accountInfo", async (req, res) => {
   const token = req.cookies.auth
-  const { user } = jwt_decode(token)
-  const data = await roleCheck(user)
-  await logger(user, req.hostname + req.originalUrl, "Visited")
+  const { username } = jwt_decode(token)
+  const data = await roleCheck(username)
+  await logger(username, req.hostname + req.originalUrl, "Visited")
 
   data.map(({ ROLE, USERNAME, ROOT }) => {
     res.locals = {
@@ -328,9 +362,9 @@ router.get("/report/accountInfo", async (req, res) => {
 })
 router.get("/report/businessinfo", async (req, res) => {
   const token = req.cookies.auth
-  const { user } = jwt_decode(token)
-  const data = await roleCheck(user)
-  await logger(user, req.hostname + req.originalUrl, "Visited")
+  const { username } = jwt_decode(token)
+  const data = await roleCheck(username)
+  await logger(username, req.hostname + req.originalUrl, "Visited")
 
   data.map(({ ROLE, USERNAME, ROOT }) => {
     res.locals = {
@@ -348,9 +382,9 @@ router.get("/report/businessinfo", async (req, res) => {
 })
 router.get("/report/mis", async (req, res) => {
   const token = req.cookies.auth
-  const { user } = jwt_decode(token)
-  const data = await roleCheck(user)
-  await logger(user, req.hostname + req.originalUrl, "Visited")
+  const { username } = jwt_decode(token)
+  const data = await roleCheck(username)
+  await logger(username, req.hostname + req.originalUrl, "Visited")
 
   data.map(({ ROLE, USERNAME, ROOT }) => {
     res.locals = {

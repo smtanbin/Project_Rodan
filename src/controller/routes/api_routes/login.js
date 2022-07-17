@@ -47,10 +47,10 @@ api.use((req, res, next) => {
  *
  */
 // All needed function are in api_login
-const { make_token, gen_login } = require("../../../core/login_master")
+const { gen_login, refresh_token } = require("../../../core/login_master")
 const { roleCheck } = require("../../../api/api_login")
 /* Working on itt*/
-api.post("/oauth", async (req, res /* res will send user & password */) => {
+api.post("/auth", async (req, res /* res will send user & password */) => {
   const auth = req.headers["authorization"]
   if (!auth) {
     // No Authorization header was passed in so it's the first time the browser hit us
@@ -67,44 +67,25 @@ api.post("/oauth", async (req, res /* res will send user & password */) => {
     } else {
       const plain_auth = Buffer.from(tmp[1], "base64").toString("utf8") // At this point plain_auth = "username:password"
       const creds = plain_auth.split(":") // split on a ':'
-
       gen_login(creds[0], creds[1], req.hostname)
         .then((token) => {
-          // console.log("Token" + token)
-          res.cookie(`auth`, token, { expire: 200 + Date.now() })
-          res.send(token)
+          res.cookie(`auth`, token[0], { expire: 200 + Date.now() })
+          res.cookie(`token`, token[1], { expire: 999 + Date.now() })
+          // res.send(token)
         })
         .catch((e) => {
-          res.status(404).json({ Error: e, status: 404 })
+          res.status(404).json({
+            "Error:": "Error from /auth " + e, status: 404
+          })
         })
     }
   }
 })
 
-api.post("/refrash_token", (req, res) => {
-  res.send(
-    new Promise(async (resolve, reject) => {
-      const { token, user } = req.body
-      let state = await token_verification(token, user)
-      if (state === "403") {
-        reject(state)
-      } else {
-        const token = make_token(user)
-        if (token === 500) {
-          reject(500)
-        } else {
-          state.map(async ({ USERNAME }) => {
-            await logger(
-              USERNAME,
-              req.hostname + req.originalUrl,
-              `Login Sucessfull`
-            )
-          })
-          resolve(token)
-        }
-      }
-    })
-  )
+api.post("/refresh", async (req, res) => {
+  await refresh_token(req.body.token).then((payload) => {
+    res.cookie(`auth`, payload, { expire: 999 + Date.now() })
+  }).catch((e) => { res.json({ "Error": e }).statusCode(404) })
 })
 
 api.post("/make_guest_token", (req, res) => {
@@ -129,6 +110,7 @@ api.post("/make_guest_token", (req, res) => {
     })
   )
 })
+
 const { status_update } = require("../../../api/api_token")
 
 api.post("/logout", (req, res) => {
