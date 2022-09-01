@@ -3,51 +3,58 @@ const { oracleDate } = require("./db/db_apps")
 
 const statementHead = async (date, key) => {
   try {
+    if (date === "null") {
+      date = await qurrythis(`SELECT REG_DATE FROM AGENT_BANKING.REGINFO WHERE MPHONE = ${key}`)
+      date = JSON.stringify(date[0])
+      date = JSON.parse(date)
+      date = date.REG_DATE
+    }
     date = oracleDate(date)
-    const sql = `/* Formatted on 2/6/2022 8:32:47 AM (QP5 v5.374) */
+    let sql = `/* Formatted on 2/6/2022 8:32:47 AM (QP5 v5.374) */
 		SELECT MPHONE,
 		NVL(( SELECT NAME FROM AGENT_BANKING.REGINFO WHERE MPHONE = R.PMPHONE),MPHONE) PMPHONE,
 			   ACCOUNT_NAME,
 			   (SELECT P.ACC_TYPE_NAME
 				  FROM AGENT_BANKING.PRODUCT_SETUP P
-				 WHERE P.ACC_TYPE_CODE = R.AC_TYPE_CODE)
-				   TYPE,
-			   (SELECT ST.NAME
-				  FROM AGENT_BANKING.AC_STATUS ST
-				 WHERE ST.S_NAME = R.STATUS)
-				   STATUS,
+          WHERE P.ACC_TYPE_CODE = R.AC_TYPE_CODE)
+          TYPE,
+          (SELECT ST.NAME
+            FROM AGENT_BANKING.AC_STATUS ST
+            WHERE ST.S_NAME = R.STATUS)
+            STATUS,
 			   TO_CHAR (REG_DATE, 'MONTH dd, YYYY')
-				   REG_DATE,
+         REG_DATE,
 			   ROUND((TANBIN.GETBALANCE (r.MPHONE, (TO_DATE ('${date}') - 1))
 				   ),2)BALANCE, TO_CHAR (MATURITY_DATE, 'MONTH dd, YYYY') MATURITY_DATE,
 				   CUST_ID,
-			   CON_MOB,
-			   PRE_VILLAGE
+           CON_MOB,
+           PRE_VILLAGE
 				|| ', '
 				|| PRE_ROAD
 				|| ', '
 				|| PRE_POST
 				|| ', '
 				|| (SELECT    name
-						   || ', '
-						   || (SELECT    name
-									  || ', '
+          || ', '
+          || (SELECT    name
+            || ', '
 									  || (SELECT    name
-												 || ', '
-												 || (SELECT name
+                      || ', '
+                      || (SELECT name
 													   FROM agent_banking.DISTHANA
-													  WHERE code = f.parent)
-											FROM agent_banking.DISTHANA f
-										   WHERE code = e.parent)
+                             WHERE code = f.parent)
+                             FROM agent_banking.DISTHANA f
+                             WHERE code = e.parent)
 								 FROM agent_banking.DISTHANA e
 								WHERE code = d.parent)
-					  FROM agent_banking.DISTHANA d
+                FROM agent_banking.DISTHANA d
 					 WHERE code = (SELECT SUBSTR (LOCATION_CODE, 0, 6)    
 									 FROM agent_banking.reginfo
-									WHERE mphone = r.mphone)) 
+                   WHERE mphone = r.mphone)) 
 				   ADDR
 		  FROM AGENT_BANKING.REGINFO R
 		 WHERE MPHONE = ${key}`
+
 
     return await qurrythis(sql)
   } catch (e) {

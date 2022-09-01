@@ -35,56 +35,49 @@ const token_verification = (token, user) => {
   })
 }
 
-// const gen_token = ({ user, passwd }) => {
+const gen_token = ({ user, passwd }) => {
+  return new Promise(async (resolve, rejects) => {
+    const status = verification(user, passwd)
 
-//   return new Promise(async (resolve, rejects) => {
-//     const status = verification(user, passwd)
-
-//     if (status === "404") {
-//       rejects("404")
-//     } else {
-//       const rtoken = jwt.sign({ user }, process.env.JWTREFRASHKEY)
-//       // Creating Cluster
-//       const inputs = { user, refrashtoken: rtoken }
-//       // Keeping token to Database
-//       try {
-//         await insert_token(rtoken, user)
-//       } catch (e) {
-//         console.log("Error adding token" + e)
-//         rejects("500")
-//       }
-//       const jose = require("node-jose");
-//       const keyStore = jose.JWK.createKeyStore();
-//       const test = keyStore.generate("RSA", 2048, { alg: "RS256", use: "sig" })
-//       console.log(test);
-//       const token = jwt.sign(inputs, process.env.JWTAUTHOKEY, {
-//         expiresIn: "1m", // expires in 1 hours
-//       })
-//       resolve(token)
-//     }
-//   })
-// }
-
-
-const created_token = (user, expires) => {
-
-  return new Promise((resolve) => {
-    if (expires === true) {
-      const token = jwt.sign({ "username": user }, process.env.JWTAUTHOKEY, { expiresIn: '30s' });
+    if (status === "404") {
+      rejects("404")
+    } else {
+      const rtoken = jwt.sign({ user }, process.env.JWTREFRASHKEY)
+      // Creating Cluster
+      const inputs = { user, refrashtoken: rtoken }
+      // Keeping token to Database
+      try {
+        await insert_token(rtoken, user)
+      } catch (e) {
+        console.log("Error adding token" + e)
+        rejects("500")
+      }
+      const token = jwt.sign(inputs, process.env.JWTAUTHOKEY, {
+        expiresIn: "13m", // expires in 1 hours
+      })
       resolve(token)
     }
-    if (expires === false) {
-      const token = jwt.sign({ "username": user }, process.env.JWTAUTHOKEY);
-      resolve(token)
-    }
-  }).catch((e) => "Error Make token:" + e)
+  })
 }
-
-
+const make_token = (user) => {
+  return new Promise((resolve, rejects) => {
+    const rtoken = jwt.sign({ user }, process.env.JWTREFRASHKEY)
+    const inputs = { user, refrashtoken: rtoken }
+    insert_token(rtoken, user)
+      .then(() => {
+        const token = jwt.sign(inputs, process.env.JWTAUTHOKEY, {
+          expiresIn: "13000m",
+        })
+        resolve(token)
+      })
+      .catch((e) => rejects("Error genataring token" + e))
+  }).catch((e) => "Error Make token. Error => " + e)
+}
 
 const { log } = require("../api/api_log")
 
 const gen_login = (user, passwd, hostname) => {
+  //Perfect 11/7/2022
   return new Promise(async (resolve, reject) => {
     if (user === undefined || passwd === undefined) {
       console.log("user or password undefined in gen_login")
@@ -92,59 +85,45 @@ const gen_login = (user, passwd, hostname) => {
     }
 
     // verification will take user and password, & return error code or username
-
     verification(user, passwd)
-      .then(async (reply) => {
-        const arr = new Array()
-        await created_token(user, true)
-          .then((token) => {
-            arr[0] = token
-          })
-          .catch((err) => { console.log("token " + err); reject(e) })
-
-          .then(async () => {
-            await created_token(user, false)
-              .then((token) => {
-                arr[1] = token
+      .then((reply) => {
+        const token = make_token(user)
+        if (token === "500" || token == undefined) {
+          reject("token replay undefined")
+        } else {
+          reply.map(async ({ USERNAME }) => {
+            //Log the activity
+            log(USERNAME, hostname + "api/login", `Login Sucessfull`)
+              .then(() => {
+                resolve(token)
               })
-              .catch((err) => { console.log("rtoken " + err); reject(e) })
-          }).then(() => {
-            reply.map(async ({ USERNAME }) => {
-              log(USERNAME, hostname + "api/login", `Login Sucessfull`)
-            })
+              .catch((err) => {
+                "Loging Failed in Login Master Token Making Error=>" + err
+              })
           })
-          .finally(() => {
-            resolve(arr)
-          })
-          .catch((e) => { reject(e) })
-
+        }
       })
       .catch((err) => {
-        reject("Verification Failed " + err)
+        reject("Verification Failed")
       })
   })
 }
 
-const refresh_token = (token) => {
+const func_approve = (token) => {
   return new Promise(async (resolve, reject) => {
     if (token === undefined) {
-      reject(403)
+      reject(["403", "No Token found"])
     } else {
-      try {
-        await jwt.verify(token, process.env.JWTAUTHOKEY, async (err) => {
-          if (!err) {
-            const { username } = jwt_decode(token, process.env.JWTAUTHOKEY)
-            await created_token(username, true).then((payload) => {
-              resolve(payload)
-            }).finally(async () => {
-              await log(username, hostname + "api/login", `Token refrash Sucessfull`)
-            })
-          } else { reject(err) }
-        })
-      } catch (e) {
-        reject(e)
-      }
+      await jwt.verify(token, process.env.JWTAUTHOKEY, (err) => {
+        if (err /*Token is not valid*/) {
+          reject(["403", err])
+        } else {
+          resolve(["202", "Grated"])
+        }
+      })
     }
+  }).catch((e) => {
+    return e
   })
 }
-module.exports = { created_token, token_verification, refresh_token, gen_login }
+module.exports = { make_token, token_verification, func_approve, gen_login }

@@ -17,17 +17,13 @@ const getstatement = async (key) => {
   // console.log(fromdate)
 
   /*Current date & time*/
-  if (fromdate === null || fromdate === "") {
-    fromdate = printday
-  }
-  if (todate === null || todate === "") {
-    todate = printday
-  }
+  if (!fromdate) fromdate = null
+  if (!todate) todate = printday
 
   /* Post request body content*/
   const urlhead = `${apiserver}/statementhead`
   const rawhead = JSON.stringify({
-    key: `${key}`,
+    acno: `${key}`,
     date: `${fromdate}`,
   })
 
@@ -38,53 +34,39 @@ const getstatement = async (key) => {
     redirect: "follow",
   }
 
-  /* Post request body content*/
-  const urlbody = `${apiserver}/statementbody`
-  const rawbody = JSON.stringify({
-    key: `${key}`,
-    fromdate: `${fromdate}`,
-    todate: `${todate}`,
-  })
-  const bodyrequestOptions = {
-    method: "POST",
-    headers: myHeaders,
-    body: rawbody,
-    redirect: "follow",
-  }
-
   /*This valus make the summary part.
   /* Totals*/
   let oprningbalance = 0
   let total_dr = 0
   let total_cr = 0
 
-  try {
-    await fetch(urlhead, headrequestOptions)
-      .then((response) => response.json())
-      .then((payload) => {
-        payload.map(
-          (
-            {
-              MPHONE,
-              PMPHONE,
-              ACCOUNT_NAME,
-              TYPE,
-              STATUS,
-              REG_DATE,
-              BALANCE,
-              CON_MOB,
-              ADDR,
-              MATURITY_DATE,
-              CUST_ID,
-            },
-            index
-          ) => {
-            oprningbalance = BALANCE
-            document.getElementById("output").innerHTML = `
+
+  await fetch(urlhead, headrequestOptions)
+    .then((response) => response.json())
+    .then((payload) => {
+      payload.map(
+        (
+          {
+            MPHONE,
+            PMPHONE,
+            ACCOUNT_NAME,
+            TYPE,
+            STATUS,
+            REG_DATE,
+            BALANCE,
+            CON_MOB,
+            ADDR,
+            MATURITY_DATE,
+            CUST_ID,
+          }
+        ) => {
+
+          oprningbalance = BALANCE
+          document.getElementById("output").innerHTML = `
 			<div class="col-12 container m-2 p-2">
 							<div class="px-2 container">
 							   <div class="card w100 columns col-12 p-1 bg-gray">
-								  <h6 class="p-centered text-tiny text-bold my-2">Account Statment</h6>
+								  <h6 class="p-centered text-tiny text-bold my-2">Account Statement</h6>
 								  <div class="columns px-2">
 									 <div class="column float-left text-tiny ">
 										<p><b>Titel :</b> ${ACCOUNT_NAME}<br />
@@ -103,14 +85,14 @@ const getstatement = async (key) => {
 										<b>Account Type:</b> ${TYPE}<br/>
 										   <b>Customer ID: </b>${CUST_ID}<br/>
 										   <b>Opening Date: </b>${REG_DATE}<br/>
-										   <b>Expiry Date: </b>${MATURITY_DATE}<br/>
+										  <b>Expiry Date: </b>${MATURITY_DATE}<br/>
 										   <b>Agent: </b>${PMPHONE}	
 										</p>
 									 </div>
 								  </div>
 								  <div class="text-tiny">Statement of Account for the Period: ${moment(
-              fromdate
-            ).format("LLL")} <b> To </b> ${moment(todate).format("LLL")}
+            REG_DATE
+          ).format("LLL")} <b> To </b> ${moment(todate).format("LLL")}
 								 </div>
 							   </div>
 							   <div class="columns col-12 card p-1">
@@ -138,140 +120,151 @@ const getstatement = async (key) => {
 							   </div>
 							</div>
 						 </div>`
-          }
-        )
+        }
+      )
+      if (!document.getElementById("fromdate").value) {
+        payload = JSON.stringify(payload[0])
+        payload = JSON.parse(payload)
+        return payload.REG_DATE
+      }
+      return document.getElementById("fromdate").value
+    }).then(async (from_date) => {
+      /* Post request body content*/
+      const urlbody = `${apiserver}/statementbody`
+      const rawbody = JSON.stringify({
+        key: `${key}`,
+        fromdate: `${from_date}`,
+        todate: `${todate}`,
       })
-  } catch (e) {
-    document.getElementById(
-      "output"
-    ).innerHTML = `<div class="empty col-12 w100">
+      const bodyrequestOptions = {
+        method: "POST",
+        headers: myHeaders,
+        body: rawbody,
+        redirect: "follow",
+      }
+
+      await fetch(urlbody, bodyrequestOptions)
+        .then((response) => response.json())
+        .then((payload) => {
+          if (payload === null) {
+            document.getElementById("output2").innerHTML += `<tr>
+						<td class="text-tiny text-break" colspan="7"></td>
+						</tr>`
+          } else {
+            payload.map(
+              ({ TRANS_NO, TRANS_DATE, DR_AMT, CR_AMT, PARTICULAR }, index) => {
+                /* Calculatation*/
+                oprningbalance += CR_AMT
+                oprningbalance -= DR_AMT
+                total_dr += DR_AMT
+                total_cr += CR_AMT
+
+                const mytable = document.getElementById("output2")
+                let newRow = document.createElement("tr")
+
+                //Index
+                let cell = document.createElement("td")
+                cell.classList.add("text-tiny")
+                cell.classList.add("text-break")
+                newRow.appendChild(cell)
+                cell.innerText = index + 1
+                //DATE
+                cell = document.createElement("td")
+                cell.classList.add("text-tiny")
+                cell.classList.add("text-break")
+                newRow.appendChild(cell)
+                cell.innerText = moment(TRANS_DATE).format("lll")
+
+                cell = document.createElement("td")
+                cell.classList.add("text-tiny")
+                cell.classList.add("text-clip")
+                newRow.appendChild(cell)
+                cell.innerText = TRANS_NO
+
+                cell = document.createElement("td")
+                cell.classList.add("text-tiny")
+                cell.classList.add("text-right")
+                newRow.appendChild(cell)
+                cell.innerText = DR_AMT.toLocaleString("en-BD", {
+                  maximumFractionDigits: 2,
+                })
+
+                cell = document.createElement("td")
+                cell.classList.add("text-tiny")
+                cell.classList.add("text-right")
+                newRow.appendChild(cell)
+                cell.innerText = CR_AMT.toLocaleString("en-BD", {
+                  maximumFractionDigits: 2,
+                })
+
+                cell = document.createElement("td")
+                cell.classList.add("text-tiny")
+                cell.classList.add("text-right")
+                newRow.appendChild(cell)
+                cell.innerText = oprningbalance.toLocaleString("en-BD", {
+                  maximumFractionDigits: 2,
+                })
+
+                cell = document.createElement("td")
+                cell.classList.add("text-tiny")
+                cell.classList.add("text-break")
+                newRow.appendChild(cell)
+                cell.innerText = PARTICULAR
+                mytable.appendChild(newRow)
+              }
+            )
+
+            /* for table footer*/
+            document.getElementById(
+              "output2"
+            ).innerHTML += `<td class="text-bold text-left" colspan="3">Total</td>
+					<td class="text-bold text-tiny text-right">${total_dr.toLocaleString("en-BD", {
+              maximumFractionDigits: 2,
+              style: "currency",
+              currency: "BDT",
+            })}</td>
+					<td class="text-bold text-tiny text-right">${total_cr.toLocaleString("en-BD", {
+              maximumFractionDigits: 2,
+              style: "currency",
+              currency: "BDT",
+            })}</td>
+					<td class="text-bold text-tiny text-right">${oprningbalance.toLocaleString(
+              "en-BD",
+              {
+                maximumFractionDigits: 2,
+                style: "currency",
+                currency: "BDT",
+              }
+            )}</td>
+					<td colspan="1"></td>`
+          }
+
+          document.getElementById("btn-loading").classList.remove("loading")
+          document.getElementById("btnprint").classList.remove("d-none")
+          document.getElementById("btndownload").classList.remove("d-none")
+          document.getElementById("btndownload").classList.add("disabled")
+          document.getElementById("btndownload").classList.add("btn-error")
+        })
+    }).catch((e) => {
+      document.getElementById(
+        "output"
+      ).innerHTML = `<div class="empty col-12 w100">
 				
 				<h4 class="empty-title h2 text-error">Stop Code 404</h4>
 				<p class="empty-title h2 text-error">Fail to get Header</p>
 				<p class="empty-subtitle">${e}</p>
 
 			</div>`
-  }
-  // try {
-  await fetch(urlbody, bodyrequestOptions)
-    .then((response) => response.json())
-    .then((payload) => {
-      if (payload === null) {
-        document.getElementById("output2").innerHTML += `<tr>
-						<td class="text-tiny text-break" colspan="7"></td>
-						</tr>`
-      } else {
-        payload.map(
-          ({ TRANS_NO, TRANS_DATE, DR_AMT, CR_AMT, PARTICULAR }, index) => {
-            /* Calculatation*/
-            oprningbalance += CR_AMT
-            oprningbalance -= DR_AMT
-            total_dr += DR_AMT
-            total_cr += CR_AMT
-
-            const mytable = document.getElementById("output2")
-            let newRow = document.createElement("tr")
-
-            //Index
-            let cell = document.createElement("td")
-            cell.classList.add("text-tiny")
-            cell.classList.add("text-break")
-            newRow.appendChild(cell)
-            cell.innerText = index + 1
-            //DATE
-            cell = document.createElement("td")
-            cell.classList.add("text-tiny")
-            cell.classList.add("text-break")
-            newRow.appendChild(cell)
-            cell.innerText = moment(TRANS_DATE).format("lll")
-
-            cell = document.createElement("td")
-            cell.classList.add("text-tiny")
-            cell.classList.add("text-clip")
-            newRow.appendChild(cell)
-            cell.innerText = TRANS_NO
-
-            cell = document.createElement("td")
-            cell.classList.add("text-tiny")
-            cell.classList.add("text-right")
-            newRow.appendChild(cell)
-            cell.innerText = DR_AMT.toLocaleString("en-BD", {
-              maximumFractionDigits: 2,
-            })
-
-            cell = document.createElement("td")
-            cell.classList.add("text-tiny")
-            cell.classList.add("text-right")
-            newRow.appendChild(cell)
-            cell.innerText = CR_AMT.toLocaleString("en-BD", {
-              maximumFractionDigits: 2,
-            })
-
-            cell = document.createElement("td")
-            cell.classList.add("text-tiny")
-            cell.classList.add("text-right")
-            newRow.appendChild(cell)
-            cell.innerText = oprningbalance.toLocaleString("en-BD", {
-              maximumFractionDigits: 2,
-            })
-
-            cell = document.createElement("td")
-            cell.classList.add("text-tiny")
-            cell.classList.add("text-break")
-            newRow.appendChild(cell)
-            cell.innerText = PARTICULAR
-            mytable.appendChild(newRow)
-          }
-        )
-
-        /* for table footer*/
-        document.getElementById(
-          "output2"
-        ).innerHTML += `<td class="text-bold text-left" colspan="3">Total</td>
-					<td class="text-bold text-tiny text-right">${total_dr.toLocaleString("en-BD", {
-          maximumFractionDigits: 2,
-          style: "currency",
-          currency: "BDT",
-        })}</td>
-					<td class="text-bold text-tiny text-right">${total_cr.toLocaleString("en-BD", {
-          maximumFractionDigits: 2,
-          style: "currency",
-          currency: "BDT",
-        })}</td>
-					<td class="text-bold text-tiny text-right">${oprningbalance.toLocaleString(
-          "en-BD",
-          {
-            maximumFractionDigits: 2,
-            style: "currency",
-            currency: "BDT",
-          }
-        )}</td>
-					<td colspan="1"></td>`
-      }
-
-      document.getElementById("btn-loading").classList.remove("loading")
-      document.getElementById("btnprint").classList.remove("d-none")
-      document.getElementById("btndownload").classList.remove("d-none")
-      document.getElementById("btndownload").classList.add("disabled")
-      document.getElementById("btndownload").classList.add("btn-error")
     })
-  // } catch (e) {
-  // 	document.getElementById("btn").classList.remove("loading");
-  // 	document.getElementById('output').innerHTML = `<div class="empty col-12 w100">
 
-  // 		<p class="empty-title h2 text-error">Stop Code 404</p>
-  // 		<p class="empty-title h2 text-error">Fail to get Body</p>
-  // 		<p class="empty-subtitle">${e}</p>
-
-  // 	</div>`
-  // }
 }
+
+
 
 /* This is the main function that generated the statement.
  */
-const statement = async () => {
+async function statement() {
   /*Checking account is existed in database. rejacted account also not count as account api/doexisist return boolien data.//#endregion*/
-
   document.getElementById("btn-loading").classList.add("loading")
   const keyvalue = document.getElementById("key").value
   /* Post request body content*/

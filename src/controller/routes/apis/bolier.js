@@ -2,7 +2,7 @@ const { Router } = require("express")
 require("dotenv").config()
 const bodyParser = require("body-parser")
 const cors = require("cors")
-const app = Router()
+const api = Router()
 
 // Cors Config
 const corsOptions = {
@@ -11,10 +11,10 @@ const corsOptions = {
 }
 
 // Middlewares
-app.use(cors(corsOptions))
-app.use(bodyParser.json())
+api.use(cors(corsOptions))
+api.use(bodyParser.json())
 
-app.use((req, res, next) => {
+api.use((req, res, next) => {
     res.header("Access-Control-Allow-Origin", "*")
     res.header(
         "Access-Control-Allow-Headers",
@@ -24,9 +24,6 @@ app.use((req, res, next) => {
     next()
 })
 
-const timeline = require("./app/timeline")
-app.use("/timeline", timeline)
-const requisition = require("./app/requisition")
-app.use("/requisition", requisition)
 
-module.exports = app
+
+module.exports = api

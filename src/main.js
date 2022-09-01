@@ -41,7 +41,7 @@ const corsOptions = {
   origin: "*",
   optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
 }
-const morgan = require('morgan')
+
 const ejs = require("ejs")
 /* EJS also supports caching by using LRU. 
 The LRU Cache will cache intermediate JavaScript functions used to render template.*/
@@ -115,26 +115,14 @@ app.set("views", path.join(__dirname, "/assets/views"))
 app.use(express.static(__dirname + "/assets/Public"))
 
 // javascripts
-app.use("/JS", express.static(__dirname + "/scripts"))
+app.use("/JS", express.static(__dirname + "/App"))
 // use res.render to load up an ejs view file
 app.use(express.json())
 
 // Middelwears
 app.use(cors(corsOptions))
-app.use(morgan())
-// morgan(function (tokens, req, res) {
-//   return [
-//     tokens.method(req, res),
-//     tokens.status(req, res),
-//     tokens['response-time'](req, res), 'ms'
-//   ].join(' ')
-// })
+
 const { logger } = require("./api/api_log")
-
-/*And Every apis path here*/
-const apipath = require("./controller/api")
-app.use("/api", apipath)
-
 
 app.get("/login", async (req, res) => {
   await logger(
@@ -159,7 +147,43 @@ app.get("/login", async (req, res) => {
 const cookieParser = require("cookie-parser")
 app.use(cookieParser())
 
-const { verification } = require("./api/api_login")
+const { verification } = require("./Api/api_login")
+
+app.post("/oauth", async (req, res) => {
+  const userid = req.body.user
+  const passwd = req.body.passwd
+  try {
+    let state = await verification(userid, passwd)
+    if (state !== false) {
+      state.map(async ({ USERNAME }) => {
+        // const token = createToken(userid, ROLE)
+
+        // Creating Refrash Token
+        const rtoken = jwt.sign({ user: userid }, process.env.JWTREFRASHKEY)
+
+        // Creating Cluster
+        const inputs = { user: userid, refrashtoken: rtoken }
+        // Keeping token to Database
+        const token = jwt.sign(inputs, process.env.JWTAUTHOKEY, {
+          expiresIn: "13m", // expires in 1 hours
+        })
+        res.setHeader("secret", token)
+        res.cookie(`auth`, token, { expire: 200 + Date.now() })
+        // let auth = req.cookies.auth
+        res.send(state)
+        await logger(
+          USERNAME,
+          req.hostname + req.originalUrl,
+          `Login Sucessfull`
+        )
+      })
+    } else {
+      res.send(state)
+    }
+  } catch (e) {
+    console.log("otho error " + e)
+  }
+})
 
 /* -----------------------------------------------------------------------
 *
@@ -171,7 +195,6 @@ app.get("/*", async (req, res, next) => {
     // console.log(req.headers)
     //Importing token from cookies
     const token = req.cookies.auth
-    // console.log(token);
     /*If there is no valid auth cookie present in browser*/
     if (!token /*token not found*/) {
       await logger(
@@ -191,10 +214,60 @@ app.get("/*", async (req, res, next) => {
     console.log("error: " + e)
   }
 })
-// app.get("/*", async (req, res, next) => {
-//   const token = req.cookies.auth
-//   res.set('Token', token)
-//   console.log(res);
+
+// app.get('/', (req, res, next) => {
+// 	console.log(res.cookies)
+// 	try {
+// 		//Importing token from cookies
+// 		const token = req.cookies.auth
+// 		/*If there is no valid auth cookie present in browser*/
+// 		if (!token /*token not found*/) {
+// 			/*Init Login Page*/
+// 			res.locals = {
+// 				title: 'Login'
+// 			}
+// 			res.render('login') //Page Renderd
+// 		} else {
+// 			/*If there is a auth cookie present in browser */
+
+// 			/*Verifying If provied token valid*/
+// 			jwt.verify(token, process.env.JWTAUTHOKEY, (err) => {
+// 				/*JWT autho token present in env file*/
+// 				if (!err /*Token is not valid*/) {
+// 					const { user, role, refrashtoken } = jwt_decode(token)
+// 					jwt.verify(token, process.env.JWTREFRASHKEY, async (err) => {
+// 						if (!err) {
+// 							/* Getting Database*/
+// 							const qurrythis = require('./apps/db')
+// 							// Creating SQL
+// 							let sql = `SELECT count(TOKEN) FROM TANBIN.JWT WHERE TOKEN = ${refrashtoken}`
+// 							// const checking = await qurrythis(sql)
+
+// 							// if (checking !== 0 /*Checking If record found?*/) {
+// 							const inputs = { user: userid, role: role, refrashtoken: refrashtoken }
+// 							const token = jwt.sign(inputs, process.env.JWTREFRASHKEY, {
+// 								expiresIn: '5s' // expires in 1 hours
+// 							})
+// 							await qurrythis(
+// 								/* Keeping token to Database*/
+// 								`INSERT INTO TANBIN.JWT (USERID, TOKEN,ORGDATE) VALUES ('${userid}', '${token}', (SELECT CURRENT_TIMESTAMP FROM dual)); commit`
+// 							)
+// 							res.cookie(`auth`, createRefrashToken(user, role, refrashtoken))
+// 							next()
+// 							// } else {
+// 							// return 'Invalid'
+// 							// }
+// 						} else console.log(err)
+// 					})
+// 				} else {
+// 					console.log('No Error Found')
+// 					next()
+// 				}
+// 			})
+// 		}
+// 	} catch (e) {
+// 		console.log('Error on middelware ' + e)
+// 	}
 // })
 
 /*******************************************************************
@@ -203,11 +276,11 @@ app.get("/*", async (req, res, next) => {
  *
  * ******************************************************************/
 /*Every Application page path location in */
-const apppath = require("./controller/routes")
+const apppath = require("./Routes/app")
 app.use("/", apppath)
-const { resolve } = require("dns")
-const { rejects } = require("assert")
-
+/*And Every apis path here*/
+const apipath = require("./Routes/api")
+app.use("/api", apipath)
 /*If Page not found (404) this path handels it*/
 app.get("*", function (req, res) {
   res.locals = {
@@ -223,7 +296,7 @@ app.get("*", function (req, res) {
  *
  *********************************************************************/
 /* Port come from env file if fail so it will run at 3000 port*/
-const port = process.env.PORT || 80
+const port = process.env.PORT || 3000
 /* Express Init*/
 app.listen(port)
 console.log("Server is listening on port: " + port)

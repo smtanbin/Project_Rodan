@@ -17,7 +17,6 @@ const logger = async (user, location, info) => {
 }
 
 const log = async (user, location, info) => {
-
   return new Promise((resolve, reject) => {
     location = encodeURI(location)
     sql = `begin tanbin.p_app_log('${user}','${location}','${info}'); end;`

@@ -1,6 +1,6 @@
 const { Router } = require("express")
 const { doexist } = require("../api/api.js")
-const { logger, log } = require("../api/api_log")
+const { logger } = require("../api/api_log")
 const {
   pbslist,
   utilityinfohead,
@@ -50,44 +50,42 @@ api.use((req, res, next) => {
 })
 
 /****************** Login ****************/
-const login = require("./routes/api_routes/login")
+const login = require("./routes/apis/login")
 api.use("/login", login)
 
 /*
  *************** Middelware **************/
 
-const agent = require("./routes/api_routes/agent")
+const { func_approve } = require("../core/login_master")
+
+api.get("/*", async (req, res, next) => {
+  let token = req.cookies.auth
+  let user = jwt_decode(token)
+  user = Object.values(user)
+
+  const status = await func_approve(token)
+  if (status[0] === "202") {
+    // logger(user[0], req.path, "accessed").then(() => {
+    //   next()
+    // })
+    next()
+  } else {
+    res.status(403).json({ message: status[1] })
+  }
+})
+
+const agent = require("./routes/apis/agent")
 api.use("/agent", agent)
-const charts = require("./routes/api_routes/charts")
+const charts = require("./routes/apis/charts")
 api.use("/charts", charts)
-const kyc = require("./routes/api_routes/kyc")
+const kyc = require("./routes/apis/kyc")
 api.use("/kyc", kyc)
-const timeline = require("./routes/api_routes/timeline")
+const timeline = require("./routes/apis/timeline")
 api.use("/timeline", timeline)
-const sms = require("./routes/api_routes/sms")
+const sms = require("./routes/apis/sms")
 api.use("/sms", sms)
-const chaque = require("./routes/api_routes/fund/chaque")
+const chaque = require("./routes/apis/chaque")
 api.use("/chaque", chaque)
-const loging = require("./routes/api_routes/loger")
-api.use("/log", loging)
-
-
-
-
-
-/*********************************************************************
- * 
- *  Old Staff
- * 
- * /
-
-
-
-
-
-
-
-
 
 api.post("/accountInfo", async (req, res) => {
   res.status(200)
@@ -244,8 +242,8 @@ api.post("/doexist", async (req, res) => {
 /* Give the summary data */
 api.post("/statementhead", async (req, res) => {
   const date = req.body.date
-  const key = req.body.key
-  const data = await statementHead(date, key)
+  const param = req.body.acno
+  const data = await statementHead(date, param)
   res.send(data)
 })
 /* Give the deteals data */
@@ -328,7 +326,23 @@ api.post("/monthly_data", async (req, res) => {
   }
 })
 
+api.post("/addlog", async (req, res) => {
+  try {
+    const data = await logger(req.body.user, req.body.location, req.body.info)
 
+    if (data === 1) {
+      res.status(201)
+      res.send("Success")
+    } else {
+      res.send("Failed")
+      res.status(404)
+    }
+  } catch (e) {
+    res.send(data)
+    console.log("Unable to log data. Error => " + e)
+    res.status(404)
+  }
+})
 
 /* Admin Routing Api*/
 const {

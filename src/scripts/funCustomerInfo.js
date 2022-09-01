@@ -13,7 +13,7 @@ const getNomi = async (param) => {
 	}
 
 	try {
-		await fetch(`${apiserver}//customernom`, requestOptions).then((response) => response.json()).then((payload) => {
+		await fetch(`${apiserver}/pages/customernom`, requestOptions).then((response) => response.json()).then((payload) => {
 			payload.map((data) => {
 				const {
 					AC_NO,

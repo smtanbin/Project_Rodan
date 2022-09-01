@@ -23,7 +23,7 @@ const authorized = async () => {
       "Basic " + base64.encode(username + ":" + password)
     )
 
-    const url = `${apiserver}/login/auth`
+    const url = `${apiserver}/login/oauth`
     const requestOptions = {
       method: "POST",
       headers: header,

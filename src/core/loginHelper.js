@@ -11,10 +11,11 @@ const getSectionKey = (user, passswd) => {
                 'password': `${passswd}`
             }
         };
-        // console.log(options);
+
         request(options, function (error, response) {
             if (error) {
                 reject(error);
+                return;
             }
             let retver = response.headers['set-cookie']
             retver = retver.toString()
@@ -24,9 +25,7 @@ const getSectionKey = (user, passswd) => {
             retver = retver.toString()
             resolve(retver);
         })
-    }).catch((e) => {
-        console.log("Error in geting getSectionKey " + e);
-    })
+    });
 }
 const chq_request = (sectionid, pmphone, mphone, page, actitel, WFPIN_NO) => {
     return new Promise((resolve, reject) => {
@@ -63,12 +62,11 @@ const chq_request = (sectionid, pmphone, mphone, page, actitel, WFPIN_NO) => {
                 reject(error);
                 return;
             }
+            console.log(response);
             resolve(response.body);
         });
 
-    }).catch((e) => {
-        console.log("Error in macking chq_request " + e);
-    })
+    });
 }
 
 module.exports = { getSectionKey, chq_request }

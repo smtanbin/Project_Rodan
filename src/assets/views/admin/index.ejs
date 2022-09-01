@@ -8,30 +8,45 @@
       <!-- <img src="/img/loading/boot_anime.webp" width="100" height="100"> -->
       <img src="/img/loading/Loading_progress.gif" height="10">
     </section>
-    <div class="container" id="main_content" style="display: '';">
-      <div class="columns">
-        <div class="row column col-12">
-          <%- include('../navbar'); %>
-        </div>
-        <div class="columns col-12 row">
 
-          <div class="column col-md-2 col-2" id="sidebarhead">
+    <section class="flowing_pagger p-1 bg-frost">
+      <div class="dot_list">
+        <a id="page-item-1" onclick="scrollToSmoothly(0),
+        dashboard_page('page_1')
+        " class="bg-primary dot"></a>
+        <a id="page-item-2" onclick="scrollToSmoothly(document.getElementById('page_2').offsetTop -10),
+        dashboard_page('page_2')" class="bg-secondary dot"></a>
+        <a id="page-item-3" onclick="scrollToSmoothly(document.getElementById('page_3').offsetTop),
+        dashboard_page('page_3')" class="bg-secondary dot"></a>
+      </div>
+
+    </section>
+
+    <section id="main_content" style="display: '';">
+      <!-- Navbar Start -->
+      <%- include('../navbar'); %>
+        <!-- Navbar End -->
+        <div class="off-canvas">
+          <!-- Sidebar Start -->
+          <div id="sidebar-id" class="off-canvas-sidebar">
             <%- include('../sidenav'); %>
           </div>
-
-          <div class="column col-10 col-md-12" id="contenthead">
-            <%- include('body'); %>
+          <!-- Sidebar end -->
+          <a class="off-canvas-overlay" href="#close"></a>
+          <div class="off-canvas-content">
+            <!-- off-screen content -->
           </div>
         </div>
-      </div>
-      <div class="row column col-12">
-        <%- include('../footer'); %>
-      </div>
-    </div>
 
-    </div>
+        <!-- Body Start -->
+        <div class="container">
+          <%- include('body'); %>
+        </div>
 
-
+        <div class="row column col-12">
+          <%- include('../footer'); %>
+        </div>
+        </div>
   </body>
 
 </html>

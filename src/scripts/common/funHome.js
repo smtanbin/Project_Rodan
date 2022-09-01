@@ -41,17 +41,18 @@ const pichat = async (param) => {
     redirect: "follow",
   }
   let xValues = []
-
   let yValues = []
+  let sum_balance = 0
 
   await fetch(url, requestOptions)
     .then((response) => response.json())
     .then((payload) => {
-      console.log(payload)
       payload.map(({ TYPE, BALANCE }) => {
         xValues += `${TYPE},`
         yValues += `${BALANCE},`
+        sum_balance += BALANCE
       })
+      document.getElementById("t_balance").innerHTML = `<p>${sum_balance}</p>`
 
       const xaxe = xValues.split(",")
       const yaxe = yValues.split(",")
@@ -160,8 +161,8 @@ const agentstatus = async (param) => {
             maximumFractionDigits: 2,
           })}</td>
 			<td class=" text-right ">${YESTERDAY.toLocaleString("en-BD", {
-        maximumFractionDigits: 2,
-      })}</td>
+            maximumFractionDigits: 2,
+          })}</td>
 		  </tr>`
         })
 
@@ -290,25 +291,25 @@ const customerstatus = async (param) => {
           }
         )}</td>
 			<td class="text-tiny text-right">${CUSTOMER_YESTERDAY.toLocaleString("en-BD", {
-        maximumFractionDigits: 2,
-      })}</td>
+          maximumFractionDigits: 2,
+        })}</td>
 		  </tr>`
       })
       document.getElementById("customerInfo").innerHTML += `<tr>
 		<td class="text-tiny text-primary text-bold" colspan="1">Total </td>
 
 		<td class="text-tiny text-right text-primary text-bold">${localCustomerToday.toLocaleString(
-      "en-BD",
-      {
-        maximumFractionDigits: 2,
-      }
-    )}</td>
+        "en-BD",
+        {
+          maximumFractionDigits: 2,
+        }
+      )}</td>
 		<td class="text-tiny text-right text-primary text-bold">${localCustomerYday.toLocaleString(
-      "en-BD",
-      {
-        maximumFractionDigits: 2,
-      }
-    )}</td>
+        "en-BD",
+        {
+          maximumFractionDigits: 2,
+        }
+      )}</td>
 	  </tr>`
       // turning INTO ARRAY
       local_mphone = local_mphone.split(",")

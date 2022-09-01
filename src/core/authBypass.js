@@ -11,22 +11,20 @@ const getSectionKey = (user, passswd) => {
         password: `${passswd}`,
       },
     }
-    console.log(options)
     request(options, function (error, response) {
       if (error) {
         reject(error)
         return
       }
-      let retver = response.headers["set-cookie"]
-      retver = retver.toString()
-      retver = retver.split("=")
-      retver = retver[1].split(";")
-      retver = retver[0]
-      retver = retver.toString()
-      // console.log(">" + retver);
-      resolve(retver)
+      let php_sessoin = response.headers["set-cookie"]
+      php_sessoin = php_sessoin.toString()
+      php_sessoin = php_sessoin.split("=")
+      php_sessoin = php_sessoin[1].split(";")
+      php_sessoin = php_sessoin[0]
+      php_sessoin = php_sessoin.toString()
+      resolve(php_sessoin)
     })
-  })
+  }).catch((e) => { return e })
 }
 
 module.exports = { getSectionKey }

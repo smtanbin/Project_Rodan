@@ -28,7 +28,7 @@ SELECT CURRENT_PMPHONE                         AGENT,
                BILL_AMOUNT       CURRENT_BILL_AMOUNT,
                COM               CURRENT_COM
           FROM TANBIN.MIS_DATA md
-         WHERE md.LOGMONTH = ${month} AND md.LOG_YEAR = ${year}) A
+         WHERE md.LOGMONTH = TO_NUMBER('${month}') AND md.LOG_YEAR = TO_NUMBER('${year}')) A
        FULL OUTER JOIN
        (SELECT PMPHONE           PRIVIOUS_PMPHONE,
                NO_OF_ACCOUNT     PRIVIOUS_NO_OF_ACCOUNT,
@@ -37,10 +37,12 @@ SELECT CURRENT_PMPHONE                         AGENT,
                BILL_AMOUNT       PRIVIOUS_BILL_AMOUNT,
                COM               PRIVIOUS_COM
           FROM TANBIN.MIS_DATA md
-         WHERE md.LOGMONTH = ${month} - 1 AND md.LOG_YEAR = ${year}) B
+         WHERE md.LOGMONTH =  TO_NUMBER('${month}') - 1 AND md.LOG_YEAR = TO_NUMBER('${year}')) B
            ON A.CURRENT_PMPHONE = B.PRIVIOUS_PMPHONE`
   try {
-    return await qurrythis(sql)
+    console.log(sql);
+    const data = await qurrythis(sql)
+    return data
   } catch (e) {
     console.log("Error in getmis function " + e)
     return e

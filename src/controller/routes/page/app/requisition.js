@@ -35,32 +35,10 @@ router.get("/", async (req, res) => {
     data.map(({ ROLE, USERNAME, ROOT }) => {
         res.locals = {
             userid: USERNAME,
-            title: "Timeline",
+            title: "Requisition",
         }
         const darkModeCon = req.cookies.darkmode
-        res.render("./pages/timeline", {
-            role: ROLE,
-            userid: USERNAME,
-            owner: ROOT,
-            darkmode: darkModeCon,
-        })
-    })
-})
-
-
-router.get("/customerInfo", async (req, res) => {
-    const token = req.cookies.auth
-    const { user } = jwt_decode(token)
-    const data = await roleCheck(user)
-    await logger(user, "/customerInfo", "Visited")
-
-    data.map(({ ROLE, USERNAME, ROOT }) => {
-        res.locals = {
-            userid: USERNAME,
-            title: "Customer Info",
-        }
-        const darkModeCon = req.cookies.darkmode
-        res.render("./pages/customerInfo", {
+        res.render("./pages/requisition/index", {
             role: ROLE,
             userid: USERNAME,
             owner: ROOT,

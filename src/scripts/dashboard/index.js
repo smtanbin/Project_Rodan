@@ -104,6 +104,7 @@ const accountStatus = async () => {
 		<td class="text-tiny text-bold text-primary">${totalCloseYesterday}</td>
 		<td class="text-tiny text-bold text-primary">${totalAllAccount}</td>
 	  </tr>`
+      document.getElementById("t_ac").innerText = totalAllAccount
 
       let arrMphone = calMphone.split(",")
       let arrOpenToday = calOpenToday.split(",")
@@ -178,7 +179,7 @@ const pichat = async () => {
     redirect: "follow",
   }
   let xValues = []
-
+  let sum_balance = 0
   let yValues = []
 
   await fetch(url, requestOptions)
@@ -187,7 +188,18 @@ const pichat = async () => {
       payload.map(({ TYPE, BALANCE }) => {
         xValues += `${TYPE},`
         yValues += `${BALANCE},`
+        sum_balance += BALANCE
       })
+
+      sum_balance = sum_balance.toLocaleString("en-BD", {
+        maximumFractionDigits: 2,
+        style: 'currency',
+        currency: 'BDT'
+      })
+      document.getElementById("t_balance").innerText =
+        sum_balance
+
+
 
       const xaxe = xValues.split(",")
       const yaxe = yValues.split(",")
@@ -386,17 +398,25 @@ const mstEventOutput = async () => {
 
 			  </div>`
       } else {
+
         payload.map(({ AC, TOTAL, REG_STATUS, SRC }) => {
           let opt = "<tr>"
-
           document.getElementById("masterblockOutput").innerHTML += `${opt}
 					<td class="text-tiny">${AC}</td>
 				<td class="text-tiny">
 				<span class="label label-rounded">${TOTAL}</span>
 				${REG_STATUS}
 				</td>
-
 				</tr>`
+
+          if (SRC === "CUSTAC_APPRDTL") document.getElementById("pending_ac").innerText = TOTAL
+          if (SRC === "PREMATURE_DETAILS_APR") {
+            document.getElementById("pending_ac").innerHTML += "/ " + TOTAL
+            document.getElementById("Pending_Account").classList.replace("bg-secondary", "bg-error")
+
+          }
+
+
         })
       }
     })
@@ -432,24 +452,17 @@ const tEventOutput = async () => {
     headers: myHeaders,
     redirect: "follow",
   }
+  let t_event = 0
   await fetch(url, requestOptions)
     .then((response) => response.json())
     .then((payload) => {
       if (payload.length === 0) {
         document.getElementById(
           "pendingEventBlock"
-        ).innerHTML = `<div class="card-header">
-					<div class="card-title text-primary h5">Transaction Event</div>
-					</div>
-					<div class="empty bg-none">
-						<div class="empty-icon">
-						<i class="icon icon-2x icon-flag text-primary"></i>
-						</div>
-						<p class="empty-title text-primary h5">No Event Found</p>
-					</div>
-				</div>`
+        ).classList.add("d-none")
       } else {
         payload.map(({ AMT, E, STATUS, SRC, TOTAL }) => {
+          t_event += TOTAL
           if (SRC === "REMITTANCE_INFO") {
             document.getElementById(
               "pendingEventBlockOutput"
@@ -483,6 +496,8 @@ const tEventOutput = async () => {
             })}</td>
 				</a></tr>`
           }
+          document.getElementById("t_event").innerText = t_event + " Tasks"
+          if (t_event === 0) document.getElementById("t_event_card").classList.replace("bg-primary", "bg-secondary")
         })
       }
     })
@@ -490,10 +505,7 @@ const tEventOutput = async () => {
   url = `${apiserver}/charts/teventoutput`
   document.getElementById(
     "todaysEventBlock"
-  ).innerHTML = `<div class="card-header">
-	<div class="card-title text-primary h5">Todays Transaction Event</div>
-  </div>
-  <table class="table p-2 table-hover table-cluster">
+  ).innerHTML = `<table class="table table-hover table-cluster">
 	<thead>
 	  <tr>
 		<th class="text-tiny text-primary">Event</th>
@@ -510,21 +522,12 @@ const tEventOutput = async () => {
     .then((response) => response.json())
     .then((payload) => {
       if (payload.length === 0) {
-        document.getElementById("todaysEventBlock").innerHTML = `
-			<div class="card-header">
-<div class="card-title text-primary h5">Transaction Event</div>
-</div>
-			<div class="empty bg-none">
-			<div class="empty-icon">
-			  <i class="icon icon-2x icon-flag text-primary"></i>
-			</div>
-			<p class="empty-title text-primary h5">No Event Found</p>
-
-		  </div>`
+        document.getElementById("todaysEventBlock").classList.add("d-none")
       } else {
         payload.map(({ PARTICULAR, NO, AMT }) => {
-          document.getElementById("todaysEventBlockOutput").innerHTML += `<tr>
-		
+
+          if (PARTICULAR === "Cash Deposit" || PARTICULAR === "Cash Withdrawal") {
+            document.getElementById("todaysEventBlockOutput").innerHTML += `<tr class="text-primary" onclick="window.location='/page/timeline';">
 						<td class="text-tiny text-clip text-capitalize">
 						${PARTICULAR}
 						</td>
@@ -532,10 +535,24 @@ const tEventOutput = async () => {
 						${NO}
 						</td>
 						<td class="text-tiny text-right">${AMT.toLocaleString("en-BD", {
-            maximumFractionDigits: 2,
-          })}
+              maximumFractionDigits: 2,
+            })}
 						</td>
 					</tr>`
+          } else {
+            document.getElementById("todaysEventBlockOutput").innerHTML += `<tr>
+						<td class="text-tiny text-clip text-capitalize">
+						${PARTICULAR}
+						</td>
+						<td class="text-tiny text-clip">
+						${NO}
+						</td>
+						<td class="text-tiny text-right">${AMT.toLocaleString("en-BD", {
+              maximumFractionDigits: 2,
+            })}
+						</td>
+					</tr>`
+          }
         })
       }
     })
@@ -857,6 +874,42 @@ const timer = () => {
     document.getElementById("remainer").setAttribute("value", remaintime)
   }
 }
+
+// ------------------------------------------------------------------------------------------
+const dashboard_page = (param) => {
+  if (param === 1) {
+    document.getElementById("page_1").classList.remove("d-none")
+    document.getElementById("page_1").classList.add("active")
+
+    document.getElementById("page_2").classList.add("d-none")
+    document.getElementById("page_2").classList.remove("active")
+
+    document.getElementById("page_3").classList.add("d-none")
+    document.getElementById("page_3").classList.remove("active")
+  }
+  if (param === 2) {
+    document.getElementById("page_1").classList.add("d-none")
+    document.getElementById("page-item-1").classList.add("bg-primary")
+
+    document.getElementById("page_2").classList.remove("d-none")
+    document.getElementById("page-item-1").classList.add("bg-primary")
+
+    document.getElementById("page_3").classList.add("d-none")
+    document.getElementById("page-item-3").classList.remove("bg-primary")
+
+  }
+  if (param === 3) {
+    document.getElementById("page_1").classList.add("d-none")
+    document.getElementById("page-item-1").classList.remove("bg-primary")
+
+    document.getElementById("page_2").classList.add("d-none")
+    document.getElementById("page-item-2").classList.remove("bg-primary")
+
+    document.getElementById("page_3").classList.remove("d-none")
+    document.getElementById("page-item-3").classList.add("bg-primary")
+  }
+}
+
 
 /******************************************************************************************
 *

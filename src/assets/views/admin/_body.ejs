@@ -1,0 +1,114 @@
+<section>
+  <div class="modal p-2" id="homeModel">
+    <a href="#close" class="modal-overlay" aria-label="Close" onclick="closeModel()"> Close</a>
+    <div class="modal-container" id="modeloutput">
+      <h3 class="h3 text-primary p-2">Agent Monthly Activity</h3>
+      <canvas data-aos="fade-up" id="dailydrcragent" style="width:100%;"></canvas>
+    </div>
+  </div>
+</section>
+
+
+
+<div class="container">
+  <div class="columns">
+
+
+
+
+
+
+
+    <section class="card noboder w100 column col-12">
+      <div class="container">
+        <div class="columns">
+
+          <div class="column col-7 col-md-12">
+
+            <!-- <section data-aos="fade-up" class="column p-2 mt-1 " id="remainer-body">
+              <div data-aos="fade-right" class="card-title text-primary h3 py-2" id="remainer-text">Today Time Remaining
+              </div>
+              <progress class="progress" id="remainer" value="0" max="540"></progress>
+            </section> -->
+
+            <!-- For Moblie view perpossed -->
+
+
+
+            <section data-aos="fade-down" class="card noboder p-2 m-1" id="pendingEventBlock">
+              <div class="loading loading-lg"></div>
+            </section>
+
+            <section data-aos="fade-right" class="card noboder p-2 m-1" id="todaysEventBlock">
+              <div class="loading loading-lg"></div>
+            </section>
+
+            <section data-aos="fade-right" id="customer_banlance" class="card noboder p-2 m-1">
+              <div class="loading loading-lg"></div>
+            </section>
+
+            <section data-aos="fade-right" id="agent_banlance">
+              <div class="loading loading-lg"></div>
+            </section>
+
+          </div>
+          <!-- Right Side -->
+          <div class="column col-5 my-1 col-md-12">
+
+
+            <section data-aos="fade-right" class="card noboder p-2 m-1" id="masterblock">
+              <div class="loading loading-lg"></div>
+            </section>
+
+
+            <section data-aos="fade-left" class="card noboder p-1 m-1">
+              <div class="card-header">
+                <div data-aos="fade-left" class="card-title text-primary h5">Today's Transaction</div>
+              </div>
+              <canvas data-aos="fade-up" id="dailydrcr"></canvas>
+            </section>
+
+
+
+
+            <section class="card noboder p-1 m-1">
+              <div class="card-header">
+                <div data-aos="fade-left" class="card-title text-primary h3 py-2">Balance</div>
+              </div>
+              <canvas data-aos="fade-up" id="Chart" style="width:100%;max-width:600px"></canvas>
+            </section>
+
+
+            <section data-aos="fade-left" class="card noboder my-2 p-1" id="accountStatusBlock">
+              <div class="loading loading-lg"></div>
+
+            </section>
+
+
+            <!-- <section class="card noboder my-2">
+              <h2 class="text-primary p-2 h2 ">Place Holder</h2>
+              <div class="ot">
+              </div>
+            </section> -->
+
+          </div>
+        </div>
+      </div>
+
+    </section>
+  </div>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+<script src="/JS/dashboard/index.js" async></script>
+<script src="/JS/index.js"></script>

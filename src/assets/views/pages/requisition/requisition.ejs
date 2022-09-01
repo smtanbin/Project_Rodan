@@ -1,0 +1,45 @@
+<main class="content m-2">
+
+
+    <ul class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a href="/">Home</a>
+        </li>
+        <li class="breadcrumb-item">
+            <a href="customerInfo">Requisition</a>
+        </li>
+
+    </ul>
+    <div class="hero" id="banner_hero">
+        <div class="hero-body">
+            <h1 class="text-primary">Requisition</h1>
+        </div>
+    </div>
+    <div class="container">
+        <!-- normal input group with button -->
+        <div style="display: flex; justify-content: center; align-items: center; flex-direction: column;">
+            <div class="input-group">
+                <div class="form-group">
+                    <select class="form-select" id="requisitionValue">
+                        <option>Choose an option</option>
+                        <option>Chaque</option>
+                    </select>
+                </div>
+                <button class="btn btn-primary input-group-btn" id="btn-loading" onclick="requisition_menu()">
+                    Search</button>
+
+            </div>
+        </div>
+        <div class="container">
+            <br>
+            <div class="columns card p-2 d-none" id="output">
+
+
+
+                <!-- ############################ optput -->
+
+            </div>
+
+
+            <script src="/js/requisition/funRequisition_menu.js"></script>
+</main>

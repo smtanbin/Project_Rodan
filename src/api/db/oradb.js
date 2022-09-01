@@ -28,6 +28,7 @@ require("dotenv").config()
  *	Calling Oracle Database */
 const oracledb = require("oracledb")
 
+
 /* Qurry Function */
 async function oradb(sqlqurry) {
   oracledb.autoCommit = true

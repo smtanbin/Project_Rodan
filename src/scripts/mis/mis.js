@@ -1,3 +1,5 @@
+
+
 const getMonth = (param) => {
   if (param < 9) {
     param = param.slice(1, 2)
@@ -31,8 +33,9 @@ const mis_part1 = async () => {
   let param = document.getElementById("param").value.split("-")
   let temp_year = param[0]
   let temp_month = param[1]
-  const current_month = current_date.getMonth() + 1
-  const current_year = current_date.getFullYear()
+  let dateObj = new Date();
+  const current_month = dateObj.getMonth() + 1
+  const current_year = dateObj.getFullYear()
   if (current_month <= temp_month && current_year <= temp_year) {
     alert("Report Must be Previous Month")
   } else {

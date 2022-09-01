@@ -198,19 +198,18 @@ const initsms = async (autho) => {
     // console.log(uniqueChars);
     for (i = 0; i < sender.length; i++) {
       if (uniqueChars[i] != undefined || uniqueChars[i] != null) {
-        sentsms(autho, msgBody, uniqueChars[i])
+        sentsms(msgBody, uniqueChars[i])
       }
     }
   }
 }
 
-const sentsms = async (autho, msgBody, to) => {
-  const url = `${apiserver}/sms/sentsms`
+const sentsms = async (msgBody, to) => {
+  const url = `${apiserver}/sms/request`
   // const res = encodeURI(msgBody)
   const raw = JSON.stringify({
     to: `88${to}`,
-    body: `${msgBody}`,
-    autho: `${autho}`,
+    body: `${msgBody}`
   })
 
   const requestOptions = {
@@ -222,28 +221,40 @@ const sentsms = async (autho, msgBody, to) => {
   try {
     await fetch(url, requestOptions)
       .then((response) => response.json())
-      .then((payload) => {
-        if (payload === "201") {
+      .then((_payload) => {
+        if (_payload.Error) {
+          const id_no = Math.floor(Math.random() * 4);
           document.getElementById(
             "toast_rail"
-          ).innerHTML += `<div id="${to}" class="toast toast-success m-2">
-                                <button class="btn btn-clear float-right" onclick="toast_exit('${to}')"></button>
+          ).innerHTML += `<div id="${id_no}" class="toast toast-error m-2">
+                                <button class="btn btn-clear float-right" onclick="toast_exit('${id_no}')"></button>
                                 <p id="toast_msg">
-                                    Massage sended to ${to} Sucessfully.
+                                    Massage failed to send at no ${to}. <br/>
+                                    Error:[${JSON.stringify(_payload)}]
                                 </p>
                             </div>`
         } else {
+          _payload = JSON.stringify(_payload)
           document.getElementById(
             "toast_rail"
-          ).innerHTML += `<div id="${to}" class="toast toast-error m-2">
-                                <button class="btn btn-clear float-right" onclick="toast_exit('${to}')"></button>
+          ).innerHTML += `<div id="${_payload}" class="toast toast-success m-2">
+                                <button class="btn btn-clear float-right" onclick="toast_exit('${_payload}')"></button>
                                 <p id="toast_msg">
-                                    Massage failed to send at no ${to}.
+                                    Massage sended to ${_payload} Sucessfully.
                                 </p>
                             </div>`
         }
       })
   } catch (e) {
+    var to = null
+    document.getElementById(
+      "toast_rail"
+    ).innerHTML += `<div id="${to}" class="toast toast-error m-2">
+                                <button class="btn btn-clear float-right" onclick="toast_exit('${to}')"></button>
+                                <p id="toast_msg">
+                                    Massage failed to send at no ${to}.
+                                </p>
+                            </div>`
     console.log(e)
   }
 }
