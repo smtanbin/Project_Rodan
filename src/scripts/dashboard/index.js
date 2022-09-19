@@ -289,29 +289,23 @@ const agentstatus = async () => {
         document.getElementById("agentInfo").innerHTML += `			<tr>
 			<td class="text-tiny"><a type="button" class="btn btn-link" onclick="agentBalancePerformance('${MPHONE}')">${MPHONE}</a></td>
 			<td class="text-left text-tiny text-crop">${ACCOUNT_NAME}</td>
-			<td class=" ${style} text-right text-tiny">${TODAY.toLocaleString("en-BD", {
-          maximumFractionDigits: 2,
-        })}</td>
-			<td class=" text-right text-tiny">${YESTERDAY.toLocaleString("en-BD", {
-          maximumFractionDigits: 2,
-        })}</td>
+			<td class=" ${style} text-right text-tiny">${TODAY ? TODAY.toLocaleString("en-BD", {
+          maximumFractionDigits: 2
+        }) : 0}</td>
+			<td class=" text-right text-tiny">${YESTERDAY ? YESTERDAY.toLocaleString("en-BD", {
+          maximumFractionDigits: 2
+        }) : 0}</td>
 		  </tr>`
       })
       document.getElementById("agentInfo").innerHTML += `			<tr>
 		<td class="text-tiny text-primary text-bold" colspan="2">Total </td>
 
-		<td class="text-tiny text-right text-primary text-bold">${loaclTatalToday.toLocaleString(
-        "en-BD",
-        {
-          maximumFractionDigits: 2,
-        }
-      )}</td>
-		<td class="text-tiny text-right text-primary text-bold">${loaclTatalYesterday.toLocaleString(
-        "en-BD",
-        {
-          maximumFractionDigits: 2,
-        }
-      )}</td>
+		<td class="text-tiny text-right text-primary text-bold">${loaclTatalToday ? loaclTatalToday.toLocaleString("en-BD", {
+        maximumFractionDigits: 2
+      }) : 0}</td>
+		<td class="text-tiny text-right text-primary text-bold">${loaclTatalYesterday ? loaclTatalYesterday.toLocaleString("en-BD", {
+        maximumFractionDigits: 2
+      }) : 0}</td>
 	  </tr>`
       // turning INTO ARRAY
       const intlocal_mphone = local_mphone.split(",")
@@ -480,9 +474,9 @@ const tEventOutput = async () => {
             ).innerHTML += `<tr onclick="window.location='/app/pendingbeftn';" class="active">
 						<td class="text-tiny">${E}</td>
 						<td class="text-tiny text-clip"><span class="label label-rounded label-primary">${TOTAL}</span> ${STATUS}</td>
-						<td class="text-tiny text-right">${AMT.toLocaleString("en-BD", {
-              maximumFractionDigits: 2,
-            })}</td>
+						<td class="text-tiny text-right">${AMT ? AMT.toLocaleString("en-BD", {
+              maximumFractionDigits: 2
+            }) : 0}</td>
 
 				</tr>`
           } else {
@@ -491,9 +485,9 @@ const tEventOutput = async () => {
             ).innerHTML += `<tr>
 				<td class="text-tiny">${E}</td>
 		<td class="text-tiny text-clip"><span class="label  label-rounded">${TOTAL}</span> ${STATUS}</td>
-				<td class="text-tiny text-right">${AMT.toLocaleString("en-BD", {
-              maximumFractionDigits: 2,
-            })}</td>
+				<td class="text-tiny text-right">${AMT ? AMT.toLocaleString("en-BD", {
+              maximumFractionDigits: 2
+            }) : 0}</td>
 				</a></tr>`
           }
           document.getElementById("t_event").innerText = t_event + " Tasks"
@@ -534,9 +528,9 @@ const tEventOutput = async () => {
 						<td class="text-tiny text-clip">
 						${NO}
 						</td>
-						<td class="text-tiny text-right">${AMT.toLocaleString("en-BD", {
-              maximumFractionDigits: 2,
-            })}
+						<td class="text-tiny text-right">${AMT ? AMT.toLocaleString("en-BD", {
+              maximumFractionDigits: 2
+            }) : 0}
 						</td>
 					</tr>`
           } else {
@@ -547,9 +541,9 @@ const tEventOutput = async () => {
 						<td class="text-tiny text-clip">
 						${NO}
 						</td>
-						<td class="text-tiny text-right">${AMT.toLocaleString("en-BD", {
-              maximumFractionDigits: 2,
-            })}
+						<td class="text-tiny text-right">${AMT ? AMT.toLocaleString("en-BD", {
+              maximumFractionDigits: 2
+            }) : 0}
 						</td>
 					</tr>`
           }
