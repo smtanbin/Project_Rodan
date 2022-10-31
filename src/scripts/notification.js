@@ -1,6 +1,6 @@
-const requestOptions = {
+const _requestOptions = {
 	method: 'GET',
-	headers: newHeaders,
+	headers: Headers,
 	redirect: 'follow'
 }
 
@@ -13,8 +13,8 @@ const nvl = (data, alternative) => {
 }
 
 const cashnotification = async () => {
-	const url = `${apiserveralt}cashEntry`
-	await fetch(url, requestOptions).then((response) => response.json()).then((payload) => {
+	const url = `${apiserver}cashEntry`
+	await fetch(url, _requestOptions).then((response) => response.json()).then((payload) => {
 		if (payload === null) {
 			document.getElementById('panel-body').innerHTML = ` `
 		} else {
@@ -76,7 +76,7 @@ const cashnotification = async () => {
 
 const reminotification = async () => {
 	const url = `${apiserveralt}/remittanceRequest`
-	await fetch(url, requestOptions).then((response) => response.json()).then((payload) => {
+	await fetch(url, _requestOptions).then((response) => response.json()).then((payload) => {
 		if (payload != null) {
 			payload.map(({ NAME_OF_MTC, BEN_NAME, STATUS, SEN_REM_AMT, REC_AGENT_ACC, ENTRY_DATE }, index) => {
 				const titel = 'Remittance Request'
@@ -101,7 +101,7 @@ const reminotification = async () => {
 
 const dpsMaturity = async () => {
 	const url = `${apiserveralt}dpsMaturity`
-	await fetch(url, requestOptions).then((response) => response.json()).then((payload) => {
+	await fetch(url, _requestOptions).then((response) => response.json()).then((payload) => {
 		if (payload != null) {
 			payload.map(({ MPHONE, MATURITY_DATE, DOB, BALANCE_M, ENTRY_DATE, STATUS }, index) => {
 				const titel = 'Mature TDR'

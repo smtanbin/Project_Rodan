@@ -1,3 +1,56 @@
+const similarity = (s1, s2) => {
+  var longer = s1
+  var shorter = s2
+  if (s1.length < s2.length) {
+    longer = s2
+    shorter = s1
+  }
+  var longerLength = longer.length
+  if (longerLength == 0) {
+    return 1.0
+  }
+  return (
+    (longerLength - editDistance(longer, shorter)) / parseFloat(longerLength)
+  )
+}
+
+const classGenerator = (param) => {
+  param = param * 100
+  if (param < 50) {
+    return "text-error"
+  }
+  if (param > 50 && param < 80) {
+    return "text-warning"
+  }
+  if (param > 80) {
+    return "text-success"
+  }
+}
+
+const editDistance = (s1, s2) => {
+  s1 = s1.toLowerCase()
+  s2 = s2.toLowerCase()
+
+  var costs = new Array()
+  for (var i = 0; i <= s1.length; i++) {
+    var lastValue = i
+    for (var j = 0; j <= s2.length; j++) {
+      if (i == 0) costs[j] = j
+      else {
+        if (j > 0) {
+          var newValue = costs[j - 1]
+          if (s1.charAt(i - 1) != s2.charAt(j - 1))
+            newValue = Math.min(Math.min(newValue, lastValue), costs[j]) + 1
+          costs[j - 1] = lastValue
+          lastValue = newValue
+        }
+      }
+    }
+    if (i > 0) costs[s2.length] = lastValue
+  }
+  return costs[s2.length]
+}
+
 const table_dtl = async () => {
   const url = `${apiserver}/fundmanagement/pendingEftList`
   const requestOptions = {
@@ -16,6 +69,7 @@ const table_dtl = async () => {
           {
             ACTNUM,
             RECIVER,
+            HONOURED,
             ABS_AC_TITEL,
             AMOUNT,
             ORIG_BANK_NAME,
@@ -26,21 +80,28 @@ const table_dtl = async () => {
           index
         ) => {
           document.getElementById("table_cell_dtl").innerHTML += `
-          <tr>
-          <td class="text-tiny">${index + 1}
-          <td class="text-tiny text-clip text-left text-black">${ACTNUM}
-          <td class="text-tiny ">${RECIVER}
-          <td class="text-tiny text-break">${ABS_AC_TITEL}
-          <td class="text-tiny text-center ">${ORIG_BANK_NAME}
-          <td class="text-tiny text-center">${ORIG_BRANCH_NAME}
-          <td class="text-tiny text-ellipsis text-lowercase">${SENDER}
-          <td class="text-tiny text-clip text-right text-black">${AMOUNT.toLocaleString(
+          <tr >
+          <td class="text-micro">${index + 1}
+          <td class="text-micro text-bold text-clip text-left text-black">${ACTNUM}</td>
+          <td class="text-micro ">${RECIVER}</td>
+          <td class="text-micro text-break">${ABS_AC_TITEL}</td>
+          <td class="text-micro text-break  ${classGenerator(
+            similarity(RECIVER, ABS_AC_TITEL)
+          )}">${similarity(RECIVER, ABS_AC_TITEL) * 100}%</td>
+
+          <td class="text-micro text-left ">${ORIG_BANK_NAME}</td>
+          <td class="text-micro text-left">${ORIG_BRANCH_NAME}</td>
+          <td class="text-micro text-ellipsis text-lowercase">${SENDER}</td>
+          <td class="text-micro text-clip text-right text-black">${AMOUNT.toLocaleString(
             "en-BD",
             {
               maximumFractionDigits: 2,
             }
-          )}
-          <td class="text-tiny text-break text-center ">${NOTE}
+          )}</td>
+            <td class="text-micro ${HONOURED === "Y" ? "text-success" : ""}">${
+            HONOURED === "Y" ? "Honored" : ""
+          }</td>
+          <td class="text-micro text-break text-center" >${NOTE}
           </td>
           </tr>`
           total += AMOUNT
@@ -50,15 +111,15 @@ const table_dtl = async () => {
           <tr class="active">
           <td colspan="7"> Total</td>
           
-          <td class="text-tiny text-clip text-right text-black">${total.toLocaleString(
-        "en-BD",
-        {
-          maximumFractionDigits: 2,
-        }
-      )}
+          <td class="text-micro text-clip text-right text-black">${total.toLocaleString(
+            "en-BD",
+            {
+              maximumFractionDigits: 2,
+            }
+          )}
             
             </td>
-            <td colspan="1"></td>
+            <td colspan="2"></td>
           </tr>`
     })
   document.getElementById("table_dtl").classList.remove("d-none")
@@ -73,8 +134,8 @@ const beftninit = async () => {
         
  
       <small class="text-bold text-center text-primary text-uppercase">Pending eft list ${moment(
-    currentdate
-  ).format("ll")}</small>
+        currentdate
+      ).format("ll")}</small>
 
 
       <table class="col-4 table table-striped table-cluster d-none" id="table_summery">
@@ -97,16 +158,17 @@ const beftninit = async () => {
       <tr colspan="8" class="text-center text-bold">Detail List
       </tr>
       <tr class="text-black  active">
-   
-        <th class="text-tiny">SL</th>
-        <th class="text-tiny text-clip text-left">Account No</th>
-        <th class="text-tiny text-left">Reciver</th>
-        <th class="text-tiny text-break">ABS Account Titel</th>
-        <th class="text-tiny text-center">Origin Bank</th>
-        <th class="text-tiny">Origin Branch</th>
-        <th class="text-tiny">Sender</th>
-        <th class="text-tiny text-clip text-right">Amount</th>
-        <th class="text-tiny text-break">Note</th>
+        <th class="text-micro">SL</th>
+        <th class="text-micro text-clip text-left">Account No</th>
+        <th class="text-micro text-left">Reciver</th>
+        <th class="text-micro text-break">ABS Account Titel</th>
+        <th class="text-micro text-break">Match</th>
+        <th class="text-micro text-center">Origin Bank</th>
+        <th class="text-micro">Origin Branch</th>
+        <th class="text-micro">Sender</th>
+        <th class="text-micro text-clip text-right">Amount</th>
+        <th class="text-micro">Status</th>
+        <th class="text-micro text-break">Note</th>
         </tr></thead>
         <tbody id="table_cell_dtl"></tbody>
     </table>`
@@ -129,12 +191,14 @@ const beftninit = async () => {
         <div class="empty-action"><button class="btn" onclick="init()">Reload</button></div></div>`
         document.getElementById("progress").classList.add("d-none")
       } else {
-        payload.map(({ TYPE, COUNT, SUM }) => {
+        payload.map(({ TYPE, HONOURED, COUNT, SUM }) => {
           document.getElementById("table_cell_summery").innerHTML += `
-          <tr>
-          <td class="text-tiny text-left">${TYPE}
-          <td class="text-tiny text-center">${COUNT}
-          <td class="text-tiny text-clip text-right text-black">${SUM.toLocaleString(
+          <tr class="${HONOURED === "Y" ? "text-success" : ""}">
+          <td class="text-micro text-left">${
+            HONOURED === "Y" ? TYPE + "(Honoured)" : TYPE
+          }
+          <td class="text-micro text-center">${COUNT}
+          <td class="text-micro text-clip text-right text-black">${SUM.toLocaleString(
             "en-BD",
             {
               maximumFractionDigits: 2,
@@ -205,14 +269,14 @@ const printAreafundmng = async (titel) => {
   </div>
 </div>`
 
-  const footer = `<div class="col-12 w100  p-2 mt-2 text-tiny">
+  const footer = `<div class="col-12 w100  p-2 mt-2 text-micro">
 	<b>Genarated by Id:</b> ${username}
 	<b>Print Date:</b> ${printday}
 	<p class="p-centered text-small">This is an electronically generated report, hence does not require a signature.</p>
 	</div>
 	<div class="text-center p-centered">
 
-<a href="https://www.standardbankbd.com" class="text-gray text-tiny">Copyright © 2022 Standard Bank Ltd</a>
+<a href="https://www.standardbankbd.com" class="text-gray text-micro">Copyright © 2022 Standard Bank Ltd</a>
    </div>
   
  <script> 

@@ -1,6 +1,8 @@
 /*api server url is in init file environment file*/
 
 
+
+
 const redAlart = (input) => {
   if (input > 10000) {
     return text - error
@@ -952,3 +954,5 @@ setInterval(() => {
   tEventOutput()
 }, 60000)
 // location.reload()
+
+

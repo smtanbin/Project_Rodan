@@ -51,11 +51,11 @@ const table_dtl = async () => {
           <td colspan="7"> Total</td>
           
           <td class="text-tiny text-clip text-right text-black">${total.toLocaleString(
-        "en-BD",
-        {
-          maximumFractionDigits: 2,
-        }
-      )}
+            "en-BD",
+            {
+              maximumFractionDigits: 2,
+            }
+          )}
             
             </td>
             <td colspan="1"></td>
@@ -73,8 +73,8 @@ const beftninit = async () => {
         
  
       <small class="text-bold text-center text-primary text-uppercase">Pending eft list ${moment(
-    currentdate
-  ).format("ll")}</small>
+        currentdate
+      ).format("ll")}</small>
 
 
       <table class="col-4 table table-striped table-cluster d-none" id="table_summery">
